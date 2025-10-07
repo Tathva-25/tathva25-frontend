@@ -17,8 +17,7 @@ export const Hero=()=> {
         <div>
           <img 
             src={Background.src}
-            className='absolute w-auto h-auto'/>
-            
+            className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden'/>
         </div>
         <div>
           <img
