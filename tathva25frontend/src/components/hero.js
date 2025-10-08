@@ -84,8 +84,8 @@ export const Hero = () => {
   }, []);
 
   return (
-    <section className={`min-h-screen flex items-center justify-center px-5 py-8 pt-20`}>
-      <div className="max-w-7xl mx-auto w-full">
+    <section className={`relative min-h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
+      <div className="mx-auto w-full">
         <div>
           <img 
             src={Background.src}
@@ -103,10 +103,10 @@ export const Hero = () => {
     
         <div className="flex flex-col items-center justify-center gap-4">
           {/* Hero Images Container */}
-          <div className="relative w-[90%] max-w-l md:max-w-md lg:max-w-l aspect-square">
-            <div className="w-full scale-240 pb-20 max-w-5xl md:max-w-5xl text-center">
+          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square">
+            <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl  text-center ml-5 ">
               <span
-                className={`${customFont.className} cursor-pointer inline-block select-none transition-all duration-200 whitespace-nowrap text-[100px] ${
+                className={`${customFont.className} cursor-pointer inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
                   isAnimating ? ' tracking-tighter' : ''
                 }`}
                 onMouseEnter={handleMouseEnter}
