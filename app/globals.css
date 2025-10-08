@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .rotate {
-  animation: spin 12s linear infinite;
+  animation: spin 48s linear infinite;
 }
 
 @keyframes spin {
