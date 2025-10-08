@@ -12,6 +12,7 @@ import Background from '../../public/images/Background.png'
 import number from '../../public/images/003.png'
 import localfont from 'next/font/local';
 import lines from '../../public/images/animation/Lines.svg'
+import Lines from './lines';
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -90,38 +91,6 @@ export const Hero=()=> {
   }, []);
 
   //Line Animations
-  const svgRef =useRef([]);
-  useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
-
-    // Target all lines or paths inside your SVG
-    const lines = svg.querySelectorAll("line, path");
-
-    // Set initial state
-    gsap.set(lines, {
-      strokeDasharray: 500,
-      strokeDashoffset: 500,
-      scaleX: 0.2,
-      transformOrigin: "center center",
-      opacity: 0.5,
-    });
-
-    // Animate on scroll
-    gsap.to(lines, {
-      strokeDashoffset: 0,
-      scaleX: 1.2,
-      opacity: 1,
-      ease: "power2.out",
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: svg,
-        start: "top 85%",
-        end: "bottom 20%",
-        scrub: true,
-      },
-    });
-  }, []);
 
   
 
@@ -147,12 +116,7 @@ export const Hero=()=> {
     
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="absolute inset-0 flex justify-center items-center">
-            <img
-              ref={svgRef}
-              src={lines.src}
-              alt="Animated Lines"
-              className="w-[90vw] h-auto opacity-80"
-            />
+            <Lines />
           </div>
           
           
@@ -174,7 +138,7 @@ export const Hero=()=> {
               <img
                 src={wheel.src}
                 alt="wheel"
-                className="w-full h-full object-contain"
+                className=" w-full h-full   object-contain"
               />
             </div>
             
