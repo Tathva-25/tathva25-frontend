@@ -97,14 +97,14 @@ export const Hero = () => {
           <img
             src={number.src}
             alt='003'
-            className='absolute ml-15 mt-19'
+            className='absolute md:ml-35 md:mt-19'
           />
         </div>
     
         <div className="flex flex-col items-center justify-center gap-4">
           {/* Hero Images Container */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square">
-            <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl  text-center ml-5 ">
+            <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl  text-center ">
               <span
                 className={`${customFont.className} cursor-pointer inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
                   isAnimating ? ' tracking-tighter' : ''
