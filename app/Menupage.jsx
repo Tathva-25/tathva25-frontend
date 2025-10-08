@@ -152,6 +152,17 @@ export default function Menupage() {
             );
           })}
         </div>
+
+        {/* Center text display - always visible */}
+        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm">
+          {fadedtext && (
+            <div
+              className={`${alumniSans.className} font-[700] text-white text-center text-sm px-2`}
+            >
+              {fadedtext}
+            </div>
+          )}
+        </div>
       </div>
       <button
         className="cursor-pointer z-10 bg-amber-500"
