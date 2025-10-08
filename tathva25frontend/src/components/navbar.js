@@ -1,6 +1,6 @@
 'use client'
 
-import logo from './assets/TATHVA25_LOGO.png'
+import logo from '../../public/images/TATHVA25_LOGO.png'
 
 
 

@@ -1,13 +1,15 @@
 // src/components/Hero.js
 import Image from 'next/image';
-import heroAvatar from './assets/avatar-body.png';
-import wheel from './assets/wheel.png';
-import tathva from './assets/TATHVA.png';
-import EyeIcon from './assets/eye.png';
-import Background from './assets/background.svg'
-import number from './assets/003.png'
+import heroAvatar from '../../public/images/avatar-body.png';
+import wheel from '../../public/images/wheel.png'
+import EyeIcon from '../../public/images/eye.svg'
+import Background from '../../public/images/Background.png'
+import number from '../../public/images/003.png'
+import localfont from 'next/font/local'
 
-
+const customFont = localfont({
+  src: '../../public/fonts/neoform.otf', // Next.js treats /public as root /
+})
 export const Hero=()=> {
   return (
     <section className={` min-h-screen flex items-center justify-center px-5 py-8 pt-20`}>
@@ -23,7 +25,7 @@ export const Hero=()=> {
           <img
             src={number.src}
             alt='003'
-            className=' absolute '
+            className=' absolute  ml-28 mt-19'
         />
         </div>
     
@@ -34,13 +36,19 @@ export const Hero=()=> {
           
           {/* Hero Images Container - All elements stacked perfectly */}
           <div className="relative  w-[90%] max-w-l md:max-w-md lg:max-w-l aspect-square">
-            <div className="w-full scale-240  pb-20 max-w-5xl md:max-w-5xl">
-            <img
-              src={tathva.src}
-              alt="TATHVA"
-              className="w-full h-auto object-contain brightness-0 "
-            />
-          </div>
+            <div className="w-full scale-240  pb-20 max-w-5xl md:max-w-5xl ">
+              <span
+                className={customFont.className}
+                style={{
+                  fontSize:'100px',
+                  
+                  
+                }}>
+                  TATHVA
+
+              </span>
+
+            </div>
             
             {/* Wheel - Bottom Layer */}
             <div className="absolute inset-0 flex items-center justify-center">
