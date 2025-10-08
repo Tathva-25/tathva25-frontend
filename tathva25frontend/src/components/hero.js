@@ -1,4 +1,6 @@
 // src/components/Hero.js
+'use client'
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import heroAvatar from '../../public/images/avatar-body.png';
 import wheel from '../../public/images/wheel.png'
@@ -8,46 +10,109 @@ import number from '../../public/images/003.png'
 import localfont from 'next/font/local'
 
 const customFont = localfont({
-  src: '../../public/fonts/neoform.otf', // Next.js treats /public as root /
+  src: '../../public/fonts/neoform.otf',
 })
-export const Hero=()=> {
-  return (
-    <section className={` min-h-screen flex items-center justify-center px-5 py-8 pt-20`}>
-      
 
+export const Hero = () => {
+  const [displayText, setDisplayText] = useState('TATHVA');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  const targetText = 'TATHVA';
+  const characters = 'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ';
+
+  const scrambleText = () => {
+    return targetText
+      .split('')
+      .slice(0, 5)
+      .map(() => characters[Math.floor(Math.random() * characters.length)])
+      .join('');
+  };
+
+  const handleMouseEnter = () => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
+    let iteration = 0;
+    const maxIterations = 60; // Number of scramble iterations
+
+    // Clear any existing intervals/timeouts
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    // Scramble effect
+    intervalRef.current = setInterval(() => {
+      setDisplayText(scrambleText());
+      iteration++;
+
+      if (iteration >= maxIterations) {
+        clearInterval(intervalRef.current);
+        
+        // Gradually reveal correct letters starting from index 0
+        let revealIndex = 0;
+        const revealInterval = setInterval(() => {
+          setDisplayText(() => {
+            let result = '';
+            for (let i = 0; i < targetText.length; i++) {
+              if (i <= revealIndex) {
+                result += targetText[i];
+              } else {
+                result += characters[Math.floor(Math.random() * characters.length)];
+              }
+            }
+            return result;
+          });
+          
+          revealIndex++;
+          if (revealIndex >= targetText.length) {
+            clearInterval(revealInterval);
+            setDisplayText(targetText);
+            setIsAnimating(false);
+          }
+        }, 100);
+      }
+    }, 30);
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  return (
+    <section className={`min-h-screen flex items-center justify-center px-5 py-8 pt-20`}>
       <div className="max-w-7xl mx-auto w-full">
         <div>
           <img 
             src={Background.src}
-            className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden'/>
+            className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden'
+            alt="Background"
+          />
         </div>
         <div>
           <img
             src={number.src}
             alt='003'
-            className=' absolute  ml-28 mt-19'
-        />
+            className='absolute ml-15 mt-19'
+          />
         </div>
     
         <div className="flex flex-col items-center justify-center gap-4">
-          
-          
-
-          
-          {/* Hero Images Container - All elements stacked perfectly */}
-          <div className="relative  w-[90%] max-w-l md:max-w-md lg:max-w-l aspect-square">
-            <div className="w-full scale-240  pb-20 max-w-5xl md:max-w-5xl ">
+          {/* Hero Images Container */}
+          <div className="relative w-[90%] max-w-l md:max-w-md lg:max-w-l aspect-square">
+            <div className="w-full scale-240 pb-20 max-w-5xl md:max-w-5xl text-center">
               <span
-                className={customFont.className}
-                style={{
-                  fontSize:'100px',
-                  
-                  
-                }}>
-                  TATHVA
-
+                className={`${customFont.className} cursor-pointer inline-block select-none transition-all duration-200 whitespace-nowrap text-[100px] ${
+                  isAnimating ? ' tracking-tighter' : ''
+                }`}
+                onMouseEnter={handleMouseEnter}
+              >
+                {displayText}
               </span>
-
             </div>
             
             {/* Wheel - Bottom Layer */}
@@ -68,7 +133,7 @@ export const Hero=()=> {
               />
             </div>
             
-            {/* Eye Icon - Top Layer (centered on avatar's face) */}
+            {/* Eye Icon - Top Layer */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-full h-full">
                 <img
@@ -78,9 +143,7 @@ export const Hero=()=> {
                 />
               </div>
             </div>
-            
           </div>
-          
         </div>
       </div>
     </section>
