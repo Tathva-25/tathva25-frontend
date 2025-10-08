@@ -1,19 +1,25 @@
 // src/components/Hero.js
-'use client'
-import { useState, useEffect, useRef } from 'react';
+
+'use client';
+import { gsap } from 'gsap';
+import { useEffect, useRef, useState } from 'react';
+import { ScrollTrigger } from 'gsap/all';
 import Image from 'next/image';
 import heroAvatar from '../../public/images/avatar-body.png';
 import wheel from '../../public/images/wheel.png'
 import EyeIcon from '../../public/images/eye.svg'
 import Background from '../../public/images/Background.png'
 import number from '../../public/images/003.png'
-import localfont from 'next/font/local'
+import localfont from 'next/font/local';
+import lines from '../../public/images/animation/Lines.svg'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const customFont = localfont({
   src: '../../public/fonts/neoform.otf',
 })
 
-export const Hero = () => {
+export const Hero=()=> {
   const [displayText, setDisplayText] = useState('TATHVA');
   const [isAnimating, setIsAnimating] = useState(false);
   const intervalRef = useRef(null);
@@ -83,9 +89,47 @@ export const Hero = () => {
     };
   }, []);
 
+  //Line Animations
+  const svgRef =useRef([]);
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    // Target all lines or paths inside your SVG
+    const lines = svg.querySelectorAll("line, path");
+
+    // Set initial state
+    gsap.set(lines, {
+      strokeDasharray: 500,
+      strokeDashoffset: 500,
+      scaleX: 0.2,
+      transformOrigin: "center center",
+      opacity: 0.5,
+    });
+
+    // Animate on scroll
+    gsap.to(lines, {
+      strokeDashoffset: 0,
+      scaleX: 1.2,
+      opacity: 1,
+      ease: "power2.out",
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: svg,
+        start: "top 85%",
+        end: "bottom 20%",
+        scrub: true,
+      },
+    });
+  }, []);
+
+  
+
   return (
+
     <section className={`relative min-h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
       <div className="mx-auto w-full">
+        
         <div>
           <img 
             src={Background.src}
@@ -102,7 +146,17 @@ export const Hero = () => {
         </div>
     
         <div className="flex flex-col items-center justify-center gap-4">
-          {/* Hero Images Container */}
+          <div className="absolute inset-0 flex justify-center items-center">
+            <img
+              ref={svgRef}
+              src={lines.src}
+              alt="Animated Lines"
+              className="w-[90vw] h-auto opacity-80"
+            />
+          </div>
+          
+          
+          {/* Hero Images Container - All elements stacked perfectly */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square">
             <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl  text-center ">
               <span
