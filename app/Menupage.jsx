@@ -23,10 +23,10 @@ export default function Menupage() {
 
       <div
         id="bg-text"
-        className="absolute flex gap-80 text-[#00000044] px-4
-         top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%]
-          text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px] 
-          -left-30 sm:-left-40 md:-left-60 lg:-left-100"
+        className="absolute flex gap-20 sm:gap-50 md:gap-60 lg:gap-80 text-[#00000044] px-4
+         top-[15%] sm:top-[12%] md:top-[4%] lg:top-[0%]
+          text-[100px] sm:text-[140px] md:text-[180px] lg:text-[220px] 
+          -left-60 sm:-left-40 md:-left-60 lg:-left-100"
       >
         {/* THIS IS WHERE I USED FRAMER-MOTION..*/
         /* INITIAL => ANIMATION ENTRY
@@ -56,12 +56,12 @@ export default function Menupage() {
           src="ring.png"
           width={400}
           height={400}
-          className="rotate scale-130"
+          className="rotate sm:scale-105 md:scale-110 z-2 lg:scale-130"
           alt="Rotating ring"
         />
       </div>
       <button
-        className="cursor-pointer z-10 bg-amber-500"
+        className="cursor-pointer z-3 bg-amber-500"
         onClick={() => {
           setFadedText(names[Math.floor(Math.random() * names.length)]);
         }}
@@ -70,7 +70,7 @@ export default function Menupage() {
       </button>
 
       <div
-        className={`mt-4 ${alumniSans.className} font-[700] text-9xl absolute bottom-[5%]`}
+        className={`mt-4 ${alumniSans.className} -z-2 font-[700] text-9xl absolute bottom-[5%]`}
       >
         <AnimatePresence mode="wait">
           <motion.div
