@@ -169,33 +169,35 @@ export const Hero=()=> {
               </span>
             </div>
             
-            {/* Wheel - Bottom Layer */}
-            <div className="absolute inset-0 -translate-y-5 flex items-center justify-center">
-              <img
-                ref={wheelRef} 
-                src={wheel.src}
-                alt="wheel"
-                className="w-[25vw] h-[25vw] max-w-none max-h-none object-contain"
-              />
-            </div>
-            
-            {/* Avatar - Middle Layer */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img
-                src={heroAvatar.src}
-                alt="Avatar"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            
-            {/* Eye Icon - Top Layer */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-full h-full">
+            <div className='THIS ONE!!'>
+              {/* Wheel - Bottom Layer */}
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center">
                 <img
-                  src={EyeIcon.src}
-                  alt="eye"
-                  className="absolute left-[53%] top-[40%] -translate-x-1/2 -translate-y-1/2 w-[70%] h-auto object-contain"
+                  ref={wheelRef} 
+                  src={wheel.src}
+                  alt="wheel"
+                  className="w-[25vw] h-[25vw] max-w-none max-h-none object-contain"
                 />
+              </div>
+              
+              {/* Avatar - Middle Layer */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img
+                  src={heroAvatar.src}
+                  alt="Avatar"
+                  className="w-full h-full object-contain"
+                  />
+              </div>
+              
+              {/* Eye Icon - Top Layer */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative w-full h-full">
+                  <img
+                    src={EyeIcon.src}
+                    alt="eye"
+                    className="absolute left-[53%] top-[40%] -translate-x-1/2 -translate-y-1/2 w-[70%] h-auto object-contain"
+                  />
+                </div>
               </div>
             </div>
           </div>
