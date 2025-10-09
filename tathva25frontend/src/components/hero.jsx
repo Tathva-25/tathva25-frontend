@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollTrigger } from 'gsap/all';
 import Image from 'next/image';
 import heroAvatar from '../../public/images/avatar-body.png';
-import wheel from '../../public/images/wheel2.png'
+import wheel from '../../public/images/wheel.svg'
 import EyeIcon from '../../public/images/eye.svg'
 import Background from '../../public/images/Background.png'
 import number from '../../public/images/003.png'
@@ -166,12 +166,12 @@ export const Hero=()=> {
             </div>
             
             {/* Wheel - Bottom Layer */}
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 -translate-y-5 flex items-center justify-center">
               <img
                 ref={wheelRef} 
                 src={wheel.src}
                 alt="wheel"
-                className="w-[20vw] h-[20vw] object-contain"
+                className="w-[25vw] h-[25vw] max-w-none max-h-none object-contain"
               />
             </div>
             
