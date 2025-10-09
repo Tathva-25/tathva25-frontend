@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Alumni_Sans } from "next/font/google";
-import Honeycomb from "./Honeycomb";
+import Image from "next/image";
 
 const alumniSans = Alumni_Sans({
   subsets: ["latin"],
@@ -214,12 +214,26 @@ export default function Menupage() {
       </div>
 
       <div id="wheel1" className="absolute">
-        <img src="ring1.png" className="rotate scale-130" alt="Rotating ring" />
+        <img src="ring5.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div>
+      <div id="wheel1" className="absolute">
+        <img src="ring1.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div>
+      <div id="wheel1" className="absolute">
+        <img src="ring2.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div>
+
+      <div id="wheel1" className="absolute">
+        <img src="ring3.svg" className=" scale-130" alt="Rotating ring" />
+      </div>
+      <div id="wheel1" className="absolute">
+        <img src="ring4.svg" className="rotate scale-130" alt="Rotating ring" />
       </div>
 
       {/* Circle with 12 numbered divs */}
-      <div className="absolute z-20 w-96 h-96 flex items-center justify-center">
-        <div className="relative  rounded-full bg-amber-300 w-full  h-full">
+
+      <div className="absolute rotate-8 z-20 w-96 h-96 flex items-center justify-center">
+        <div className="relative rounded-full w-full  h-full">
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180); // 30 degrees between each item
             const radius = 130; // Distance from center
@@ -231,7 +245,7 @@ export default function Menupage() {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
                 style={{
                   left: `calc(50% + ${x}px - 40px)`,
                   top: `calc(50% + ${y}px - 40px)`,
@@ -263,16 +277,6 @@ export default function Menupage() {
           )}
         </div>
       </div>
-      <button
-        className="cursor-pointer z-10 bg-amber-500"
-        onClick={() => {
-          setFadedText(
-            menuItems[Math.floor(Math.random() * menuItems.length)].name
-          );
-        }}
-      >
-        change
-      </button>
 
       {fadedtext && (
         <div
