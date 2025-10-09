@@ -213,6 +213,7 @@ export default function Menupage() {
           ))}
       </div>
 
+      {/*IMAGES*/}
       <div id="wheel1" className="absolute">
         <img src="ring5.svg" className="rotate scale-130" alt="Rotating ring" />
       </div>
