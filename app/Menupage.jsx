@@ -224,7 +224,7 @@ export default function Menupage() {
 
       {/* Circle with 12 numbered divs */}
       <div className="absolute z-20 w-96 h-96 flex items-center justify-center">
-        <div className="relative  rounded-full bg-blue-950 w-full  h-full">
+        <div className="relative  rounded-full bg-blue-950 [mix-blend-mode:screen] w-full  h-full">
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180); // 30 degrees between each item
             const radius = 145; // Distance from center
@@ -236,7 +236,7 @@ export default function Menupage() {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-16 h-16 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
+                className={`absolute w-16 h-16 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
                 style={{
                   left: `calc(50% + ${x}px - 32px)`,
                   top: `calc(50% + ${y}px - 32px)`,
@@ -256,7 +256,7 @@ export default function Menupage() {
           })}
         </div>
 
-        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden border-4 border-white border-opacity-30">
+        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden">
           {hoveredItem && (
             <img
               ref={centerImageRef}
