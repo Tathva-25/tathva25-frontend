@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollTrigger } from 'gsap/all';
 import Image from 'next/image';
 import heroAvatar from '../../public/images/avatar-body.png';
-import wheel from '../../public/images/wheel.png'
+import wheel from '../../public/images/wheel2.png'
 import EyeIcon from '../../public/images/eye.svg'
 import Background from '../../public/images/Background.png'
 import number from '../../public/images/003.png'
@@ -25,6 +25,8 @@ export const Hero=()=> {
   const [isAnimating, setIsAnimating] = useState(false);
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
+  // 1. Create a ref for the wheel element
+  const wheelRef = useRef(null); 
 
   const targetText = 'TATHVA';
   const characters = 'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ';
@@ -82,13 +84,27 @@ export const Hero=()=> {
     }, 30);
   };
 
-  // Cleanup on unmount
+  // Cleanup on unmount for text animation
   useEffect(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
+
+  // 2. Add useEffect for the spinning wheel animation
+  useEffect(() => {
+    // Ensure the ref is available
+    if (wheelRef.current) {
+      // Use gsap.to for continuous rotation
+      gsap.to(wheelRef.current, {
+        rotation: 360, // Rotate 360 degrees
+        duration: 20, // Spin slowly: 20 seconds for a full rotation
+        ease: 'linear', // Keep the speed constant
+        repeat: -1, // Repeat infinitely
+      });
+    }
+  }, []); // Empty dependency array runs once on mount
 
   //Line Animations
 
@@ -136,9 +152,11 @@ export const Hero=()=> {
             {/* Wheel - Bottom Layer */}
             <div className="absolute inset-0 flex items-center justify-center">
               <img
+                // 3. Attach the ref to the wheel image
+                ref={wheelRef} 
                 src={wheel.src}
                 alt="wheel"
-                className=" w-full h-full   object-contain"
+                className=" w-[20vw] h-[20vw] object-contain"
               />
             </div>
             
