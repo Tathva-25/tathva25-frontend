@@ -9,28 +9,88 @@ const alumniSans = Alumni_Sans({
   variable: "--font-alumni-sans",
 });
 
-const imglinks = [];
-const links = [];
-const names = [
-  "LECTURES",
-  "WORKSHOPS",
-  "ROBOWARS",
-  "COMPETITIONS",
-  "EVENTS",
-  "SPONSORS",
-  "CONTACT",
-  "ABOUT",
-  "TEAM",
-  "GALLERY",
-  "BLOG",
-  "FAQS",
+const menuItems = [
+  {
+    name: "LECTURES",
+    link: "/lectures",
+    img1: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "WORKSHOPS",
+    link: "/workshops",
+    img1: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "ROBOWARS",
+    link: "/robowars",
+    img1: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "COMPETITIONS",
+    link: "/competitions",
+    img1: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "EVENTS",
+    link: "/events",
+    img1: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "SPONSORS",
+    link: "/sponsors",
+    img1: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "CONTACT",
+    link: "/contact",
+    img1: "https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1512428559087-560fa5ceab42?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "ABOUT",
+    link: "/about",
+    img1: "https://images.unsplash.com/photo-1552664688-cf412ec27db2?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "TEAM",
+    link: "/team",
+    img1: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "GALLERY",
+    link: "/gallery",
+    img1: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "BLOG",
+    link: "/blog",
+    img1: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b013?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=150&h=150&fit=crop&crop=center",
+  },
+  {
+    name: "FAQS",
+    link: "/faqs",
+    img1: "https://images.unsplash.com/photo-1603465228952-2bb7322bb0f8?w=100&h=100&fit=crop&crop=center",
+    img2: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=150&h=150&fit=crop&crop=center",
+  },
 ];
 
 export default function Menupage() {
   const [fadedtext, setFadedText] = useState("");
+  const [hoveredItem, setHoveredItem] = useState(null);
   const bgTextRefs = useRef([]);
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
+  const centerImageRef = useRef(null);
 
   useEffect(() => {
     if (fadedtext && bgTextRefs.current.length > 0) {
@@ -71,6 +131,35 @@ export default function Menupage() {
     }
   }, [fadedtext]);
 
+  useEffect(() => {
+    if (centerImageRef.current) {
+      if (hoveredItem) {
+        // Animate new image in from bottom
+        gsap.fromTo(
+          centerImageRef.current,
+          {
+            opacity: 0,
+            y: 50,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+          }
+        );
+      } else {
+        // Animate image out (fade up)
+        gsap.to(centerImageRef.current, {
+          opacity: 0,
+          y: -50,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+      }
+    }
+  }, [hoveredItem]);
+
   const handleCircleItemHover = (index, isHovering) => {
     if (circleItemRefs.current[index]) {
       gsap.to(circleItemRefs.current[index], {
@@ -82,10 +171,16 @@ export default function Menupage() {
 
     // Show the corresponding name in the background when hovering
     if (isHovering) {
-      setFadedText(names[index]);
+      setFadedText(menuItems[index].name);
+      setHoveredItem(menuItems[index]);
     } else {
       setFadedText("");
+      setHoveredItem(null);
     }
+  };
+
+  const handleCircleItemClick = (index) => {
+    console.log(menuItems[index].name);
   };
 
   return (
@@ -138,36 +233,45 @@ export default function Menupage() {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer shadow-lg ${alumniSans.className}`}
+                className={`absolute w-16 h-16 rounded-full flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white`}
                 style={{
-                  left: `calc(50% + ${x}px - 24px)`, // 24px = half of width/height
-                  top: `calc(50% + ${y}px - 24px)`,
+                  left: `calc(50% + ${x}px - 32px)`, // 32px = half of width/height
+                  top: `calc(50% + ${y}px - 32px)`,
                   transform: "translate(0, 0)", // Reset any transforms
                 }}
                 onMouseEnter={() => handleCircleItemHover(i, true)}
                 onMouseLeave={() => handleCircleItemHover(i, false)}
+                onClick={() => handleCircleItemClick(i)}
               >
-                {i + 1}
+                <img
+                  src={menuItems[i].img1}
+                  alt={menuItems[i].name}
+                  className="w-full h-full object-cover"
+                />
               </div>
             );
           })}
         </div>
 
-        {/* Center text display - always visible */}
-        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm">
-          {fadedtext && (
-            <div
-              className={`${alumniSans.className} font-[700] text-white text-center text-sm px-2`}
-            >
-              {fadedtext}
-            </div>
+        {/* Center image display - always visible */}
+        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden border-4 border-white border-opacity-30">
+          {hoveredItem && (
+            <img
+              ref={centerImageRef}
+              src={hoveredItem.img2}
+              alt={hoveredItem.name}
+              className="w-full h-full object-cover"
+              style={{ opacity: 0 }}
+            />
           )}
         </div>
       </div>
       <button
         className="cursor-pointer z-10 bg-amber-500"
         onClick={() => {
-          setFadedText(names[Math.floor(Math.random() * names.length)]);
+          setFadedText(
+            menuItems[Math.floor(Math.random() * menuItems.length)].name
+          );
         }}
       >
         change
