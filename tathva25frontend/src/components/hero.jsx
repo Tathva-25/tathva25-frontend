@@ -159,7 +159,7 @@ export const Hero=()=> {
           
           {/* Hero Images Container - All elements stacked perfectly */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square">
-            <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl text-center">
+            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center">
               <span
                 className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
                   isAnimating ? 'tracking-tighter' : ''
