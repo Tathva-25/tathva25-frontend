@@ -138,7 +138,7 @@ export const Hero=()=> {
               <img
                 src={wheel.src}
                 alt="wheel"
-                className=" w-full h-full   object-contain"
+                className=" w-full h-full    object-contain"
               />
             </div>
             
