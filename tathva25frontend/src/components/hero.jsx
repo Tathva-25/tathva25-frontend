@@ -25,8 +25,9 @@ export const Hero=()=> {
   const [isAnimating, setIsAnimating] = useState(false);
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
-  // 1. Create a ref for the wheel element
-  const wheelRef = useRef(null); 
+  const wheelRef = useRef(null);
+  const sectionRef = useRef(null);
+  const hasAnimatedRef = useRef(false);
 
   const targetText = 'TATHVA';
   const characters = 'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ';
@@ -39,18 +40,17 @@ export const Hero=()=> {
       .join('');
   };
 
-  const handleMouseEnter = () => {
-    if (isAnimating) return;
+  const triggerGlitchEffect = () => {
+    if (isAnimating || hasAnimatedRef.current) return;
     
     setIsAnimating(true);
+    hasAnimatedRef.current = true;
     let iteration = 0;
-    const maxIterations = 60; // Number of scramble iterations
+    const maxIterations = 60;
 
-    // Clear any existing intervals/timeouts
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    // Scramble effect
     intervalRef.current = setInterval(() => {
       setDisplayText(scrambleText());
       iteration++;
@@ -58,7 +58,6 @@ export const Hero=()=> {
       if (iteration >= maxIterations) {
         clearInterval(intervalRef.current);
         
-        // Gradually reveal correct letters starting from index 0
         let revealIndex = 0;
         const revealInterval = setInterval(() => {
           setDisplayText(() => {
@@ -84,6 +83,30 @@ export const Hero=()=> {
     }, 30);
   };
 
+  // Intersection Observer for scroll into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimatedRef.current) {
+            triggerGlitchEffect();
+          }
+        });
+      },
+      { threshold: 0.1 } // Trigger when 10% of the section is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   // Cleanup on unmount for text animation
   useEffect(() => {
     return () => {
@@ -92,27 +115,21 @@ export const Hero=()=> {
     };
   }, []);
 
-  // 2. Add useEffect for the spinning wheel animation
+  // Spinning wheel animation
   useEffect(() => {
-    // Ensure the ref is available
     if (wheelRef.current) {
-      // Use gsap.to for continuous rotation
       gsap.to(wheelRef.current, {
-        rotation: 360, // Rotate 360 degrees
-        duration: 20, // Spin slowly: 20 seconds for a full rotation
-        ease: 'linear', // Keep the speed constant
-        repeat: -1, // Repeat infinitely
+        rotation: 360,
+        duration: 20,
+        ease: 'linear',
+        repeat: -1,
       });
     }
-  }, []); // Empty dependency array runs once on mount
-
-  //Line Animations
-
-  
+  }, []);
 
   return (
 
-    <section className={`relative min-h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
+    <section ref={sectionRef} className={`relative min-h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
       <div className="mx-auto w-full">
         
         <div>
@@ -138,12 +155,11 @@ export const Hero=()=> {
           
           {/* Hero Images Container - All elements stacked perfectly */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square">
-            <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl  text-center ">
+            <div className="w-full scale-240 pb-20 max-w-[90vw] md:max-w-5xl text-center">
               <span
-                className={`${customFont.className} cursor-pointer inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
-                  isAnimating ? ' tracking-tighter' : ''
+                className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
+                  isAnimating ? 'tracking-tighter' : ''
                 }`}
-                onMouseEnter={handleMouseEnter}
               >
                 {displayText}
               </span>
@@ -152,11 +168,10 @@ export const Hero=()=> {
             {/* Wheel - Bottom Layer */}
             <div className="absolute inset-0 flex items-center justify-center">
               <img
-                // 3. Attach the ref to the wheel image
                 ref={wheelRef} 
                 src={wheel.src}
                 alt="wheel"
-                className=" w-[20vw] h-[20vw] object-contain"
+                className="w-[20vw] h-[20vw] object-contain"
               />
             </div>
             
