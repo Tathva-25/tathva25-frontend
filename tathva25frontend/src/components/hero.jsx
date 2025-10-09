@@ -13,6 +13,8 @@ import number from '../../public/images/003.png'
 import localfont from 'next/font/local';
 import lines from '../../public/images/animation/Lines.svg'
 import Lines from './lines';
+import Particles from './particles';
+import DustParticleAnimation from './particles';
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -150,6 +152,8 @@ export const Hero=()=> {
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="absolute inset-0 flex justify-center items-center">
             <Lines />
+            
+            
           </div>
           
           
