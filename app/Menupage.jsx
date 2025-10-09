@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Alumni_Sans } from "next/font/google";
-import Honeycomb from "./Honeycomb";
+import Image from "next/image";
 
 const alumniSans = Alumni_Sans({
   subsets: ["latin"],
@@ -239,12 +239,26 @@ export default function Menupage() {
       </div>
 
       <div id="wheel1" className="absolute">
-        <img src="ring1.png" className="rotate scale-130" alt="Rotating ring" />
+        <img src="ring5.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div>
+      <div id="wheel1" className="absolute">
+        <img src="ring1.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div>
+      <div id="wheel1" className="absolute">
+        <img src="ring2.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div>
+
+      <div id="wheel1" className="absolute">
+        <img src="ring3.svg" className=" scale-130" alt="Rotating ring" />
+      </div>
+      <div id="wheel1" className="absolute">
+        <img src="ring4.svg" className="rotate scale-130" alt="Rotating ring" />
       </div>
 
       {/* Circle with 12 numbered divs */}
-      <div className="absolute z-20 w-96 h-96 flex items-center justify-center">
-        <div className="relative  rounded-full  w-full  h-full">
+
+      <div className="absolute rotate-8 z-20 w-96 h-96 flex items-center justify-center">
+        <div className="relative rounded-full w-full  h-full">
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180); // 30 degrees between each item
             const radius = 120; // Distance from center
@@ -289,7 +303,7 @@ export default function Menupage() {
         </div>
       </div>
       <button
-        className="cursor-pointer z-10"
+        className="cursor-pointer z-10 bg-amber-500"
         onClick={() => {
           setFadedText(
             menuItems[Math.floor(Math.random() * menuItems.length)].name
