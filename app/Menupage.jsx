@@ -84,6 +84,9 @@ const menuItems = [
   },
 ];
 
+let length = menuItems.length;
+let cutangle = 360 / length;
+
 export default function Menupage() {
   const [fadedtext, setFadedText] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -196,7 +199,6 @@ export default function Menupage() {
           text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px] 
           -left-30 sm:-left-40 md:-left-60 lg:-left-100"
       >
-        {/* Background text animated with GSAP */}
         {fadedtext &&
           Array.from({ length: 6 }).map((_, i) => (
             <span
@@ -222,22 +224,23 @@ export default function Menupage() {
 
       {/* Circle with 12 numbered divs */}
       <div className="absolute z-20 w-96 h-96 flex items-center justify-center">
-        <div className="relative w-full h-full">
-          {Array.from({ length: 12 }, (_, i) => {
-            const angle = i * 30 * (Math.PI / 180); // 30 degrees between each item
-            const radius = 150; // Distance from center
+        <div className="relative  rounded-full bg-blue-950 w-full  h-full">
+          {Array.from({ length }, (_, i) => {
+            const angle = i * cutangle * (Math.PI / 180); // 30 degrees between each item
+            const radius = 145; // Distance from center
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
+            const rotationAngle = i * cutangle + 90; // Rotate each trapezium to point toward center
 
             return (
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-16 h-16 rounded-full flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white`}
+                className={`absolute w-16 h-16 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
                 style={{
-                  left: `calc(50% + ${x}px - 32px)`, // 32px = half of width/height
+                  left: `calc(50% + ${x}px - 32px)`,
                   top: `calc(50% + ${y}px - 32px)`,
-                  transform: "translate(0, 0)", // Reset any transforms
+                  transform: `rotate(${rotationAngle}deg)`,
                 }}
                 onMouseEnter={() => handleCircleItemHover(i, true)}
                 onMouseLeave={() => handleCircleItemHover(i, false)}
@@ -253,7 +256,6 @@ export default function Menupage() {
           })}
         </div>
 
-        {/* Center image display - always visible */}
         <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden border-4 border-white border-opacity-30">
           {hoveredItem && (
             <img
@@ -289,3 +291,6 @@ export default function Menupage() {
     </div>
   );
 }
+
+// clip-path for trapezium
+// useEffect for GSAP
