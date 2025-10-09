@@ -74,13 +74,13 @@ const menuItems = [
   {
     name: "BLOG",
     link: "/blog",
-    img1: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b013?w=100&h=100&fit=crop&crop=center",
+    img1: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop&crop=center",
     img2: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=150&h=150&fit=crop&crop=center",
   },
   {
     name: "FAQS",
     link: "/faqs",
-    img1: "https://images.unsplash.com/photo-1603465228952-2bb7322bb0f8?w=100&h=100&fit=crop&crop=center",
+    img1: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop&crop=center",
     img2: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=150&h=150&fit=crop&crop=center",
   },
 ];
@@ -95,12 +95,13 @@ export default function Menupage() {
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
   const centerImageRef = useRef(null);
+  const scrollingTextRef = useRef(null);
 
   useEffect(() => {
-    if (fadedtext && bgTextRefs.current.length > 0) {
-      // Animate background text spans
+    if (fadedtext && scrollingTextRef.current) {
+      // Animate background text container fade in
       gsap.fromTo(
-        bgTextRefs.current,
+        "#bg-text",
         {
           opacity: 0,
           y: 100,
@@ -109,10 +110,18 @@ export default function Menupage() {
           opacity: 1,
           y: 0,
           duration: 0.5,
-          stagger: 0.05,
           ease: "power2.out",
         }
       );
+
+      // Start the continuous scrolling animation (left to right)
+      gsap.set(scrollingTextRef.current, { x: "-50%" });
+      gsap.to(scrollingTextRef.current, {
+        x: "0%",
+        duration: 15,
+        ease: "none",
+        repeat: -1,
+      });
     }
   }, [fadedtext]);
 
@@ -195,41 +204,48 @@ export default function Menupage() {
 
       <div
         id="bg-text"
-        className="absolute flex gap-80 text-[#00000044] px-4
+        className="absolute text-[#00000044] overflow-hidden whitespace-nowrap
          top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%]
           text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px] 
-          -left-30 sm:-left-40 md:-left-60 lg:-left-100"
+          w-full"
       >
-        {fadedtext &&
-          Array.from({ length: 6 }).map((_, i) => (
-            <span
-              key={`${fadedtext}-${i}`}
-              ref={(el) => (bgTextRefs.current[i] = el)}
-              className={`${alumniSans.className} font-[700]`}
-              style={{ opacity: 0 }}
-            >
-              {fadedtext}
-            </span>
-          ))}
+        {fadedtext && (
+          <div
+            ref={scrollingTextRef}
+            className="flex gap-80"
+            style={{ width: "200%" }}
+          >
+            {Array.from({ length: 24 }).map((_, i) => (
+              <span
+                key={`${fadedtext}-${i}`}
+                ref={(el) => (bgTextRefs.current[i] = el)}
+                className={`${alumniSans.className} font-[700] flex-shrink-0`}
+                style={{ opacity: 1 }}
+              >
+                {fadedtext}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/*IMAGES*/}
-      <div id="wheel1" className="absolute">
+      {/* <div id="wheel1" className="absolute">
         <img src="ring5.svg" className="rotate scale-130" alt="Rotating ring" />
+      </div> */}
+      <div id="wheel1" className="absolute">
+        <img src="ring1.svg" className="rotate scale-118" alt="Rotating ring" />
       </div>
       <div id="wheel1" className="absolute">
-        <img src="ring1.svg" className="rotate scale-130" alt="Rotating ring" />
-      </div>
-      <div id="wheel1" className="absolute">
-        <img src="ring2.svg" className="rotate scale-130" alt="Rotating ring" />
+        <img src="ring2.svg" className="scale-130" alt="Rotating ring" />
       </div>
 
       <div id="wheel1" className="absolute">
         <img src="ring3.svg" className=" scale-130" alt="Rotating ring" />
       </div>
-      <div id="wheel1" className="absolute">
+      {/* <div id="wheel1" className="absolute">
         <img src="ring4.svg" className="rotate scale-130" alt="Rotating ring" />
-      </div>
+      </div> */}
 
       {/* Circle with 12 numbered divs */}
 
@@ -266,7 +282,7 @@ export default function Menupage() {
           })}
         </div>
 
-        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden border-4 border-white border-opacity-30">
+        <div className="absolute z-30 flex items-center justify-center w-56 h-56 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden">
           {hoveredItem && (
             <img
               ref={centerImageRef}

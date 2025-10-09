@@ -13,6 +13,19 @@
   }
 }
 
+.animate-scroll-left {
+  animation: scroll-left 15s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
 .honeycomb {
   width: 7.4213457107543945;
   height: 7.4213457107543945;
