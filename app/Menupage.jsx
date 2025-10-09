@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Alumni_Sans } from "next/font/google";
+import Honeycomb from "./Honeycomb";
 
 const alumniSans = Alumni_Sans({
   subsets: ["latin"],
@@ -212,22 +213,16 @@ export default function Menupage() {
           ))}
       </div>
 
-      <div id="wheel" className="absolute">
-        <img
-          src="ring.png"
-          width={400}
-          height={400}
-          className="rotate scale-130"
-          alt="Rotating ring"
-        />
+      <div id="wheel1" className="absolute">
+        <img src="ring1.png" className="rotate scale-130" alt="Rotating ring" />
       </div>
 
       {/* Circle with 12 numbered divs */}
       <div className="absolute z-20 w-96 h-96 flex items-center justify-center">
-        <div className="relative  rounded-full bg-blue-950 w-full  h-full">
+        <div className="relative  rounded-full bg-amber-300 w-full  h-full">
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180); // 30 degrees between each item
-            const radius = 145; // Distance from center
+            const radius = 130; // Distance from center
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
             const rotationAngle = i * cutangle + 90; // Rotate each trapezium to point toward center
@@ -236,10 +231,10 @@ export default function Menupage() {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-16 h-16 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
                 style={{
-                  left: `calc(50% + ${x}px - 32px)`,
-                  top: `calc(50% + ${y}px - 32px)`,
+                  left: `calc(50% + ${x}px - 40px)`,
+                  top: `calc(50% + ${y}px - 40px)`,
                   transform: `rotate(${rotationAngle}deg)`,
                 }}
                 onMouseEnter={() => handleCircleItemHover(i, true)}

@@ -12,3 +12,13 @@
     transform: rotate(360deg);
   }
 }
+
+.honeycomb {
+  width: 7.4213457107543945;
+  height: 7.4213457107543945;
+  top: 371.41px;
+  left: 637.77px;
+  background: #4a4a4a;
+  opacity: 1;
+  box-shadow: 0px 1.88px 2.35px 0px #00000040 inset;
+}
