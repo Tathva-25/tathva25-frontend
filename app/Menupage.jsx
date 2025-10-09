@@ -74,13 +74,13 @@ const menuItems = [
   {
     name: "BLOG",
     link: "/blog",
-    img1: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b013?w=100&h=100&fit=crop&crop=center",
+    img1: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop&crop=center",
     img2: "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=150&h=150&fit=crop&crop=center",
   },
   {
     name: "FAQS",
     link: "/faqs",
-    img1: "https://images.unsplash.com/photo-1603465228952-2bb7322bb0f8?w=100&h=100&fit=crop&crop=center",
+    img1: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=100&h=100&fit=crop&crop=center",
     img2: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=150&h=150&fit=crop&crop=center",
   },
 ];
@@ -98,7 +98,13 @@ export default function Menupage() {
 
   useEffect(() => {
     if (fadedtext && bgTextRefs.current.length > 0) {
-      // Animate background text spans
+      // Kill any existing animations on the background text
+      gsap.killTweensOf(bgTextRefs.current);
+
+      // Reset position
+      gsap.set(bgTextRefs.current, { x: 0 });
+
+      // Animate background text spans - entrance animation
       gsap.fromTo(
         bgTextRefs.current,
         {
@@ -113,6 +119,25 @@ export default function Menupage() {
           ease: "power2.out",
         }
       );
+
+      // Create smooth infinite scroll animation
+      const tl = gsap.timeline({ repeat: -1 });
+
+      // Set initial position far left
+      gsap.set(bgTextRefs.current, { x: "-200%" });
+
+      // Animate from left to right smoothly
+      tl.to(bgTextRefs.current, {
+        x: "200%",
+        duration: 10,
+        ease: "none",
+      });
+
+      // Immediately jump back to start position (invisible due to being off-screen)
+      tl.set(bgTextRefs.current, { x: "-200%" });
+    } else if (bgTextRefs.current.length > 0) {
+      // Kill animations when text disappears
+      gsap.killTweensOf(bgTextRefs.current);
     }
   }, [fadedtext]);
 
@@ -198,7 +223,7 @@ export default function Menupage() {
         className="absolute flex gap-80 text-[#00000044] px-4
          top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%]
           text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px] 
-          -left-30 sm:-left-40 md:-left-60 lg:-left-100"
+          -left-[200%] whitespace-nowrap"
       >
         {fadedtext &&
           Array.from({ length: 6 }).map((_, i) => (
@@ -219,10 +244,10 @@ export default function Menupage() {
 
       {/* Circle with 12 numbered divs */}
       <div className="absolute z-20 w-96 h-96 flex items-center justify-center">
-        <div className="relative  rounded-full bg-amber-300 w-full  h-full">
+        <div className="relative  rounded-full  w-full  h-full">
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180); // 30 degrees between each item
-            const radius = 130; // Distance from center
+            const radius = 120; // Distance from center
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
             const rotationAngle = i * cutangle + 90; // Rotate each trapezium to point toward center
@@ -231,7 +256,7 @@ export default function Menupage() {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden border-2 border-white [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]`}
                 style={{
                   left: `calc(50% + ${x}px - 40px)`,
                   top: `calc(50% + ${y}px - 40px)`,
@@ -251,7 +276,7 @@ export default function Menupage() {
           })}
         </div>
 
-        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden border-4 border-white border-opacity-30">
+        <div className="absolute z-30 flex items-center justify-center w-48 h-48 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden">
           {hoveredItem && (
             <img
               ref={centerImageRef}
@@ -264,7 +289,7 @@ export default function Menupage() {
         </div>
       </div>
       <button
-        className="cursor-pointer z-10 bg-amber-500"
+        className="cursor-pointer z-10"
         onClick={() => {
           setFadedText(
             menuItems[Math.floor(Math.random() * menuItems.length)].name
