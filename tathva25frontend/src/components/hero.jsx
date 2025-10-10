@@ -128,7 +128,7 @@ export const Hero=()=> {
 
   return (
 
-    <section ref={sectionRef} className={`relative min-h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
+    <section ref={sectionRef} className={`relative h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
       <div className="mx-auto w-full">
         
         <div>
@@ -140,18 +140,31 @@ export const Hero=()=> {
         </div>
 
     
-        <div className="flex flex-col items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-between h-full gap-4">
           <div className="absolute inset-0 flex justify-center items-center">
             <Lines />
           </div>
 
-          <div className="absolute inset-0 flex justify-center items-center">
-            <Ripple />
+          
+          
+          {/* TATHVA Text - Centered */}
+          <div className="flex-1 flex items-center justify-center w-full">
+            <div className="w-full max-w-[90vw] md:max-w-5xl text-center">
+              <span
+                className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
+                  isAnimating ? 'tracking-tighter' : ''
+                }`}
+              >
+                {displayText}
+              </span>
+            </div>
           </div>
           
-          
-          {/* Hero Images Container - All elements stacked perfectly */}
-          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square">
+          {/* Hero Images Container - Positioned at bottom */}
+          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square mb-0 mt-10">
+            <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+              <Ripple />
+            </div>
             <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center">
               <span
                 className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
@@ -164,7 +177,7 @@ export const Hero=()=> {
             
             <div className='THIS ONE!!'>
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center">
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center ">
                 <Image
                   ref={wheelRef} 
                   src={wheel.src}
