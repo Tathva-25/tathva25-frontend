@@ -159,6 +159,14 @@ export const Hero=()=> {
               </span>
             </div>
           </div>
+          <div 
+                className="absolute  pointer-events-none"
+                style={{
+                  background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(255, 255, 255, 0.5) 80%, white 100%)',
+                  backdropFilter: 'blur(2px)',
+                  WebkitBackdropFilter: 'blur(2px)'
+                }}
+              />
           
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square mb-0 mt-10">
@@ -209,6 +217,9 @@ export const Hero=()=> {
                   />
                 </div>
               </div>
+              
+              {/* Blur Gradient Overlay - Top Layer */}
+              
             </div>
           </div>
         </div>
