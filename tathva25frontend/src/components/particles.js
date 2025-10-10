@@ -3,13 +3,13 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 // --- CONFIGURATION CONSTANTS ---
 // This is the variable you would change to adjust the radius of the initial ring.
 // It determines the starting distance (in pixels) of the particles from the center.
-const INITIAL_RING_RADIUS = 60; // Start particles 60px from the center.
+const INITIAL_RING_RADIUS = 150; // Start particles 60px from the center.
 
 // Other configuration settings:
 const NUM_PARTICLES_PER_RIPPLE = 60;
-const RIPPLE_SPEED = 1.8; // How fast particles move outwards (pixels per frame)
-const MAX_DISTANCE = 350; // Distance at which particles fade out and are removed
-const RIPPLE_INTERVAL_MS = 1500; // Time delay between spawning new ripples
+const RIPPLE_SPEED = 1; // How fast particles move outwards (pixels per frame)
+const MAX_DISTANCE = 500; // Distance at which particles fade out and are removed
+const RIPPLE_INTERVAL_MS = 700; // Time delay between spawning new ripples
 
 /**
  * Generates a new set of particles positioned in a perfect circle (a ring).
@@ -94,9 +94,9 @@ const Ripple = () => {
                             key={p.id}
                             className="absolute rounded-full shadow-lg"
                             style={{
-                                width: '3px',
-                                height: '3px',
-                                backgroundColor: 'rgba(56, 189, 248, 1)', // Tailwind sky-400 equivalent
+                                width: '5px',
+                                height: '5px',
+                                backgroundColor: 'rgba(0, 0, 0, 1)', // Tailwind sky-400 equivalent
                                 opacity: opacity > 0 ? opacity : 0,
                                 // Center the particle, then translate it by (x, y)
                                 transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
