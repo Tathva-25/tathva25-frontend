@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 const INITIAL_RING_RADIUS = 150; // Start particles 60px from the center.
 
 // Other configuration settings:
-const NUM_PARTICLES_PER_RIPPLE = 60;
+const NUM_PARTICLES_PER_RIPPLE = 40;
 const RIPPLE_SPEED = 1; // How fast particles move outwards (pixels per frame)
 const MAX_DISTANCE = 500; // Distance at which particles fade out and are removed
 const RIPPLE_INTERVAL_MS = 700; // Time delay between spawning new ripples

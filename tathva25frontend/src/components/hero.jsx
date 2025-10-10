@@ -9,12 +9,8 @@ import heroAvatar from '../../public/images/avatar-body.png';
 import wheel from '../../public/images/wheel.svg'
 import EyeIcon from '../../public/images/eye.svg'
 import Background from '../../public/images/Background.png'
-import number from '../../public/images/003.png'
 import localfont from 'next/font/local';
-import lines from '../../public/images/animation/Lines.svg'
 import Lines from './lines';
-import Particles from './particles';
-import DustParticleAnimation from './particles';
 import Ripple from './particles';
 
 gsap.registerPlugin(ScrollTrigger)
@@ -142,13 +138,7 @@ export const Hero=()=> {
             alt="Background"
           />
         </div>
-        <div>
-          <img
-            src={number.src}
-            alt='003'
-            className='absolute md:ml-35 md:mt-19'
-          />
-        </div>
+
     
         <div className="flex flex-col items-center justify-center gap-4">
           <div className="absolute inset-0 flex justify-center items-center">
@@ -175,29 +165,33 @@ export const Hero=()=> {
             <div className='THIS ONE!!'>
               {/* Wheel - Bottom Layer */}
               <div className="absolute inset-0 -translate-y-5 flex items-center justify-center">
-                <img
+                <Image
                   ref={wheelRef} 
                   src={wheel.src}
                   alt="wheel"
+                  fill 
                   className="w-[25vw] h-[25vw] max-w-none max-h-none object-contain"
                 />
               </div>
               
               {/* Avatar - Middle Layer */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <img
+                <Image
                   src={heroAvatar.src}
                   alt="Avatar"
                   className="w-full h-full object-contain"
+                  fill
                   />
               </div>
               
               {/* Eye Icon - Top Layer */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  <img
+                  <Image
                     src={EyeIcon.src}
                     alt="eye"
+                    width={100}
+                    height={100}
                     className="absolute left-[53%] top-[40%] -translate-x-1/2 -translate-y-1/2 w-[70%] h-auto object-contain"
                   />
                 </div>
