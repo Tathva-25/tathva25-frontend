@@ -12,17 +12,32 @@ const customFont = localfont({
 
 const GamePage = () => {
   return (
-    <div className="bg-white flex flex-col sm:flex-row relative overflow-hidden">
+    <div className="bg-white flex flex-col sm:flex-row relative overflow-hidden min-h-screen max-h-screen">
       {/* <Sidebar /> */}
         {/* Background NEXUS text with hexagons */}
-        <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-center items-center overflow-hidden">
-          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`} style={{fontSize: '20rem', lineHeight: '0.9'}}>
+        <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-center items-center overflow-hidden text-[8rem] leading-[0.9] sm:text-[20rem] sm:leading-[0.9]">
+          <div className={`${customFont.className} text-black font-bold whitespace-nowrap `}>
             NEXUS
           </div>
-          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`} style={{fontSize: '20rem', lineHeight: '0.9'}}>
+          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`}>
             NEXUS
           </div>
-          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`} style={{fontSize: '20rem', lineHeight: '0.9'}}>
+          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`}>
+            NEXUS
+          </div>
+          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
+            NEXUS
+          </div>
+          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
+            NEXUS
+          </div>
+          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
+            NEXUS
+          </div>
+          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
+            NEXUS
+          </div>
+          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
             NEXUS
           </div>
         </div>
