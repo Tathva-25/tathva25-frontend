@@ -3,6 +3,8 @@ import localfont from "next/font/local"
 import gaming_hero from "../../../public/images/gaming/gaming_hero_w_text.png"
 import text_box_1 from "../../../public/images/gaming/text_box_1.png"
 import text_box_2 from "../../../public/images/gaming/text_box_2.png"
+import Navbar from "@/components/navbar"
+import Sidebar from "@/components/sidebar"
 
 const customFont = localfont({
     src: '../../../public/fonts/neoform.otf',
@@ -11,6 +13,7 @@ const customFont = localfont({
 const GamePage = () => {
   return (
     <div className="bg-white flex flex-col sm:flex-row relative overflow-hidden">
+      <Sidebar />
         {/* Background NEXUS text with hexagons */}
         <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-center items-center overflow-hidden">
           <div className={`${customFont.className} text-black font-bold whitespace-nowrap`} style={{fontSize: '20rem', lineHeight: '0.9'}}>
@@ -85,7 +88,7 @@ const GamePage = () => {
               <div className="relative flex items-center justify-center gap-3">
                 <Image
                   src={text_box_2}
-                  
+
                   // width={300}
                 />
                 <p className="absolute">LEARN MORE</p>

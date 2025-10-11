@@ -174,7 +174,7 @@ export default function Sidebar() {
             </aside>
 
             {/* Demo sections - Remove these in production */}
-            <div className="ml-12">
+            {/* <div className="ml-12">
                 {items.map((item) => (
                     <section
                         key={item.num}
@@ -199,7 +199,7 @@ export default function Sidebar() {
                         <p className="text-xl text-gray-600">Section Footer</p>
                     </div>
                 </section>
-            </div>
+            </div> */}
         </>
     );
 }
