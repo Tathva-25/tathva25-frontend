@@ -13,7 +13,7 @@ const customFont = localfont({
 const GamePage = () => {
   return (
     <div className="bg-white flex flex-col sm:flex-row relative overflow-hidden">
-      <Sidebar />
+      {/* <Sidebar /> */}
         {/* Background NEXUS text with hexagons */}
         <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-center items-center overflow-hidden">
           <div className={`${customFont.className} text-black font-bold whitespace-nowrap`} style={{fontSize: '20rem', lineHeight: '0.9'}}>
