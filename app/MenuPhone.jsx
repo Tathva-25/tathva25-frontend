@@ -87,6 +87,27 @@ export default function MenuPhone({ menuItems }) {
         force3D: true,
       });
     }
+
+    // Set initial scaling for the first item (index 0)
+    setTimeout(() => {
+      circleItemRefs.current.forEach((itemRef, index) => {
+        if (itemRef) {
+          if (index === 0) {
+            // Scale up the initial selected item
+            gsap.set(itemRef, {
+              scale: 1.3,
+              transformOrigin: "center center",
+            });
+          } else {
+            // Ensure other items are at normal scale
+            gsap.set(itemRef, {
+              scale: 1.0,
+              transformOrigin: "center center",
+            });
+          }
+        }
+      });
+    }, 100); // Small delay to ensure refs are ready
   }, []); // Empty dependency array - only run on mount
 
   // Touch gesture handling for mobile
@@ -173,17 +194,15 @@ export default function MenuPhone({ menuItems }) {
       // Calculate which item should be selected based on current angle
       const potentialIndex = calculateSelectedIndex(currentRotation);
 
-      // Update visual feedback during drag but don't change selectedIndex until touch end
-      // This prevents state conflicts
-      if (
-        potentialIndex !== selectedIndex &&
-        potentialIndex >= 0 &&
-        potentialIndex < length
-      ) {
-        setFadedText(menuItems[potentialIndex].name);
-        setHoveredItem(menuItems[potentialIndex]);
+      // Update visual feedback during drag
+      if (potentialIndex >= 0 && potentialIndex < length) {
+        // Only update text and hover state if it's actually different
+        if (potentialIndex !== selectedIndex) {
+          setFadedText(menuItems[potentialIndex].name);
+          setHoveredItem(menuItems[potentialIndex]);
+        }
 
-        // Trigger scaling animation immediately when potential selection changes
+        // Always trigger scaling animation to ensure correct state
         circleItemRefs.current.forEach((itemRef, index) => {
           if (itemRef) {
             if (index === potentialIndex) {
