@@ -14,6 +14,7 @@ export default function MenuPhone({ menuItems }) {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0); // For mobile selection
   const [circleRotation, setCircleRotation] = useState(0); // Current rotation angle
+  const [isAnimating, setIsAnimating] = useState(false); // Prevent multiple animations
   const bgTextRefs = useRef([]);
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
@@ -25,19 +26,49 @@ export default function MenuPhone({ menuItems }) {
   let length = menuItems.length;
   let cutangle = 360 / length;
 
-  // Initialize mobile selection and set initial rotation
+  // Function to normalize angle to 0-360 range
+  const normalizeAngle = (angle) => {
+    angle = angle % 360;
+    return angle < 0 ? angle + 360 : angle;
+  };
+
+  // Function to calculate which item should be selected based on current angle
+  const calculateSelectedIndex = (currentRotation) => {
+    // Normalize the rotation angle (add 90 to align with top position)
+    let normalizedAngle = normalizeAngle(currentRotation + 90);
+
+    // Calculate which segment this angle falls into
+    const segmentIndex = normalizedAngle / cutangle;
+
+    // Round to nearest integer and ensure it's within bounds
+    let newIndex = Math.round(segmentIndex) % length;
+    if (newIndex < 0) newIndex += length;
+
+    // Since items are positioned clockwise but we want counter-clockwise selection
+    newIndex = (length - newIndex) % length;
+
+    return newIndex;
+  };
+
+  // Function to get the target rotation for a specific index
+  const getTargetRotation = (index) => {
+    return -90 - index * cutangle;
+  };
+
+  // Initialize mobile selection and set initial rotation (only on component mount)
   useEffect(() => {
-    setFadedText(menuItems[selectedIndex].name);
-    setHoveredItem(menuItems[selectedIndex]);
+    setFadedText(menuItems[0].name);
+    setHoveredItem(menuItems[0]);
 
     // Set initial rotation to position first item at top
-    // Since items start at 0 degrees (right side), we need -90 degrees to move first item to top
-    const initialRotation = -90 - selectedIndex * cutangle;
+    const initialRotation = getTargetRotation(0);
     setCircleRotation(initialRotation);
 
     if (circleContainerRef.current) {
       gsap.set(circleContainerRef.current, {
         rotation: initialRotation,
+        transformOrigin: "center center",
+        force3D: true,
       });
     }
 
@@ -45,14 +76,18 @@ export default function MenuPhone({ menuItems }) {
     if (ring2Ref.current) {
       gsap.set(ring2Ref.current, {
         rotation: initialRotation,
+        transformOrigin: "center center",
+        force3D: true,
       });
     }
     if (ring3Ref.current) {
       gsap.set(ring3Ref.current, {
-        rotation: initialRotation,
+        rotation: initialRotation, // Start in sync with the button ring
+        transformOrigin: "center center",
+        force3D: true,
       });
     }
-  }, [selectedIndex]);
+  }, []); // Empty dependency array - only run on mount
 
   // Touch gesture handling for mobile
   useEffect(() => {
@@ -63,15 +98,29 @@ export default function MenuPhone({ menuItems }) {
     let isDragging = false;
     let startTime = 0;
     let initialRotation = circleRotation;
+    let currentRotation = circleRotation;
 
     const handleTouchStart = (e) => {
+      // Always allow touch start to interrupt animations
       startX = e.touches[0].clientX;
       currentX = startX;
       isDragging = true;
       startTime = Date.now();
-      initialRotation = circleRotation;
 
-      // Stop any ongoing animations
+      // Get the actual current rotation from GSAP instead of stored state
+      // This prevents glitches when starting from mid-animation positions
+      const actualRotation = circleContainerRef.current
+        ? gsap.getProperty(circleContainerRef.current, "rotation")
+        : circleRotation;
+
+      initialRotation = actualRotation;
+      currentRotation = actualRotation;
+
+      // Update our state to match the actual visual position
+      setCircleRotation(actualRotation);
+
+      // Stop any ongoing animations and reset animation state
+      setIsAnimating(false);
       if (circleContainerRef.current) {
         gsap.killTweensOf(circleContainerRef.current);
       }
@@ -90,25 +139,49 @@ export default function MenuPhone({ menuItems }) {
       currentX = e.touches[0].clientX;
       const deltaX = currentX - startX;
 
-      // Convert horizontal movement to rotation (more sensitive)
-      const rotationDelta = (deltaX / window.innerWidth) * 180;
-      const newRotation = initialRotation + rotationDelta;
+      // Convert horizontal movement to rotation with better sensitivity
+      // Use a more responsive calculation based on screen width
+      const sensitivity = Math.min(200, window.innerWidth * 0.5);
+      const rotationDelta = (deltaX / window.innerWidth) * sensitivity;
+      currentRotation = initialRotation + rotationDelta;
 
-      // Apply real-time rotation during drag
-      if (circleContainerRef.current) {
-        gsap.set(circleContainerRef.current, {
-          rotation: newRotation,
-        });
-      }
-      if (ring2Ref.current) {
-        gsap.set(ring2Ref.current, {
-          rotation: newRotation,
-        });
-      }
-      if (ring3Ref.current) {
-        gsap.set(ring3Ref.current, {
-          rotation: newRotation,
-        });
+      // Apply real-time rotation during drag with smooth updates
+      requestAnimationFrame(() => {
+        if (circleContainerRef.current) {
+          gsap.set(circleContainerRef.current, {
+            rotation: currentRotation,
+            transformOrigin: "center center",
+            force3D: true,
+          });
+        }
+        if (ring2Ref.current) {
+          gsap.set(ring2Ref.current, {
+            rotation: currentRotation * 0.8, // Slightly different speed for depth
+            transformOrigin: "center center",
+            force3D: true,
+          });
+        }
+        if (ring3Ref.current) {
+          gsap.set(ring3Ref.current, {
+            rotation: currentRotation, // Move in sync with the button ring
+            transformOrigin: "center center",
+            force3D: true,
+          });
+        }
+      });
+
+      // Calculate which item should be selected based on current angle
+      const potentialIndex = calculateSelectedIndex(currentRotation);
+
+      // Update visual feedback during drag but don't change selectedIndex until touch end
+      // This prevents state conflicts
+      if (
+        potentialIndex !== selectedIndex &&
+        potentialIndex >= 0 &&
+        potentialIndex < length
+      ) {
+        setFadedText(menuItems[potentialIndex].name);
+        setHoveredItem(menuItems[potentialIndex]);
       }
     };
 
@@ -121,47 +194,33 @@ export default function MenuPhone({ menuItems }) {
       const deltaTime = Date.now() - startTime;
       const velocity = Math.abs(deltaX) / deltaTime;
 
-      // Lower threshold and consider velocity for more responsive swiping
-      const threshold = 30;
-      const velocityThreshold = 0.5;
+      // Use the current rotation from the last touch move
+      // This ensures continuity and prevents jumps
+      const finalRotation = currentRotation;
 
-      if (Math.abs(deltaX) > threshold || velocity > velocityThreshold) {
+      // Determine target index based on final rotation angle
+      let targetIndex = calculateSelectedIndex(finalRotation);
+
+      // Ensure targetIndex is valid
+      if (targetIndex < 0 || targetIndex >= length) {
+        targetIndex = selectedIndex; // Fallback to current selection
+      }
+
+      // Add momentum for fast swipes
+      if (velocity > 0.5 && Math.abs(deltaX) > 50) {
+        const momentumSteps = Math.min(2, Math.floor(velocity));
         if (deltaX > 0) {
-          // Swipe right - rotate counter-clockwise (previous item)
-          rotateToPrevious();
+          // Swipe right - go to previous items
+          targetIndex = (targetIndex - momentumSteps + length) % length;
         } else {
-          // Swipe left - rotate clockwise (next item)
-          rotateToNext();
-        }
-      } else {
-        // Snap back to current selection if swipe wasn't significant enough
-        const targetRotation = -90 - selectedIndex * cutangle;
-        setCircleRotation(targetRotation);
-
-        if (circleContainerRef.current) {
-          gsap.to(circleContainerRef.current, {
-            rotation: targetRotation,
-            duration: 0.4,
-            ease: "back.out(1.7)",
-          });
-        }
-        if (ring2Ref.current) {
-          gsap.to(ring2Ref.current, {
-            rotation: targetRotation,
-            duration: 0.4,
-            ease: "back.out(1.7)",
-          });
-        }
-        if (ring3Ref.current) {
-          gsap.to(ring3Ref.current, {
-            rotation: targetRotation,
-            duration: 0.4,
-            ease: "back.out(1.7)",
-          });
+          // Swipe left - go to next items
+          targetIndex = (targetIndex + momentumSteps) % length;
         }
       }
-    };
 
+      // Animate to the target position from current position
+      animateToIndex(targetIndex);
+    };
     const element = circleContainerRef.current;
     element.addEventListener("touchstart", handleTouchStart, {
       passive: false,
@@ -169,77 +228,134 @@ export default function MenuPhone({ menuItems }) {
     element.addEventListener("touchmove", handleTouchMove, { passive: false });
     element.addEventListener("touchend", handleTouchEnd, { passive: false });
 
+    // Add mouse wheel support for desktop testing
+    const handleWheel = (e) => {
+      if (isAnimating) return;
+      e.preventDefault();
+
+      if (e.deltaY > 0) {
+        rotateToNext();
+      } else {
+        rotateToPrevious();
+      }
+    };
+
+    element.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    element.addEventListener("touchmove", handleTouchMove, { passive: false });
+    element.addEventListener("touchend", handleTouchEnd, { passive: false });
+    element.addEventListener("wheel", handleWheel, { passive: false });
+
     return () => {
       element.removeEventListener("touchstart", handleTouchStart);
       element.removeEventListener("touchmove", handleTouchMove);
       element.removeEventListener("touchend", handleTouchEnd);
+      element.removeEventListener("wheel", handleWheel);
     };
-  }, [selectedIndex, circleRotation]);
+  }, []); // Remove dependencies to prevent recreating event listeners
 
-  const rotateToNext = () => {
-    const newIndex = (selectedIndex + 1) % length;
-    // Calculate rotation to keep the selected item at the top
-    const newRotation = -90 - newIndex * cutangle;
-    setSelectedIndex(newIndex);
-    setCircleRotation(newRotation);
+  // Add haptic feedback for mobile devices
+  const triggerHapticFeedback = () => {
+    if ("vibrate" in navigator) {
+      navigator.vibrate(10); // Short vibration
+    }
+  };
+
+  // Safety mechanism to reset animation state if it gets stuck
+  useEffect(() => {
+    if (isAnimating) {
+      const timeout = setTimeout(() => {
+        setIsAnimating(false);
+      }, 3000); // 3-second timeout
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isAnimating]);
+
+  // Unified animation function for smooth transitions
+  const animateToIndex = (targetIndex) => {
+    if (isAnimating) {
+      return;
+    }
+
+    // Ensure targetIndex is valid
+    targetIndex = ((targetIndex % length) + length) % length;
+
+    if (targetIndex === selectedIndex) {
+      return;
+    }
+    setIsAnimating(true);
+    const targetRotation = getTargetRotation(targetIndex);
+
+    // Trigger haptic feedback on selection change
+    triggerHapticFeedback();
+
+    // Calculate the shortest rotation path from actual current position
+    const actualCurrentRotation = circleContainerRef.current
+      ? gsap.getProperty(circleContainerRef.current, "rotation")
+      : circleRotation;
+
+    let currentRot = actualCurrentRotation;
+    let targetRot = targetRotation;
+
+    // Find the shortest path
+    let diff = targetRot - currentRot;
+
+    // Normalize the difference to [-180, 180]
+    while (diff > 180) diff -= 360;
+    while (diff < -180) diff += 360;
+
+    const finalRotation = currentRot + diff; // Update states immediately to prevent conflicts
+    setSelectedIndex(targetIndex);
+    setCircleRotation(finalRotation);
+    setFadedText(menuItems[targetIndex].name);
+    setHoveredItem(menuItems[targetIndex]);
 
     // Enhanced smooth rotation with spring animation
     if (circleContainerRef.current) {
       gsap.to(circleContainerRef.current, {
-        rotation: newRotation,
-        duration: 0.7,
-        ease: "back.out(1.7)",
+        rotation: finalRotation,
+        duration: 0.6,
+        ease: "power3.out",
+        transformOrigin: "center center",
+        force3D: true, // Enable hardware acceleration
+        onComplete: () => {
+          setIsAnimating(false);
+          // Animation is complete - no additional state updates needed
+        },
       });
     }
 
     // Rotate ring2 and ring3 with slightly different timing for layered effect
     if (ring2Ref.current) {
       gsap.to(ring2Ref.current, {
-        rotation: newRotation,
-        duration: 0.8,
+        rotation: finalRotation * 0.8,
+        duration: 0.7,
         ease: "power3.out",
+        transformOrigin: "center center",
+        force3D: true,
       });
     }
     if (ring3Ref.current) {
       gsap.to(ring3Ref.current, {
-        rotation: newRotation,
-        duration: 0.9,
+        rotation: finalRotation, // Move in sync with the button ring
+        duration: 0.6, // Same duration as the button ring for perfect sync
         ease: "power3.out",
+        transformOrigin: "center center",
+        force3D: true,
       });
     }
   };
 
+  const rotateToNext = () => {
+    const newIndex = (selectedIndex + 1) % length;
+    animateToIndex(newIndex);
+  };
+
   const rotateToPrevious = () => {
     const newIndex = selectedIndex === 0 ? length - 1 : selectedIndex - 1;
-    // Calculate rotation to keep the selected item at the top
-    const newRotation = -90 - newIndex * cutangle;
-    setSelectedIndex(newIndex);
-    setCircleRotation(newRotation);
-
-    // Enhanced smooth rotation with spring animation
-    if (circleContainerRef.current) {
-      gsap.to(circleContainerRef.current, {
-        rotation: newRotation,
-        duration: 0.7,
-        ease: "back.out(1.7)",
-      });
-    }
-
-    // Rotate ring2 and ring3 with slightly different timing for layered effect
-    if (ring2Ref.current) {
-      gsap.to(ring2Ref.current, {
-        rotation: newRotation,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-    }
-    if (ring3Ref.current) {
-      gsap.to(ring3Ref.current, {
-        rotation: newRotation,
-        duration: 0.9,
-        ease: "power3.out",
-      });
-    }
+    animateToIndex(newIndex);
   };
 
   useEffect(() => {
@@ -365,16 +481,20 @@ export default function MenuPhone({ menuItems }) {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)] ${
-                  isSelected ? "ring-4 ring-white ring-opacity-70" : ""
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)] transition-all duration-300 ease-out ${
+                  isSelected
+                    ? "ring-4 ring-white ring-opacity-90 shadow-2xl z-10"
+                    : "ring-2 ring-white ring-opacity-20"
                 }`}
                 style={{
                   left: `calc(50% + ${x}px - 40px)`,
                   top: `calc(50% + ${y}px - 40px)`,
                   transform: `rotate(${rotationAngle}deg) ${
-                    isSelected ? "scale(1.2)" : ""
+                    isSelected ? "scale(1.3)" : "scale(1.0)"
                   }`,
-                  transition: "transform 0.3s ease",
+                  filter: isSelected
+                    ? "brightness(1.2) saturate(1.3)"
+                    : "brightness(0.8) saturate(0.9)",
                 }}
                 onClick={() => handleCircleItemClick(i)}
               >
@@ -383,23 +503,31 @@ export default function MenuPhone({ menuItems }) {
                   alt={menuItems[i].name}
                   className="w-full h-full object-cover"
                 />
+                {isSelected && (
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+                )}
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Mobile swipe indicator */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm opacity-70 flex items-center gap-2">
-        <span>←</span>
-        <span>Swipe to navigate</span>
-        <span>→</span>
+      {/* Mobile swipe indicator with current selection info */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm opacity-70 flex flex-col items-center gap-1">
+        <div className="flex items-center gap-2">
+          <span>←</span>
+          <span>Swipe to navigate</span>
+          <span>→</span>
+        </div>
+        <div className="text-xs opacity-50">
+          {selectedIndex + 1} of {length}
+        </div>
       </div>
 
       {fadedtext && (
         <div
           ref={bottomTextRef}
-          className={`mt-4 ${alumniSans.className} font-[700] absolute text-4xl bottom-[25%]`}
+          className={`mt-4 ${alumniSans.className} font-[700] absolute text-4xl bottom-[50%]`}
           style={{ opacity: 0 }}
         >
           {fadedtext}
