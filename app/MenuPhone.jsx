@@ -182,6 +182,29 @@ export default function MenuPhone({ menuItems }) {
       ) {
         setFadedText(menuItems[potentialIndex].name);
         setHoveredItem(menuItems[potentialIndex]);
+
+        // Trigger scaling animation immediately when potential selection changes
+        circleItemRefs.current.forEach((itemRef, index) => {
+          if (itemRef) {
+            if (index === potentialIndex) {
+              // Scale up the potential selected item
+              gsap.to(itemRef, {
+                scale: 1.3,
+                duration: 0.2,
+                ease: "power2.out",
+                transformOrigin: "center center",
+              });
+            } else {
+              // Scale down other items
+              gsap.to(itemRef, {
+                scale: 1.0,
+                duration: 0.2,
+                ease: "power2.out",
+                transformOrigin: "center center",
+              });
+            }
+          }
+        });
       }
     };
 
@@ -311,6 +334,29 @@ export default function MenuPhone({ menuItems }) {
     setCircleRotation(finalRotation);
     setFadedText(menuItems[targetIndex].name);
     setHoveredItem(menuItems[targetIndex]);
+
+    // Apply scaling animation for final selection
+    circleItemRefs.current.forEach((itemRef, index) => {
+      if (itemRef) {
+        if (index === targetIndex) {
+          // Scale up the selected item
+          gsap.to(itemRef, {
+            scale: 1.3,
+            duration: 0.3,
+            ease: "back.out(1.7)",
+            transformOrigin: "center center",
+          });
+        } else {
+          // Scale down non-selected items
+          gsap.to(itemRef, {
+            scale: 1.0,
+            duration: 0.2,
+            ease: "power2.out",
+            transformOrigin: "center center",
+          });
+        }
+      }
+    });
 
     // Enhanced smooth rotation with spring animation
     if (circleContainerRef.current) {
@@ -481,7 +527,7 @@ export default function MenuPhone({ menuItems }) {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)] transition-all duration-300 ease-out ${
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)] ${
                   isSelected
                     ? "ring-4 ring-white ring-opacity-90 shadow-2xl z-10"
                     : "ring-2 ring-white ring-opacity-20"
@@ -489,9 +535,7 @@ export default function MenuPhone({ menuItems }) {
                 style={{
                   left: `calc(50% + ${x}px - 40px)`,
                   top: `calc(50% + ${y}px - 40px)`,
-                  transform: `rotate(${rotationAngle}deg) ${
-                    isSelected ? "scale(1.3)" : "scale(1.0)"
-                  }`,
+                  transform: `rotate(${rotationAngle}deg)`,
                   filter: isSelected
                     ? "brightness(1.2) saturate(1.3)"
                     : "brightness(0.8) saturate(0.9)",
