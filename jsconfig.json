@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "expo-tathvaexpo-tathva/*": ["./src/*"]
+    }
+  }
+}
