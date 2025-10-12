@@ -17,7 +17,7 @@ function Line() {
   return (
     <>
       <div className="flex justify-center mx-2 my-6 items-center">
-        <div className="bg-black w-[80%] rounded-full h-[6px]"></div>
+        <div className="bg-black w-[80%] h-[4px]"></div>
       </div>
     </>
   );
@@ -31,9 +31,9 @@ function Region() {
         <div className="flex justify-between flex-wrap px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
             <div>
-              <div className="flex gap-2 sm:gap-3 md:gap-5 flex-wrap items-center">
+              <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
                 <div
-                  className={`bg-black px-2 pr-6 sm:pr-8 md:pr-16 py-1 ${schabo.className}`}
+                  className={`bg-black px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className}`}
                 >
                   <span className="text-white robopagetitle">OCT 26,27</span>
                 </div>
@@ -42,7 +42,7 @@ function Region() {
                 </div>
 
                 <div
-                  className={`${spacemono.className} text-[10px] sm:text-sm md:text-lg lg:text-xl text-[400] flex flex-col`}
+                  className={`${spacemono.className} text-[10px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
                 >
                   <span>30 x 30 FT. ARENA</span>
                   <span>15KG \ 60KG</span>
