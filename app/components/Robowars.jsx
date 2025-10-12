@@ -59,35 +59,37 @@ function Region() {
   return (
     <>
       <div className="mt-5 py-4">
-        <div className="flex justify-center lg:justify-between items-center gap-4 md:gap-8 lg:gap-16 flex-wrap px-4 sm:px-8 md:px-12 lg:px-20">
-          <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
-            <div>
-              <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
-                <div
-                  className={`bg-black px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className}`}
-                >
-                  <span className="text-white robopagetitle">OCT 26,27</span>
-                </div>
-                <div className={`bg-black py-1 ${schabo.className}`}>
-                  <span className="robopagetitle">l</span>
-                </div>
+        <div className="flex justify-center items-center px-4 sm:px-8 md:px-12 lg:px-20">
+          <div className="flex items-center gap-4 md:gap-8 lg:gap-16 flex-wrap justify-center">
+            <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
+              <div>
+                <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
+                  <div
+                    className={`bg-black px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className}`}
+                  >
+                    <span className="text-white robopagetitle">OCT 26,27</span>
+                  </div>
+                  <div className={`bg-black py-1 ${schabo.className}`}>
+                    <span className="robopagetitle">l</span>
+                  </div>
 
-                <div
-                  className={`${spacemono.className} text-[10px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
-                >
-                  <span>30 x 30 FT. ARENA</span>
-                  <span>15KG \ 60KG</span>
+                  <div
+                    className={`${spacemono.className} text-[10px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
+                  >
+                    <span>30 x 30 FT. ARENA</span>
+                    <span>15KG \ 60KG</span>
+                  </div>
                 </div>
               </div>
+              <div className={`text-black ${schabo.className}`}>
+                <span className="robopagetitle">PRIZES WORTH INR 8 LAKH</span>
+              </div>
             </div>
-            <div className={`text-black ${schabo.className}`}>
-              <span className="robopagetitle">PRIZES WORTH INR 8 LAKH</span>
+            <div className="flex gap-1">
+              <BarcodeImage src="/barcode.png" alt="barcode" />
+              <BarcodeImage src="/barcode.png" alt="barcode" />
+              <BarcodeImage src="/barcode.png" alt="barcode" />
             </div>
-          </div>
-          <div className="flex gap-1">
-            <BarcodeImage src="/barcode.png" alt="barcode" />
-            <BarcodeImage src="/barcode.png" alt="barcode" />
-            <BarcodeImage src="/barcode.png" alt="barcode" />
           </div>
         </div>
         <div></div>
