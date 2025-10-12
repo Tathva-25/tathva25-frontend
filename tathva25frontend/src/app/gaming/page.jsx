@@ -15,33 +15,19 @@ const GamePage = () => {
     <div className="bg-white flex flex-col sm:flex-row relative overflow-hidden min-h-screen max-h-screen">
       {/* <Sidebar /> */}
         {/* Background NEXUS text with hexagons */}
-        <div className="absolute inset-0 pointer-events-none opacity-10 flex flex-col justify-center items-center overflow-hidden text-[8rem] leading-[0.9] sm:text-[20rem] sm:leading-[0.9]">
-          <div className={`${customFont.className} text-black font-bold whitespace-nowrap `}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} text-black font-bold whitespace-nowrap`}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
-            NEXUS
-          </div>
-          <div className={`${customFont.className} sm:hidden text-black font-bold whitespace-nowrap`}>
-            NEXUS
+        <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center overflow-hidden text-[8rem] leading-[0.9] sm:text-[20rem] sm:leading-[0.9]">
+          {/* Add the new class here */}
+          <div className={`text-effect-container ${customFont.className} font-bold whitespace-nowrap`}>
+            <div>NEXUS</div>
+            <div>NEXUS</div>
+            <div>NEXUS</div>
+            <div className="sm:hidden">NEXUS</div>
+            <div className="sm:hidden">NEXUS</div>
+            <div className="sm:hidden">NEXUS</div>
+            <div className="sm:hidden">NEXUS</div>
+            <div className="sm:hidden">NEXUS</div>
           </div>
         </div>
-
         {/* Bottom left hexagons - sm and up only */}
         <div className="hidden sm:block absolute left-0 bottom-0 pointer-events-none opacity-15">
           <svg width="300" height="300" viewBox="0 0 300 300" className="text-gray-400">
@@ -90,20 +76,21 @@ const GamePage = () => {
             <Image
               src={text_box_1}
               width={400}
+              alt="textbox_1"
             />
             <div className="absolute text-center">
-              <p className="text-gray-800 text-lg leading-relaxed font-mono mb-6">
+              <div className="text-gray-800 text-lg leading-relaxed font-mono mb-6">
                 <p>Show off your skills and</p>
                 <p>conquer the arena at <span className="text-red-800">Gaming</span></p>
                 <p><span className="text-red-800">Conclave</span>, where only the</p>
                 <p>best rise to the top</p>
-              </p>
+              </div>
             </div>
             <div className="absolute translate-y-18">
               <div className="relative flex items-center justify-center gap-3">
                 <Image
                   src={text_box_2}
-
+                  alt="text_box_2"
                   // width={300}
                 />
                 <p className="absolute">LEARN MORE</p>
