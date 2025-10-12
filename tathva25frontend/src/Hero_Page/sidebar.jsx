@@ -176,11 +176,13 @@ export default function Sidebar() {
             {/* Demo sections - Remove these in production */}
             <div className="ml-12">
                 {items.map((item) => (
+                    
                     <section
                         key={item.num}
                         id={`section-${item.num}`}
                         className="h-screen flex items-center justify-center border-b-2 border-gray-200"
                         style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
+                        
                     >
                         <div className="text-center">
                             <h2 className="text-6xl font-bold mb-4">{item.label}</h2>

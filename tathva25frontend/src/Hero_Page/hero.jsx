@@ -132,44 +132,40 @@ export const Hero=()=> {
       <div className="mx-auto w-full">
         
         <div>
-          <img 
+          <Image
             src={Background.src}
             className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden'
             alt="Background"
+            width={100}
+            height={100}
           />
         </div>
 
     
         <div className="flex flex-col items-center justify-between h-full gap-4">
-          <div className="absolute inset-0 flex justify-center items-center">
+          <div className="absolute inset-0 flex justify-center items-center mt-12">
             <Lines />
           </div>
 
           
           
           {/* TATHVA Text - Centered */}
-          <div className="flex-1 flex items-center justify-center w-full">
-            <div className="w-full max-w-[90vw] md:max-w-5xl text-center">
+          <div className="flex-1 flex items-center justify-center w-full ">
+            <div className="w-full max-w-[90vw] md:max-w-5xl text-center ">
               <span
                 className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
                   isAnimating ? 'tracking-tighter' : ''
                 }`}
+
               >
                 {displayText}
               </span>
             </div>
           </div>
-          <div 
-                className="absolute  pointer-events-none"
-                style={{
-                  background: 'linear-gradient(to bottom, transparent 0%, transparent 60%, rgba(255, 255, 255, 0.5) 80%, white 100%)',
-                  backdropFilter: 'blur(2px)',
-                  WebkitBackdropFilter: 'blur(2px)'
-                }}
-              />
+         
           
           {/* Hero Images Container - Positioned at bottom */}
-          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square mb-0 mt-10">
+          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square mb-0 mt-19">
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
               <Ripple />
             </div>
@@ -218,12 +214,24 @@ export const Hero=()=> {
                 </div>
               </div>
               
-              {/* Blur Gradient Overlay - Top Layer */}
+              
+              
               
             </div>
+            
           </div>
+          
         </div>
+        <div 
+          className="absolute bottom-0 w-full h-4"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(243,240,232,1), rgba(246, 246, 238, 1))',
+          }}
+        ></div>
       </div>
+      
+      
     </section>
+    
   );
 }
