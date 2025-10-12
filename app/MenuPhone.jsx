@@ -506,17 +506,17 @@ export default function MenuPhone({ menuItems }) {
       <div className="absolute z-10 flex items-center justify-center bottom-0 translate-y-1/2 w-96 h-96 left-1/2 transform -translate-x-1/2 scale-75">
         <div className="absolute">
           <img
-            src="ring1.svg"
+            src="ring1.png"
             className="rotate scale-230"
             alt="Rotating ring"
           />
         </div>
         <div ref={ring2Ref} className="absolute">
-          <img src="ring2.svg" className="scale-170" alt="Rotating ring" />
+          <img src="ring2.png" className="scale-170" alt="Rotating ring" />
         </div>
         <div ref={ring3Ref} className="absolute">
           <img
-            src="ring3.svg"
+            src="ring3.png"
             className="scale-170 rotate-22"
             alt="Rotating ring"
           />

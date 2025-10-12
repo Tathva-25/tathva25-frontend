@@ -151,16 +151,16 @@ export default function MenuDesktop({ menuItems }) {
       <div className="absolute z-10 flex items-center justify-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96">
         <div className="absolute">
           <img
-            src="ring1.svg"
+            src="ring1.png"
             className="rotate scale-170"
             alt="Rotating ring"
           />
         </div>
         <div className="absolute">
-          <img src="ring2.svg" className="scale-130" alt="Rotating ring" />
+          <img src="ring2.png" className="scale-130" alt="Rotating ring" />
         </div>
         <div className="absolute">
-          <img src="ring3.svg" className="scale-130" alt="Rotating ring" />
+          <img src="ring3.png" className="scale-130" alt="Rotating ring" />
         </div>
       </div>
 
@@ -215,7 +215,7 @@ export default function MenuDesktop({ menuItems }) {
       {fadedtext && (
         <div
           ref={bottomTextRef}
-          className={`mt-4 ${alumniSans.className} font-[700] absolute text-9xl bottom-[5%]`}
+          className={`mt-4 ${alumniSans.className} font-[700] absolute text-9xl -bottom-[1%]`}
           style={{ opacity: 0 }}
         >
           {fadedtext}
