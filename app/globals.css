@@ -25,3 +25,7 @@
     transform: translateX(50%);
   }
 }
+
+.robopagetitle {
+  @apply text-xl sm:text-2xl md:text-4xl lg:text-5xl;
+}
