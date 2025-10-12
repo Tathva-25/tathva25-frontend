@@ -12,6 +12,37 @@ const schabo = localFont({
   src: "../../public/fonts/schabo.woff2",
 });
 
+/*Direct img tag to next Image tag converter..*/
+function ImgtoImage({ src, alt }) {
+  return (
+    <Image
+      src={`${src}`}
+      alt={`${alt}`}
+      width={0}
+      height={0}
+      sizes="100vw"
+      className="w-full h-auto object-cover"
+      style={{
+        width: "100%",
+        height: "auto",
+      }}
+    />
+  );
+}
+
+/*Barcode component with actual size*/
+function BarcodeImage({ src, alt }) {
+  return (
+    <Image
+      src={`${src}`}
+      alt={`${alt}`}
+      width={100}
+      height={200}
+      className="h-auto object-contain"
+    />
+  );
+}
+
 /*LINES*/
 function Line() {
   return (
@@ -28,7 +59,7 @@ function Region() {
   return (
     <>
       <div className="mt-5 py-4">
-        <div className="flex justify-between flex-wrap px-4 sm:px-8 md:px-12 lg:px-20">
+        <div className="flex justify-center lg:justify-between items-center gap-4 md:gap-8 lg:gap-16 flex-wrap px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
             <div>
               <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
@@ -53,28 +84,15 @@ function Region() {
               <span className="robopagetitle">PRIZES WORTH INR 8 LAKH</span>
             </div>
           </div>
+          <div className="flex gap-1">
+            <BarcodeImage src="/barcode.png" alt="barcode" />
+            <BarcodeImage src="/barcode.png" alt="barcode" />
+            <BarcodeImage src="/barcode.png" alt="barcode" />
+          </div>
         </div>
         <div></div>
       </div>
     </>
-  );
-}
-
-/*Direct img tag to next Image tag converter..*/
-function ImgtoImage({ src, alt }) {
-  return (
-    <Image
-      src={`${src}`}
-      alt={`${alt}`}
-      width={0}
-      height={0}
-      sizes="100vw"
-      className="w-full h-auto object-cover"
-      style={{
-        width: "100%",
-        height: "auto",
-      }}
-    />
   );
 }
 
