@@ -1,11 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Hero } from "@/Hero_Page/hero";
+
 
 export default function Sidebar() {
     const items = [
-        { num: 1, label: "Home" },
-        { num: 2, label: "About" },
-        { num: 3, label: "Events" },
+        { num: 1, label: "Main" },
+        { num: 2, label: "GPC" },
+        { num: 3, label: "Robowars" },
         { num: 4, label: "Gallery" },
         { num: 5, label: "Contact" },
     ];
@@ -60,12 +62,12 @@ export default function Sidebar() {
             });
 
             setActiveSection(newActiveSection);
-            setExpandedSection(closestSection); // Expand the closest section to viewport center
+            setExpandedSection(closestSection);
             setScrollProgress(newProgress);
         };
 
         window.addEventListener("scroll", handleScroll);
-        handleScroll(); // Initial call
+        handleScroll();
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
@@ -146,7 +148,6 @@ export default function Sidebar() {
                                                 }}
                                             >
                                                 {item.label.split("").map((letter, idx) => {
-                                                    // Calculate the vertical position of each letter
                                                     const letterHeight = 100 / item.label.length;
                                                     const letterPosition = (idx * letterHeight) + (letterHeight / 2);
                                                     const isCovered = isActive && progress > letterPosition;
@@ -173,30 +174,52 @@ export default function Sidebar() {
                 </div>
             </aside>
 
-            {/* Demo sections - Remove these in production */}
+            {/* Main content sections */}
             <div className="ml-12">
-                {items.map((item) => (
-                    <section
-                        key={item.num}
-                        id={`section-${item.num}`}
-                        className="h-screen flex items-center justify-center border-b-2 border-gray-200"
-                        style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
-                    >
-                        <div className="text-center">
-                            <h2 className="text-6xl font-bold mb-4">{item.label}</h2>
-                            <p className="text-xl text-gray-600">Section {item.num}</p>
-                        </div>
-                    </section>
-                ))}
-                <section
+                {/* Hero Section */}
+                <section id="section-1" className="min-h-screen">
+                    <Hero />
+                </section>
 
-                    id={`section-footer`}
-                    className="h-screen flex items-center justify-center bg-black border-b-2 border-gray-200"
+                {/* GPC Section */}
+                <section id="section-2" className="min-h-screen flex items-center justify-center bg-gray-50">
+                    <div className="text-center">
+                        <h2 className="text-6xl font-bold mb-4">GPC</h2>
+                        <p className="text-xl text-gray-600">GPC Section - Add your GPC component here</p>
+                        {/* <GPC /> */}
+                    </div>
+                </section>
 
-                >
+                {/* Robowars Section */}
+                <section id="section-3" className="min-h-screen flex items-center justify-center bg-gray-100">
+                    <div className="text-center">
+                        <h2 className="text-6xl font-bold mb-4">Robowars</h2>
+                        <p className="text-xl text-gray-600">Robowars Section - Add your Robowars component here</p>
+                        {/* <Robowars /> */}
+                    </div>
+                </section>
+
+                {/* Gallery Section */}
+                <section id="section-4" className="min-h-screen flex items-center justify-center bg-gray-50">
+                    <div className="text-center">
+                        <h2 className="text-6xl font-bold mb-4">Gallery</h2>
+                        <p className="text-xl text-gray-600">Gallery Section</p>
+                    </div>
+                </section>
+
+                {/* Contact Section */}
+                <section id="section-5" className="min-h-screen flex items-center justify-center bg-gray-100">
+                    <div className="text-center">
+                        <h2 className="text-6xl font-bold mb-4">Contact</h2>
+                        <p className="text-xl text-gray-600">Contact Section</p>
+                    </div>
+                </section>
+
+                {/* Footer Section */}
+                <section id="section-footer" className="min-h-screen flex items-center justify-center bg-black text-white">
                     <div className="text-center">
                         <h2 className="text-6xl font-bold mb-4">Footer</h2>
-                        <p className="text-xl text-gray-600">Section Footer</p>
+                        <p className="text-xl text-gray-400">Footer Section</p>
                     </div>
                 </section>
             </div>
