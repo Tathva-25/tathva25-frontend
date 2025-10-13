@@ -34,17 +34,24 @@ export default function MenuPhone({ menuItems }) {
 
   // Function to calculate which item should be selected based on current angle
   const calculateSelectedIndex = (currentRotation) => {
-    // Normalize the rotation angle (add 90 to align with top position)
-    let normalizedAngle = normalizeAngle(currentRotation + 90);
+    // Normalize the rotation angle to 0-360 range
+    let normalizedAngle = normalizeAngle(currentRotation);
+
+    // Add 90 degrees to align with the top position (since first item starts at -90)
+    normalizedAngle = normalizeAngle(normalizedAngle + 90);
 
     // Calculate which segment this angle falls into
     const segmentIndex = normalizedAngle / cutangle;
 
-    // Round to nearest integer and ensure it's within bounds
-    let newIndex = Math.round(segmentIndex) % length;
+    // Round to nearest integer
+    let newIndex = Math.round(segmentIndex);
+
+    // Ensure the index is within bounds
+    newIndex = newIndex % length;
     if (newIndex < 0) newIndex += length;
 
-    // Since items are positioned clockwise but we want counter-clockwise selection
+    // Reverse the index since we want counter-clockwise selection
+    // but items are positioned clockwise
     newIndex = (length - newIndex) % length;
 
     return newIndex;
@@ -57,6 +64,8 @@ export default function MenuPhone({ menuItems }) {
 
   // Initialize mobile selection and set initial rotation (only on component mount)
   useEffect(() => {
+    // Ensure first item is selected
+    setSelectedIndex(0);
     setFadedText(menuItems[0].name);
     setHoveredItem(menuItems[0]);
 
@@ -194,13 +203,11 @@ export default function MenuPhone({ menuItems }) {
       // Calculate which item should be selected based on current angle
       const potentialIndex = calculateSelectedIndex(currentRotation);
 
-      // Update visual feedback during drag
+      // Ensure potentialIndex is valid and update visual feedback during drag
       if (potentialIndex >= 0 && potentialIndex < length) {
-        // Only update text and hover state if it's actually different
-        if (potentialIndex !== selectedIndex) {
-          setFadedText(menuItems[potentialIndex].name);
-          setHoveredItem(menuItems[potentialIndex]);
-        }
+        // Update text and hover state
+        setFadedText(menuItems[potentialIndex].name);
+        setHoveredItem(menuItems[potentialIndex]);
 
         // Always trigger scaling animation to ensure correct state
         circleItemRefs.current.forEach((itemRef, index) => {
@@ -244,9 +251,12 @@ export default function MenuPhone({ menuItems }) {
       let targetIndex = calculateSelectedIndex(finalRotation);
 
       // Ensure targetIndex is valid
-      if (targetIndex < 0 || targetIndex >= length) {
+      if (targetIndex < 0 || targetIndex >= length || isNaN(targetIndex)) {
         targetIndex = selectedIndex; // Fallback to current selection
       }
+
+      // Ensure targetIndex is within bounds
+      targetIndex = Math.max(0, Math.min(length - 1, targetIndex));
 
       // Add momentum for fast swipes
       if (velocity > 0.5 && Math.abs(deltaX) > 50) {
