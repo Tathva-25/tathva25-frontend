@@ -68,31 +68,59 @@ export default function MenuDesktop({ menuItems }) {
     }
   }, [fadedtext]);
 
-  /*MATHEW INTE BLOCK SPACE*/
+  /*PIXELATED MIXING TRANSITION*/
   useEffect(() => {
     if (centerImageRef.current) {
+      const img = centerImageRef.current;
+
       if (hoveredItem) {
-        // Animate new image in from bottom
-        gsap.fromTo(
-          centerImageRef.current,
-          {
-            opacity: 0,
-            y: -50,
-          },
-          {
+        // Pixelated mixing effect using CSS filters
+        const tl = gsap.timeline();
+
+        // Start pixelated and blocky
+        tl.set(img, {
+          filter: "blur(0.5px) contrast(2) saturate(0.5)",
+          transform: "scale(0.9)",
+          opacity: 0.7,
+          imageRendering: "pixelated",
+        })
+          // Create interference/mixing phase
+          .to(img, {
+            filter: "blur(0px) contrast(1.5) saturate(1.5)",
+            transform: "scale(1.05)",
+            opacity: 0.55,
+            duration: 0.08,
+          })
+          .to(img, {
+            filter: "blur(0.3px) contrast(1.8) saturate(0.8)",
+            transform: "scale(0.95)",
+            opacity: 0.9,
+            duration: 0.08,
+          })
+          .to(img, {
+            filter: "blur(0px) contrast(1.3) saturate(1.2)",
+            transform: "scale(1.02)",
+            opacity: 0.95,
+            duration: 0.18,
+          })
+          // Final clear
+          .to(img, {
+            filter: "blur(0px) contrast(1) saturate(1)",
+            transform: "scale(1)",
             opacity: 1,
-            y: 0,
-            duration: 0.5,
+            imageRendering: "auto",
+            duration: 0.15,
             ease: "power2.out",
-          }
-        );
+          });
       } else {
-        // Animate image out (fade up)
-        gsap.to(centerImageRef.current, {
+        // Glitch out with pixelation
+        gsap.to(img, {
+          filter: "blur(1px) contrast(0.5) saturate(0.3)",
+          transform: "scale(0.8)",
           opacity: 0,
-          y: -50,
-          duration: 0.3,
-          ease: "power2.in",
+          imageRendering: "pixelated",
+          duration: 0.2,
+          ease: "power2.out",
         });
       }
     }
@@ -207,7 +235,9 @@ export default function MenuDesktop({ menuItems }) {
               src={hoveredItem.img2}
               alt={hoveredItem.name}
               className="w-[90%] h-full object-contain"
-              style={{ opacity: 0 }}
+              style={{
+                opacity: 0,
+              }}
             />
           )}
         </div>
