@@ -68,6 +68,7 @@ export default function MenuDesktop({ menuItems }) {
     }
   }, [fadedtext]);
 
+  /*MATHEW INTE BLOCK SPACE*/
   useEffect(() => {
     if (centerImageRef.current) {
       if (hoveredItem) {
@@ -76,7 +77,7 @@ export default function MenuDesktop({ menuItems }) {
           centerImageRef.current,
           {
             opacity: 0,
-            y: 50,
+            y: -50,
           },
           {
             opacity: 1,
@@ -199,13 +200,13 @@ export default function MenuDesktop({ menuItems }) {
         </div>
 
         {/* Center image - show on hover */}
-        <div className="absolute z-30 flex items-center justify-center w-56 h-56 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden">
+        <div className="absolute z-30 flex items-center -rotate-8 justify-center w-56 h-56 bg-black bg-opacity-20 rounded-full backdrop-blur-sm overflow-hidden">
           {hoveredItem && (
             <img
               ref={centerImageRef}
               src={hoveredItem.img2}
               alt={hoveredItem.name}
-              className="w-full h-full object-cover"
+              className="w-[90%] h-full object-contain"
               style={{ opacity: 0 }}
             />
           )}
