@@ -12,17 +12,17 @@ const customFont = localfont({
 
 const GamePage = () => {
   return (
-    <div className="bg-white flex flex-col sm:flex-row relative overflow-hidden min-h-screen max-h-screen">
+    <div className="bg-white flex flex-col sm:flex-row items-center justify-center relative overflow-hidden min-h-screen">
       {/* <Sidebar /> */}
         {/* Background NEXUS text with hexagons */}
-        <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center overflow-hidden text-[8rem] leading-[0.9] sm:text-[20rem] sm:leading-[0.9]">
+        <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center overflow-hidden text-[7rem] leading-[0.9] sm:text-[12rem] md:text-[20rem] sm:leading-[0.9] sm:tracking-widest">
           {/* Add the new class here */}
           <div className={`text-effect-container ${customFont.className} font-bold whitespace-nowrap`}>
             <div>NEXUS</div>
             <div>NEXUS</div>
             <div>NEXUS</div>
-            <div className="sm:hidden">NEXUS</div>
-            <div className="sm:hidden">NEXUS</div>
+            <div className="lg:hidden">NEXUS</div>
+            <div className="lg:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
@@ -54,8 +54,8 @@ const GamePage = () => {
           </svg>
         </div>
 
-        <div className="sm:pb-5 px-10 sm:pl-40 sm:w-[60%] relative z-10 ">
-            <div className="sm:w-[70%]">
+        <div className="sm:pb-20 px-10 sm:w-[60%] relative z-10 flex flex-col items-center sm:h-screen justify-center">
+            <div className="sm:w-[100%] lg:w-[70%]">
                 <Image
                     src={gaming_hero}
                     width={400}
@@ -63,20 +63,21 @@ const GamePage = () => {
                 />
                 
             </div>
-            <div className="hero">
-                <div className={`MainTitle ${customFont.className} text-[#550d0d] text-7xl flex flex-col items-center md:w-[70%]`}>
+            <div className="desc">
+                <div className={`MainTitle ${customFont.className} pl-10 text-[#550d0d] text-5xl md:text-7xl flex flex-col items-center lg:w-[70%]`}>
                     <p>Gaming</p>
                     <p>Conclave</p>
                 </div>
             </div>
-            <div className="desc"></div>
         </div>
-        <div className="sm:py-5 px-10 sm:w-[40%] flex sm:justify-center sm:items-center relative z-10">
-          <div className="relative w-full sm:h-screen flex items-center justify-center p-4">
+
+        <div className="sm:py-5 lg:px-10 lg:w-[40%] flex sm:justify-center sm:items-center relative z-10 ">
+          <div className="relative w-full sm:h-screen flex items-center justify-center p-4 ">
             <Image
               src={text_box_1}
-              width={400}
+              // width={350}
               alt="textbox_1"
+              className="sm:w-[30rem] lg:w-[25rem]"
             />
             <div className="absolute text-center">
               <div className="text-gray-800 text-lg leading-relaxed font-mono mb-6">
@@ -91,9 +92,10 @@ const GamePage = () => {
                 <Image
                   src={text_box_2}
                   alt="text_box_2"
+                  className="w-[15rem]"
                   // width={300}
                 />
-                <p className="absolute">LEARN MORE</p>
+                <p className="absolute text-[0.75rem]">LEARN MORE</p>
               </div>
             </div>
           </div>
