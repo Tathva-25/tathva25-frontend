@@ -556,26 +556,17 @@ export default function MenuPhone({ menuItems }) {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)] ${
-                  isSelected
-                    ? "ring-4 ring-white ring-opacity-90 shadow-2xl z-10"
-                    : "ring-2 ring-white ring-opacity-20"
-                }`}
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden]`}
                 style={{
                   left: `calc(50% + ${x}px - 40px)`,
                   top: `calc(50% + ${y}px - 40px)`,
-                  transform: `rotate(${rotationAngle}deg)`,
-                  filter: isSelected
-                    ? "brightness(1.2) saturate(1.3)"
-                    : "brightness(0.8) saturate(0.9)",
+                  // filter: isSelected
+                  //   ? "brightness(1.2) saturate(1.3)"
+                  //   : "brightness(0.8) saturate(0.9)",
                 }}
                 onClick={() => handleCircleItemClick(i)}
               >
-                <img
-                  src={menuItems[i].img1}
-                  alt={menuItems[i].name}
-                  className="w-full h-full object-cover"
-                />
+                <img src={menuItems[i].img1} alt={menuItems[i].name} />
                 {isSelected && (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
                 )}

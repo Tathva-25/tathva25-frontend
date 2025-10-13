@@ -170,30 +170,24 @@ export default function MenuDesktop({ menuItems }) {
         <div className="relative rounded-full w-full h-full">
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180);
-            const radius = 130;
+            const radius = 150;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
-            const rotationAngle = i * cutangle + 90;
 
             return (
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className="absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden [clip-path:polygon(0%_0%,_100%_0%,_77%_61%,_23%_61%)]"
+                className="absolute w-10 h-10 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden"
                 style={{
-                  left: `calc(50% + ${x}px - 40px)`,
-                  top: `calc(50% + ${y}px - 40px)`,
-                  transform: `rotate(${rotationAngle}deg)`,
+                  left: `calc(50% + ${x}px - 20px)`,
+                  top: `calc(50% + ${y}px - 20px)`,
                 }}
                 onMouseEnter={() => handleCircleItemHover(i, true)}
                 onMouseLeave={() => handleCircleItemHover(i, false)}
                 onClick={() => handleCircleItemClick(i)}
               >
-                <img
-                  src={menuItems[i].img1}
-                  alt={menuItems[i].name}
-                  className="w-full h-full object-cover"
-                />
+                <img src={menuItems[i].img1} alt={menuItems[i].name} />
               </div>
             );
           })}
