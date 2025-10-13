@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation"; // For getting current path in Next.js 13+ app directory
 import MenuDesktop from "./MenuDesktop";
 import MenuPhone from "./MenuPhone";
 
@@ -80,6 +81,9 @@ const menuItems = [
 
 export default function Menupage() {
   const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname(); // This gets the current path
+
+  console.log("Current page:", pathname);
 
   // Mobile detection
   useEffect(() => {
@@ -101,9 +105,9 @@ export default function Menupage() {
 
       {/* Conditionally render desktop or mobile component */}
       {isMobile ? (
-        <MenuPhone menuItems={menuItems} />
+        <MenuPhone menuItems={menuItems} currentPath={pathname} />
       ) : (
-        <MenuDesktop menuItems={menuItems} />
+        <MenuDesktop menuItems={menuItems} currentPath={pathname} />
       )}
     </div>
   );
