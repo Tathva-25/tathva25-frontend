@@ -80,13 +80,13 @@ export default function MenuDesktop({ menuItems }) {
         // Start pixelated and blocky
         tl.set(img, {
           filter: "blur(0.5px) contrast(2) saturate(0.5)",
-          transform: "scale(0.9)",
-          opacity: 0.7,
+          transform: "scale(0.2)",
+          opacity: 1,
           imageRendering: "pixelated",
         })
           // Create interference/mixing phase
           .to(img, {
-            filter: "blur(0px) contrast(1.5) saturate(1.5)",
+            filter: "blur(0px) contrast(1000) saturate(20)",
             transform: "scale(1.05)",
             opacity: 0.55,
             duration: 0.08,
@@ -102,6 +102,7 @@ export default function MenuDesktop({ menuItems }) {
             transform: "scale(1.02)",
             opacity: 0.95,
             duration: 0.18,
+            imageRendering: "pixelated",
           })
           // Final clear
           .to(img, {
@@ -109,7 +110,7 @@ export default function MenuDesktop({ menuItems }) {
             transform: "scale(1)",
             opacity: 1,
             imageRendering: "auto",
-            duration: 0.15,
+            duration: 0.4,
             ease: "power2.out",
           });
       } else {
@@ -120,7 +121,7 @@ export default function MenuDesktop({ menuItems }) {
           opacity: 0,
           imageRendering: "pixelated",
           duration: 0.2,
-          ease: "power2.out",
+          ease: "power2.inOut",
         });
       }
     }
