@@ -84,7 +84,7 @@ function Region() {
               <span className="robopagetitle">PRIZES WORTH INR 8 LAKH</span>
             </div>
           </div>
-          <div className="flex ml-10">
+          <div className="flex">
             <BarcodeImage src="/barcode.png" alt="barcode" />
           </div>
         </div>
