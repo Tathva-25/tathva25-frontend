@@ -544,7 +544,7 @@ export default function MenuPhone({ menuItems }) {
         >
           {Array.from({ length }, (_, i) => {
             const angle = i * cutangle * (Math.PI / 180);
-            const radius = 130;
+            const radius = 145;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
             const rotationAngle = i * cutangle + 90;
@@ -556,7 +556,7 @@ export default function MenuPhone({ menuItems }) {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden]`}
+                className={`absolute w-20 h-20 flex items-center justify-center cursor-pointer overflow-hidden]`}
                 style={{
                   left: `calc(50% + ${x}px - 40px)`,
                   top: `calc(50% + ${y}px - 40px)`,
@@ -566,10 +566,14 @@ export default function MenuPhone({ menuItems }) {
                 }}
                 onClick={() => handleCircleItemClick(i)}
               >
-                <img src={menuItems[i].img1} alt={menuItems[i].name} />
-                {isSelected && (
+                <img
+                  src={menuItems[i].img1}
+                  alt={menuItems[i].name}
+                  // className="rotate-90"
+                />
+                {/* {isSelected && (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
-                )}
+                )} */}
               </div>
             );
           })}
