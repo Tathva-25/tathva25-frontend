@@ -9,12 +9,13 @@ const alumniSans = Alumni_Sans({
   variable: "--font-alumni-sans",
 });
 
-export default function MenuPhone({ menuItems }) {
+export default function MenuPhone({ menuItems, currentPath }) {
   const [fadedtext, setFadedText] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0); // For mobile selection
   const [circleRotation, setCircleRotation] = useState(0); // Current rotation angle
   const [isAnimating, setIsAnimating] = useState(false); // Prevent multiple animations
+  const [dragSelectedIndex, setDragSelectedIndex] = useState(0); // Track selection during drag for haptics
   const bgTextRefs = useRef([]);
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
@@ -64,13 +65,25 @@ export default function MenuPhone({ menuItems }) {
 
   // Initialize mobile selection and set initial rotation (only on component mount)
   useEffect(() => {
-    // Ensure first item is selected
-    setSelectedIndex(0);
-    setFadedText(menuItems[0].name);
-    setHoveredItem(menuItems[0]);
+    let initialIndex = 0;
 
-    // Set initial rotation to position first item at top
-    const initialRotation = getTargetRotation(0);
+    // Find the menu item that matches the current path
+    if (currentPath && menuItems.length > 0) {
+      const currentIndex = menuItems.findIndex(
+        (item) => item.link === currentPath
+      );
+      if (currentIndex !== -1) {
+        initialIndex = currentIndex;
+      }
+    }
+
+    // Set the selected item (either current page or fallback to first item)
+    setSelectedIndex(initialIndex);
+    setFadedText(menuItems[initialIndex].name);
+    setHoveredItem(menuItems[initialIndex]);
+
+    // Set initial rotation to position the selected item at top
+    const initialRotation = getTargetRotation(initialIndex);
     setCircleRotation(initialRotation);
 
     if (circleContainerRef.current) {
@@ -97,11 +110,11 @@ export default function MenuPhone({ menuItems }) {
       });
     }
 
-    // Set initial scaling for the first item (index 0)
+    // Set initial scaling for the selected item
     setTimeout(() => {
       circleItemRefs.current.forEach((itemRef, index) => {
         if (itemRef) {
-          if (index === 0) {
+          if (index === initialIndex) {
             // Scale up the initial selected item
             gsap.set(itemRef, {
               scale: 1.3,
@@ -117,7 +130,7 @@ export default function MenuPhone({ menuItems }) {
         }
       });
     }, 100); // Small delay to ensure refs are ready
-  }, []); // Empty dependency array - only run on mount
+  }, [currentPath, menuItems]); // Re-run when currentPath or menuItems change
 
   // Touch gesture handling for mobile
   useEffect(() => {
@@ -145,6 +158,9 @@ export default function MenuPhone({ menuItems }) {
 
       initialRotation = actualRotation;
       currentRotation = actualRotation;
+
+      // Initialize drag selection tracking for haptics
+      setDragSelectedIndex(selectedIndex);
 
       // Update our state to match the actual visual position
       setCircleRotation(actualRotation);
@@ -198,6 +214,20 @@ export default function MenuPhone({ menuItems }) {
             force3D: true,
           });
         }
+
+        // Update image rotations in real-time to keep them straight
+        circleItemRefs.current.forEach((itemRef) => {
+          if (itemRef) {
+            const img = itemRef.querySelector("img");
+            if (img) {
+              gsap.set(img, {
+                rotation: -currentRotation,
+                transformOrigin: "center center",
+                force3D: true,
+              });
+            }
+          }
+        });
       });
 
       // Calculate which item should be selected based on current angle
@@ -205,6 +235,12 @@ export default function MenuPhone({ menuItems }) {
 
       // Ensure potentialIndex is valid and update visual feedback during drag
       if (potentialIndex >= 0 && potentialIndex < length) {
+        // Trigger haptic feedback when selection changes during drag
+        if (potentialIndex !== dragSelectedIndex) {
+          triggerRotationHaptic(); // Light haptic for selection change during drag
+          setDragSelectedIndex(potentialIndex);
+        }
+
         // Update text and hover state
         setFadedText(menuItems[potentialIndex].name);
         setHoveredItem(menuItems[potentialIndex]);
@@ -308,9 +344,16 @@ export default function MenuPhone({ menuItems }) {
   }, []); // Remove dependencies to prevent recreating event listeners
 
   // Add haptic feedback for mobile devices
-  const triggerHapticFeedback = () => {
+  const triggerHapticFeedback = (intensity = 10) => {
     if ("vibrate" in navigator) {
-      navigator.vibrate(10); // Short vibration
+      navigator.vibrate(intensity); // Vibration with configurable intensity
+    }
+  };
+
+  // Add lighter haptic for rotation feedback
+  const triggerRotationHaptic = () => {
+    if ("vibrate" in navigator) {
+      navigator.vibrate(5); // Very light vibration for rotation
     }
   };
 
@@ -340,8 +383,8 @@ export default function MenuPhone({ menuItems }) {
     setIsAnimating(true);
     const targetRotation = getTargetRotation(targetIndex);
 
-    // Trigger haptic feedback on selection change
-    triggerHapticFeedback();
+    // Trigger haptic feedback on selection change (stronger feedback for final selection)
+    triggerHapticFeedback(15); // Slightly stronger haptic for final selection
 
     // Calculate the shortest rotation path from actual current position
     const actualCurrentRotation = circleContainerRef.current
@@ -395,6 +438,25 @@ export default function MenuPhone({ menuItems }) {
         ease: "power3.out",
         transformOrigin: "center center",
         force3D: true, // Enable hardware acceleration
+        onUpdate: () => {
+          // Update image rotations during animation to keep them straight
+          const currentCircleRotation = gsap.getProperty(
+            circleContainerRef.current,
+            "rotation"
+          );
+          circleItemRefs.current.forEach((itemRef) => {
+            if (itemRef) {
+              const img = itemRef.querySelector("img");
+              if (img) {
+                gsap.set(img, {
+                  rotation: -currentCircleRotation,
+                  transformOrigin: "center center",
+                  force3D: true,
+                });
+              }
+            }
+          });
+        },
         onComplete: () => {
           setIsAnimating(false);
           // Animation is complete - no additional state updates needed
@@ -435,6 +497,10 @@ export default function MenuPhone({ menuItems }) {
 
   useEffect(() => {
     if (fadedtext && scrollingTextRef.current) {
+      // Kill any existing animations to prevent conflicts
+      gsap.killTweensOf("#bg-text-mobile");
+      gsap.killTweensOf(scrollingTextRef.current);
+
       // Animate background text container fade in
       gsap.fromTo(
         "#bg-text-mobile",
@@ -450,13 +516,15 @@ export default function MenuPhone({ menuItems }) {
         }
       );
 
-      // Start the continuous scrolling animation (left to right)
+      // Start the continuous scrolling animation (left to right) - faster and more consistent
       gsap.set(scrollingTextRef.current, { x: "-50%" });
       gsap.to(scrollingTextRef.current, {
         x: "0%",
-        duration: 15,
+        duration: 8, // Faster: reduced from 15 to 8 seconds
         ease: "none",
         repeat: -1,
+        immediateRender: false, // Prevents initial render conflicts
+        force3D: true, // Enable hardware acceleration for smoother animation
       });
     }
   }, [fadedtext]);
@@ -502,7 +570,7 @@ export default function MenuPhone({ menuItems }) {
               <span
                 key={`${fadedtext}-${i}`}
                 ref={(el) => (bgTextRefs.current[i] = el)}
-                className={`${alumniSans.className} font-[700] flex-shrink-0`}
+                className={`${alumniSans.className} font-[800] flex-shrink-0`}
                 style={{ opacity: 1 }}
               >
                 {fadedtext}
@@ -569,7 +637,9 @@ export default function MenuPhone({ menuItems }) {
                 <img
                   src={menuItems[i].img1}
                   alt={menuItems[i].name}
-                  className={`rotate-${0 + i * 80}`}
+                  style={{
+                    transform: `rotate(${-circleRotation}deg)`,
+                  }}
                 />
                 {/* {isSelected && (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
@@ -595,7 +665,7 @@ export default function MenuPhone({ menuItems }) {
       {fadedtext && (
         <div
           ref={bottomTextRef}
-          className={`mt-4 ${alumniSans.className} font-[700] absolute text-4xl bottom-[50%]`}
+          className={`mt-4 ${alumniSans.className} font-[800] absolute text-6xl bottom-[50%]`}
           style={{ opacity: 0 }}
         >
           {fadedtext}
