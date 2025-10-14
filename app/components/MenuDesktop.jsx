@@ -9,9 +9,10 @@ const alumniSans = Alumni_Sans({
   variable: "--font-alumni-sans",
 });
 
-export default function MenuDesktop({ menuItems }) {
+export default function MenuDesktop({ menuItems, currentPath }) {
   const [fadedtext, setFadedText] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null); // Track currently selected item
   const bgTextRefs = useRef([]);
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
@@ -20,6 +21,45 @@ export default function MenuDesktop({ menuItems }) {
 
   let length = menuItems.length;
   let cutangle = 360 / length;
+
+  // Initialize with current page selected based on pathname
+  useEffect(() => {
+    if (currentPath && menuItems.length > 0) {
+      // Find the menu item that matches the current path
+      const currentIndex = menuItems.findIndex(
+        (item) => item.link === currentPath
+      );
+
+      if (currentIndex !== -1) {
+        // Set the current page as selected
+        setSelectedIndex(currentIndex);
+        setFadedText(menuItems[currentIndex].name);
+        setHoveredItem(menuItems[currentIndex]);
+
+        // Set initial scaling for the current page item
+        setTimeout(() => {
+          if (circleItemRefs.current[currentIndex]) {
+            gsap.set(circleItemRefs.current[currentIndex], {
+              scale: 1.2,
+            });
+          }
+        }, 100);
+      } else {
+        // Fallback to first item if current path doesn't match any menu item
+        setSelectedIndex(0);
+        setFadedText(menuItems[0].name);
+        setHoveredItem(menuItems[0]);
+
+        setTimeout(() => {
+          if (circleItemRefs.current[0]) {
+            gsap.set(circleItemRefs.current[0], {
+              scale: 1.2,
+            });
+          }
+        }, 100);
+      }
+    }
+  }, [currentPath, menuItems]);
 
   useEffect(() => {
     if (fadedtext && scrollingTextRef.current) {
@@ -128,22 +168,28 @@ export default function MenuDesktop({ menuItems }) {
   }, [hoveredItem]);
 
   const handleCircleItemHover = (index, isHovering) => {
-    if (circleItemRefs.current[index]) {
-      gsap.to(circleItemRefs.current[index], {
-        scale: isHovering ? 1.2 : 1,
-        duration: 0.3,
-        ease: "power2.out",
-      });
-    }
-
-    // Show the corresponding name in the background when hovering
     if (isHovering) {
-      setFadedText(menuItems[index].name);
-      setHoveredItem(menuItems[index]);
-    } else {
-      setFadedText("");
-      setHoveredItem(null);
+      // Only update if hovering over a different item
+      if (selectedIndex !== index) {
+        // Update selection to the hovered item
+        setSelectedIndex(index);
+        setFadedText(menuItems[index].name);
+        setHoveredItem(menuItems[index]);
+
+        // Apply scaling to all items
+        circleItemRefs.current.forEach((itemRef, i) => {
+          if (itemRef) {
+            gsap.to(itemRef, {
+              scale: i === index ? 1.2 : 1,
+              duration: 0.3,
+              ease: "power2.out",
+            });
+          }
+        });
+      }
     }
+    // Note: When mouse leaves (isHovering = false), we don't change anything
+    // The selection stays locked on the last hovered item
   };
 
   const handleCircleItemClick = (index) => {
@@ -203,14 +249,19 @@ export default function MenuDesktop({ menuItems }) {
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
 
+            const isSelected = selectedIndex === i;
+
             return (
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className="absolute w-10 h-10 flex items-center justify-center cursor-pointer overflow-hidden"
+                className={`absolute w-10 h-10 flex items-center justify-center cursor-pointer overflow-hidden `}
                 style={{
                   left: `calc(50% + ${x}px - 20px)`,
                   top: `calc(50% + ${y}px - 20px)`,
+                  // filter: isSelected
+                  //   ? "brightness(1.2) saturate(1.2)"
+                  //   : "brightness(0.9) saturate(0.8)",
                 }}
                 onMouseEnter={() => handleCircleItemHover(i, true)}
                 onMouseLeave={() => handleCircleItemHover(i, false)}
