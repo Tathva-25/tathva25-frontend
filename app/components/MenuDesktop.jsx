@@ -86,20 +86,20 @@ export default function MenuDesktop({ menuItems }) {
         })
           // Create interference/mixing phase
           .to(img, {
-            filter: "blur(0px) contrast(1000) saturate(20)",
+            filter: "blur(0px) contrast(1) saturate(1)",
             transform: "scale(1.05)",
             opacity: 0.55,
             duration: 0.08,
           })
           .to(img, {
-            filter: "blur(0.3px) contrast(1.8) saturate(0.8)",
-            transform: "scale(0.95)",
+            filter: "blur(0.3px) contrast(1000) saturate(100)",
+            transform: "scale(0.75)",
             opacity: 0.9,
-            duration: 0.08,
+            duration: 0.1,
           })
           .to(img, {
             filter: "blur(0px) contrast(1.3) saturate(1.2)",
-            transform: "scale(1.02)",
+            transform: "scale(1)",
             opacity: 0.95,
             duration: 0.18,
             imageRendering: "pixelated",
