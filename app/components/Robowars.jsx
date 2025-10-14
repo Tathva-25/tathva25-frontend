@@ -38,7 +38,7 @@ function BarcodeImage({ src, alt }) {
       alt={`${alt}`}
       width={100}
       height={200}
-      className="h-auto object-contain"
+      className="h-auto w-auto object-contain"
     />
   );
 }
@@ -46,7 +46,7 @@ function BarcodeImage({ src, alt }) {
 function Loader() {
   return (
     <>
-      <div className="flex mt-5 ml-10 mb-10">
+      <div className="flex mt-10 ml-10 mb-10">
         <div className="loader-item opacity-0" style={{ animationDelay: "0s" }}>
           <ImgtoImage src="/roboloader.png" alt="roboloader" />
         </div>
@@ -101,7 +101,7 @@ function Loader() {
 function Line() {
   return (
     <>
-      <div className="flex justify-center mx-2 my-3 items-center">
+      <div className="flex justify-center mx-2 my-6 items-center">
         <div className="bg-black w-[80%] h-[4px]"></div>
       </div>
     </>
@@ -151,7 +151,7 @@ function Region() {
 /*Main pic*/
 function Picture() {
   return (
-    <div className="w-full absolute -top-65">
+    <div className="w-full">
       <div className="w-full">
         <ImgtoImage src="/robowars.png" alt="robowars" />
       </div>
@@ -166,7 +166,6 @@ export default function Robowars({ link }) {
         <div className="relative bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
           <Line />
           <Loader />
-          <div className="p-80">&nbsp;</div>
           <Picture />
           <Region />
           <Line />
