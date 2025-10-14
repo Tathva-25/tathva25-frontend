@@ -569,7 +569,7 @@ export default function MenuPhone({ menuItems }) {
                 <img
                   src={menuItems[i].img1}
                   alt={menuItems[i].name}
-                  // className="rotate-90"
+                  className={`rotate-${0 + i * 80}`}
                 />
                 {/* {isSelected && (
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />

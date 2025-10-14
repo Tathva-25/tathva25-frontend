@@ -207,7 +207,7 @@ export default function MenuDesktop({ menuItems }) {
               <div
                 key={i}
                 ref={(el) => (circleItemRefs.current[i] = el)}
-                className="absolute w-10 h-10 flex items-center justify-center cursor-pointer shadow-lg overflow-hidden"
+                className="absolute w-10 h-10 flex items-center justify-center cursor-pointer overflow-hidden"
                 style={{
                   left: `calc(50% + ${x}px - 20px)`,
                   top: `calc(50% + ${y}px - 20px)`,
@@ -216,7 +216,11 @@ export default function MenuDesktop({ menuItems }) {
                 onMouseLeave={() => handleCircleItemHover(i, false)}
                 onClick={() => handleCircleItemClick(i)}
               >
-                <img src={menuItems[i].img1} alt={menuItems[i].name} />
+                <img
+                  src={menuItems[i].img1}
+                  alt={menuItems[i].name}
+                  className="-rotate-8"
+                />
               </div>
             );
           })}
