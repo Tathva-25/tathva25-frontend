@@ -52,19 +52,7 @@ function Loader() {
         </div>
         <div
           className="loader-item opacity-0"
-          style={{ animationDelay: "0.2s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
-        <div
-          className="loader-item opacity-0"
           style={{ animationDelay: "0.4s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
-        <div
-          className="loader-item opacity-0"
-          style={{ animationDelay: "0.6s" }}
         >
           <ImgtoImage src="/roboloader.png" alt="roboloader" />
         </div>
@@ -76,19 +64,31 @@ function Loader() {
         </div>
         <div
           className="loader-item opacity-0"
-          style={{ animationDelay: "1.0s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
-        <div
-          className="loader-item opacity-0"
           style={{ animationDelay: "1.2s" }}
         >
           <ImgtoImage src="/roboloader.png" alt="roboloader" />
         </div>
         <div
           className="loader-item opacity-0"
-          style={{ animationDelay: "1.4s" }}
+          style={{ animationDelay: "1.6s" }}
+        >
+          <ImgtoImage src="/roboloader.png" alt="roboloader" />
+        </div>
+        <div
+          className="loader-item opacity-0"
+          style={{ animationDelay: "2.0s" }}
+        >
+          <ImgtoImage src="/roboloader.png" alt="roboloader" />
+        </div>
+        <div
+          className="loader-item opacity-0"
+          style={{ animationDelay: "2.4s" }}
+        >
+          <ImgtoImage src="/roboloader.png" alt="roboloader" />
+        </div>
+        <div
+          className="loader-item opacity-0"
+          style={{ animationDelay: "2.8s" }}
         >
           <ImgtoImage src="/roboloader.png" alt="roboloader" />
         </div>
