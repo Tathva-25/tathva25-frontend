@@ -46,7 +46,7 @@ function BarcodeImage({ src, alt }) {
 function Loader() {
   return (
     <>
-      <div className="flex mt-10 ml-10 mb-50">
+      <div className="flex mt-10 ml-10 mr-30">
         <div className="loader-item opacity-0" style={{ animationDelay: "0s" }}>
           <ImgtoImage src="/roboloader.png" alt="roboloader" />
         </div>
@@ -86,12 +86,6 @@ function Loader() {
         >
           <ImgtoImage src="/roboloader.png" alt="roboloader" />
         </div>
-        <div
-          className="loader-item opacity-0"
-          style={{ animationDelay: "2.8s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
       </div>
     </>
   );
@@ -120,14 +114,16 @@ function Region() {
                 <div
                   className={`bg-black px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className}`}
                 >
-                  <span className="text-white robopagetitle">OCT 26,27</span>
+                  <span className="text-white robopagetitle tracking-wider">
+                    OCT 26,27
+                  </span>
                 </div>
                 <div className={`bg-black py-1 ${schabo.className}`}>
                   <span className="robopagetitle">l</span>
                 </div>
 
                 <div
-                  className={`${spacemono.className} text-[10px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
+                  className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
                 >
                   <span>30 x 30 FT. ARENA</span>
                   <span>15KG \ 60KG</span>
@@ -135,7 +131,9 @@ function Region() {
               </div>
             </div>
             <div className={`text-black ${schabo.className}`}>
-              <span className="robopagetitle">PRIZES WORTH INR 8 LAKH</span>
+              <span className="robopagetitle tracking-wider">
+                PRIZES WORTH INR 8 LAKH
+              </span>
             </div>
           </div>
           <div className="flex">
@@ -151,17 +149,7 @@ function Region() {
 /*Main pic*/
 function Picture() {
   return (
-    <div className="absolute w-full -top-[16%]">
-      <div className="w-full">
-        <ImgtoImage src="/robowars.png" alt="robowars" />
-      </div>
-    </div>
-  );
-}
-
-function Pseudopicture() {
-  return (
-    <div className="w-full scale-50 opacity-0">
+    <div className="w-full">
       <div className="w-full">
         <ImgtoImage src="/robowars.png" alt="robowars" />
       </div>
@@ -172,17 +160,12 @@ function Pseudopicture() {
 export default function Robowars({ link }) {
   return (
     <>
-      <div className="pt-100">
-        <div className="relative bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
-          <Line />
-          <Loader />
-          <Picture />
-          <div className="w-[65%] h-[65%]">
-            <Pseudopicture />
-          </div>
-          <Region />
-          <Line />
-        </div>
+      <div className="relative bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
+        <Line />
+        <Loader />
+        <Picture />
+        <Region />
+        <Line />
       </div>
     </>
   );
