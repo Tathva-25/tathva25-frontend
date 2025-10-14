@@ -65,15 +65,17 @@ export default function MenuPhone({ menuItems, currentPath }) {
   // Initialize mobile selection and set initial rotation (only on component mount)
   useEffect(() => {
     let initialIndex = 0;
-    
+
     // Find the menu item that matches the current path
     if (currentPath && menuItems.length > 0) {
-      const currentIndex = menuItems.findIndex(item => item.link === currentPath);
+      const currentIndex = menuItems.findIndex(
+        (item) => item.link === currentPath
+      );
       if (currentIndex !== -1) {
         initialIndex = currentIndex;
       }
     }
-    
+
     // Set the selected item (either current page or fallback to first item)
     setSelectedIndex(initialIndex);
     setFadedText(menuItems[initialIndex].name);
