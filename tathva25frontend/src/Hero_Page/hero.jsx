@@ -12,6 +12,7 @@ import Background from '../../public/images/Background.png'
 import localfont from 'next/font/local';
 import Lines from './lines';
 import Ripple from './particles';
+import Avatar from '../../public/images/avatar.png';
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -201,7 +202,7 @@ export const Hero=()=> {
                   />
               </div>
               
-              {/* Eye Icon - Top Layer */}
+             {/* Eye Icon - Top Layer */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-full h-full">
                   <Image
@@ -213,6 +214,8 @@ export const Hero=()=> {
                   />
                 </div>
               </div>
+            
+            
               
               
               
