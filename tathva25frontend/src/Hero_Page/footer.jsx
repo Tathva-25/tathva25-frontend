@@ -34,19 +34,19 @@ const Footer = () => {
                                         className="w-[25vw] px-[0.521vw] py-[0.521vw] translate-x-[10vw] translate-y-[27vw] text-[2vw] bg-transparent border-b-[0.104vw] border-white text-white placeholder-gray-300 placeholder-opacity-70 focus:outline-none focus:border-gray-200 transition-colors"
                                     />
                                 </div>
-                                <button className=" translate-x-[10vw] rounded-md translate-y-[30vw] px-[3vw] w-[20vw] round-2 bg-white text-black hover:bg-[#D9B64D]">
+                                <button className=" translate-x-[10vw] rounded-md translate-y-[30vw] px-[2vw] w-[20vw] round-2 bg-white text-black text-[3.5vw] hover:bg-[#D9B64D] transition-colors">
                                     Subscribe
                                 </button>
                             </div>
                             <div className="grid grid-cols-2 gap-x-[3vw] gap-y-[0.260vw]">
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Home</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Events</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Workshops</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Lectures</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Sponsors</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">About Us</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Team</a>
-                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Contact</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Home</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Events</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Workshops</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Lectures</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Sponsors</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">About Us</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Team</a>
+                                <a href="#" className="hover:text-[#D9B64D] transition-colors text-[4vw] text-white translate-y-[26vw] translate-x-[20vw]">Contact</a>
                             </div>
                         </div>
                         <div className="mt-[1.042vw] text-[2.5vw] translate-y-[31vw] translate-x-[10vw]">
@@ -103,14 +103,14 @@ const Footer = () => {
                             {/* Navigation Links Overlay */}
                             <div className="absolute inset-[7.813vw] flex items-center justify-center px-[1.042vw] right-[1.042vw] mt-[5.208vw] bottom-[1.302vw]">
                                 <div className="grid grid-cols-2 gap-x-[3vw] gap-y-[0.260vw]">
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Home</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Events</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Workshops</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Lectures</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Sponsors</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">About Us</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Team</a>
-                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[1.8vw] text-white -translate-y-[1vw] translate-x-[1.7vw]">Contact</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Home</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Events</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Workshops</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Lectures</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Sponsors</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">About Us</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Team</a>
+                                    <a href="#" className="hover:text-[#D9B64D] transition-colors text-[2vw] text-white translate-y-[0.5vw] translate-x-[6vw]">Contact</a>
                                 </div>
                             </div>
                         </div>
