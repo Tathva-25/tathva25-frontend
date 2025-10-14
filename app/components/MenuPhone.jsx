@@ -15,6 +15,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
   const [selectedIndex, setSelectedIndex] = useState(0); // For mobile selection
   const [circleRotation, setCircleRotation] = useState(0); // Current rotation angle
   const [isAnimating, setIsAnimating] = useState(false); // Prevent multiple animations
+  const [dragSelectedIndex, setDragSelectedIndex] = useState(0); // Track selection during drag for haptics
   const bgTextRefs = useRef([]);
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
@@ -158,6 +159,9 @@ export default function MenuPhone({ menuItems, currentPath }) {
       initialRotation = actualRotation;
       currentRotation = actualRotation;
 
+      // Initialize drag selection tracking for haptics
+      setDragSelectedIndex(selectedIndex);
+
       // Update our state to match the actual visual position
       setCircleRotation(actualRotation);
 
@@ -231,6 +235,12 @@ export default function MenuPhone({ menuItems, currentPath }) {
 
       // Ensure potentialIndex is valid and update visual feedback during drag
       if (potentialIndex >= 0 && potentialIndex < length) {
+        // Trigger haptic feedback when selection changes during drag
+        if (potentialIndex !== dragSelectedIndex) {
+          triggerRotationHaptic(); // Light haptic for selection change during drag
+          setDragSelectedIndex(potentialIndex);
+        }
+
         // Update text and hover state
         setFadedText(menuItems[potentialIndex].name);
         setHoveredItem(menuItems[potentialIndex]);
@@ -334,9 +344,16 @@ export default function MenuPhone({ menuItems, currentPath }) {
   }, []); // Remove dependencies to prevent recreating event listeners
 
   // Add haptic feedback for mobile devices
-  const triggerHapticFeedback = () => {
+  const triggerHapticFeedback = (intensity = 10) => {
     if ("vibrate" in navigator) {
-      navigator.vibrate(10); // Short vibration
+      navigator.vibrate(intensity); // Vibration with configurable intensity
+    }
+  };
+
+  // Add lighter haptic for rotation feedback
+  const triggerRotationHaptic = () => {
+    if ("vibrate" in navigator) {
+      navigator.vibrate(5); // Very light vibration for rotation
     }
   };
 
@@ -366,8 +383,8 @@ export default function MenuPhone({ menuItems, currentPath }) {
     setIsAnimating(true);
     const targetRotation = getTargetRotation(targetIndex);
 
-    // Trigger haptic feedback on selection change
-    triggerHapticFeedback();
+    // Trigger haptic feedback on selection change (stronger feedback for final selection)
+    triggerHapticFeedback(15); // Slightly stronger haptic for final selection
 
     // Calculate the shortest rotation path from actual current position
     const actualCurrentRotation = circleContainerRef.current
