@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 // --- CONFIGURATION CONSTANTS ---
 const INITIAL_RING_RADIUS = 150;
@@ -8,8 +8,8 @@ const MAX_DISTANCE = 1000;
 const RIPPLE_INTERVAL_MS = 700;
 
 // Sparkle appearance settings
-const SPARKLE_SIZE_MIN = 5;
-const SPARKLE_SIZE_MAX = 13;
+const SPARKLE_SIZE_MIN = 7;
+const SPARKLE_SIZE_MAX = 17;
 const SPARKLE_ROTATION_SPEED = 0.05;
 
 // Non-uniform distribution settings
@@ -18,179 +18,182 @@ const SPEED_VARIANCE = 0.4; // How much speed can vary per particle (0 = uniform
 const CLUSTER_EFFECT = 0.2; // Creates clustering in certain directions (0 = no clustering, 1 = strong clustering)
 
 const Ripple = () => {
-    const canvasRef = useRef(null);
-    const particlesRef = useRef([]);
-    const animationFrameRef = useRef(null);
-    const rippleIntervalRef = useRef(null);
+  const canvasRef = useRef(null);
+  const particlesRef = useRef([]);
+  const animationFrameRef = useRef(null);
+  const lastRippleTimeRef = useRef(0);
 
-    /**
-     * Create a new ripple of particles with non-uniform distribution
-     */
-    const createRipple = () => {
-        const newParticles = [];
-        const timestamp = Date.now();
-        const clusterAngle = Math.random() * Math.PI * 2; // Random preferred direction for clustering
-        
-        for (let i = 0; i < NUM_PARTICLES_PER_RIPPLE; i++) {
-            // Base angle with non-uniform distribution
-            const baseAngle = (i / NUM_PARTICLES_PER_RIPPLE) * 2 * Math.PI;
-            const angleRandomness = (Math.random() - 0.5) * Math.PI * ANGLE_VARIANCE;
-            const clusterInfluence = Math.sin(baseAngle - clusterAngle) * CLUSTER_EFFECT;
-            const angle = baseAngle + angleRandomness + clusterInfluence;
-            
-            // Variable speed per particle
-            const speedMultiplier = 1 + (Math.random() - 0.5) * SPEED_VARIANCE;
-            
-            // Variable sparkle size
-            const size = SPARKLE_SIZE_MAX - SPARKLE_SIZE_MIN;
-            
-            newParticles.push({
-                id: timestamp + i,
-                angle: angle,
-                distance: INITIAL_RING_RADIUS,
-                speed: RIPPLE_SPEED * speedMultiplier,
-                size: size,
-                rotation: Math.random() * Math.PI * 2, // Initial rotation
-                rotationSpeed: (Math.random() - 0.5) * SPARKLE_ROTATION_SPEED,
-            });
-        }
-        return newParticles;
+  /**
+   * Create a new ripple of particles with non-uniform distribution
+   */
+  const createRipple = () => {
+    const newParticles = [];
+    const timestamp = Date.now();
+    const clusterAngle = Math.random() * Math.PI * 2; // Random preferred direction for clustering
+
+    for (let i = 0; i < NUM_PARTICLES_PER_RIPPLE; i++) {
+      // Base angle with non-uniform distribution
+      const baseAngle = (i / NUM_PARTICLES_PER_RIPPLE) * 2 * Math.PI;
+      const angleRandomness = (Math.random() - 0.5) * Math.PI * ANGLE_VARIANCE;
+      const clusterInfluence =
+        Math.sin(baseAngle - clusterAngle) * CLUSTER_EFFECT;
+      const angle = baseAngle + angleRandomness + clusterInfluence;
+
+      // Variable speed per particle
+      const speedMultiplier = 1 + (Math.random() - 0.5) * SPEED_VARIANCE;
+
+      // Variable sparkle size
+      const size = SPARKLE_SIZE_MAX - SPARKLE_SIZE_MIN;
+
+      newParticles.push({
+        id: timestamp + i,
+        angle: angle,
+        distance: INITIAL_RING_RADIUS,
+        speed: RIPPLE_SPEED * speedMultiplier,
+        size: size,
+        rotation: Math.random() * Math.PI * 2, // Initial rotation
+        rotationSpeed: (Math.random() - 0.5) * SPARKLE_ROTATION_SPEED,
+      });
+    }
+    return newParticles;
+  };
+
+  /**
+   * Draw a sparkle/star shape
+   */
+  const drawSparkle = (ctx, x, y, size, rotation, opacity) => {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+
+    // Create gradient for golden sparkle
+    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
+    gradient.addColorStop(0, `rgba(108, 82, 37, ${opacity})`); // Bright golden center
+    gradient.addColorStop(0.5, `rgba(108, 82, 37, ${opacity * 0.8})`); // Golden middle
+    gradient.addColorStop(1, `rgba(108, 82, 37, ${opacity * 0.3})`); // Darker golden edge
+
+    // Draw 4-pointed star
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const angle = (i * Math.PI) / 2;
+      const tipX = Math.cos(angle) * size;
+      const tipY = Math.sin(angle) * size;
+      const innerX = Math.cos(angle + Math.PI / 4) * (size * 0.3);
+      const innerY = Math.sin(angle + Math.PI / 4) * (size * 0.3);
+
+      if (i === 0) {
+        ctx.moveTo(tipX, tipY);
+      } else {
+        ctx.lineTo(tipX, tipY);
+      }
+      ctx.lineTo(innerX, innerY);
+    }
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // Add a bright center dot
+    ctx.beginPath();
+    ctx.arc(0, 0, size * 0.2, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(255, 255, 200, ${opacity})`;
+    ctx.fill();
+
+    ctx.restore();
+  };
+
+  /**
+   * Animation loop using canvas for better performance
+   */
+  const animate = (timestamp) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+
+    // Check if it's time to create a new ripple
+    if (timestamp - lastRippleTimeRef.current >= RIPPLE_INTERVAL_MS) {
+      particlesRef.current = [...particlesRef.current, ...createRipple()];
+      lastRippleTimeRef.current = timestamp;
+    }
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Update and draw particles
+    particlesRef.current = particlesRef.current
+      .map((p) => ({
+        ...p,
+        distance: p.distance + p.speed,
+        rotation: p.rotation + p.rotationSpeed,
+      }))
+      .filter((p) => p.distance < MAX_DISTANCE);
+
+    // Draw sparkles
+    particlesRef.current.forEach((p) => {
+      const x = centerX + p.distance * Math.cos(p.angle);
+      const y = centerY + p.distance * Math.sin(p.angle);
+      const opacity =
+        1 -
+        (p.distance - INITIAL_RING_RADIUS) /
+          (MAX_DISTANCE - INITIAL_RING_RADIUS);
+
+      if (opacity > 0) {
+        drawSparkle(ctx, x, y, p.size, p.rotation, opacity);
+      }
+    });
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    // Set canvas size to be large enough for particles to expand in all directions
+    const updateCanvasSize = () => {
+      // Calculate diagonal distance from center to corner to ensure full coverage
+      const maxDimension = Math.max(window.innerWidth, window.innerHeight);
+      const canvasSize = maxDimension * 3; // 3x to ensure particles reach all corners
+      canvas.width = canvasSize;
+      canvas.height = canvasSize;
     };
+    updateCanvasSize();
+    window.addEventListener("resize", updateCanvasSize);
 
-    /**
-     * Draw a sparkle/star shape
-     */
-    const drawSparkle = (ctx, x, y, size, rotation, opacity) => {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(rotation);
-        
-        // Create gradient for golden sparkle
-        const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
-        gradient.addColorStop(0, `rgba(108, 82, 37, ${opacity})`); // Bright golden center
-        gradient.addColorStop(0.5, `rgba(108, 82, 37, ${opacity * 0.8})`); // Golden middle
-        gradient.addColorStop(1, `rgba(108, 82, 37, ${opacity * 0.3})`); // Darker golden edge
-        
-        // Draw 4-pointed star
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-            const angle = (i * Math.PI) / 2;
-            const tipX = Math.cos(angle) * size;
-            const tipY = Math.sin(angle) * size;
-            const innerX = Math.cos(angle + Math.PI / 4) * (size * 0.3);
-            const innerY = Math.sin(angle + Math.PI / 4) * (size * 0.3);
-            
-            if (i === 0) {
-                ctx.moveTo(tipX, tipY);
-            } else {
-                ctx.lineTo(tipX, tipY);
-            }
-            ctx.lineTo(innerX, innerY);
-        }
-        ctx.closePath();
-        ctx.fillStyle = gradient;
-        ctx.fill();
-        
-        // Add a bright center dot
-        ctx.beginPath();
-        ctx.arc(0, 0, size * 0.2, 0, 2 * Math.PI);
-        ctx.fillStyle = `rgba(255, 255, 200, ${opacity})`;
-        ctx.fill();
-        
-        ctx.restore();
+    // Initialize with first ripple and set initial timestamp
+    particlesRef.current = createRipple();
+    lastRippleTimeRef.current = performance.now();
+
+    // Start animation
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", updateCanvasSize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
+  }, []);
 
-    /**
-     * Animation loop using canvas for better performance
-     */
-    const animate = () => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Update and draw particles
-        particlesRef.current = particlesRef.current
-            .map(p => ({
-                ...p,
-                distance: p.distance + p.speed,
-                rotation: p.rotation + p.rotationSpeed,
-            }))
-            .filter(p => p.distance < MAX_DISTANCE);
-
-        // Draw sparkles
-        particlesRef.current.forEach(p => {
-            const x = centerX + p.distance * Math.cos(p.angle);
-            const y = centerY + p.distance * Math.sin(p.angle);
-            const opacity = 1 - (p.distance - INITIAL_RING_RADIUS) / (MAX_DISTANCE - INITIAL_RING_RADIUS);
-
-            if (opacity > 0) {
-                drawSparkle(ctx, x, y, p.size, p.rotation, opacity);
-            }
-        });
-
-        animationFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        // Set canvas size to be large enough for particles to expand in all directions
-        const updateCanvasSize = () => {
-            // Calculate diagonal distance from center to corner to ensure full coverage
-            const maxDimension = Math.max(window.innerWidth, window.innerHeight);
-            const canvasSize = maxDimension * 3; // 3x to ensure particles reach all corners
-            canvas.width = canvasSize;
-            canvas.height = canvasSize;
-        };
-        updateCanvasSize();
-        window.addEventListener('resize', updateCanvasSize);
-
-        // Initialize with first ripple
-        particlesRef.current = createRipple();
-
-        // Start animation
-        animationFrameRef.current = requestAnimationFrame(animate);
-
-        // Set up ripple spawning interval
-        rippleIntervalRef.current = setInterval(() => {
-            particlesRef.current = [...particlesRef.current, ...createRipple()];
-        }, RIPPLE_INTERVAL_MS);
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('resize', updateCanvasSize);
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
-            if (rippleIntervalRef.current) {
-                clearInterval(rippleIntervalRef.current);
-            }
-        };
-    }, []);
-
-    return (
-        <div className="absolute w-full h-full pointer-events-none overflow-visible">
-            <canvas
-                ref={canvasRef}
-                className="absolute"
-                style={{ 
-                    opacity: 1,
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '300vmax',
-                    height: '300vmax'
-                }}
-            />
-        </div>
-    );
+  return (
+    <div className="absolute w-full h-full pointer-events-none overflow-visible">
+      <canvas
+        ref={canvasRef}
+        className="absolute"
+        style={{
+          opacity: 1,
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "300vmax",
+          height: "300vmax",
+        }}
+      />
+    </div>
+  );
 };
 
 export default Ripple;

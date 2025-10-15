@@ -1,26 +1,25 @@
 // src/components/Hero.js
 
-'use client';
-import { gsap } from 'gsap';
-import { useEffect, useRef, useState } from 'react';
-import { ScrollTrigger } from 'gsap/all';
-import Image from 'next/image';
-import heroAvatar from '../../public/images/avatar-body.png';
-import wheel from '../../public/images/wheel.svg'
-import EyeIcon from '../../public/images/eye.svg'
-import Background from '../../public/images/Background.png'
-import localfont from 'next/font/local';
-import Lines from './lines';
-import Ripple from './particles';
+"use client";
+import { gsap } from "gsap";
+import { useEffect, useRef, useState } from "react";
+import { ScrollTrigger } from "gsap/all";
+import Image from "next/image";
+import heroAvatar from "../../public/images/avatar-body.png";
+import wheel from "../../public/images/wheel.png";
+import Background from "../../public/images/Background.png";
+import localfont from "next/font/local";
+import Lines from "./lines";
+import Ripple from "./particles";
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger);
 
 const customFont = localfont({
-  src: '../../public/fonts/neoform.otf',
-})
+  src: "../../public/fonts/neoform.otf",
+});
 
-export const Hero=()=> {
-  const [displayText, setDisplayText] = useState('TATHVA');
+export const Hero = () => {
+  const [displayText, setDisplayText] = useState("TATHVA");
   const [isAnimating, setIsAnimating] = useState(false);
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -28,20 +27,21 @@ export const Hero=()=> {
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
-  const targetText = 'TATHVA';
-  const characters = 'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵ';
+  const targetText = "TATHVA";
+  const characters =
+    "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵ";
 
   const scrambleText = () => {
     return targetText
-      .split('')
+      .split("")
       .slice(0, 5)
       .map(() => characters[Math.floor(Math.random() * characters.length)])
-      .join('');
+      .join("");
   };
 
   const triggerGlitchEffect = () => {
     if (isAnimating || hasAnimatedRef.current) return;
-    
+
     setIsAnimating(true);
     hasAnimatedRef.current = true;
     let iteration = 0;
@@ -56,21 +56,22 @@ export const Hero=()=> {
 
       if (iteration >= maxIterations) {
         clearInterval(intervalRef.current);
-        
+
         let revealIndex = 0;
         const revealInterval = setInterval(() => {
           setDisplayText(() => {
-            let result = '';
+            let result = "";
             for (let i = 0; i < targetText.length; i++) {
               if (i <= revealIndex) {
                 result += targetText[i];
               } else {
-                result += characters[Math.floor(Math.random() * characters.length)];
+                result +=
+                  characters[Math.floor(Math.random() * characters.length)];
               }
             }
             return result;
           });
-          
+
           revealIndex++;
           if (revealIndex >= targetText.length) {
             clearInterval(revealInterval);
@@ -120,105 +121,96 @@ export const Hero=()=> {
       gsap.to(wheelRef.current, {
         rotation: 360,
         duration: 20,
-        ease: 'linear',
+        ease: "linear",
         repeat: -1,
       });
     }
   }, []);
 
   return (
-
-    <section ref={sectionRef} className={`relative h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}>
+    <section
+      ref={sectionRef}
+      className={`relative h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
+    >
       <div className="mx-auto w-full">
-        
         <div>
           <Image
-            src={Background.src}
-            className='absolute  md:w-[100vw] md:h-auto h-screen inset-0 object-cover  md:rotate-0  overflow-x-hidden'
+            src={Background}
+            className="absolute  md:w-[100vw] md:h-auto h-screen inset-0 object-cover  md:rotate-0  overflow-x-hidden"
             alt="Background"
-            width={600}
-            height={600}
+            fill
+            priority
+            quality={90}
+            sizes="100vw"
           />
         </div>
 
-    
         <div className="flex flex-col items-center justify-between h-full gap-4">
           <div className="absolute inset-0 flex justify-center items-center mt-12">
             <Lines />
           </div>
 
-          
-          
           {/* TATHVA Text - Centered */}
           <div className="flex-1 flex items-center justify-center w-full ">
             <div className="w-full max-w-[90vw] md:max-w-5xl text-center ">
               <span
-                className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
-                  isAnimating ? 'tracking-tighter' : ''
+                className={`${
+                  customFont.className
+                } inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
+                  isAnimating ? "tracking-tighter" : ""
                 }`}
-
               >
                 {displayText}
               </span>
             </div>
           </div>
-         
-          
+
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
-            <div className="absolute inset-0 flex justify-center items-center pointer-events-none -mt-18">
+            <div className="absolute inset-0 flex justify-center items-center pointer-events-none -mt-16">
               <Ripple />
             </div>
-            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center">
+            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center -mt-6">
               <span
-                className={`${customFont.className} inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
-                  isAnimating ? 'tracking-tighter' : ''
+                className={`${
+                  customFont.className
+                } inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] ${
+                  isAnimating ? "tracking-tighter" : ""
                 }`}
               >
                 {displayText}
               </span>
             </div>
-            
-            <div className='THIS ONE!!'>
+
+            <div className="THIS ONE!!">
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-20">
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-20 scale-110 ">
                 <Image
-                  ref={wheelRef} 
-                  src={wheel.src}
+                  ref={wheelRef}
+                  src={wheel}
                   alt="wheel"
-                  fill 
+                  fill
                   className="w-full h-full  object-contain"
+                  sizes="(max-width: 768px) 90vw, 500px"
+                  priority
                 />
               </div>
-              
+
               {/* Avatar - Middle Layer */}
-               <div className="absolute inset-0 flex items-center justify-center ">
+              <div className="absolute inset-0 flex items-center justify-center ">
                 <Image
-                  src={heroAvatar.src}
+                  src={heroAvatar}
                   alt="Avatar"
                   className="w-full h-full object-contain scale-136"
-                  width={300}
-                  height={300}
-                  />
+                  fill
+                  sizes="(max-width: 768px) 90vw, 500px"
+                  priority
+                />
               </div>
-              
-             
-            
-            
-              
-              
-              
-              
             </div>
-            
           </div>
-          
         </div>
-        
       </div>
-      
-      
     </section>
-    
   );
-}
+};
