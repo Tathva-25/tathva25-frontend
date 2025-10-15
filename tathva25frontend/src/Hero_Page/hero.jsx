@@ -27,7 +27,7 @@ export const Hero = () => {
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
-  const targetText = "TATHVA";
+  const targetText = "TATHVA ";
   const characters =
     "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵ";
 

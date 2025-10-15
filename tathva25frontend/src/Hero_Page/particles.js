@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 // --- CONFIGURATION CONSTANTS ---
 const INITIAL_RING_RADIUS = 150;
-const NUM_PARTICLES_PER_RIPPLE = 20;
+const NUM_PARTICLES_PER_RIPPLE = 15;
 const RIPPLE_SPEED = 2;
 const MAX_DISTANCE = 1000;
 const RIPPLE_INTERVAL_MS = 700;
@@ -11,6 +11,7 @@ const RIPPLE_INTERVAL_MS = 700;
 const SPARKLE_SIZE_MIN = 7;
 const SPARKLE_SIZE_MAX = 17;
 const SPARKLE_ROTATION_SPEED = 0.05;
+const GLOW_SIZE_MULTIPLIER = 2; // How much larger the glow is compared to sparkle
 
 // Non-uniform distribution settings
 const ANGLE_VARIANCE = 0.3; // How much angles can vary from uniform (0 = uniform, 1 = completely random)
@@ -22,6 +23,7 @@ const Ripple = () => {
   const particlesRef = useRef([]);
   const animationFrameRef = useRef(null);
   const lastRippleTimeRef = useRef(0);
+  const cachedGradientsRef = useRef(new Map());
 
   /**
    * Create a new ripple of particles with non-uniform distribution
@@ -43,7 +45,9 @@ const Ripple = () => {
       const speedMultiplier = 1 + (Math.random() - 0.5) * SPEED_VARIANCE;
 
       // Variable sparkle size
-      const size = SPARKLE_SIZE_MAX - SPARKLE_SIZE_MIN;
+      const size =
+        SPARKLE_SIZE_MIN +
+        Math.random() * (SPARKLE_SIZE_MAX - SPARKLE_SIZE_MIN);
 
       newParticles.push({
         id: timestamp + i,
@@ -59,40 +63,68 @@ const Ripple = () => {
   };
 
   /**
-   * Draw a sparkle/star shape
+   * Get or create cached gradient
+   */
+  const getGradient = (ctx, size, type) => {
+    const key = `${type}-${size.toFixed(1)}`;
+    if (!cachedGradientsRef.current.has(key)) {
+      const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
+      if (type === "glow") {
+        gradient.addColorStop(0, "rgba(211, 175, 55, 1)");
+        gradient.addColorStop(0.3, "rgba(211, 175, 55, 1)");
+        gradient.addColorStop(0.7, "rgba(211, 175, 32, 0.24)");
+        gradient.addColorStop(1, "rgba(218, 165, 32, 0)");
+      } else {
+        gradient.addColorStop(0, "rgba(205, 158, 17, 1)");
+        gradient.addColorStop(0.5, "rgba(238, 171, 46, 0.8)");
+        gradient.addColorStop(1, "rgba(156, 112, 1, 0.4)");
+      }
+      cachedGradientsRef.current.set(key, gradient);
+    }
+    return cachedGradientsRef.current.get(key);
+  };
+
+  /**
+   * Draw a sparkle/star shape with glow
    */
   const drawSparkle = (ctx, x, y, size, rotation, opacity) => {
+    if (opacity <= 0) return;
+
     ctx.save();
     ctx.translate(x, y);
+
+    // Draw glow first (behind sparkle)
+    ctx.globalAlpha = opacity * 0.6;
+    const glowSize = size * GLOW_SIZE_MULTIPLIER;
+    ctx.beginPath();
+    ctx.arc(0, 0, glowSize, 0, 2 * Math.PI);
+    ctx.fillStyle = getGradient(ctx, glowSize, "glow");
+    ctx.fill();
+
+    // Draw sparkle
+    ctx.globalAlpha = opacity;
     ctx.rotate(rotation);
 
-    // Create gradient for golden sparkle
-    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
-    gradient.addColorStop(0, `rgba(108, 82, 37, ${opacity})`); // Bright golden center
-    gradient.addColorStop(0.5, `rgba(108, 82, 37, ${opacity * 0.8})`); // Golden middle
-    gradient.addColorStop(1, `rgba(108, 82, 37, ${opacity * 0.3})`); // Darker golden edge
-
-    // Draw 4-pointed star
+    // Draw 4-pointed star (optimized path)
     ctx.beginPath();
+    const innerSize = size * 0.3;
     for (let i = 0; i < 4; i++) {
       const angle = (i * Math.PI) / 2;
+      const angle2 = angle + Math.PI / 4;
       const tipX = Math.cos(angle) * size;
       const tipY = Math.sin(angle) * size;
-      const innerX = Math.cos(angle + Math.PI / 4) * (size * 0.3);
-      const innerY = Math.sin(angle + Math.PI / 4) * (size * 0.3);
+      const innerX = Math.cos(angle2) * innerSize;
+      const innerY = Math.sin(angle2) * innerSize;
 
-      if (i === 0) {
-        ctx.moveTo(tipX, tipY);
-      } else {
-        ctx.lineTo(tipX, tipY);
-      }
+      if (i === 0) ctx.moveTo(tipX, tipY);
+      else ctx.lineTo(tipX, tipY);
       ctx.lineTo(innerX, innerY);
     }
     ctx.closePath();
-    ctx.fillStyle = gradient;
+    ctx.fillStyle = getGradient(ctx, size, "sparkle");
     ctx.fill();
 
-    // Add a bright center dot
+    // Add bright center dot
     ctx.beginPath();
     ctx.arc(0, 0, size * 0.2, 0, 2 * Math.PI);
     ctx.fillStyle = `rgba(255, 255, 200, ${opacity})`;
@@ -158,6 +190,8 @@ const Ripple = () => {
       const canvasSize = maxDimension * 3; // 3x to ensure particles reach all corners
       canvas.width = canvasSize;
       canvas.height = canvasSize;
+      // Clear gradient cache on resize
+      cachedGradientsRef.current.clear();
     };
     updateCanvasSize();
     window.addEventListener("resize", updateCanvasSize);
