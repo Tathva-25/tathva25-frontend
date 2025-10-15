@@ -140,7 +140,8 @@ export default function AlternatingSection({ sections }) {
             <div
               className="absolute inset-[10px] sm:inset-[15px] md:inset-[20px] pointer-events-none z-[5]"
               style={{
-                border: "2px sm:border-[2.5px] md:border-[3px] solid rgba(255, 215, 0, 1)",
+                border:
+                  "2px sm:border-[2.5px] md:border-[3px] solid rgba(255, 215, 0, 1)",
                 borderTopRightRadius: "30px",
                 borderBottomLeftRadius: "30px",
               }}
