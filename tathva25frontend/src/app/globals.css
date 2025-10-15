@@ -25,3 +25,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+@keyframes slowspin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slowspin 18s linear infinite; /* 20s per full rotation */
+  transform-origin: center center; /* ✅ Ensures rotation stays centered */
+  display: block;
+}
