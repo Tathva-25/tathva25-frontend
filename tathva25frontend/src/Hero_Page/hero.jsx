@@ -18,6 +18,10 @@ const customFont = localfont({
   src: "../../public/fonts/neoform.otf",
 });
 
+const SCRAMBLE_INTERVAL_MS = 40;
+const SCRAMBLE_DURATION_MS = 900;
+const REVEAL_INTERVAL_MS = 110;
+
 export const Hero = () => {
   const [displayText, setDisplayText] = useState("TATHVA");
   const [isAnimating, setIsAnimating] = useState(false);
@@ -27,60 +31,59 @@ export const Hero = () => {
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
-  const targetText = "TATHVA ";
-  const characters =
-    "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵ";
+  const targetText = "TATHVA";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  const scrambleText = () => {
-    return targetText
-      .split("")
-      .slice(0, 5)
-      .map(() => characters[Math.floor(Math.random() * characters.length)])
-      .join("");
-  };
+  const getRandomChar = () =>
+    characters[Math.floor(Math.random() * characters.length)] || "";
+
+  const generateRandomString = (length) =>
+    Array.from({ length }, () => getRandomChar()).join("");
 
   const triggerGlitchEffect = () => {
     if (isAnimating || hasAnimatedRef.current) return;
 
     setIsAnimating(true);
     hasAnimatedRef.current = true;
-    let iteration = 0;
-    const maxIterations = 60;
+    const textLength = targetText.length;
 
     if (intervalRef.current) clearInterval(intervalRef.current);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (timeoutRef.current) clearInterval(timeoutRef.current);
+
+    let elapsed = 0;
+    setDisplayText(generateRandomString(textLength));
 
     intervalRef.current = setInterval(() => {
-      setDisplayText(scrambleText());
-      iteration++;
+      elapsed += SCRAMBLE_INTERVAL_MS;
+      setDisplayText(generateRandomString(textLength));
 
-      if (iteration >= maxIterations) {
+      if (elapsed >= SCRAMBLE_DURATION_MS) {
         clearInterval(intervalRef.current);
 
+        const revealedChars = targetText.split("");
+        const workingChars = generateRandomString(textLength).split("");
         let revealIndex = 0;
-        const revealInterval = setInterval(() => {
-          setDisplayText(() => {
-            let result = "";
-            for (let i = 0; i < targetText.length; i++) {
-              if (i <= revealIndex) {
-                result += targetText[i];
-              } else {
-                result +=
-                  characters[Math.floor(Math.random() * characters.length)];
-              }
-            }
-            return result;
-          });
 
+        timeoutRef.current = setInterval(() => {
+          if (revealIndex < textLength) {
+            workingChars[revealIndex] = revealedChars[revealIndex];
+          }
+
+          for (let i = revealIndex + 1; i < textLength; i++) {
+            workingChars[i] = getRandomChar();
+          }
+
+          setDisplayText(workingChars.join(""));
           revealIndex++;
-          if (revealIndex >= targetText.length) {
-            clearInterval(revealInterval);
+
+          if (revealIndex >= textLength) {
+            clearInterval(timeoutRef.current);
             setDisplayText(targetText);
             setIsAnimating(false);
           }
-        }, 100);
+        }, REVEAL_INTERVAL_MS);
       }
-    }, 30);
+    }, SCRAMBLE_INTERVAL_MS);
   };
 
   // Intersection Observer for scroll into view
@@ -111,7 +114,7 @@ export const Hero = () => {
   useEffect(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) clearInterval(timeoutRef.current);
     };
   }, []);
 
