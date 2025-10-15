@@ -134,7 +134,7 @@ export const Hero=()=> {
         <div>
           <Image
             src={Background.src}
-            className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden '
+            className='absolute  md:w-[100vw] md:h-auto h-screen inset-0 object-cover  md:rotate-0  overflow-x-hidden'
             alt="Background"
             width={600}
             height={600}
@@ -166,7 +166,7 @@ export const Hero=()=> {
           
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
-            <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+            <div className="absolute inset-0 flex justify-center items-center pointer-events-none -mt-18">
               <Ripple />
             </div>
             <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center">
