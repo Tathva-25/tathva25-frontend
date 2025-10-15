@@ -3,11 +3,25 @@ import localfont from "next/font/local"
 import gaming_hero from "../../../public/images/gaming/gaming_hero_w_text.png"
 import text_box_1 from "../../../public/images/gaming/text_box_1.png"
 import text_box_2 from "../../../public/images/gaming/text_box_2.png"
-import Navbar from "@/components/navbar"
-import Sidebar from "@/components/sidebar"
+import { JetBrains_Mono } from 'next/font/google'
 
 const customFont = localfont({
     src: '../../../public/fonts/neoform.otf',
+})
+
+const jetBrainsMono = JetBrains_Mono({
+  // Specify which subsets you need to load (latin is the default)
+  subsets: ['latin'],
+  
+  // This is a Variable Font, so we don't need to specify weights.
+  // It loads all weights by default, but you can limit them if needed:
+  // weight: ['400', '700'], 
+
+  // Optional: Define a CSS variable for Tailwind CSS or custom CSS
+  variable: '--font-mono', 
+
+  // Optional: Font display strategy
+  display: 'swap', 
 })
 
 const GamePage = () => {
@@ -15,7 +29,7 @@ const GamePage = () => {
     <div className="bg-white flex flex-col sm:flex-row items-center justify-center relative overflow-hidden min-h-screen">
       {/* <Sidebar /> */}
         {/* Background NEXUS text with hexagons */}
-        <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center overflow-hidden text-[7rem] leading-[0.9] sm:text-[12rem] md:text-[20rem] sm:leading-[0.9] sm:tracking-widest">
+        <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center overflow-hidden text-[7rem] leading-[0.9] sm:text-[12rem] md:text-[25rem] sm:leading-[0.9] sm:tracking-widest">
           {/* Add the new class here */}
           <div className={`text-effect-container ${customFont.className} font-bold whitespace-nowrap`}>
             <div>NEXUS</div>
@@ -54,17 +68,24 @@ const GamePage = () => {
           </svg>
         </div>
 
-        <div className="sm:pb-20 px-10 sm:w-[60%] relative z-10 flex flex-col items-center sm:h-screen justify-center">
-            <div className="sm:w-[100%] lg:w-[70%]">
+        <div className="sm:w-[60%] z-10 flex flex-col items-center sm:h-screen justify-center mx-auto"> 
+            {/* mx-auto centers the 60% container horizontally on the page */}
+            {/* flex-col stacks children vertically */}
+            {/* items-center centers children (Image container and Text container) horizontally */}
+
+            {/* Image Container: Added flex justify-center to horizontally center the Image inside this 100% width container */}
+            <div className="sm:w-[100%] flex justify-center">
                 <Image
                     src={gaming_hero}
-                    width={400}
+                    width={500}
                     alt="Hero_Image"
                 />
-                
             </div>
+            
             <div className="desc">
-                <div className={`MainTitle ${customFont.className} pl-10 text-[#550d0d] text-5xl md:text-7xl flex flex-col items-center lg:w-[70%]`}>
+                {/* Title Container: Removed the offsetting 'pl-10' padding */}
+                <div className={`MainTitle ${customFont.className} text-[#550d0d] text-5xl md:text-7xl flex flex-col items-center `}>
+                    {/* The content inside this flex-col container is centered horizontally by items-center */}
                     <p>Gaming</p>
                     <p>Conclave</p>
                 </div>
@@ -77,25 +98,25 @@ const GamePage = () => {
               src={text_box_1}
               // width={350}
               alt="textbox_1"
-              className="sm:w-[30rem] lg:w-[25rem]"
+              className="sm:w-[30rem] lg:w-[30rem]"
             />
             <div className="absolute text-center">
-              <div className="text-gray-800 text-lg leading-relaxed font-mono mb-6">
+              <div className={`${jetBrainsMono.className} text-gray-800 text-lg leading-relaxed font-mono mb-6`}>
                 <p>Show off your skills and</p>
                 <p>conquer the arena at <span className="text-red-800">Gaming</span></p>
                 <p><span className="text-red-800">Conclave</span>, where only the</p>
                 <p>best rise to the top</p>
               </div>
             </div>
-            <div className="absolute translate-y-18">
+            <div className="absolute translate-y-20">
               <div className="relative flex items-center justify-center gap-3">
                 <Image
                   src={text_box_2}
                   alt="text_box_2"
-                  className="w-[15rem]"
+                  className="w-[20rem]"
                   // width={300}
                 />
-                <p className="absolute text-[0.75rem]">LEARN MORE</p>
+                <p className="absolute text-[1rem]">LEARN MORE</p>
               </div>
             </div>
           </div>
