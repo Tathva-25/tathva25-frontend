@@ -10,6 +10,10 @@ const alumniSans = Alumni_Sans({
 });
 
 export default function MenuPhone({ menuItems, currentPath }) {
+  // TEXT COLOR CONFIGURATION - Change these to modify the text colors
+  const BG_TEXT_COLOR = "#00000044"; // Background scrolling text color
+  const BOTTOM_TEXT_COLOR = "#ffffff"; // Bottom text color
+
   const [fadedtext, setFadedText] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0); // For mobile selection
@@ -558,7 +562,8 @@ export default function MenuPhone({ menuItems, currentPath }) {
     <>
       <div
         id="bg-text-mobile"
-        className="absolute text-[#00000044] overflow-hidden whitespace-nowrap w-full top-[15%] text-[120px]"
+        className="absolute overflow-hidden whitespace-nowrap w-full top-[15%] text-[120px]"
+        style={{ color: BG_TEXT_COLOR }}
       >
         {fadedtext && (
           <div
@@ -666,7 +671,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
         <div
           ref={bottomTextRef}
           className={`mt-4 ${alumniSans.className} font-[800] absolute text-6xl bottom-[50%]`}
-          style={{ opacity: 0 }}
+          style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
         >
           {fadedtext}
         </div>

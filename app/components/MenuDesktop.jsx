@@ -10,6 +10,10 @@ const alumniSans = Alumni_Sans({
 });
 
 export default function MenuDesktop({ menuItems, currentPath }) {
+  // TEXT COLOR CONFIGURATION - Change these to modify the text colors
+  const BG_TEXT_COLOR = "#ffffff44"; // Background scrolling text color
+  const BOTTOM_TEXT_COLOR = "#ffffff"; // Bottom text color
+
   const [fadedtext, setFadedText] = useState("");
   const [hoveredItem, setHoveredItem] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null); // Track currently selected item
@@ -18,6 +22,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
   const circleItemRefs = useRef([]);
   const centerImageRef = useRef(null);
   const scrollingTextRef = useRef(null);
+  const scrollAnimationRef = useRef(null);
 
   let length = menuItems.length;
   let cutangle = 360 / length;
@@ -63,6 +68,13 @@ export default function MenuDesktop({ menuItems, currentPath }) {
 
   useEffect(() => {
     if (fadedtext && scrollingTextRef.current) {
+      // Kill any existing animations on these elements
+      if (scrollAnimationRef.current) {
+        scrollAnimationRef.current.kill();
+      }
+      gsap.killTweensOf("#bg-text");
+      gsap.killTweensOf(scrollingTextRef.current);
+
       // Animate background text container fade in
       gsap.fromTo(
         "#bg-text",
@@ -80,13 +92,21 @@ export default function MenuDesktop({ menuItems, currentPath }) {
 
       // Start the continuous scrolling animation (left to right)
       gsap.set(scrollingTextRef.current, { x: "-50%" });
-      gsap.to(scrollingTextRef.current, {
+      scrollAnimationRef.current = gsap.to(scrollingTextRef.current, {
         x: "0%",
         duration: 15,
         ease: "none",
         repeat: -1,
+        paused: false,
       });
     }
+
+    // Cleanup function to kill animations when component unmounts or fadedtext changes
+    return () => {
+      if (scrollAnimationRef.current) {
+        scrollAnimationRef.current.kill();
+      }
+    };
   }, [fadedtext]);
 
   useEffect(() => {
@@ -201,7 +221,8 @@ export default function MenuDesktop({ menuItems, currentPath }) {
     <>
       <div
         id="bg-text"
-        className="absolute text-[#00000044] overflow-hidden whitespace-nowrap w-full top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%] text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px]"
+        className="absolute overflow-hidden whitespace-nowrap w-full top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%] text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px]"
+        style={{ color: BG_TEXT_COLOR }}
       >
         {fadedtext && (
           <div
@@ -297,7 +318,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
         <div
           ref={bottomTextRef}
           className={`mt-4 ${alumniSans.className} font-[700] absolute text-9xl -bottom-[1%]`}
-          style={{ opacity: 0 }}
+          style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
         >
           {fadedtext}
         </div>
