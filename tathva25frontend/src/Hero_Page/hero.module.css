@@ -1,0 +1,14 @@
+
+.heroSection {
+  background-image: url('./assets/background.svg');
+  background-size: contain;
+  background-position: 15% 70px;
+  background-repeat: repeat;
+}
+@media (max-width: 768px) {     /*mobile*/
+  .heroSection{
+    background-position: 61.45% 70px; 
+    background-size: cover;
+  } 
+  
+}
