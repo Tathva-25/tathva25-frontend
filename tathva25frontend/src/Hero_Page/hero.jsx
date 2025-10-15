@@ -12,7 +12,6 @@ import Background from '../../public/images/Background.png'
 import localfont from 'next/font/local';
 import Lines from './lines';
 import Ripple from './particles';
-import Avatar from '../../public/images/avatar.png';
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -135,10 +134,10 @@ export const Hero=()=> {
         <div>
           <Image
             src={Background.src}
-            className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden'
+            className='absolute w-[100vw] h-auto inset-0 object-cover overflow-x-hidden '
             alt="Background"
-            width={100}
-            height={100}
+            width={600}
+            height={600}
           />
         </div>
 
@@ -166,7 +165,7 @@ export const Hero=()=> {
          
           
           {/* Hero Images Container - Positioned at bottom */}
-          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square mb-0 mt-19">
+          <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
               <Ripple />
             </div>
@@ -182,38 +181,28 @@ export const Hero=()=> {
             
             <div className='THIS ONE!!'>
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center ">
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-20">
                 <Image
                   ref={wheelRef} 
                   src={wheel.src}
                   alt="wheel"
                   fill 
-                  className="w-[25vw] h-[25vw] max-w-none max-h-none object-contain"
+                  className="w-full h-full  object-contain"
                 />
               </div>
               
               {/* Avatar - Middle Layer */}
-              <div className="absolute inset-0 flex items-center justify-center">
+               <div className="absolute inset-0 flex items-center justify-center ">
                 <Image
                   src={heroAvatar.src}
                   alt="Avatar"
-                  className="w-full h-full object-contain"
-                  fill
+                  className="w-full h-full object-contain scale-136"
+                  width={300}
+                  height={300}
                   />
               </div>
               
-             {/* Eye Icon - Top Layer */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-full h-full">
-                  <Image
-                    src={EyeIcon.src}
-                    alt="eye"
-                    width={100}
-                    height={100}
-                    className="absolute left-[53%] top-[40%] -translate-x-1/2 -translate-y-1/2 w-[70%] h-auto object-contain"
-                  />
-                </div>
-              </div>
+             
             
             
               
@@ -225,12 +214,7 @@ export const Hero=()=> {
           </div>
           
         </div>
-        <div 
-          className="absolute bottom-0 w-full h-4"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(243,240,232,1), rgba(246, 246, 238, 1))',
-          }}
-        ></div>
+        
       </div>
       
       
