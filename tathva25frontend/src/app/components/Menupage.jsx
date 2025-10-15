@@ -99,9 +99,9 @@ export default function Menupage() {
 
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden">
-      <div className="absolute z-2 top-[2%] right-[2%] w-full flex px-8 py-4 justify-end">
+      {/* <div className="absolute z-2 top-[2%] right-[2%] w-full flex px-8 py-4 justify-end">
         <img src="logo.png" width={200} height={200} alt="Logo" />
-      </div>
+      </div> */}
 
       {/* Conditionally render desktop or mobile component */}
       {isMobile ? (
