@@ -248,16 +248,19 @@ export default function Sidebar() {
             {/* Main Content Sections */}
             <div className="md:ml-12">
                 {/* Hero Section */}
-                <Hero />
+                <section id="section-1">
+                    <Hero />
+                </section>
+
 
                 {/* About Section */}
                 <section
                     id="section-2"
-                    className="min-h-screen flex items-center justify-center bg-green-50"
+                    className=" bg-green-50"
                 >
                     <div className="text-center">
                         <h2 className="text-6xl font-bold mb-4">About</h2>
-                        <p className="text-xl text-gray-600">About Tathva 25</p>
+                        <p className="text-xl text-gray-600">Grand Prix Challenge</p>
                     </div>
                 </section>
 
