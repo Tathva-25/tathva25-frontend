@@ -19,7 +19,7 @@ const menuItems = [
   },
   {
     name: "ROBOWARS",
-    link: "/robowars",
+    link: "/test",
     img1: "/menu_icon3.png",
     img2: "/menu3.png",
   },
