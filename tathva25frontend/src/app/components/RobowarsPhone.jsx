@@ -69,8 +69,8 @@ function ImgtoImage({ src, alt }) {
 function Region() {
   return (
     <>
-      <div className="flex flex-col bg-teal-400 items-center justify-center">
-        <div className="flex justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20">
+      <div className="flex flex-col items-center justify-center gap-5">
+        <div className="flex w-full h-full justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
             <div>
               <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
@@ -121,7 +121,7 @@ function Picture() {
 export default function RobowarsPhone() {
   return (
     <>
-      <div className="relative bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
+      <div className="relative bg-[url('/robopagebg.png')] bg-cover">
         <Line />
         <Loader />
         <Picture />

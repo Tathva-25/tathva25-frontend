@@ -154,7 +154,7 @@ function Picture() {
 export default function RobowarsDesktop() {
   return (
     <>
-      <div className="relative bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
+      <div className="relative bg-[url('/robopagebg.png')] bg-cover">
         <Line />
         <Loader />
         <Picture />
