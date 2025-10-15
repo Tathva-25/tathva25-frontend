@@ -31,7 +31,7 @@ const Proshow = () => {
             alt="Proshow main text"
             width={400}
             height={400}
-            className="rounded-2xl md:scale-[0.8] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animate-slow-spin"
+            className="rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animate-slow-spin"
             priority
           />
         </div>
