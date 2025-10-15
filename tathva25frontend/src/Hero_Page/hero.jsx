@@ -28,7 +28,7 @@ export const Hero=()=> {
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
-  const targetText = 'TATHVA';
+  const targetText = 'TATHVA ';
   const characters = 'ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵ';
 
   const scrambleText = () => {
@@ -113,6 +113,7 @@ export const Hero=()=> {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
+
 
   // Spinning wheel animation
   useEffect(() => {
