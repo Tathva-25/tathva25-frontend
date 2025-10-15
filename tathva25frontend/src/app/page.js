@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Hero } from "@/Hero_Page/hero";
 import Navbar from "@/Hero_Page/navbar";
 import Sidebar from "@/Hero_Page/sidebar";
+import ResponsiveLayout from "@/components/Wheels";
 export default function Home() {
   return (
     <div>
@@ -9,7 +10,7 @@ export default function Home() {
       <main>
         <Hero />
         
-        
+        <ResponsiveLayout/>
         <Sidebar />
       </main>
     </div>
