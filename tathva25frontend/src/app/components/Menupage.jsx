@@ -73,7 +73,7 @@ const menuItems = [
   },
   {
     name: "FAQS",
-    link: "/faqs",
+    link: "/character-demo",
     img1: "/menu_icon12.png",
     img2: "/menu12.png",
   },
