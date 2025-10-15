@@ -2,26 +2,21 @@
 
 import DotGrid from "@/components/DotGrid";
 import React from "react";
-// import DotGrid from "reactbits/animated/DotGrid";
 
 export default function DotGridButton({
   text = "Experience It",
   dotColor = "#5227FF",
 }) {
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block min-w-[250px] min-h-[50px]">
       {/* DotGrid background */}
-      <div className="absolute inset-0 rounded-full overflow-hidden">
+      <div className="absolute inset-0 bg-black -inset-x-10 -inset-y-2">
         <DotGrid
-          dotSize={20}
-          gap={12}
-          baseColor='#0c0d0d'
-          activeColor="#0c0d0d"
-          proximity={120}
-          shockRadius={250}
-          shockStrength={5}
-          resistance={750}
-          returnDuration={1.5}
+          dotSize={2}
+          gap={5}
+          baseColor="#524d06"
+          activeColor="#c4b702"
+          proximity={50}
         />
       </div>
 
@@ -29,17 +24,13 @@ export default function DotGridButton({
       <button
         className="
           relative 
-          px-8 
-          py-3 
-          rounded-full 
+          px-10 
+          py-2
           text-white 
           font-semibold 
-          bg-transparent 
-          border border-white 
-          hover:scale-105 
-          transition-transform 
+          bg-transparent
           z-10 
-          backdrop-blur-md
+          pointer-events-auto
         "
       >
         {text}

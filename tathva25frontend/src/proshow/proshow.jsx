@@ -74,10 +74,10 @@ const Proshow = () => {
           hic. Quis laboriosam fugiat magni asperiores iusto praesentium quia
           aliquam, optio eaque nulla quas. Voluptatum, autem?
         </div>
-      </div>
-    <div className="flex justify-center md:justify-start mt-6">
+    <div className="flex justify-center md:justify-start mt-24">
       <DotGridButton text="Book Your Pass" />
     </div>
+      </div>
 
       {/* <div style={{ width: '100%', height: '600px', position: 'relative' }}>
         <DotGrid
