@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const Proshow = () => {
   const images = ["/images/embla1.png", "/images/embla2.png", "/images/embla3.png"];
+  const desc=[["Arivu","cfyuhgvhuhgvhijhbv bhijhbvbhuhvhuhvvhuhvvhuhbvbhihvhuhv vhuhvhuhvhuhvhujhvbhuhvhuhvuh"],["Shilpa Rao", "b bhjijhbjihjiujhgvfdftyuhjbvcxsdrtyuikjnbvcdrty ujn cdftyujn cftyujnbvfrtyujnbvftyhnb cftyujn cf"], ["Fejo", "hguijhngfdtyukjm cfyuikm vcfgyujkm cfgyujkmn bvfgtyuikm"]];
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -155,18 +156,48 @@ const Proshow = () => {
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col mt-6 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-6 z-30">
-          <div className="text-3xl font-semibold mb-2">Heading</div>
-          <div className="text-gray-700 leading-relaxed text-sm md:text-base">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur,
-            officia ipsam quia pariatur iusto debitis enim dolores modi, quod
-            aspernatur maiores et nulla velit error natus tempora deleniti
-            accusamus minus! Saepe consectetur asperiores exercitationem dolorem
-            harum, dolores fugit accusamus porro quasi, voluptatum nihil aspernatur
-            hic. Quis laboriosam fugiat magni asperiores iusto praesentium quia
-            aliquam, optio eaque nulla quas. Voluptatum, autem?
+        <div className="flex flex-col mt-6 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-6 z-30 overflow-hidden">
+          <div className="relative h-12 overflow-hidden">
+            {desc.map((item, index) => (
+              <div
+                key={index}
+                className="absolute w-full transition-all duration-500 ease-out"
+                style={{
+                  transform: currentIndex === index 
+                    ? 'translateY(0)' 
+                    : currentIndex > index 
+                      ? 'translateY(-100%)' 
+                      : 'translateY(100%)',
+                  opacity: currentIndex === index ? 1 : 0,
+                }}
+              >
+                <div className="text-3xl font-semibold">{item[0]}</div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="relative min-h-[200px] overflow-hidden">
+            {desc.map((item, index) => (
+              <div
+                key={index}
+                className="absolute w-full transition-all duration-500 ease-out"
+                style={{
+                  transform: currentIndex === index 
+                    ? 'translateY(0)' 
+                    : currentIndex > index 
+                      ? 'translateY(-100%)' 
+                      : 'translateY(100%)',
+                  opacity: currentIndex === index ? 1 : 0,
+                }}
+              >
+                <div className="text-gray-700 leading-relaxed text-sm md:text-base">
+                  {item[1]}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+
       </div>
 
       <style jsx>{`
