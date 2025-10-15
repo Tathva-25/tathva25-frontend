@@ -1,5 +1,11 @@
+"use client"
+import DotGridButton from "@/component/DotGridButton";
+import { EmblaCarousel } from "@/component/EmblaCarousel";
+// import DotGrid from "@/components/DotGrid";
+// import DotGridButton from "@/components/DotGridButton";
 import Image from "next/image";
 import React from "react";
+// import DotGrid from './DotGrid';
 
 const Proshow = () => {
   return (
@@ -11,6 +17,7 @@ const Proshow = () => {
       <div className="absolute hidden md:block bottom-8 left-20">
         Be there <br />Feel it <br />Live it
       </div>
+      {/* <DotGrid/> */}
 
       {/* Image section */}
       <div className="md:w-[60%] flex justify-center relative">
@@ -35,6 +42,24 @@ const Proshow = () => {
             priority
           />
         </div>
+        <div
+  className="
+    sm:hidden 
+    absolute 
+    scale-[0.53] 
+    hover:scale-[0.6] 
+    -mt-12 
+    left-1/2 
+    -translate-x-1/2 
+    overflow-hidden 
+    max-w-full 
+    w-full 
+    touch-pan-y
+  "
+>
+  <EmblaCarousel />
+</div>
+
       </div>
 
       {/* Text content */}
@@ -50,6 +75,23 @@ const Proshow = () => {
           aliquam, optio eaque nulla quas. Voluptatum, autem?
         </div>
       </div>
+    <div className="flex justify-center md:justify-start mt-6">
+      <DotGridButton text="Book Your Pass" />
+    </div>
+
+      {/* <div style={{ width: '100%', height: '600px', position: 'relative' }}>
+        <DotGrid
+          dotSize={10}
+          gap={15}
+          baseColor="#5227FF"
+          activeColor="#5227FF"
+          proximity={120}
+          shockRadius={250}
+          shockStrength={5}
+          resistance={750}
+          returnDuration={1.5}
+        />
+      </div> */}
     </div>
   );
 };
