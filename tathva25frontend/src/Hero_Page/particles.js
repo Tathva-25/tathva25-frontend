@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from "react";
 
 // --- CONFIGURATION CONSTANTS ---
 const INITIAL_RING_RADIUS = 150;
-const NUM_PARTICLES_PER_RIPPLE = 15;
+const NUM_PARTICLES_PER_RIPPLE = 17;
 const RIPPLE_SPEED = 2;
 const MAX_DISTANCE = 1000;
 const RIPPLE_INTERVAL_MS = 700;
 
 // Sparkle appearance settings
-const SPARKLE_SIZE_MIN = 7;
-const SPARKLE_SIZE_MAX = 17;
+const SPARKLE_SIZE_MIN = 2;
+const SPARKLE_SIZE_MAX = 7;
 const SPARKLE_ROTATION_SPEED = 0.05;
 const GLOW_SIZE_MULTIPLIER = 2; // How much larger the glow is compared to sparkle
 
@@ -75,9 +75,9 @@ const Ripple = () => {
         gradient.addColorStop(0.7, "rgba(211, 175, 32, 0.24)");
         gradient.addColorStop(1, "rgba(218, 165, 32, 0)");
       } else {
-        gradient.addColorStop(0, "rgba(205, 158, 17, 1)");
-        gradient.addColorStop(0.5, "rgba(238, 171, 46, 0.8)");
-        gradient.addColorStop(1, "rgba(156, 112, 1, 0.4)");
+        gradient.addColorStop(0, "rgba(153, 127, 80, 1)");
+        gradient.addColorStop(0.5, "rgba(196, 171, 109, 0.8)");
+        gradient.addColorStop(1, "rgba(248, 236, 211, 0.4)");
       }
       cachedGradientsRef.current.set(key, gradient);
     }
