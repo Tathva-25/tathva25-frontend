@@ -106,7 +106,7 @@ function Line() {
 function Region() {
   return (
     <>
-      <div className="mt-5 py-4">
+      <div className=" py-4">
         <div className="flex justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
             <div>
@@ -160,7 +160,16 @@ function Picture() {
 export default function Robowars({ link }) {
   return (
     <>
-      <div className="relative bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
+      {/*
+        The 'relative' class is good because it allows absolute positioning of children 
+        if needed, but its default position is static/relative, meaning it flows normally 
+        with the document and is easily positioned by a parent container.
+        
+        I've added 'max-w-full' for extra caution, though 'w-full' should suffice 
+        if the parent manages the overall width. 'mx-auto' is a common pattern for 
+        making a component centered and manageable within a larger container.
+      */}
+      <div className="relative w-full max-w-full mx-auto bg-[url('/robopagebg.png')] bg-amber-200 bg-cover">
         <Line />
         <Loader />
         <Picture />
