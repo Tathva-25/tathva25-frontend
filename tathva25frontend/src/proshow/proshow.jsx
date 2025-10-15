@@ -7,6 +7,7 @@ const Proshow = () => {
   const images = ["/images/embla1.png", "/images/embla2.png", "/images/embla3.png"];
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const script1 = document.createElement('script');
@@ -37,6 +38,10 @@ const Proshow = () => {
           scrub: 1,
           onUpdate: (self) => {
             setScrollProgress(self.progress);
+            // Snap to nearest position
+            const rawIndex = self.progress * 2;
+            const snappedIndex = Math.round(rawIndex);
+            setCurrentIndex(snappedIndex % 3);
           },
         });
       }
@@ -51,63 +56,27 @@ const Proshow = () => {
     };
   }, []);
 
-  // Calculate transform for each image based on its original index
+  // Calculate transform for each image based on snapped positions
   const getImageTransform = (imageIndex) => {
-    // Convert scroll progress (0 to 1) to rotation steps (0 to 2)
-    const rotationProgress = scrollProgress * 2; // 0 to 2 (two full rotations)
+    // Use snapped progress instead of continuous
+    const rotationProgress = Math.round(scrollProgress * 2);
     
-    // Calculate the visual position for this image
-    // Each image cycles through: right(2) -> center(1) -> left(0) -> back to right(2)
-    let position = ((2 - imageIndex) + rotationProgress) % 3;
+    // Calculate the visual position for this image (inverted direction: left -> center -> right)
+    let position = ((imageIndex) - rotationProgress + 6) % 3;
     
     // Define positions
     const positions = {
-      left: { x: -320, scale: 0.75, opacity: 0.6, z: 10 },
-      center: { x: 0, scale: 1.1, opacity: 1, z: 30 },
-      right: { x: 320, scale: 0.75, opacity: 0.6, z: 20 },
+      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 }, // left
+      1: { x: 0, scale: 1.1, opacity: 1, z: 30 },        // center
+      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 },   // right
     };
     
-    // Interpolate between positions based on where we are in the cycle
-    let x, scale, opacity, z;
-    
-    if (position >= 0 && position < 1) {
-      // Transitioning from left to right (wrapping around behind)
-      const t = position;
-      // Move from left, fade out, then fade back in on right
-      if (t < 0.5) {
-        // First half: fade out while moving right
-        x = positions.left.x + 200 * (t * 2);
-        scale = positions.left.scale - 0.3 * (t * 2);
-        opacity = positions.left.opacity - 0.6 * (t * 2);
-        z = 5;
-      } else {
-        // Second half: appear on right side
-        const t2 = (t - 0.5) * 2;
-        x = positions.right.x;
-        scale = positions.right.scale - 0.3 * (1 - t2);
-        opacity = 0 + positions.right.opacity * t2;
-        z = 15;
-      }
-    } else if (position >= 1 && position < 2) {
-      // Transitioning from right to center
-      const t = position - 1;
-      x = positions.right.x + (positions.center.x - positions.right.x) * t;
-      scale = positions.right.scale + (positions.center.scale - positions.right.scale) * t;
-      opacity = positions.right.opacity + (positions.center.opacity - positions.right.opacity) * t;
-      z = 20 + Math.floor(t * 10);
-    } else {
-      // Transitioning from center to left
-      const t = position - 2;
-      x = positions.center.x + (positions.left.x - positions.center.x) * t;
-      scale = positions.center.scale + (positions.left.scale - positions.center.scale) * t;
-      opacity = positions.center.opacity + (positions.left.opacity - positions.center.opacity) * t;
-      z = 30 - Math.floor(t * 20);
-    }
+    const pos = positions[position];
     
     return {
-      transform: `translateX(${x}px) scale(${scale})`,
-      opacity: opacity,
-      zIndex: z,
+      transform: `translateX(${pos.x}px) scale(${pos.scale})`,
+      opacity: pos.opacity,
+      zIndex: pos.z,
     };
   };
 
@@ -155,7 +124,7 @@ const Proshow = () => {
               {images.map((img, index) => (
                 <div 
                   key={index}
-                  className="absolute transition-all duration-75 ease-linear"
+                  className="absolute transition-all duration-500 ease-out"
                   style={getImageTransform(index)}
                 >
                   <Image
@@ -176,7 +145,7 @@ const Proshow = () => {
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  Math.round(scrollProgress * 2) === index
+                  currentIndex === index
                     ? "bg-blue-600 w-6"
                     : "bg-gray-400"
                 }`}
