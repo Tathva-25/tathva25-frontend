@@ -5,7 +5,7 @@ import Robowars from "./components/Robowars";
 export default function Home() {
   return (
     <>
-      <Robowars />
+      <Menupage />
     </>
   );
 }
