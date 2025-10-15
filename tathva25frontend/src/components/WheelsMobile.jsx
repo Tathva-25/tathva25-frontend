@@ -10,6 +10,8 @@ export default function WheelsEventMobile() {
       style={{
         width: "100vw",
         height: "100vh",
+
+        
         backgroundColor: "#000",
         color: "#fff",
         fontFamily: "'Michroma', sans-serif",
