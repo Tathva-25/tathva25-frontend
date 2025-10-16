@@ -7,9 +7,9 @@ export default function Home() {
     <div>
       <Navbar />
       <main>
-        <Hero />
-        
-        
+
+
+
         <Sidebar />
       </main>
     </div>
