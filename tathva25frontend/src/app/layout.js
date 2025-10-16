@@ -1,6 +1,4 @@
-
 import "./globals.css";
-
 export const metadata = {
   title: "Tathva 25",
   description: "Tathva",
@@ -9,7 +7,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="relative overflow-x-hidden">
+        {/* Background */}
         {children}
       </body>
     </html>

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import localfont from "next/font/local"
-import gaming_hero from "../../../public/images/gaming/gaming_hero_w_text.png"
+import gaming_hero from "../../../public/images/gaming/gaming_hero.png"
 import text_box_1 from "../../../public/images/gaming/text_box_1.png"
 import text_box_2 from "../../../public/images/gaming/text_box_2.png"
 import { JetBrains_Mono } from 'next/font/google'
@@ -34,7 +34,7 @@ const GamePage = () => {
           <div className={`text-effect-container ${customFont.className} font-bold whitespace-nowrap`}>
             <div>NEXUS</div>
             <div>NEXUS</div>
-            <div>NEXUS</div>
+            <div className="lg:hidden">NEXUS</div>
             <div className="lg:hidden">NEXUS</div>
             <div className="lg:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
@@ -80,15 +80,6 @@ const GamePage = () => {
                     width={500}
                     alt="Hero_Image"
                 />
-            </div>
-            
-            <div className="desc">
-                {/* Title Container: Removed the offsetting 'pl-10' padding */}
-                <div className={`MainTitle ${customFont.className} text-[#550d0d] text-5xl md:text-7xl flex flex-col items-center `}>
-                    {/* The content inside this flex-col container is centered horizontally by items-center */}
-                    <p>Gaming</p>
-                    <p>Conclave</p>
-                </div>
             </div>
         </div>
 
