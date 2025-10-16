@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import ResponsiveLayout from "../Wheels";
 import Proshow from "@/components/proshow";
 import Explore from "@/app/components/Explore";
+import Expo from "@/app/components/Expo"
+
+
 import { Hero } from "./hero";
 export default function Sidebar() {
   const items = [
@@ -199,6 +202,11 @@ export default function Sidebar() {
             
              <section id="section-3" >
             <Proshow/>
+        
+            </section>
+
+                     <section id="section-4" >
+            <Expo/>
         
             </section>
 
