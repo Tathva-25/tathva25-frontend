@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import ResponsiveLayout from "../Wheels";
 import Proshow from "@/components/proshow/proshow";
 import Image from 'next/image';
-import Proshow from "@/components/proshow";
 import Explore from "@/app/components/Explore";
 import Expo from "../Expo";
 import Robowars from "@/app/components/Robowars";
