@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import ResponsiveLayout from "../Wheels";
 import Proshow from "@/components/proshow";
 import Explore from "@/app/components/Explore";
+import ResponsiveLayout from "../Wheels";
 import Expo from "../Expo";
 
 import { Hero } from "./hero";
@@ -10,8 +10,9 @@ export default function Sidebar() {
   const items = [
     { num: 1, label: "Home" },
     { num: 2, label: "Explore" },
-    { num: 3, label: "Wheels" },
-    { num: 4, label: "Proshow" },
+    { num: 3, label: "Proshow" },
+    { num: 4, label: "Wheels" },
+    { num: 5, label: "Expo" },
   ];
 
   const [hovered, setHovered] = useState(null);
@@ -187,27 +188,24 @@ export default function Sidebar() {
       </aside>
 
       <div className="ml-12">
-            <section id="section-1" >
-            <Hero/>
-        
-            </section>
+        <section id="section-1">
+          <Hero />
+        </section>
 
+        <section id="section-2">
+          <Explore />
+        </section>
 
-             <section id="section-2" >
-            <Explore/>
-        
-            </section>
+        <section id="section-3">
+          <Proshow />
+        </section>
 
-            
-             <section id="section-3" >
-            <Proshow/>
-        
-            </section>
-
-                     <section id="section-4" >
-            <Expo/>
-        
-            </section>
+        <section id="section-4">
+          <ResponsiveLayout />
+        </section>
+        <section id="section-5">
+          <Expo />
+        </section>
 
         <section
           id={`section-footer`}
