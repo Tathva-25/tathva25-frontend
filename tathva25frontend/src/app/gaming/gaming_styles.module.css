@@ -15,7 +15,7 @@
 .effectContainer {
   /* 1. Create the angled gradient for the parallelogram shape. */
   background-image: linear-gradient(
-    135deg,        /* The angle creates the slanted effect. */
+    120deg,        /* The angle creates the slanted effect. */
     rgba(255, 255, 255, 1) 44%,
     #d9c48c 44%,   /* transition almost immediately */
     #ADA48C 56%,   /* keep the red band narrow */
