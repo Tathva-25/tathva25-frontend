@@ -8,7 +8,7 @@ import Explore from "./components/Explore";
 import Menupage from "./components/Menupage";
 import Robowars from "./components/Robowars";
 
-import Proshow from "@/components/proshow";
+import Proshow from "@/components/proshow/proshow";
 export default function Home() {
   return (
     <div>

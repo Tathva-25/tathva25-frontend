@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import ResponsiveLayout from "../Wheels";
-import Proshow from "@/components/proshow";
+import Proshow from "@/components/proshow/proshow";
 import Explore from "@/app/components/Explore";
 import { Hero } from "./hero";
 export default function Sidebar() {

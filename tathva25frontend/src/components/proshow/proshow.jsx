@@ -4,9 +4,9 @@ import DotGridButton from "@/components/DotGridButton";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import localFont from 'next/font/local'
-
+import style from './proshow.module.css'
 const akiraExpanded = localFont({
-  src: '../../public/fonts/Akira-Expanded.otf',
+  src: '../../../public/fonts/Akira-Expanded.otf',
   variable: '--font-akira'
 });
 
@@ -98,44 +98,45 @@ const Proshow = () => {
   return (
     <div
       ref={sectionRef}
-      className=" w-full relative overflow-hidden py-12 h-[100vh] bg-gray-100"
+      className="h-screen relative overflow-hidden"
     >
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}
         <div className="absolute font-black hidden md:block top-10 left-20 text-sm z-40">
           11.3210°N <br />75.9320°E
         </div>
-        <div className="absolute font- hidden md:block bottom-8 left-20 text-sm z-40">
+        <div className="absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40">
           Be there <br />Feel it <br />Live it
         </div>
 
         {/* Image section */}
-        <div className="md:w-[60%] flex justify-center relative z-30">
+        <div className="md:w-[60%] flex justify-center relative z-30 ">
           {/* Main Image */}
           <Image
             src="/images/proshow-main.png"
             alt="Proshow main"
             width={600}
             height={400}
-            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto"
+            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-9 md:translate-y-0"
             priority
           />
 
           {/* Text Image (overlayed and moves with main image) */}
-          <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+          <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-8 md:translate-y-0">
             <Image
               src="/images/proshowText.png"
               alt="Proshow main text"
               width={400}
               height={400}
-              className="rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animate-slow-spin"
+              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%]` + style.animateSlowSpin}
+           
               priority
             />
           </div>
 
           {/* Carousel - All 3 images rendered, positions calculated */}
-          <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block mt-[12rem] w-full max-w-[700px] h-[200px]">
-            <div className="relative w-full h-full flex justify-center items-center">
+          <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+            <div className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 ">
               {images.map((img, index) => (
                 <div 
                   key={index}
@@ -211,25 +212,13 @@ const Proshow = () => {
             ))}
           </div>
 
-          <div className="flex justify-center ml-10  md:justify-start sm:mt-8 -mt-8">
+          <div className="flex justify-center ml-10  md:justify-start sm:mt-8 ">
             <DotGridButton text="Book Your Pass" />
           </div>
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes slow-spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .animate-slow-spin {
-          animation: slow-spin 20s linear infinite;
-        }
-      `}</style>
+
     </div>
   );
 };
