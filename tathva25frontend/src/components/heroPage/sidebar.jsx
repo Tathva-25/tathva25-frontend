@@ -83,7 +83,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="fixed top-0 left-0 h-screen w-12 z-50 bg-transparent ">
+      <aside className="fixed top-0 left-0 h-screen w-12 z-50 bg-white ">
         {/* outer borders */}
         <div className="absolute inset-y-0 left-0 w-full pointer-events-none">
           <div className="h-full border-l border-black/90" />
@@ -187,7 +187,7 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      <div className="ml-12">
+      <div className="ml-12 isolate">
         <section id="section-1">
           <Hero />
         </section>
