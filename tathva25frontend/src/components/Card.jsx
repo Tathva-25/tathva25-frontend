@@ -1,6 +1,4 @@
-"use client";
 import { useBarcode } from "next-barcode";
-import { useEffect, useRef } from 'react';
 export default function Card({
   number,
   imageUrl,
@@ -132,10 +130,12 @@ export default function Card({
       {/* Heading below the image, moved 5% upward */}
       <div
         style={{
+          marginTop: 20,
           fontFamily: "'Jost', sans-serif",
           fontWeight: 700,
-          fontSize: 36,
+          fontSize: 24,
           letterSpacing: "3%",
+          lineHeight: 1.2,
           color: "#000",
           width: "auto",
           height: 40,
@@ -170,7 +170,7 @@ export default function Card({
             fontSize: 15,
             color: "#444",
             lineHeight: 1.14,
-            letterSpacing: "0px",
+            letterSpacing: "1px",
             width: "60%",
             textAlign: "justify",
             minHeight: 60,
