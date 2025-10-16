@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 // --- CONFIGURATION CONSTANTS ---
 const INITIAL_RING_RADIUS = 150;
-const NUM_PARTICLES_PER_RIPPLE = 15;
+const NUM_PARTICLES_PER_RIPPLE = 5;
 const RIPPLE_SPEED = 2;
 const MAX_DISTANCE = 1000;
 const RIPPLE_INTERVAL_MS = 700;
@@ -11,7 +11,7 @@ const RIPPLE_INTERVAL_MS = 700;
 const SPARKLE_SIZE_MIN = 5;
 const SPARKLE_SIZE_MAX = 15;
 const SPARKLE_ROTATION_SPEED = 0.05;
-const GLOW_SIZE_MULTIPLIER = 2; // How much larger the glow is compared to sparkle
+const GLOW_SIZE_MULTIPLIER = 1; // How much larger the glow is compared to sparkle
 
 // Non-uniform distribution settings
 const ANGLE_VARIANCE = 0.3; // How much angles can vary from uniform (0 = uniform, 1 = completely random)
