@@ -8,6 +8,7 @@ import localfont from 'next/font/local';
 
 const someFont = localfont({
     src: '../../public/fonts/michroma.ttf',
+    display: 'swap', // Add this for better loading
 })
 
 export default function Sidebar() {
@@ -104,7 +105,7 @@ export default function Sidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className="hidden md:block fixed top-0 left-0 h-screen w-12 z-50 bg-transparent">
+            <aside className={`hidden md:block fixed top-0 left-0 h-screen w-12 z-50 bg-transparent ${someFont.className}`}>
                 <div className="absolute inset-y-0 left-0 w-full pointer-events-none">
                     <div className="h-full border-l border-black/90" />
                     <div className="absolute inset-y-0 right-0 w-px border-r border-black/90" />
@@ -132,7 +133,7 @@ export default function Sidebar() {
 
                     <div className="mt-16">
                         <div
-                            className="font-mono text-[20px] whitespace-nowrap mt-35 ${customFont.className}"
+                            className="text-[20px] whitespace-nowrap mt-35"
                             style={{
                                 transform: "rotate(90deg)",
                                 transformOrigin: "center",
@@ -158,7 +159,7 @@ export default function Sidebar() {
                                     className={`group relative w-full border-t border-black/90 flex flex-col items-center justify-start overflow-hidden transition-all duration-300 ease-in-out cursor-pointer ${i === items.length - 1 ? "border-b border-black/90" : ""
                                         } ${isExpanded ? "bg-black/5" : ""}`}
                                     style={{
-                                        maxHeight: isExpanded ? "140px" : "36px",
+                                        maxHeight: isExpanded ? "150px" : "45px",
                                     }}
                                 >
                                     <div
@@ -171,16 +172,16 @@ export default function Sidebar() {
 
                                     <div className="relative z-10 w-full flex flex-col items-center">
                                         <span
-                                            className={`font-mono text-[20px] inline-block mt-1 transition-all duration-300 ${isActive && progress > 30 ? "text-white" : "text-black"
-                                                }`}
+                                            className={`text-[16px] inline-block mt-[10px] transition-all duration-300 ${isActive && progress > 30 ? "text-white" : "text-black"}`}
                                             style={{ transform: "rotate(90deg)" }}
                                         >
                                             {String(item.num).padStart(2, "0")}/
                                         </span>
 
+
                                         <div className="w-full flex justify-center mt-2 mb-5">
                                             <div
-                                                className={`font-mono text-[16px] whitespace-nowrap transition-all duration-300 ${isExpanded
+                                                className={`text-[16px] whitespace-nowrap transition-all duration-300 ${isExpanded
                                                     ? "opacity-100 translate-y-0"
                                                     : "opacity-0 -translate-y-2"
                                                     }`}
@@ -217,7 +218,7 @@ export default function Sidebar() {
             </aside >
 
             {/* Mobile Menu Bar */}
-            <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-black">
+            <div className={`md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-black ${someFont.className}`}>
                 <div className="flex items-center justify-between px-4 py-3 border-b border-black">
                     {/* Logo - Smaller and positioned beside the menu */}
                     <div className="flex items-center gap-4">
@@ -230,7 +231,7 @@ export default function Sidebar() {
                                 className="w-full h-full object-contain"
                             />
                         </div>
-                        <div className="font-mono text-sm tracking-wider">
+                        <div className="text-sm tracking-wider">
                             WELCOME (TATHVA 25);
                         </div>
                     </div>
@@ -272,7 +273,7 @@ export default function Sidebar() {
                         <button
                             key={item.num}
                             onClick={() => scrollToSection(item.num)}
-                            className={`w-full text-left px-4 py-4 font-mono text-sm hover:bg-gray-50 transition-colors ${activeSection === item.num ? "bg-gray-100" : ""
+                            className={`w-full text-left px-4 py-4 text-sm hover:bg-gray-50 transition-colors ${activeSection === item.num ? "bg-gray-100" : ""
                                 }`}
                         >
                             {String(item.num).padStart(2, "0")}/ {item.label.toUpperCase()}
@@ -294,7 +295,7 @@ export default function Sidebar() {
                     id="section-2"
                     className=" bg-green-50"
                 >
-                    <div className="text-center">
+                    <div className="min-h-screen flex items-center justify-center text-center">
                         <h2 className="text-6xl font-bold mb-4">About</h2>
                         <p className="text-xl text-gray-600">Grand Prix Challenge</p>
                     </div>
@@ -325,7 +326,7 @@ export default function Sidebar() {
                 {/* Contact Section */}
                 <section
                     id="section-5"
-                    className="flex items-center justify-center bg-gray-100"
+                    className="min-h-screen flex items-center justify-center bg-gray-100"
                 >
                     <div className="text-center">
                         <h2 className="text-6xl font-bold mb-4">Contact</h2>
