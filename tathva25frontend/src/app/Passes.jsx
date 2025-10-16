@@ -207,79 +207,73 @@ function Passes() {
           alt="arrow"
           width={10}
           height={10}
-          className="rotate-180 absolute left-0 top-[20%] z-0 w-30 h-auto sm:w-60 md:w-72 lg:w-80"
+          className="rotate-180 absolute left-0 top-[20%] z-0 w-30 h-auto sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80"
         />
 
         <span
-          className={`${mi.className} cursor-pointer absolute top-[42%] left-[25%] hover:scale-110 transition text-sm sm:text-md md:text-lg lg:text-2xl`}
+          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] left-[32%] md:left-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
           onClick={() => {
             const prev = (centerCard + cards.length - 1) % cards.length;
             moveToCenter(prev);
           }}
+          onTouchEnd={(e) => e.stopPropagation()}
         >
           PREV
         </span>
 
-        <Image
+        {/* <Image
           src="/bordersvg.svg"
           alt="arrow"
           width={10}
           height={10}
-          className="rotate-180 absolute w-6 left-[45%] bottom-[16%]"
+          className="rotate-180 absolute lg:w-6 left-[45%] bottom-[32%] lg:bottom-[16%]"
         />
         <Image
           src="/bordersvg.svg"
           alt="arrow"
           width={10}
           height={10}
-          className="rotate-90 absolute w-6 right-[46.5%] bottom-[16%]"
-        />
+          className="rotate-90 absolute lg:w-6 right-[46.5%] bottom-[32%] lg:bottom-[16%]"
+        /> */}
 
         <span
-          className={`${mi.className} cursor-pointer absolute top-[42%] right-[25%] hover:scale-110 transition text-sm sm:text-md md:text-lg lg:text-2xl`}
+          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] right-[32%] md:right-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
           onClick={() => {
             const next = (centerCard + 1) % cards.length;
             moveToCenter(next);
           }}
+          onTouchEnd={(e) => e.stopPropagation()}
         >
           NEXT
         </span>
 
-        <Image
+        {/* <Image
           src="/bordersvg.svg"
           alt="arrow"
           width={10}
           height={10}
-          className="rotate-270 absolute w-6 left-[45%] top-[25%]"
+          className="rotate-270 absolute  lg:w-6 left-[45%] top-[25%]"
         />
         <Image
           src="/bordersvg.svg"
           alt="arrow"
           width={10}
           height={10}
-          className="rotate-0 absolute w-6 right-[46.5%] top-[25%]"
-        />
+          className="rotate-0 absolute  lg:w-6 right-[46.5%] top-[25%]"
+        /> */}
 
         <span
-          className={`${osw.className} absolute top-[38%] right-[49.3%] text-5xl`}
+          className={`${osw.className} absolute top-[27%] lg:top-[29%] xl:top-[30%] 2xl:top-[33%] right-[49%] sm:right-[49%] lg:right-[48.5%] xl:right-[48.8%] 2xl:right-[48.7%] text-md sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl`}
         >
           {String(ticketData[centerCard].day).padStart(2, "0")}
         </span>
-
-        {/* <Image
-          src="/bordertiles.png"
-          alt="border"
-          width={30}
-          height={100}
-          className="absolute h-screen left-0"
-        /> */}
 
         <Image
           src="/arrows2.svg"
           alt="arrow"
           width={10}
           height={10}
-          className="absolute right-0 top-[20%] origin-right w-30 h-auto sm:w-60 md:w-72 lg:w-80"
+          className="absolute right-0 top-[20%] origin-right w-30 h-auto sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80"
         />
       </div>
     </section>
