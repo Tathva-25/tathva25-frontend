@@ -46,52 +46,61 @@ const jetBrainsMono = JetBrains_Mono({
   display: 'swap', 
 })
 
+const michroma = Michroma({ subsets: ["latin"], weight: "400" })
+
 const GamePage = () => {
   return (
-    <div className="bg-white flex flex-col sm:flex-row items-center justify-center relative">
-      <Sidebar/>
+    <div className="bg-white flex flex-col-reverse sm:flex-row items-center justify-center relative">
+      {/* <Sidebar/> */}
       {/* <Sidebar /> */}
         {/* Background NEXUS text with hexagons */}
         <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center text-[7rem] leading-[0.9] sm:text-[12rem] md:text-[25rem] sm:leading-[0.9] sm:tracking-widest">
           {/* Add the new class here */}
-          <div className={`${effectStyles.effectContainer} ${integralCF.className} font-bold h-full flex flex-col justify-between pb-10`}
+          <div className={`${effectStyles.effectContainer} ${integralCF.className} font-bold h-full flex flex-col justify-center sm:justify-between items-center pb-10`}
             style={{
               WebkitTextStroke: '2px black', 
             }}
           >
             <div>NEXUS</div>
             <div>NEXUS</div>
-            <div className="lg:hidden">NEXUS</div>
-            <div className="lg:hidden">NEXUS</div>
-            <div className="lg:hidden">NEXUS</div>
+            <div className="sm:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
             <div className="sm:hidden">NEXUS</div>
           </div>
         </div>
 
-        <div className="sm:w-[60%] z-10 flex flex-col items-center sm:h-screen justify-center mx-auto"> 
+        <div className="z-10 flex flex-col items-center sm:h-screen justify-center sm:translate-x-40"> 
             {/* mx-auto centers the 60% container horizontally on the page */}
             {/* flex-col stacks children vertically */}
             {/* items-center centers children (Image container and Text container) horizontally */}
 
             {/* Image Container: Added flex justify-center to horizontally center the Image inside this 100% width container */}
-            <div className="sm:w-[100%] flex justify-center">
+            <div className="sm:h-screen flex justify-center">
                 <Image
                     src={gaming_hero}
-                    width={500}
+                    // width={500}
                     alt="Hero_Image"
+                    className="sm:h-screen w-auto object-cover"
                 />
             </div>
         </div>
 
-        <div className="lg:px-10 lg:w-[40%] flex sm:justify-center sm:items-center relative z-10 ">
-              <div className={`${Michroma.} text-lg leading-relaxed mb-6`}>
-                Show off your skills and
-                conquer the arena at <span className="text-red-800">Gaming</span>
-                <span className="text-red-800">Conclave</span>, where only the
-                best rise to the top
-              </div>
+        <div className="sm:px-10 flex flex-col sm:flex-row justify-center sm:items-center relative z-10">
+          <div className="sm:mr-15">
+            <div className={`${integralCF.className} text-xg sm:text-8xl font-bold text-left sm:w-[40rem]`}>
+              GPC NEXUS
+            </div>
+            <div className="absolute sm:static bottom-0 left-0 sm:text-right sm:-translate-x-17 mt-3">
+              <DotGridButton text="Learn More" min_height={20} min_width={40}/>
+            </div>
+          </div>  
+          <div className={`${michroma.className} text-2xs sm:text-xl leading-relaxed mb-6 sm:mr-15 sm:max-w-[25vw]`}>
+            Show off your skills and
+            conquer the arena at <span className="text-red-800">Gaming</span>
+            <span className="text-red-800">Conclave</span>, where only the
+            best rise to the top
+          </div>
         </div>
     </div>
   )
