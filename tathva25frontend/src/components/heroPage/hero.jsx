@@ -5,9 +5,9 @@ import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
-import heroAvatar from "../../public/images/avatar-body.png";
-import wheel from "../../public/images/wheel.png";
-import Background from "../../public/images/Background.png";
+import heroAvatar from "../../../public/images/avatar-body.png";
+import wheel from "../../../public/images/wheel.png";
+import Background from "../../../public/images/Background.png";
 import localfont from "next/font/local";
 import Lines from "./lines";
 import Ripple from "./particles";
@@ -15,7 +15,7 @@ import Ripple from "./particles";
 gsap.registerPlugin(ScrollTrigger);
 
 const customFont = localfont({
-  src: "../../public/fonts/neoform.otf",
+  src: "../../../public/fonts/neoform.otf",
 });
 
 const SCRAMBLE_INTERVAL_MS = 40;

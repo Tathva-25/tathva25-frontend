@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "../../public/images/TATHVA25_LOGO.png";
+import logo from "../../../public/images/TATHVA25_LOGO.png";
 
 export default function Navbar() {
   return (

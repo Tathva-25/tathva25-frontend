@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Hero } from "@/Hero_Page/hero";
-import Navbar from "@/Hero_Page/navbar";
-import Sidebar from "@/Hero_Page/sidebar";
+import { Hero } from "@/components/heroPage/hero";
+import Navbar from "@/components/heroPage/navbar";
+import Sidebar from "@/components/heroPage/sidebar";
 export default function Home() {
   return (
     <div>
