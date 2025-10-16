@@ -5,6 +5,7 @@ const page = () => {
     <div className="flex justify-center h-screen items-center">
         <Card
             src="/images/sculptor.png"
+            alt="sculptor"
             title="Sculpting Modeling"
             tagline="Mastering and Simulation and Modeling"
             date="17 October 2025"

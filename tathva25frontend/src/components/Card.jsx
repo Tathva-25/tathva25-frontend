@@ -3,102 +3,117 @@ import { Michroma } from "next/font/google"
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" })
 
-const Card = ({src, title, tagline, date, time, venue, price, desc, }) => {
+const Card = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
   return (
-    <div className={`${michroma.className} lg:w-[80%] shadow-2xl flex rounded-xl`}>
-      <div className="lg:w-[45%]">
+    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-xl bg-white`}>
+      {/* Image Section - 3:4 ratio */}
+      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[75vh] lg:mt-0">
         <Image
           src={src}
-          width={200}
-          height={200}
-          className="h-full w-auto"
+          alt={alt}
+          fill
+          className=""
+          priority
         />
       </div>
-      <div className="flex flex-col w-full py-5 items-center">
-        <div className="titlebox w-full"
-            style={{
-            boxShadow: "0 8px 16px -8px rgba(0,0,0,0.2)"
-          }}
-        >
-          <h1 className={`text-7xl  text-center w-full`}>
+
+      {/* Content Section */}
+      <div className="flex flex-col w-full lg:w-[55%]">
+        {/* Title Section */}
+        <div className="px-6 lg:px-10 py-3 pb-6 border-b border-gray-200">
+          <h1 className="text-4xl lg:text-5xl font-normal tracking-wide">
             {title}
           </h1>
-          <p className={` my-5 pl-[6rem]`}>
+          <p className="text-base lg:text-lg mt-3 text-gray-600">
             {tagline}
           </p>
         </div>
-        <div className="icons py-5 grid grid-cols-2 sm:grid-cols-4 gap-5 sm:translate-x-10">
-          <div className="icon1 flex gap-2">
+
+        {/* Info Icons Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-6 lg:px-10 py-6 lg:py-8">
+          <div className="flex items-start gap-3">
             <Image
               src="/images/calendar.svg"
-              width={20}
-              height={20}
-              className="w-[2rem]"
+              alt="calendar"
+              width={24}
+              height={24}
+              className="w-6 h-6 flex-shrink-0"
             />
-            <div>
-              <p>Date:</p>
-              <p className="font-bold">{date}</p>
+            <div className="min-w-0">
+              <p className="text-lg text-gray-600">Date</p>
+              <p className="font-bold text-lg lg:text-base break-words">{date}</p>
             </div>
           </div>
-          <div className="icon1 flex gap-2">
+          
+          <div className="flex items-start gap-3">
             <Image
               src="/images/clock.svg"
-              width={20}
-              height={20}
-              className="w-[2rem]"
+              alt="clock"
+              width={24}
+              height={24}
+              className="w-6 h-6 flex-shrink-0"
             />
-            <div>
-              <p>Time:</p>
-              <p className="font-bold">{time}</p>
+            <div className="min-w-0">
+              <p className="text-lg text-gray-600">Time</p>
+              <p className="font-bold text-lg lg:text-base">{time}</p>
             </div>
           </div>
-          <div className="icon1 flex gap-2">
+          
+          <div className="flex items-start gap-3">
             <Image
               src="/images/pin.svg"
-              width={20}
-              height={20}
-              className="w-[2rem]"
+              alt="pin"
+              width={24}
+              height={24}
+              className="w-6 h-6 flex-shrink-0"
             />
-            <div>
-              <p>Venue:</p>
-              <p className="font-bold">{venue}</p>
+            <div className="min-w-0">
+              <p className="text-lg text-gray-600">Venue</p>
+              <p className="font-bold text-lg lg:text-base break-words">{venue}</p>
             </div>
           </div>
-          <div className="icon1 flex gap-2">
+          
+          <div className="flex items-start gap-3">
             <Image
               src="/images/tag.svg"
-              width={20}
-              height={20}
-              className="w-[2rem]"
+              alt="tag"
+              width={24}
+              height={24}
+              className="w-6 h-6 flex-shrink-0"
             />
-            <div>
-              <p>Price:</p>
-              <p className="font-bold">₹ {price}</p>
+            <div className="min-w-0">
+              <p className="text-lg text-gray-600">Price</p>
+              <p className="font-bold text-lg lg:text-base">₹ {price}</p>
             </div>
           </div>
         </div>
-        <div className="descBox px-10 py-5"
-          style={{
-            boxShadow: "0 -8px 16px -8px rgba(0,0,0,0.2)"
-          }}
-        >
-          <h1 className="font-bold text-2xl">Description</h1>
-          <p className="text-xl font-[100] tracking-wide leading-8">
+
+        {/* Description Section */}
+        <div className="px-6 lg:px-10 py-6 border-t border-gray-200">
+          <h2 className="font-bold text-xl lg:text-2xl mb-3">Description</h2>
+          <p className="text-lg lg:text-base leading-relaxed text-gray-700">
             {desc}
           </p>
         </div>
-        <div className="h-[2px] bg-[#D4B255] w-[90%]"></div>
-        <div className="policies w-[90%] PY-5">
-          <div className="text-lg">
-            <span className="font-bold">Note : </span> Ticket details are automatically taken from your profile. You can update them on the profile page.
+
+        {/* Policies Section */}
+        <div className="px-6 lg:px-10 py-4 space-y-3">
+          <div className="text-xs lg:text-lg leading-relaxed">
+            <span className="font-bold">Note: </span>
+            <span className="text-gray-700">Ticket details are automatically taken from your profile. You can update them on the profile page.</span>
           </div>
-          <div className="text-lg mt-3">
-            <span className="font-bold">Refund Policy : </span> All tickets are non-refundable and non-transferable except in the case of event cancellation or technical issues..
+          <div className="text-xs lg:text-lg leading-relaxed">
+            <span className="font-bold">Refund Policy: </span>
+            <span className="text-gray-700">All tickets are non-refundable and non-transferable except in the case of event cancellation or technical issues.</span>
           </div>
         </div>
-        <button className="px-3 py-3 shadow-lg text-3xl mt-5">
-          Register Now
-        </button>
+
+        {/* Register Button */}
+        <div className="px-6 lg:px-10 pt-4 pb-6">
+          <button className="w-full lg:w-auto px-8 py-3 bg-white border-2 border-black text-xl lg:text-2xl font-normal hover:bg-black hover:text-white transition-colors duration-200">
+            Register Now
+          </button>
+        </div>
       </div>
     </div>
   )
