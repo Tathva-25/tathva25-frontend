@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import Image from 'next/image';
 import logo from '../../public/images/TATHVA25_LOGO.png';
-import { Hero } from "@/Hero_Page/hero";
-import Footer from "@/Hero_Page/footer";
+import { Hero } from "@/components/hero";
+import Footer from "@/components/footer";
 
 export default function Sidebar() {
     const items = [

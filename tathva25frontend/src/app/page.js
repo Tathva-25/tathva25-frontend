@@ -7,6 +7,7 @@ import ResponsiveLayout from "@/components/Wheels";
 import Explore from "./components/Explore";
 import Menupage from "./components/Menupage";
 import Robowars from "./components/Robowars";
+import Footer from "@/components/footer";
 
 import Proshow from "@/components/proshow";
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
         <Proshow/>
         <ResponsiveLayout/> */}
         <Sidebar />
+        <Footer />
     </div>
   );
 }
