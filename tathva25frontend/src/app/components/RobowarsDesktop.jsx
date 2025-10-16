@@ -57,11 +57,13 @@ function Loader() {
       scale: 0.5,
     });
 
+    //tl => gsap.timeline(varsoptions)
+    //tl.fromTo().to().to(). ...=> CHAINING OF ANIMATIONS?
     ScrollTrigger.create({
       trigger: loaderRef.current,
       start: "top 90%",
       onEnter: () => {
-        const tl = gsap.timeline({ repeat: -1 });
+        const tl = gsap.timeline({ repeat: 0 });
 
         tl.fromTo(
           loaderItems,
@@ -249,14 +251,6 @@ function CircuitLines() {
   );
 }
 
-function Line() {
-  return (
-    <div className="w-full flex justify-center">
-      <div className="bg-black w-[80%] h-1 md:h-[4px]"></div>
-    </div>
-  );
-}
-
 function Picture() {
   return (
     <div className="w-full">
@@ -334,7 +328,8 @@ export default function RobowarsDesktop({ link }) {
       trigger: loaderRef.current,
       start: "top 100%",
       onEnter: () => {
-        gsap.fromTo(
+        const tl = gsap.timeline({ repeat: 0 });
+        tl.fromTo(
           loaderRef.current,
           {
             opacity: 1,
@@ -357,7 +352,8 @@ export default function RobowarsDesktop({ link }) {
       trigger: pictureRef.current,
       start: "top 100%",
       onEnter: () => {
-        gsap.fromTo(
+        const tl = gsap.timeline({ repeat: 0 });
+        tl.fromTo(
           pictureRef.current,
           {
             opacity: 1,
@@ -379,18 +375,20 @@ export default function RobowarsDesktop({ link }) {
     ScrollTrigger.create({
       trigger: regionRef.current,
       start: "top 100%",
+      once: true, //THIS IS HOW YOU RUN A GSAP ANIMATION ONLY ONCE ON SCROLL TRIGGER
       onEnter: () => {
-        gsap.fromTo(
+        const tl = gsap.timeline({ repeat: 0 });
+        tl.fromTo(
           regionRef.current,
           {
             opacity: 1,
-            y: 600,
+            y: 400,
           },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 1.4,
+            duration: 0.8,
             ease: "power3.out",
             delay: 0.8,
           }
@@ -402,10 +400,11 @@ export default function RobowarsDesktop({ link }) {
       trigger: containerRef.current,
       start: "top 50%",
       onEnter: () => {
-        gsap.to(containerRef.current, {
+        const tl = gsap.timeline({ repeat: 0 });
+        tl.to(containerRef.current, {
           backgroundSize: "105%",
           duration: 8,
-          repeat: -1,
+          repeat: 0,
           yoyo: true,
           ease: "sine.inOut",
         });
