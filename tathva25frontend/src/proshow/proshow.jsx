@@ -1,11 +1,30 @@
 'use client'
 
+import DotGridButton from "@/component/DotGridButton";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import localFont from 'next/font/local'
+
+const akiraExpanded = localFont({
+  src: '../../public/fonts/Akira-Expanded.otf',
+  variable: '--font-akira'
+});
+
+// Placeholder for DotGridButton - replace with your actual component
+// const DotGridButton = ({ text }) => (
+//   <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+//     {text}
+//   </button>
+// );
 
 const Proshow = () => {
   const images = ["/images/embla1.png", "/images/embla2.png", "/images/embla3.png"];
-  const desc=[["Arivu","cfyuhgvhuhgvhijhbv bhijhbvbhuhvhuhvvhuhvvhuhbvbhihvhuhv vhuhvhuhvhuhvhujhvbhuhvhuhvuh"],["Shilpa Rao", "b bhjijhbjihjiujhgvfdftyuhjbvcxsdrtyuikjnbvcdrty ujn cdftyujn cftyujnbvfrtyujnbvftyhnb cftyujn cf"], ["Fejo", "hguijhngfdtyukjm cfyuikm vcfgyujkm cfgyujkmn bvfgtyuikm"]];
+  const desc = [
+    ["Arivu", "From the earliest days of their career, this artist has been fascinated by the interplay of light and shadow, often using vivid contrasts to evoke deep emotion. Their work transcends traditional boundaries, blending elements of realism with abstract motifs that challenge the viewer to look beyond the surface."],
+    ["Shilpa Rao", "Beyond their paintings, the artist has explored multiple mediums, including sculpture and digital installations, constantly pushing the limits of their creative expression. Each piece seems to tell a story that evolves with the viewer's interpretation, revealing hidden layers and textures upon closer inspection."],
+    ["Fejo", "What sets this artist apart is their ability to connect with audiences on a profoundly personal level. Through interviews and public talks, they reveal an unwavering dedication to their craft, emphasizing experimentation and emotional honesty. Their legacy is not only in the art itself but in the inspiration it sparks"]
+  ];
+  
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,12 +53,12 @@ const Proshow = () => {
         ScrollTrigger.create({
           trigger: section,
           start: 'top top',
-          end: () => `+=${window.innerHeight * 3.5}`,
+          end: () => `+=${window.innerHeight * 0.8}`,
+          //reduce the above to reduce the amount of scroll needed to trigger hori-scroll
           pin: true,
           scrub: 1,
           onUpdate: (self) => {
             setScrollProgress(self.progress);
-            // Snap to nearest position
             const rawIndex = self.progress * 2;
             const snappedIndex = Math.round(rawIndex);
             setCurrentIndex(snappedIndex % 3);
@@ -57,19 +76,14 @@ const Proshow = () => {
     };
   }, []);
 
-  // Calculate transform for each image based on snapped positions
   const getImageTransform = (imageIndex) => {
-    // Use snapped progress instead of continuous
     const rotationProgress = Math.round(scrollProgress * 2);
-    
-    // Calculate the visual position for this image (inverted direction: left -> center -> right)
     let position = ((imageIndex) - rotationProgress + 6) % 3;
     
-    // Define positions
     const positions = {
-      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 }, // left
-      1: { x: 0, scale: 1.1, opacity: 1, z: 30 },        // center
-      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 },   // right
+      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 },
+      1: { x: 0, scale: 1.1, opacity: 1, z: 30 },
+      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 },
     };
     
     const pos = positions[position];
@@ -88,10 +102,10 @@ const Proshow = () => {
     >
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}
-        <div className="absolute hidden md:block top-10 left-20 text-sm z-40">
+        <div className="absolute font-black hidden md:block top-10 left-20 text-sm z-40">
           11.3210°N <br />75.9320°E
         </div>
-        <div className="absolute hidden md:block bottom-8 left-20 text-sm z-40">
+        <div className="absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40">
           Be there <br />Feel it <br />Live it
         </div>
 
@@ -120,7 +134,7 @@ const Proshow = () => {
           </div>
 
           {/* Carousel - All 3 images rendered, positions calculated */}
-          <div className="absolute hidden sm:block mt-[12rem] w-full max-w-[700px] h-[200px]">
+          <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div className="relative w-full h-full flex justify-center items-center">
               {images.map((img, index) => (
                 <div 
@@ -141,7 +155,7 @@ const Proshow = () => {
           </div>
 
           {/* Progress indicators */}
-          <div className="absolute bottom-[-190px] md:bottom-[-220px] left-1/2 -translate-x-1/2 flex gap-2">
+          {/* <div className="absolute bottom-[-190px] md:bottom-[-220px] left-1/2 -translate-x-1/2 flex gap-2">
             {images.map((_, index) => (
               <div
                 key={index}
@@ -152,7 +166,7 @@ const Proshow = () => {
                 }`}
               />
             ))}
-          </div>
+          </div> */}
         </div>
 
         {/* Text content */}
@@ -171,7 +185,7 @@ const Proshow = () => {
                   opacity: currentIndex === index ? 1 : 0,
                 }}
               >
-                <div className="text-3xl font-semibold">{item[0]}</div>
+                <div className={`text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
               </div>
             ))}
           </div>
@@ -195,6 +209,10 @@ const Proshow = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="flex justify-center ml-10  md:justify-start sm:mt-8 -mt-8">
+            <DotGridButton text="Book Your Pass" />
           </div>
         </div>
 

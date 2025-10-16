@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { Michroma } from "next/font/google"
+import DotGridButton from "@/component/DotGridButton"
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" })
 
