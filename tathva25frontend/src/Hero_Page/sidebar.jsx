@@ -332,7 +332,10 @@ export default function Sidebar() {
                         <p className="text-xl text-gray-600">Get in Touch</p>
                     </div>
                 </section>
-                <Footer />
+                <section>
+                    <Footer />
+                </section>
+
             </div>
         </>
     );
