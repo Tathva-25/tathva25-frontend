@@ -1,9 +1,9 @@
-import Card from "../../components/Card"
+import CardDetails from "@/components/CardDetails"
 
 const page = () => {
   return (
     <div className="flex justify-center h-screen items-center">
-        <Card
+        <CardDetails
             src="/images/sculptor.png"
             alt="sculptor"
             title="Sculpting Modeling"

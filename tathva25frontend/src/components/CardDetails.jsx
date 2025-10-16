@@ -1,14 +1,14 @@
 import Image from "next/image"
 import { Michroma } from "next/font/google"
-import DotGridButton from "@/component/DotGridButton"
+import DotGridButton from "./DotGridButton"
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" })
 
-const Card = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
+const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
   return (
-    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-xl bg-white`}>
+    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white`}>
       {/* Image Section - 3:4 ratio */}
-      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[75vh] lg:mt-0">
+      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[69vh] lg:mt-0">
         <Image
           src={src}
           alt={alt}
@@ -19,10 +19,10 @@ const Card = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col w-full lg:w-[55%]">
+      <div className="flex flex-col items-center w-full lg:w-[55%]">
         {/* Title Section */}
-        <div className="px-6 lg:px-10 py-3 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl lg:text-5xl font-normal tracking-wide">
+        <div className="px-6 lg:px-10 py-3 pb-6 border-b border-gray-200 text-center">
+          <h1 className="text-3xl lg:text-5xl font-normal tracking-wide">
             {title}
           </h1>
           <p className="text-base lg:text-lg mt-3 text-gray-600">
@@ -111,13 +111,13 @@ const Card = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
 
         {/* Register Button */}
         <div className="px-6 lg:px-10 pt-4 pb-6">
-          <button className="w-full lg:w-auto px-8 py-3 bg-white border-2 border-black text-xl lg:text-2xl font-normal hover:bg-black hover:text-white transition-colors duration-200">
-            Register Now
-          </button>
+          <div className="flex justify-center">
+            <DotGridButton text="Register Now" />
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default Card
+export default CardDetails
