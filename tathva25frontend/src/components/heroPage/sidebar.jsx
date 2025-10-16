@@ -1,12 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
+import ResponsiveLayout from "../Wheels";
+import Proshow from "@/proshow/proshow";
 
 export default function Sidebar() {
   const items = [
     { num: 1, label: "Home" },
     { num: 2, label: "About" },
-    { num: 3, label: "Events" },
-    { num: 4, label: "Gallery" },
+    { num: 3, label: "Wheels" },
+    { num: 4, label: "Proshow" },
     { num: 5, label: "Contact" },
   ];
 
@@ -185,21 +187,28 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Demo sections - Remove these in production */}
       <div className="ml-12">
-        {items.map((item) => (
-          <section
-            key={item.num}
-            id={`section-${item.num}`}
-            className="h-screen flex items-center justify-center border-b-2 border-gray-200"
-            style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
-          >
-            <div className="text-center">
-              <h2 className="text-6xl font-bold mb-4">{item.label}</h2>
-              <p className="text-xl text-gray-600">Section {item.num}</p>
-            </div>
-          </section>
-        ))}
+{items.map((item) => (
+  <section
+    key={item.num}
+    id={`section-${item.num}`}
+    className="h-screen flex items-center justify-center border-b-2 border-gray-200"
+    style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
+  >
+    {item.label === "Wheels" ? (
+      <ResponsiveLayout />
+    ) : item.label === "Proshow" ? (
+      <Proshow />
+    ) :
+     (
+      <div className="text-center">
+        <h2 className="text-6xl font-bold mb-4">{item.label}</h2>
+        <p className="text-xl text-gray-600">Section {item.num}</p>
+      </div>
+    )}
+  </section>
+))}
+
         <section
           id={`section-footer`}
           className="h-screen flex items-center justify-center bg-black border-b-2 border-gray-200"
