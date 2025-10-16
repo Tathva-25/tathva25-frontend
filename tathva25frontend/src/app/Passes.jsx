@@ -7,6 +7,7 @@ import Ticket from "./Ticket";
 import TicketMobile from "./TicketMobile";
 import { Playfair_Display, Inter, Oswald } from "next/font/google";
 import { Michroma } from "next/font/google";
+import { Arrow } from "./Arrow";
 
 const osw = Oswald({
   subsets: ["latin"],
@@ -32,7 +33,6 @@ function Passes() {
   const cards = [0, 1, 2];
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
-  const rulerRef = useRef(null);
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 700);
@@ -88,8 +88,45 @@ function Passes() {
     setCenterCard(1);
   }, [isMobile]);
 
+  const leftArrowRefs = useRef([]);
+  const rightArrowRefs = useRef([]);
+
+  // Add this function to trigger the wave animation
+  const triggerArrowWave = (direction) => {
+    const refs =
+      direction === "left" ? leftArrowRefs.current : rightArrowRefs.current;
+
+    const orderedRefs = direction === "left" ? [...refs].reverse() : refs;
+
+    orderedRefs.forEach((ref, index) => {
+      if (ref) {
+        setTimeout(() => {
+          ref.animate();
+        }, index * 150); // 150ms delay between each arrow
+      }
+    });
+  };
+
   const moveToCenter = (clicked) => {
     if (clicked === centerCard) return;
+
+    let direction;
+
+    if (centerCard === 0 && clicked === 2) {
+      // Going from day 1 to day 3 = going backwards (left)
+      direction = "left";
+    } else if (centerCard === 2 && clicked === 0) {
+      // Going from day 3 to day 1 = going forward (right)
+      direction = "right";
+    } else if (clicked < centerCard) {
+      // Normal backward movement
+      direction = "left";
+    } else {
+      // Normal forward movement
+      direction = "right";
+    }
+
+    triggerArrowWave(direction);
 
     const positions = [
       {
@@ -124,13 +161,6 @@ function Passes() {
       });
     });
 
-    const rulerShift = -clicked * -600;
-    gsap.to(rulerRef.current, {
-      x: rulerShift,
-      duration: 0.6,
-      ease: "power2.inOut",
-    });
-
     setCenterCard(clicked);
   };
 
@@ -157,9 +187,6 @@ function Passes() {
 
   return (
     <section
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
       className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center overflow-hidden"
       style={{ backgroundImage: "url('/bg.png')" }}
     >
@@ -187,6 +214,9 @@ function Passes() {
           key={i}
           className={`card card-${i} absolute cursor-pointer`}
           onClick={() => moveToCenter(i)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {isMobile ? (
             <TicketMobile
@@ -200,22 +230,54 @@ function Passes() {
         </div>
       ))}
 
-      {/* arrows  */}
-      <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative overflow-x-hidden">
-        <Image
+      {/* bottom bar  */}
+      <div className="w-screen h-[80px] bg-green-200 sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative overflow-x-hidden">
+        {/* <Image
           src="/arrows2.svg"
           alt="arrow"
           width={10}
           height={10}
           className="rotate-180 absolute left-0 top-[20%] z-0 w-30 h-auto sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80"
-        />
+        /> */}
+
+        <div className="flex absolute bg-red-300 gap-3 right-[25%] sm:right-[75%] md:right-[75%] -top-[8%] sm:top-[10%] z-0 w-full h-fit scale-50 sm:scale-80 md:scale-90 sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80">
+          <Arrow
+            direction={"left"}
+            ref={(el) => (leftArrowRefs.current[0] = el)}
+          />
+          <Arrow
+            direction={"left"}
+            ref={(el) => (leftArrowRefs.current[1] = el)}
+          />
+          <Arrow
+            direction={"left"}
+            ref={(el) => (leftArrowRefs.current[2] = el)}
+          />
+        </div>
+
+        <div className="flex absolute bg-red-300 gap-3 left-[25%] sm:left-[75%] md:left-[75%] -top-[8%] sm:top-[10%] z-0 w-full h-fit scale-50 sm:scale-80 md:scale-90 sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80">
+          <Arrow
+            direction={"right"}
+            ref={(el) => (rightArrowRefs.current[0] = el)}
+          />
+          <Arrow
+            direction={"right"}
+            ref={(el) => (rightArrowRefs.current[1] = el)}
+          />
+          <Arrow
+            direction={"right"}
+            ref={(el) => (rightArrowRefs.current[2] = el)}
+          />
+        </div>
 
         <span
-          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] left-[32%] md:left-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
+          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] left-[36%] md:left-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
           onClick={() => {
             const prev = (centerCard + cards.length - 1) % cards.length;
             moveToCenter(prev);
           }}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
           onTouchEnd={(e) => e.stopPropagation()}
         >
           PREV
@@ -237,11 +299,13 @@ function Passes() {
         /> */}
 
         <span
-          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] right-[32%] md:right-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
+          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] right-[36%] md:right-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
           onClick={() => {
             const next = (centerCard + 1) % cards.length;
             moveToCenter(next);
           }}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
           onTouchEnd={(e) => e.stopPropagation()}
         >
           NEXT
@@ -263,18 +327,18 @@ function Passes() {
         /> */}
 
         <span
-          className={`${osw.className} absolute top-[27%] lg:top-[29%] xl:top-[30%] 2xl:top-[33%] right-[49%] sm:right-[49%] lg:right-[48.5%] xl:right-[48.8%] 2xl:right-[48.7%] text-md sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl`}
+          className={`${osw.className} absolute top-[27%] lg:top-[29%] xl:top-[30%] 2xl:top-[33%] right-[48.5%] sm:right-[49%] lg:right-[48.5%] xl:right-[48.8%] 2xl:right-[48.7%] text-md sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl`}
         >
           {String(ticketData[centerCard].day).padStart(2, "0")}
         </span>
 
-        <Image
+        {/* <Image
           src="/arrows2.svg"
           alt="arrow"
           width={10}
           height={10}
           className="absolute right-0 top-[20%] origin-right w-30 h-auto sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80"
-        />
+        /> */}
       </div>
     </section>
   );
