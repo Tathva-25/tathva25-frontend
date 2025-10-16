@@ -22,6 +22,71 @@ export default function WheelsEventMobile() {
         justifyContent: "flex-start",
       }}
     >
+      <style>{`
+        @keyframes glitch {
+          0%,
+          100% {
+            transform: translate(0);
+            clip-path: inset(0 0 0 0);
+          }
+          10% {
+            transform: translate(-3px, 0);
+            clip-path: inset(10% 0 85% 0);
+          }
+          20% {
+            transform: translate(3px, 0);
+            clip-path: inset(80% 0 10% 0);
+          }
+          30% {
+            transform: translate(-2px, 0);
+            clip-path: inset(50% 0 30% 0);
+          }
+          40% {
+            transform: translate(2px, 0);
+            clip-path: inset(20% 0 60% 0);
+          }
+          50% {
+            transform: translate(0);
+            clip-path: inset(0 0 0 0);
+          }
+        }
+
+        @keyframes shake {
+          0%,
+          100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+         
+          20% {
+            transform: translate(0.5px, 0.3px) rotate(0.1deg);
+          }
+         
+          40% {
+            transform: translate(0.5px, -0.3px) rotate(0.08deg);
+          }
+         
+          60% {
+            transform: translate(0.3px, -0.5px) rotate(0.05deg);
+          }
+         
+          80% {
+            transform: translate(0.5px, 0.5px) rotate(0.1deg);
+          }
+          90% {
+            transform: translate(-0.3px, 0.3px) rotate(-0.05deg);
+          }
+        }
+
+        .glitch-wheels {
+          animation: glitch 0.5s infinite;
+          display: inline-block;
+        }
+
+        .shake-text {
+          animation: shake 1s infinite;
+          display: inline-block;
+        }
+      `}</style>
       {/* === BACKGROUND LAYER (car + bg) === */}
       <div
         style={{
@@ -96,6 +161,7 @@ export default function WheelsEventMobile() {
           }}
         >
           <div
+            className="glitch-wheels"
             style={{
               fontFamily: "sans-serif",
               fontSize: "clamp(2.5rem, 20vw, 11rem)",
@@ -158,6 +224,7 @@ export default function WheelsEventMobile() {
         >
           {/* === YEAR (left aligned) === */}
           <div
+            className="shake-text"
             style={{
               width: "100%",
               fontFamily: "'Michroma', sans-serif",

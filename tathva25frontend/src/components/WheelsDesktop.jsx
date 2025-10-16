@@ -2,6 +2,7 @@
 import Barcode from "react-barcode";
 import { Michroma } from "next/font/google";
 import { useEffect, useState } from "react";
+import TextType from "./TextType";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
@@ -80,25 +81,66 @@ export default function WheelsEvent() {
           }}
         />
 
-        <style jsx>{`
+        <style>{`
           @keyframes glitch {
-            0% {
-              transform: translate(0);
-            }
-            20% {
-              transform: translate(-2px, 2px);
-            }
-            40% {
-              transform: translate(-2px, -2px);
-            }
-            60% {
-              transform: translate(2px, 2px);
-            }
-            80% {
-              transform: translate(2px, -2px);
-            }
+            0%,
             100% {
               transform: translate(0);
+              clip-path: inset(0 0 0 0);
+            }
+            10% {
+              transform: translate(-3px, 0);
+              clip-path: inset(10% 0 85% 0);
+            }
+            20% {
+              transform: translate(3px, 0);
+              clip-path: inset(80% 0 10% 0);
+            }
+            30% {
+              transform: translate(-2px, 0);
+              clip-path: inset(50% 0 30% 0);
+            }
+            40% {
+              transform: translate(2px, 0);
+              clip-path: inset(20% 0 60% 0);
+            }
+            50% {
+              transform: translate(0);
+              clip-path: inset(0 0 0 0);
+            }
+          }
+
+          @keyframes shake {
+            0%,
+            100% {
+              transform: translate(0, 0) rotate(0deg);
+            }
+            10% {
+              transform: translate(-0.5px, -0.5px) rotate(-0.1deg);
+            }
+            20% {
+              transform: translate(0.5px, 0.3px) rotate(0.1deg);
+            }
+            30% {
+              transform: translate(-0.3px, 0.5px) rotate(-0.08deg);
+            }
+            40% {
+              transform: translate(0.5px, -0.3px) rotate(0.08deg);
+            }
+            50% {
+              transform: translate(-0.5px, 0.3px) rotate(-0.05deg);
+            }
+            60% {
+              transform: translate(0.3px, -0.5px) rotate(0.05deg);
+            }
+            70% {
+              transform: translate(-0.3px, -0.3px) rotate(-0.1deg);
+            }
+            80% {
+              transform: translate(0.5px, 0.5px) rotate(0.1deg);
+            }
+            90% {
+              transform: translate(-0.3px, 0.3px) rotate(-0.05deg);
             }
           }
 
@@ -169,7 +211,16 @@ export default function WheelsEvent() {
 
           .glitch-text {
             position: relative;
-            animation: ${glitchActive ? "glitch 0.3s infinite" : "none"};
+          }
+
+          .glitch-wheels {
+            animation: glitch 0.5s infinite;
+            display: inline-block;
+          }
+
+          .shake-text {
+            animation: shake 0.5s infinite;
+            display: inline-block;
           }
 
           .flicker-text {
@@ -292,6 +343,7 @@ export default function WheelsEvent() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          overflowX: "hidden",
         }}
       >
         {/* === TOP GRID === */}
@@ -322,7 +374,7 @@ export default function WheelsEvent() {
             }}
           >
             <div
-              className="cyber-text"
+              // className="cyber-text"
               style={{
                 fontSize: "clamp(1rem, 4vw, 4rem)",
                 fontWeight: 200,
@@ -382,7 +434,7 @@ export default function WheelsEvent() {
             }}
           >
             <div
-              className="cyber-text glitch-text slide-in-right"
+              className="glitch-wheels slide-in-right"
               style={{
                 fontFamily: "sans-serif",
                 fontSize: "clamp(2rem, 12vw, 11rem)",
@@ -452,11 +504,53 @@ export default function WheelsEvent() {
               overflow: "hidden",
             }}
           >
-            <div>Prototype: 1981 DeLorean</div>
-            <div>Status: Operational</div>
-            <div>Power Source: Mr. Fusion™ Reactor</div>
-            <div>Objective: Bend the continuum. Revisit the impossible.</div>
-            <div>Function: Temporal displacement via flux synchronization</div>
+            <TextType
+              text={["Prototype: 1981 DeLorean"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              cursorCharacter="_"
+              loop={false}
+              showCursor={false}
+            />
+            <TextType
+              text={["Status: Operational"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              cursorCharacter="_"
+              loop={false}
+              showCursor={false}
+            />
+            <TextType
+              text={["Power Source: Mr. Fusion™ Reactor"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              cursorCharacter="_"
+              loop={false}
+              showCursor={false}
+            />
+            <TextType
+              text={["Objective: Bend the continuum. Revisit the impossible."]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              cursorCharacter="_"
+              loop={false}
+              showCursor={false}
+            />
+            <TextType
+              text={[
+                "Function: Temporal displacement via flux synchronization",
+              ]}
+              typingSpeed={95}
+              pauseDuration={500}
+              cursorCharacter="_"
+              loop={false}
+              showCursor={false}
+            />
+            {/* <div>Prototype: 1981 DeLorean</div> */}
+            {/* <div>Status: Operational</div> */}
+            {/* <div>Power Source: Mr. Fusion™ Reactor</div> */}
+            {/* <div>Objective: Bend the continuum. Revisit the impossible.</div> */}
+            {/* <div>Function: Temporal displacement via flux synchronization</div> */}
           </div>
 
           {/* === BOTTOM RIGHT === */}
@@ -470,7 +564,7 @@ export default function WheelsEvent() {
             }}
           >
             <div
-              className="cyber-text glitch-text"
+              className="shake-text"
               style={{
                 fontFamily: "'Michroma', sans-serif",
                 fontSize: "clamp(2rem, 7vw, 8rem)",
@@ -536,7 +630,7 @@ export default function WheelsEvent() {
             </div>
 
             <div
-              className="cyber-text"
+              // className="cyber-text"
               style={{
                 fontSize: "clamp(2rem, 5.5vw, 6rem)",
                 fontWeight: 200,

@@ -10,9 +10,13 @@ export default function Home() {
       <main>
         {/* <Hero /> */}
 
+        {/* <ResponsiveLayout /> */}
         <ResponsiveLayout />
         <ResponsiveLayout />
         <ResponsiveLayout />
+        <ResponsiveLayout />
+        <ResponsiveLayout />
+
         {/* <Sidebar /> */}
       </main>
     </div>
