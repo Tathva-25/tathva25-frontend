@@ -178,3 +178,46 @@
 .loader-item-mob {
   animation: loaderFade 2s ease-in-out infinite;
 }
+
+/* GSAP Background Animation Styles */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    filter: brightness(1) drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
+  }
+  to {
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 255, 255, 0.6));
+  }
+}
+
+.circuit-line {
+  stroke-dasharray: 5, 5;
+  animation: circuit-flow 2s linear infinite;
+}
+
+@keyframes circuit-flow {
+  to {
+    stroke-dashoffset: -10;
+  }
+}

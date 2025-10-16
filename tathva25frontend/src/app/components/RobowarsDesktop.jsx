@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/*FONTS*/
+gsap.registerPlugin(ScrollTrigger);
+
 const spacemono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -12,7 +16,6 @@ const schabo = localFont({
   src: "../../../public/fonts/schabo.woff2",
 });
 
-/*CONVERT ANY IMG TO IMAGE TAG*/
 function ResponsiveImage({ src, alt, className = "" }) {
   return (
     <Image
@@ -43,70 +46,123 @@ function BarcodeImage({ src, alt }) {
 }
 
 function Loader() {
+  const loaderRef = useRef(null);
+
+  useEffect(() => {
+    const loaderItems = loaderRef.current.querySelectorAll(".loader-item");
+
+    gsap.set(loaderItems, {
+      opacity: 0,
+      y: 20,
+      scale: 0.5,
+    });
+
+    ScrollTrigger.create({
+      trigger: loaderRef.current,
+      start: "top 90%",
+      onEnter: () => {
+        const tl = gsap.timeline({ repeat: -1 });
+
+        tl.fromTo(
+          loaderItems,
+          {
+            opacity: 0,
+            y: 20,
+            scale: 0.5,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: "back.out(1.4)",
+            stagger: 0.12,
+          }
+        )
+          .to(loaderItems, {
+            y: -8,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.08,
+          })
+          .to(loaderItems, {
+            y: 0,
+            duration: 0.5,
+            ease: "bounce.out",
+            stagger: 0.08,
+          })
+          .to(
+            loaderItems,
+            {
+              opacity: 0.3,
+              scale: 0.9,
+              duration: 0.6,
+              ease: "power2.in",
+              stagger: 0.08,
+            },
+            "+=0.3"
+          )
+          .to(loaderItems, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: "power2.out",
+            stagger: 0.08,
+          });
+      },
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
     <div className="absolute w-full flex justify-end pr-2 lg:pr-6 pt-16 lg:-translate-y-5 lg:translate-0 md:-top-10 md:-right-40 lg:top-auto lg:right-auto lg:pt-24 xl:pt-32 pb-4">
-      <div className="flex scale-75 md:scale-75 lg:scale-100">
-        <div className="loader-item opacity-0" style={{ animationDelay: "0s" }}>
+      <div ref={loaderRef} className="flex scale-75 md:scale-75 lg:scale-100">
+        <div className="loader-item opacity-0">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
             className="md:w-6 md:h-10"
           />
         </div>
-        <div
-          className="-translate-x-5 loader-item opacity-0"
-          style={{ animationDelay: "0.4s" }}
-        >
+        <div className="-translate-x-5 loader-item opacity-0">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
             className="w-8 h-8 md:w-10 md:h-10"
           />
         </div>
-        <div
-          className="loader-item opacity-0 -translate-x-10"
-          style={{ animationDelay: "0.8s" }}
-        >
+        <div className="loader-item opacity-0 -translate-x-10">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
             className="w-8 h-8 md:w-10 md:h-10"
           />
         </div>
-        <div
-          className="loader-item opacity-0 -translate-x-15"
-          style={{ animationDelay: "1.2s" }}
-        >
+        <div className="loader-item opacity-0 -translate-x-15">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
             className="w-8 h-8 md:w-10 md:h-10"
           />
         </div>
-        <div
-          className="loader-item opacity-0 -translate-x-20"
-          style={{ animationDelay: "1.6s" }}
-        >
+        <div className="loader-item opacity-0 -translate-x-20">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
             className="w-8 h-8 md:w-10 md:h-10"
           />
         </div>
-        <div
-          className="loader-item opacity-0 -translate-x-25"
-          style={{ animationDelay: "2.0s" }}
-        >
+        <div className="loader-item opacity-0 -translate-x-25">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
             className="w-8 h-8 md:w-10 md:h-10"
           />
         </div>
-        <div
-          className="loader-item opacity-0 -translate-x-30"
-          style={{ animationDelay: "2.4s" }}
-        >
+        <div className="loader-item opacity-0 -translate-x-30">
           <ResponsiveImage
             src="/roboloader.png"
             alt="roboloader"
@@ -114,6 +170,81 @@ function Loader() {
           />
         </div>
       </div>
+    </div>
+  );
+}
+
+function CircuitLines() {
+  const linesRef = useRef(null);
+
+  useEffect(() => {
+    const paths = linesRef.current.querySelectorAll("path");
+
+    gsap.set(paths, {
+      strokeDasharray: 1000,
+      strokeDashoffset: 1000,
+      opacity: 0,
+    });
+
+    ScrollTrigger.create({
+      trigger: linesRef.current,
+      start: "top 60%",
+      onEnter: () => {
+        gsap.to(paths, {
+          strokeDashoffset: 0,
+          opacity: 0.3,
+          duration: 3,
+          repeat: -1,
+          ease: "power2.inOut",
+          stagger: {
+            amount: 2,
+            repeat: -1,
+            repeatDelay: 1,
+          },
+        });
+      },
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
+  return (
+    <div ref={linesRef} className="fixed inset-0 pointer-events-none z-0">
+      <svg className="w-full h-full opacity-30">
+        <defs>
+          <linearGradient
+            id="circuitGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stopColor="#00ffff" stopOpacity="0" />
+            <stop offset="50%" stopColor="#00ffff" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#00ffff" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path
+          d="M0,50 Q200,100 400,50 T800,50"
+          stroke="url(#circuitGradient)"
+          strokeWidth="2"
+          fill="none"
+        />
+        <path
+          d="M0,150 Q300,200 600,150 T1200,150"
+          stroke="url(#circuitGradient)"
+          strokeWidth="1.5"
+          fill="none"
+        />
+        <path
+          d="M200,300 Q500,350 800,300 T1400,300"
+          stroke="url(#circuitGradient)"
+          strokeWidth="1"
+          fill="none"
+        />
+      </svg>
     </div>
   );
 }
@@ -143,7 +274,6 @@ function Region() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-16 items-start">
           <div className="md:col-span-1 lg:col-span-2">
             <div className="space-y-4 md:space-y-6">
-              {/* Date and Basic Info */}
               <div className="flex flex-wrap gap-2 md:gap-4 items-center">
                 <div
                   className={`bg-black px-3 md:pr-20 py-2  ${schabo.className}`}
@@ -188,12 +318,125 @@ function Region() {
 }
 
 export default function RobowarsDesktop({ link }) {
+  const containerRef = useRef(null);
+  const loaderRef = useRef(null);
+  const pictureRef = useRef(null);
+  const regionRef = useRef(null);
+
+  useEffect(() => {
+    gsap.set([loaderRef.current, pictureRef.current, regionRef.current], {
+      opacity: 0,
+      y: 100,
+      scale: 0.9,
+    });
+
+    ScrollTrigger.create({
+      trigger: loaderRef.current,
+      start: "top 100%",
+      onEnter: () => {
+        gsap.fromTo(
+          loaderRef.current,
+          {
+            opacity: 1,
+            y: 900,
+            scale: 1,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.0,
+            ease: "power3.out",
+            delay: 0.1,
+          }
+        );
+      },
+    });
+
+    ScrollTrigger.create({
+      trigger: pictureRef.current,
+      start: "top 100%",
+      onEnter: () => {
+        gsap.fromTo(
+          pictureRef.current,
+          {
+            opacity: 1,
+            y: 1200,
+            scale: 1,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.4,
+          }
+        );
+      },
+    });
+
+    ScrollTrigger.create({
+      trigger: regionRef.current,
+      start: "top 100%",
+      onEnter: () => {
+        gsap.fromTo(
+          regionRef.current,
+          {
+            opacity: 1,
+            y: 600,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.4,
+            ease: "power3.out",
+            delay: 0.8,
+          }
+        );
+      },
+    });
+
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top 50%",
+      onEnter: () => {
+        gsap.to(containerRef.current, {
+          backgroundSize: "105%",
+          duration: 8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      },
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[url('/robobg.png')] bg-cover bg-center bg-no-repeat">
-      <div className="w-full relative">
-        <Loader />
-        <Picture />
-        <Region />
+    <div
+      ref={containerRef}
+      className="min-h-screen bg-[url('/robobg.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden"
+      style={{ backgroundSize: "100%" }}
+    >
+      <CircuitLines />
+
+      <div className="w-full relative z-10">
+        <div ref={loaderRef}>
+          <Loader />
+        </div>
+
+        <div ref={pictureRef}>
+          <Picture />
+        </div>
+
+        <div ref={regionRef}>
+          <Region />
+        </div>
       </div>
     </div>
   );
