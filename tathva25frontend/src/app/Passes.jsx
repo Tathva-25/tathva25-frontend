@@ -176,7 +176,7 @@ function Passes() {
       <div className="">
         <h1
           className={`${inter.className} text-6xl font-bold z-20 relative ${
-            isMobile ? "mb-140" : "mb-120"
+            isMobile ? "mb-96" : "mb-56"
           }`}
         >
           PASSES
@@ -201,7 +201,7 @@ function Passes() {
       ))}
 
       {/* arrows  */}
-      {/* <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative overflow-x-hidden">
+      <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative overflow-x-hidden">
         <Image
           src="/arrows2.svg"
           alt="arrow"
@@ -274,14 +274,14 @@ function Passes() {
           className="absolute h-screen left-0"
         /> */}
 
-      {/* <Image
+        <Image
           src="/arrows2.svg"
           alt="arrow"
           width={10}
           height={10}
           className="absolute right-0 top-[20%] origin-right w-30 h-auto sm:w-60 md:w-72 lg:w-80"
         />
-      </div> */}
+      </div>
     </section>
   );
 }
