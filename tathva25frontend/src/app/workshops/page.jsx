@@ -1,51 +1,189 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Card from "@/components/Card";
 import Link from "next/link";
 
-// /src/app/workshops/page.jsx
-
-export const metadata = {
-  title: "Workshops — Tathva 25",
-  description: "Explore upcoming workshops for Tathva 25",
-};
-
 export default function WorkshopsPage() {
-  const workshops = [
-    { id: "w1", title: "Intro to Robotics", desc: "Hands-on robotics basics." },
-    { id: "w2", title: "Web Dev Crash Course", desc: "Build modern web apps." },
+  const [workshops, setWorkshops] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const formatDate = (dateString) =>
+    dateString
+      ? new Date(dateString).toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          timeZone: "Asia/Kolkata",
+        })
+      : "TBA";
+
+  useEffect(() => {
+    const fetchWorkshops = async () => {
+      try {
+        setLoading(true);
+        const url = `${process.env.NEXT_PUBLIC_API}/api/events/all?type=workshops`;
+        const response = await axios.get(url);
+        setWorkshops(response.data.events);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching workshops:", err);
+        setError(err.message || "Failed to load workshops");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorkshops();
+  }, []);
+
+  // Search filtering
+  const searchedWorkshops = workshops.filter((workshop) =>
+    workshop.heading.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (loading) {
+    return (
+      <div className="bg-white min-h-screen py-16 px-4 sm:px-8 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-gray-900 border-r-transparent"></div>
+          <p className="mt-4 text-gray-600">Loading workshops...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-white min-h-screen py-16 px-4 sm:px-8 flex items-center justify-center">
+        <div className="text-center text-red-600">
+          <p className="text-xl font-semibold">Error loading workshops</p>
+          <p className="mt-2">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const filteredWorkshops = searchedWorkshops.filter((w) => !w.isFull);
+
+  // Sort: real images first, dummy ones (ending with "-DUMMY.jpg") last
+  const sortedWorkshops = [
+    ...filteredWorkshops.filter(
+      (w) => !w.picture?.trim().endsWith("-DUMMY.jpg")
+    ),
+    ...filteredWorkshops.filter((w) =>
+      w.picture?.trim().endsWith("-DUMMY.jpg")
+    ),
   ];
 
   return (
-    <main
-      style={{
-        padding: "2rem",
-        fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto',
-      }}
-    >
-      <header>
-        <h1>Workshops</h1>
-        <p>Upcoming workshops and registrations for Tathva 25.</p>
-      </header>
+    <div className="bg-white min-h-screen py-4 sm:py-10 px-4 sm:px-8">
+      {/* Heading and home */}
+      <div className="mb-12">
+        <Link
+          href="/"
+          className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
+        >
+          ← Home
+        </Link>
 
-      <section>
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {workshops.map((w) => (
-            <li
-              key={w.id}
-              style={{
-                margin: "1.25rem 0",
-                border: "1px solid #e5e7eb",
-                borderRadius: 8,
-                padding: "1rem",
-              }}
-            >
-              <h2 style={{ margin: 0 }}>{w.title}</h2>
-              <p style={{ margin: "0.5rem 0" }}>{w.desc}</p>
-              <Link href={`/workshops/${w.id}`}>
-                <a style={{ color: "#2563eb" }}>View details</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </main>
+        <div className="mb-12 border-b border-gray-300 pb-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            {/* Title */}
+            <h1 className="pp-fragment text-4xl sm:text-5xl md:text-6xl text-center md:text-left tracking-wide text-gray-900 uppercase md:mt-3">
+              WORKSHOPS
+            </h1>
+
+            {/* Search Bar */}
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search For Workshops"
+              className="w-full md:max-w-lg p-4 border border-gray-300 rounded-full shadow-sm focus:ring-gray-500 focus:border-gray-500"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto">
+        {sortedWorkshops.length === 0 ? (
+          <p className="text-center text-gray-600 text-lg">
+            No workshops found matching your search.
+          </p>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
+            {sortedWorkshops.map((workshop, index) => {
+              const {
+                id,
+                heading,
+                description,
+                price,
+                datetime,
+                time,
+                venue,
+                picture,
+              } = workshop;
+
+              // Generate barcode value based on workshop ID
+              const barcodeValue = String(id).padStart(7, "0");
+
+              // Format description with additional info
+              const fullDescription = `${
+                description ?? "No description available"
+              } `;
+
+              return (
+                <Link
+                  href={`/workshops/${id}`}
+                  key={id}
+                  className="block transform hover:scale-105 transition-transform duration-300"
+                >
+                  <div className="workshop-card-container">
+                    <Card
+                      number={String(index + 1).padStart(2, "0")}
+                      imageUrl={picture || "/images/card_01.png"}
+                      heading={heading ?? "Untitled Workshop"}
+                      description={fullDescription}
+                      barcodeValue={barcodeValue}
+                      sideImageUrl="/images/misc.png"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <style jsx>{`
+        .workshop-card-container {
+          margin-bottom: 2rem;
+          transition: all 0.3s ease;
+        }
+
+        .workshop-card-container:hover {
+          filter: brightness(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .workshop-card-container {
+            transform: scale(0.85);
+            margin-bottom: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .workshop-card-container {
+            transform: scale(0.7);
+            margin-bottom: 0.5rem;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
