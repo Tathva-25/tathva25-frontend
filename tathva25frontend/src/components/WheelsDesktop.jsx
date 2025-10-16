@@ -40,6 +40,7 @@ export default function WheelsEvent() {
           style={{
             width: "100%",
             height: "100%",
+            // top: "-10px",
             objectFit: "cover",
             objectPosition: "center",
             position: "absolute",
@@ -55,7 +56,7 @@ export default function WheelsEvent() {
           className="car-overlay"
           style={{
             position: "absolute",
-            bottom: "6%",
+            bottom: "12%",
             left: "24%",
             width: "51%",
             height: "auto",

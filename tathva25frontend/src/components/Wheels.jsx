@@ -22,9 +22,11 @@ export default function ResponsiveLayout({
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  return (
+  return isMobile ? (
+    <WheelsEventMobile />
+  ) : (
     <GridTransition duration={1500}>
-      {isMobile ? <WheelsEventMobile /> : <WheelsEvent />}
+      <WheelsEvent />
     </GridTransition>
   );
 }

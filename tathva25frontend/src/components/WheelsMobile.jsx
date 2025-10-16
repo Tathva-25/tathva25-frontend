@@ -1,8 +1,8 @@
-'use client';
+"use client";
 import Barcode from "react-barcode";
-import { Michroma } from 'next/font/google';
+import { Michroma } from "next/font/google";
 
-const michroma = Michroma({ subsets: ['latin'], weight: '400' });
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function WheelsEventMobile() {
   return (
@@ -11,7 +11,6 @@ export default function WheelsEventMobile() {
         width: "100vw",
         height: "100vh",
 
-        
         backgroundColor: "#000",
         color: "#fff",
         fontFamily: "'Michroma', sans-serif",
@@ -46,18 +45,18 @@ export default function WheelsEventMobile() {
           }}
         />
 
-        {/* car
-        <img
+        {/* car */}
+        {/* <img
           src="/images/car.png"
           alt="Car"
           style={{
             position: "absolute",
-            bottom: "5%", // bring car slightly up
+            bottom: "20%",
             left: "50%",
-            transform: "translateX(-50%) translateY(-40%) ", // center + zoom so front/back are offscreen
-            width: "auto",
+            transform: "translateX(-50%)",
+            width: "100%",
             height: "auto",
-            minWidth: "150%", // ensures mid part visible, rest out
+            maxHeight: "50%",
             objectFit: "contain",
             pointerEvents: "none",
             userSelect: "none",
@@ -68,6 +67,7 @@ export default function WheelsEventMobile() {
 
       {/* === MAIN CONTENT === */}
       <div
+        className="px-2 py-2"
         style={{
           position: "relative",
           zIndex: 2,
@@ -77,11 +77,10 @@ export default function WheelsEventMobile() {
           alignItems: "center",
           height: "100%",
           width: "100%",
-          padding: "1.5rem 1rem",
+          //padding: "clamp(1rem, 3vh, 2rem) clamp(0.75rem, 4vw, 1.5rem)",
           boxSizing: "border-box",
         }}
       >
-
         {/* === TOP SECTION === */}
         <div
           style={{
@@ -91,18 +90,20 @@ export default function WheelsEventMobile() {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            paddingBottom: "0.1rem",
+            paddingBottom: "clamp(0.5rem, 2vh, 1rem)",
             borderBottom: "1px solid #fff",
-            marginBottom: "0.1rem",
+            flex: "0 0 auto",
           }}
         >
           <div
             style={{
-              fontSize: "clamp(3rem, 15.5vw, 11rem)",
-              fontWeight: 10000000,
+              fontFamily: "sans-serif",
+              fontSize: "clamp(2.5rem, 20vw, 11rem)",
+              fontWeight: 900,
+              letterSpacing: "0.00em",
               textTransform: "uppercase",
-              lineHeight: 1,
-              marginBottom: "0.3rem",
+              lineHeight: 0.9,
+              marginBottom: "clamp(0.3rem, 1vh, 0.5rem)",
             }}
           >
             WHEELS
@@ -113,16 +114,16 @@ export default function WheelsEventMobile() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "90%",
+              width: "100%",
               gap: "0rem",
-              transform:"translateX(-7%)",
+              marginTop: "clamp(0.2rem, 1vh, 0.5rem)",
             }}
           >
-            <div style={{ transform: "scale(0.55)" }}>
+            <div style={{ transform: "scale(0.8)", transformOrigin: "center" }}>
               <Barcode
                 value="WHEELS-2025"
                 height={35}
-                width={1.2}
+                width={1}
                 background="transparent"
                 lineColor="#fff"
                 displayValue={false}
@@ -130,8 +131,9 @@ export default function WheelsEventMobile() {
             </div>
             <div
               style={{
-                fontSize: "clamp(1.2rem, 6.5vw, 3.5rem)",
-                fontWeight: 1000,
+                fontFamily: "sans-serif",
+                fontSize: "clamp(1rem, 8vw, 3.5rem)",
+                fontWeight: 900,
                 textTransform: "uppercase",
                 letterSpacing: "0.0em",
               }}
@@ -141,57 +143,84 @@ export default function WheelsEventMobile() {
           </div>
         </div>
 
-        {/* === YEAR (left aligned) === */}
+        {/* === MIDDLE CONTENT SECTION === */}
         <div
           style={{
             width: "100%",
-            fontFamily: "'Michroma', sans-serif",
-            fontSize: "clamp(3rem, 14vw, 8rem)",
-            textTransform: "uppercase",
-            color: "transparent",
-            transform:"translateY(-240%) translateX(-5%)",
-            WebkitTextStroke: "2px #fff",
-            textStroke: "2px #fff",
-            lineHeight: 1,
-            textAlign: "left",
-            paddingLeft: "0.5rem",
-            marginBottom: "0.5rem",
+            flex: "1 1 auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            gap: "clamp(0.5rem, 2vh, 1rem)",
+            paddingTop: "clamp(1rem, 3vh, 2rem)",
           }}
         >
-          2025
-        </div>
-
-        {/* === DATE SECTION === */}
-        <div
-          style={{
-            width: "100%",
-            textAlign: "center",
-            margin: "0.2rem 0 0.6rem 0",
-          }}
-        >
+          {/* === YEAR (left aligned) === */}
           <div
             style={{
-              fontSize: "clamp(2rem, 9vw, 4rem)",
-              fontWeight: 100,
-               transform:"translateY(-500%) translateX(-9%)",
+              width: "100%",
+              fontFamily: "'Michroma', sans-serif",
+              fontSize: "clamp(3rem, 14vw, 8rem)",
               textTransform: "uppercase",
-              letterSpacing: "0.0em",
-              lineHeight: 1.1,
+              color: "transparent",
+              WebkitTextStroke: "2px #fff",
+              textStroke: "2px #fff",
+              lineHeight: 0.9,
+              textAlign: "left",
+              paddingLeft: "0",
             }}
           >
-            October 26
+            2025
           </div>
+
+          {/* === DATE SECTION === */}
           <div
             style={{
-              fontSize: "clamp(0.9rem, 3.5vw, 1.3rem)",
-              fontWeight: 300,
-              transform:"translateY(-920%) translateX(-18%)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              marginTop: "0.3rem",
+              width: "100%",
+              textAlign: "left",
+              paddingTop: "clamp(0.5rem, 2vh, 1rem)",
             }}
           >
-            Back to the Future
+            <div
+              style={{
+                fontSize: "clamp(2rem, 9vw, 4rem)",
+                fontWeight: 100,
+                textTransform: "uppercase",
+                letterSpacing: "0.0em",
+                lineHeight: 1.1,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <span>OCTOBER 26</span>
+              <svg
+                width="1em"
+                height="1em"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ fontSize: "0.6em" }}
+              >
+                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                <circle cx="12" cy="20" r="1"></circle>
+              </svg>
+            </div>
+            <div
+              style={{
+                fontSize: "clamp(0.8rem, 3.5vw, 1.3rem)",
+                fontWeight: 300,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                marginTop: "clamp(0.3rem, 1vh, 0.6rem)",
+              }}
+            >
+              Back to the Future
+            </div>
           </div>
         </div>
 
@@ -199,69 +228,105 @@ export default function WheelsEventMobile() {
         <div
           style={{
             width: "100%",
-            paddingTop: "1rem",
+            paddingBottom: "clamp(1rem, 2vh, 1.5rem)",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "0.7rem",
+            alignItems: "flex-start",
+            justifyContent: "flex-end",
+            gap: "clamp(0.5rem, 1.5vh, 1rem)",
+            flex: "0 0 auto",
           }}
         >
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
-              gap: "1rem",
-              fontSize: "clamp(0.6rem, 3vw, 1rem)",
+              justifyContent: "flex-start",
+              flexWrap: "wrap",
+              paddingLeft: "10px",
+              gap: "clamp(0.8rem, 4vw, 1.5rem)",
+              fontSize: "clamp(0.7rem, 3vw, 1rem)",
               textTransform: "uppercase",
               fontWeight: 300,
-               transform:"translateY(-220%) translateX(-15%)",
               letterSpacing: "0.05em",
             }}
           >
-            <div>Rally</div>
-            <div>Car Reveals</div>
-            <div>Stunts</div>
+            <div>RALLY</div>
+            <div>CAR REVEALS</div>
+            <div>STUNTS</div>
           </div>
 
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "1rem",
-              transform:"translateY(-120%)",
-              fontSize: "clamp(2.0rem, 4vw, 4rem)",
+              alignItems: "baseline",
+              justifyContent: "flex-start",
+              gap: "clamp(0.5rem, 2vw, 1rem)",
+              fontSize: "clamp(1.8rem, 6vw, 4rem)",
               fontWeight: 300,
+              paddingLeft: "8px",
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              lineHeight: "0.9",
-              whiteSpace: "nowrap",
+              lineHeight: "1",
             }}
           >
-            <span>Temporal</span>
+            <span>TEMPORAL</span>
             <span
               style={{
-                fontSize: "clamp(1.1rem, 2vw, 1.8rem)",
+                fontSize: "clamp(1.2rem, 3.5vw, 1.8rem)",
                 fontWeight: 200,
                 letterSpacing: "0.2em",
               }}
             >
-              Shift
+              SHIFT
             </span>
-            
           </div>
-          <div>
-    <img
-      src="/images/misc.png"
-      alt="Misc"
-      style={{
-        height: "2rem", // adjust size as needed
-        objectFit: "contain",
-      }}
-    />
-  </div>
-          
+
+          {/* Bottom icons row */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              marginTop: "clamp(0.5rem, 1vh, 1rem)",
+            }}
+          >
+            {/* Left side - CE and FCC marks */}
+            <div
+              // style={{
+              //   display: "flex",
+              //   alignItems: "center",
+              //   gap: "clamp(1rem, 4vw, 2rem)",
+              //   fontSize: "clamp(1rem, 4vw, 1.5rem)",
+              //   fontWeight: "bold",
+              // }}
+              className="w-full flex justify-between px-3 "
+            >
+              <div
+                style={{
+                  border: "2px solid #fff",
+                  borderRadius: "4px",
+                  padding: "0.1em 0.3em",
+                  fontSize: "clamp(0.8rem, 3vw, 1.2rem)",
+                }}
+              >
+                CE
+              </div>
+              <div style={{ fontSize: "clamp(0.6rem, 2vw, 0.8rem)" }}>✦</div>
+              <div style={{ fontSize: "clamp(0.6rem, 2vw, 0.8rem)" }}>✦</div>
+              <div style={{ fontSize: "clamp(0.6rem, 2vw, 0.8rem)" }}>✦</div>
+              <div
+                style={{
+                  border: "2px solid #fff",
+                  borderRadius: "4px",
+                  padding: "0.1em 0.3em",
+                  fontSize: "clamp(0.8rem, 3vw, 1.2rem)",
+                }}
+              >
+                FCC
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

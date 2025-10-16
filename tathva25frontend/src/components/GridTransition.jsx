@@ -13,12 +13,12 @@ export default function GridTransition({
   // ========== CUSTOMIZABLE VARIABLES ==========
   const TRANSITION_DURATION = duration; // Total duration in milliseconds (default: 3000ms = 3s)
   const INITIAL_DELAY = 500; // Delay before transition starts (ms)
-  const GRID_ROWS = 20;
-  const GRID_COLS = 24;
+  const GRID_ROWS = 25;
+  const GRID_COLS = 30;
   const TOTAL_CELLS = GRID_ROWS * GRID_COLS;
-  const HOVER_FADE_DURATION = 300; // Duration for hover effect to fade out (ms)
-  const NEARBY_CELLS_COUNT = 3; // Number of nearby random cells to also trigger
-  const NEARBY_RADIUS = 1; // Radius around hovered cell to pick random cells from
+  const HOVER_FADE_DURATION = 400; // Duration for hover effect to fade out (ms)
+  const NEARBY_CELLS_COUNT = 8; // Number of nearby random cells to also trigger
+  const NEARBY_RADIUS = 2; // Radius around hovered cell to pick random cells from
 
   // Calculate delay between each cell reveal based on total duration
   const CELL_DELAY = TRANSITION_DURATION / TOTAL_CELLS;
@@ -169,14 +169,6 @@ export default function GridTransition({
           const isHovered = hoveredCells.has(index);
           const showBorder = isTransitioning;
 
-          // Calculate the position of this cell for background positioning
-          const row = Math.floor(index / GRID_COLS);
-          const col = index % GRID_COLS;
-          const cellWidthPercent = 100 / GRID_COLS;
-          const cellHeightPercent = 100 / GRID_ROWS;
-          const bgPosX = (col * cellWidthPercent).toFixed(2);
-          const bgPosY = (row * cellHeightPercent).toFixed(2);
-
           return (
             <div
               key={index}
@@ -184,17 +176,16 @@ export default function GridTransition({
               style={{
                 backgroundColor:
                   isTransitioning && !isRevealed ? "#000" : "transparent",
-                backgroundImage: isHovered ? `url(${transitionImage})` : "none",
-                backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
-                backgroundPosition: `${bgPosX}% ${bgPosY}%`,
                 border: showBorder
                   ? "1px solid rgba(255, 255, 255, 0.1)"
                   : "none",
                 transition: `background-color ${
                   isHovered ? "0.05s" : "0.8s"
-                } ease, opacity 0.3s ease`,
+                } ease, opacity 0.3s ease, filter 0.05s ease`,
                 opacity: isHovered ? 1 : isTransitioning && !isRevealed ? 1 : 0,
                 cursor: "default",
+                backdropFilter: isHovered ? "invert(1)" : "none",
+                WebkitBackdropFilter: isHovered ? "invert(1)" : "none",
               }}
             />
           );
