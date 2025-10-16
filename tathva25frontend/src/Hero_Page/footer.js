@@ -65,7 +65,7 @@ const YourComponent = () => {
                                         <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)]">EMAIL:  tathva2025@gmail.com</div>
                                         <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)]">PHONE:  +91 55555 55555</div>
                                     </div>
-                                    <div className="absolute inset-0 w-[10vw] -translate-y-[9vw] translate-x-[4vw] drop-shadow-[0_0_8px_rgba(0,0,0,1)]">
+                                    <div className="absolute inset-0 w-[10vw] -translate-y-[10.6vw] translate-x-[4vw] drop-shadow-[0_0_8px_rgba(0,0,0,1)]">
                                         <img src={Tathvalogo.src} />
                                     </div>
                                     <div className="absolute inset-0 w-[10vw] text-[1vw] text-white translate-x-[5vw] translate-y-[14.5vw] drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
