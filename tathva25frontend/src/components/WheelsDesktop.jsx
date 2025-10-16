@@ -1,8 +1,8 @@
-'use client';
+"use client";
 import Barcode from "react-barcode";
-import { Michroma } from 'next/font/google';
+import { Michroma } from "next/font/google";
 
-const michroma = Michroma({ subsets: ['latin'], weight: '400' });
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function WheelsEvent() {
   return (
@@ -241,11 +241,12 @@ export default function WheelsEvent() {
           >
             <div
               style={{
-                fontSize: "clamp(2rem, 8.5vw, 11rem)",
+                fontFamily: "sans-serif",
+                fontSize: "clamp(2rem, 12vw, 11rem)",
                 fontWeight: 900,
-                lineHeight: 0.8,
+                lineHeight: 0.6,
                 textTransform: "uppercase",
-                marginTop: "-1vh",
+                // marginTop: "-1vh",
               }}
             >
               WHEELS
@@ -265,12 +266,13 @@ export default function WheelsEvent() {
                 style={{
                   transform: "scale(0.9)",
                   maxWidth: "40%",
+                  marginRight: "-3vw",
                 }}
               >
                 <Barcode
                   value="WHEELS-2025"
                   height={38}
-                  width={1.1}
+                  width={2.1}
                   background="transparent"
                   lineColor="#fff"
                   displayValue={false}

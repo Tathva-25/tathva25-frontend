@@ -1,19 +1,18 @@
 import Image from "next/image";
-import { Hero } from "@/Hero_Page/hero";
-import Navbar from "@/Hero_Page/navbar";
-import Sidebar from "@/Hero_Page/sidebar";
+// import { Hero } from "@/Hero_Page/hero";
+// import Navbar from "@/Hero_Page/navbar";
+// import Sidebar from "@/Hero_Page/sidebar";
 import ResponsiveLayout from "@/components/Wheels";
 export default function Home() {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <main>
-        <Hero />
-        
-        <ResponsiveLayout/>
-        <Sidebar />
+        {/* <Hero /> */}
+
+        <ResponsiveLayout />
+        {/* <Sidebar /> */}
       </main>
     </div>
-
   );
 }
