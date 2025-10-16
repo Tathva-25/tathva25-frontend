@@ -3,6 +3,7 @@
 import DotGrid from "@/components/DotGrid";
 import React from "react";
 import { Michroma } from 'next/font/google';
+import Link from "next/link";
 
 const michroma = Michroma({
   weight: '400',
@@ -14,7 +15,7 @@ export default function DotGridButton({
   dotColor = "#5227FF",
 }) {
   return (
-    <div className="relative inline-block min-w-[250px] min-h-[50px]">
+    <Link href={"/proshow"} className="relative  flex justify-end items-center min-w-[250px] min-h-[50px]">
       {/* DotGrid background */}
       <div className="absolute inset-0 bg-black -inset-x-10 -inset-y-2">
         <DotGrid
@@ -30,7 +31,9 @@ export default function DotGridButton({
       <button
         className={`
           relative 
-          px-10 
+          ml-12
+          pl-10 
+          pr-5 
           py-2
           text-white 
           font-semibold 
@@ -42,6 +45,6 @@ export default function DotGridButton({
       >
         {text}
       </button>
-    </div>
+    </Link>
   );
 }
