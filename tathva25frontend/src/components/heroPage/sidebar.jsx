@@ -4,6 +4,7 @@ import Proshow from "@/components/proshow";
 import Explore from "@/app/components/Explore";
 import ResponsiveLayout from "../Wheels";
 import Expo from "../Expo";
+import Robowars from "@/app/components/Robowars";
 
 import { Hero } from "./hero";
 export default function Sidebar() {
@@ -205,6 +206,10 @@ export default function Sidebar() {
         </section>
         <section id="section-5">
           <Expo />
+        </section>
+
+            <section id="section-6">
+          <Robowars/>
         </section>
 
         <section
