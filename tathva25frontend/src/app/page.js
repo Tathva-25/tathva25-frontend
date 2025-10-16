@@ -17,8 +17,7 @@ export default function Home() {
         <Explore/>
         <Proshow/>
         <ResponsiveLayout/>
-        
-        {/* <Sidebar /> */}
+        <Sidebar />
     </div>
   );
 }
