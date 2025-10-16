@@ -1,16 +1,16 @@
-
 import "./globals.css";
+import MenuWrapper from "./components/MenuWrapper";
 
 export const metadata = {
   title: "Tathva 25",
-  description: "Tathva"
+  description: "Tathva",
 };
-
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="relative overflow-x-hidden">
+        {/* Background */}
         {children}
       </body>
     </html>

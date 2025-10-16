@@ -1,15 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
 import ResponsiveLayout from "../Wheels";
-import Proshow from "@/proshow/proshow";
-
+import Proshow from "@/components/proshow";
+import Explore from "@/app/components/Explore";
 export default function Sidebar() {
   const items = [
     { num: 1, label: "Home" },
-    { num: 2, label: "About" },
+    { num: 2, label: "Explore" },
     { num: 3, label: "Wheels" },
     { num: 4, label: "Proshow" },
-    { num: 5, label: "Contact" },
   ];
 
   const [hovered, setHovered] = useState(null);
@@ -99,7 +98,7 @@ export default function Sidebar() {
                 letterSpacing: "0.45em",
               }}
             >
-              Welcome (TATHVA 25);
+              TATHVA 25
             </div>
           </div>
 
@@ -188,26 +187,27 @@ export default function Sidebar() {
       </aside>
 
       <div className="ml-12">
-{items.map((item) => (
-  <section
-    key={item.num}
-    id={`section-${item.num}`}
-    className="h-screen flex items-center justify-center border-b-2 border-gray-200"
-    style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
-  >
-    {item.label === "Wheels" ? (
-      <ResponsiveLayout />
-    ) : item.label === "Proshow" ? (
-      <Proshow />
-    ) :
-     (
-      <div className="text-center">
-        <h2 className="text-6xl font-bold mb-4">{item.label}</h2>
-        <p className="text-xl text-gray-600">Section {item.num}</p>
-      </div>
-    )}
-  </section>
-))}
+        {items.map((item) => (
+          <section
+            key={item.num}
+            id={`section-${item.num}`}
+            className="min-h-screen flex items-center justify-center border-b-2 border-gray-200"
+            style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
+          >
+            {item.label === "Explore" ? (
+              <Explore />
+            ) : item.label === "Proshow" ? (
+              <Proshow />
+            ) : item.label === "Wheels" ? (
+              <ResponsiveLayout />
+            ) : (
+              <div className="text-center">
+                <h2 className="text-6xl font-bold mb-4">{item.label}</h2>
+                <p className="text-xl text-gray-600">Section {item.num}</p>
+              </div>
+            )}
+          </section>
+        ))}
 
         <section
           id={`section-footer`}
