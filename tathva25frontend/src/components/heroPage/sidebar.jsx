@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from 'next/image';
-// import logo from '../../public/images/TATHVA25_LOGO.png';
 import Proshow from "@/components/proshow";
 import Explore from "@/app/components/Explore";
 import ResponsiveLayout from "../Wheels";
@@ -109,7 +108,7 @@ export default function Sidebar() {
     return (
         <>
             {/* Desktop Sidebar */}
-            <aside className={`hidden md:block fixed top-0 left-0 h-screen w-12 z-50 bg-transparent ${someFont.className}`}>
+            <aside className={`hidden md:block fixed top-0 left-0 h-screen w-9 z-50 bg-transparent ${someFont.className}`}>
                 <div className="absolute inset-y-0 left-0 w-full pointer-events-none">
                     <div className="h-full border-l border-black/90" />
                     <div className="absolute inset-y-0 right-0 w-px border-r border-black/90" />
@@ -137,7 +136,7 @@ export default function Sidebar() {
 
                     <div className="">
                         <div
-                            className="text-[18px] whitespace-nowrap "
+                            className="text-[15px] whitespace-nowrap "
                             style={{
                                 transform: "rotate(90deg)",
                                 transformOrigin: "center",
@@ -176,7 +175,7 @@ export default function Sidebar() {
 
                                     <div className="relative z-10 w-full flex flex-col items-center">
                                         <span
-                                            className={`text-[16px] inline-block mt-[10px] transition-all duration-300 ${isActive && progress > 30 ? "text-white" : "text-black"}`}
+                                            className={`text-[13px] inline-block mt-[10px] transition-all duration-300 ${isActive && progress > 30 ? "text-white" : "text-black"}`}
                                             style={{ transform: "rotate(90deg)" }}
                                         >
                                             {String(item.num).padStart(2, "0")}/
@@ -185,7 +184,7 @@ export default function Sidebar() {
 
                                         <div className="w-full flex justify-center mt-2 mb-5">
                                             <div
-                                                className={`text-[16px] whitespace-nowrap transition-all duration-300 ${isExpanded
+                                                className={`text-[13px] whitespace-nowrap transition-all duration-300 ${isExpanded
                                                     ? "opacity-100 translate-y-0"
                                                     : "opacity-0 -translate-y-2"
                                                     }`}
@@ -226,17 +225,17 @@ export default function Sidebar() {
                 <div className="flex items-center justify-between px-4 py-3 border-b border-black">
                     {/* Logo - Smaller and positioned beside the menu */}
                     <div className="flex items-center gap-4">
-                        {/* <div className="w-8 h-8 flex-shrink-0">
+                        <div className="w-8 h-8 flex-shrink-0">
                             <Image
-                                src={logo.src}
+                                src="/images/TATHVA25_LOGO.png"
                                 alt="Tathva Logo"
                                 width={32}
                                 height={32}
                                 className="w-full h-full object-contain"
                             />
-                        </div> */}
+                        </div>
                         <div className="text-sm tracking-wider">
-                            WELCOME (TATHVA 25);
+                            TATHVA 25
                         </div>
                     </div>
 
@@ -286,7 +285,7 @@ export default function Sidebar() {
                 </div>
         
             </div>
-      <div className="md:ml-12">
+      <div className="md:ml-9">
         <section id="section-1">
           <Hero />
         </section>
