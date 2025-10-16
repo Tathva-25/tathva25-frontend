@@ -213,7 +213,7 @@ export const Hero = () => {
               </div>
 
               {/* Avatar - Middle Layer */}
-              <div className="absolute inset-0 flex items-center justify-center ">
+              <div className="absolute inset-0 flex items-center justify-center scale-130 -bottom-30">
                 <Image
                   src={heroAvatar}
                   alt="Avatar"
