@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import RobowarsDesktop from "./RobowarsDesktop";
 import RobowarsPhone from "./RobowarsPhone";
+import RB1 from "./RobowarsDesktop";
 
 export default function Robowars({ link }) {
   const [isMobile, setIsMobile] = useState(false);
