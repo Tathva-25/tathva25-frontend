@@ -63,7 +63,7 @@ function Loader() {
       trigger: loaderRef.current,
       start: "top 90%",
       onEnter: () => {
-        const tl = gsap.timeline({ repeat: 0 });
+        const tl = gsap.timeline({ repeat: -1 });
 
         tl.fromTo(
           loaderItems,
@@ -82,7 +82,7 @@ function Loader() {
           }
         )
           .to(loaderItems, {
-            y: -8,
+            y: -16,
             duration: 0.5,
             ease: "power2.out",
             stagger: 0.08,
@@ -120,8 +120,8 @@ function Loader() {
   }, []);
 
   return (
-    <div className="absolute w-full flex justify-end pr-2 lg:pr-6 pt-16 lg:-translate-y-5 lg:translate-0 md:-top-10 md:-right-40 lg:top-auto lg:right-auto lg:pt-24 xl:pt-32 pb-4">
-      <div ref={loaderRef} className="flex scale-75 md:scale-75 lg:scale-100">
+    <div className="absolute w-full flex justify-end md:-right-60 md:justify-end pr-2 md:pr-8 lg:pr-6 pt-16 lg:-translate-y-5 lg:translate-0 md:-top-10  lg:top-auto lg:right-auto lg:pt-24 xl:pt-32 pb-4">
+      <div ref={loaderRef} className="flex scale-50 md:scale-50 lg:scale-75">
         <div className="loader-item opacity-0">
           <ResponsiveImage
             src="/roboloader.png"
@@ -419,7 +419,7 @@ export default function RobowarsDesktop({ link }) {
   return (
     <div
       ref={containerRef}
-      className="min-h-screen bg-[url('/robobg.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden"
+      className="bg-red-400 bg-cover bg-center bg-no-repeat relative overflow-hidden"
       style={{ backgroundSize: "100%" }}
     >
       <CircuitLines />
