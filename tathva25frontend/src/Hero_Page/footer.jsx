@@ -37,12 +37,14 @@ const YourComponent = () => {
                     <div className="absolute inset-0 overflow-hidden">
 
                         {/* Decoration Images */}
-                        <div className="absolute right-[5%] top-[50%] transform -translate-x-[0vw] -translate-y-[50%] flex gap-4 sm:gap-6 lg:gap-8">
-                            <Image src={Dec1} alt="Decoration 1" className="w-[3vw]" />
+                        {/* Decoration Elements (hidden on mobile) */}
+                        <div className="hidden md:block absolute right-4 top-1/4">
+                            <Image src={Dec1} alt="Decoration 1" className="w-8" />
                         </div>
-                        <div className="absolute right-[5%] top-[50%] transform -translate-x-[86vw] -translate-y-[50%] flex gap-4 sm:gap-6 lg:gap-8">
-                            <Image src={Dec2} alt="Decoration 2" className="w-[3vw]" />
+                        <div className="hidden md:block absolute left-4 bottom-1/4">
+                            <Image src={Dec2} alt="Decoration 2" className="w-8" />
                         </div>
+
 
                         {/* Cards Container */}
                         <div className="absolute left-[50%] top-[50%] transform -translate-x-[50%] -translate-y-[50%] flex gap-4 sm:gap-6 lg:gap-8 w-[80vw]">
@@ -135,19 +137,19 @@ const YourComponent = () => {
             <footer className="md:hidden relative flex flex-col bg-cover bg-no-repeat bg-center overflow-hidden">
                 {/* Background */}
                 <div
-                    className="absolute inset-0 bg-contain w-full h-full z-0 bg-no-repeat"
+                    className="absolute inset-0 bg-contain w-full top-[13%] h-full z-0 bg-no-repeat"
                     style={{ backgroundImage: `url(${BackgroundMobile.src})` }}
                 />
 
                 {/* Main Content Container */}
-                <div className="relative z-10 w-full px-6 py-[6vw] flex flex-col items-center justify-center">
+                <div className="relative z-10 w-full px-6 py-[50vw] flex flex-col items-center justify-center">
 
                     {/* Mobile Card */}
-                    <div className="w-[70vw] max-w-md -translate-y-[10vw] relative">
+                    <div className="w-[80vw] max-w-md translate-y-[0vw] absolute">
                         <Image
                             src={CardMobile}
                             alt="Mobile Card"
-                            className="w-full h-auto object-contain drop-shadow-lg"
+                            className="w-full h-auto object-cover drop-shadow-lg"
                             priority
                         />
 
@@ -155,27 +157,27 @@ const YourComponent = () => {
                         <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
 
                             {/* Logo */}
-                            <div className="w-[17vw] mb-4 translate-x-[20vw] translate-y-[40vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                            <div className="w-[17vw] mb-4 translate-x-[17vw] translate-y-[20vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                                 <Image src={Tathvalogo} alt="Tathva Logo" />
                             </div>
-                            <div className="flex flex-col absolute inset-0 text-white font-bold translate-x-[7vw] translate-y-[50vw]">
+                            <div className="flex flex-col absolute inset-0 text-white font-bold  text-[3.3vw] translate-x-[7vw] translate-y-[47vw]">
                                 <span>Any queries?</span>
                                 <span>Contact <span className="font-extrabold">+91 55555555</span></span>
                             </div>
 
                             {/*Quick links*/}
-                            <div className={`relative inset-0 text-white flex flex-row translate-x-[0vw] text-[4vw] -translate-y-[21vw] gap-8 ${customFont.className}`}>
+                            <div className={`absolute inset-0 text-white flex flex-row translate-x-[12vw] text-[3.3vw] translate-y-[12vw] gap-8 ${customFont.className}`}>
                                 <div className="flex flex-col gap-4">
-                                    <button className="hover:text-[#F1D233] flex gap-5"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Home</button>
-                                    <button className="hover:text-[#F1D233] flex gap-5"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Lecures</button>
-                                    <button className="hover:text-[#F1D233] flex gap-5"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Events</button>
-                                    <button className="hover:text-[#F1D233] flex gap-5"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Workshops</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Home</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Lecures</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Events</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Workshops</button>
                                 </div>
                                 <div className="flex flex-col gap-4">
-                                    <button className="hover:text-[#F1D233] flex gap-5 "><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" /> Map</button>
-                                    <button className="hover:text-[#F1D233] flex gap-5"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" /> Contact</button>
-                                    <button className="hover:text-[#F1D233] flex gap-5 "><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" /> Team</button>
-                                    <button className="hover:text-[#F1D233] flex gap-5"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />FAQs</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3 "><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Map</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" /> Contact</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3 "><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Team</button>
+                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />FAQs</button>
                                 </div>
                             </div>
                         </div>
@@ -193,10 +195,10 @@ const YourComponent = () => {
 
                     {/* Decoration Elements */}
                     <div className="absolute right-4 top-1/4">
-                        <Image src={Dec1} alt="Decoration 1" className="w-8" />
+                        <Image src={Dec1} alt="Decoration 1" className="w-[5vw]" />
                     </div>
                     <div className="absolute left-4 bottom-1/4">
-                        <Image src={Dec2} alt="Decoration 2" className="w-8" />
+                        <Image src={Dec2} alt="Decoration 2" className="w-[5vw]" />
                     </div>
                 </div>
             </footer>
