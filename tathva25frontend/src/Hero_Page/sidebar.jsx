@@ -5,10 +5,11 @@ import logo from '../../public/images/TATHVA25_LOGO.png';
 import { Hero } from "@/Hero_Page/hero";
 import Footer from "@/Hero_Page/footer";
 import localfont from 'next/font/local';
+import Menu from "@/Hero_Page/Menu"; // Import your Menu component
 
 const someFont = localfont({
     src: '../../public/fonts/michroma.ttf',
-    display: 'swap', // Add this for better loading
+    display: 'swap',
 })
 
 export default function Sidebar() {
@@ -26,6 +27,7 @@ export default function Sidebar() {
     const [expandedSection, setExpandedSection] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [overallProgress, setOverallProgress] = useState(0);
+    const [menuOpen, setMenuOpen] = useState(false); // State for menu overlay
 
     useEffect(() => {
         const handleScroll = () => {
@@ -76,11 +78,14 @@ export default function Sidebar() {
             setScrollProgress(newProgress);
         };
 
-        window.addEventListener("scroll", handleScroll);
-        handleScroll();
+        // Only add scroll event listener if menu is not open
+        if (!menuOpen) {
+            window.addEventListener("scroll", handleScroll);
+            handleScroll();
+        }
 
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [menuOpen]);
 
     const scrollToSection = (num) => {
         const section = document.getElementById(`section-${num}`);
@@ -90,22 +95,25 @@ export default function Sidebar() {
         }
     };
 
-    // Handler for menu button click - replace with your actual navigation
+    // Handler for menu button click
     const handleMenuButtonClick = () => {
-        // Example: Navigate to another page
-        // window.location.href = '/menu-page';
+        setMenuOpen(true);
+    };
 
-        // Example: Open external link
-        // window.open('https://example.com', '_blank');
-
-        // For now, showing an alert - replace with actual navigation
-        alert("Menu button clicked! This would navigate to another page.");
+    // Handler for closing menu
+    const handleCloseMenu = () => {
+        setMenuOpen(false);
     };
 
     return (
         <>
+            {/* Menu Overlay */}
+            {menuOpen && (
+                <Menu onClose={handleCloseMenu} />
+            )}
+
             {/* Desktop Sidebar */}
-            <aside className={`hidden md:block fixed top-0 left-0 h-screen w-12 z-50 bg-transparent ${someFont.className}`}>
+            <aside className={`fixed top-0 left-0 h-screen w-12 z-50 bg-transparent ${someFont.className} ${menuOpen ? 'hidden md:block' : 'hidden md:block'}`}>
                 <div className="absolute inset-y-0 left-0 w-full pointer-events-none">
                     <div className="h-full border-l border-black/90" />
                     <div className="absolute inset-y-0 right-0 w-px border-r border-black/90" />
@@ -178,7 +186,6 @@ export default function Sidebar() {
                                             {String(item.num).padStart(2, "0")}/
                                         </span>
 
-
                                         <div className="w-full flex justify-center mt-2 mb-5">
                                             <div
                                                 className={`text-[16px] whitespace-nowrap transition-all duration-300 ${isExpanded
@@ -209,16 +216,16 @@ export default function Sidebar() {
                                                 })}
                                             </div>
                                         </div>
-                                    </div >
-                                </div >
+                                    </div>
+                                </div>
                             );
                         })}
-                    </div >
-                </div >
-            </aside >
+                    </div>
+                </div>
+            </aside>
 
             {/* Mobile Menu Bar */}
-            <div className={`md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-black ${someFont.className}`}>
+            <div className={`md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-black ${someFont.className}`}>
                 <div className="flex items-center justify-between px-4 py-3 border-b border-black">
                     {/* Logo - Smaller and positioned beside the menu */}
                     <div className="flex items-center gap-4">
@@ -283,12 +290,11 @@ export default function Sidebar() {
             </div>
 
             {/* Main Content Sections */}
-            <div className="md:ml-12">
+            <div className={`md:ml-12 ${menuOpen ? 'blur-sm pointer-events-none' : ''}`}>
                 {/* Hero Section */}
                 <section id="section-1">
                     <Hero />
                 </section>
-
 
                 {/* About Section */}
                 <section
@@ -336,7 +342,6 @@ export default function Sidebar() {
                 <section>
                     <Footer />
                 </section>
-
             </div>
         </>
     );
