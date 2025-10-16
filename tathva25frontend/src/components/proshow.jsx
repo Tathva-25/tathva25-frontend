@@ -98,7 +98,7 @@ const Proshow = () => {
   return (
     <div
       ref={sectionRef}
-      className=" w-full relative overflow-hidden h-full"
+      className=" w-full relative overflow-hidden py-12 h-[100vh] bg-gray-100"
     >
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}

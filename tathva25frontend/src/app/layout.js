@@ -1,6 +1,4 @@
 import "./globals.css";
-import MenuWrapper from "./components/MenuWrapper";
-
 export const metadata = {
   title: "Tathva 25",
   description: "Tathva",
