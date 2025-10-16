@@ -1,13 +1,15 @@
 "use client";
 import Barcode from "react-barcode";
 import { Michroma } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import TextType from "./TextType";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function WheelsEvent() {
   const [glitchActive, setGlitchActive] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     // Random glitch effect
@@ -19,8 +21,32 @@ export default function WheelsEvent() {
     return () => clearInterval(glitchInterval);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of the component is visible
+      }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div
+      ref={containerRef}
       className={michroma.className} // ✅ Apply Michroma font globally
       style={{
         width: "100vw",
@@ -35,6 +61,19 @@ export default function WheelsEvent() {
         position: "relative",
       }}
     >
+      {/* Color transition overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 10000,
+          backgroundColor: "#fff",
+          mixBlendMode: "difference",
+          clipPath: isInView ? "inset(100% 0 0 0)" : "inset(0 0 0 0)",
+          transition: "clip-path 3.5s ease-out",
+          pointerEvents: "none",
+        }}
+      />
       {/* === BACKGROUND CONTAINER === */}
       <div
         className="background-container"

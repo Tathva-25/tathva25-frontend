@@ -25,8 +25,8 @@ export default function ResponsiveLayout({
   return isMobile ? (
     <WheelsEventMobile />
   ) : (
-    <GridTransition duration={1500}>
-      <WheelsEvent />
-    </GridTransition>
+    // <GridTransition duration={1500}>
+    <WheelsEvent />
+    // </GridTransition>
   );
 }
