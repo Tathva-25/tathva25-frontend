@@ -1,10 +1,23 @@
 "use client";
 import Barcode from "react-barcode";
 import { Michroma } from "next/font/google";
+import { useEffect, useState } from "react";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function WheelsEvent() {
+  const [glitchActive, setGlitchActive] = useState(false);
+
+  useEffect(() => {
+    // Random glitch effect
+    const glitchInterval = setInterval(() => {
+      setGlitchActive(true);
+      setTimeout(() => setGlitchActive(false), 200);
+    }, 5000);
+
+    return () => clearInterval(glitchInterval);
+  }, []);
+
   return (
     <div
       className={michroma.className} // ✅ Apply Michroma font globally
@@ -68,6 +81,131 @@ export default function WheelsEvent() {
         />
 
         <style jsx>{`
+          @keyframes glitch {
+            0% {
+              transform: translate(0);
+            }
+            20% {
+              transform: translate(-2px, 2px);
+            }
+            40% {
+              transform: translate(-2px, -2px);
+            }
+            60% {
+              transform: translate(2px, 2px);
+            }
+            80% {
+              transform: translate(2px, -2px);
+            }
+            100% {
+              transform: translate(0);
+            }
+          }
+
+          @keyframes neonGlow {
+            0%,
+            100% {
+              text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #00ffff,
+                0 0 30px #00ffff, 0 0 40px #00ffff;
+            }
+            50% {
+              text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 10px #00ffff,
+                0 0 15px #00ffff, 0 0 20px #00ffff;
+            }
+          }
+
+          @keyframes flicker {
+            0%,
+            19%,
+            21%,
+            23%,
+            25%,
+            54%,
+            56%,
+            100% {
+              opacity: 1;
+            }
+            20%,
+            24%,
+            55% {
+              opacity: 0.4;
+            }
+          }
+
+          @keyframes slideInLeft {
+            from {
+              transform: translateX(-100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+
+          @keyframes slideInRight {
+            from {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+
+          @keyframes scanline {
+            0% {
+              transform: translateY(-100%);
+            }
+            100% {
+              transform: translateY(100vh);
+            }
+          }
+
+          .cyber-text {
+            animation: neonGlow 2s ease-in-out infinite;
+          }
+
+          .glitch-text {
+            position: relative;
+            animation: ${glitchActive ? "glitch 0.3s infinite" : "none"};
+          }
+
+          .flicker-text {
+            animation: flicker 3s linear infinite;
+          }
+
+          .slide-in-left {
+            animation: slideInLeft 1s ease-out;
+          }
+
+          .slide-in-right {
+            animation: slideInRight 1s ease-out;
+          }
+
+          .scanline-container {
+            position: relative;
+            overflow: hidden;
+          }
+
+          .scanline-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+              transparent,
+              rgba(0, 255, 255, 0.8),
+              transparent
+            );
+            animation: scanline 4s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+          }
+
           @media (max-width: 768px) {
             .background-image {
               filter: blur(8px) brightness(0.8);
@@ -170,6 +308,7 @@ export default function WheelsEvent() {
         >
           {/* === TOP LEFT === */}
           <div
+            className="slide-in-left"
             style={{
               borderRight: "0.05vw solid #fff",
               borderBottom: "0.05vw solid #fff",
@@ -183,6 +322,7 @@ export default function WheelsEvent() {
             }}
           >
             <div
+              className="cyber-text"
               style={{
                 fontSize: "clamp(1rem, 4vw, 4rem)",
                 fontWeight: 200,
@@ -228,6 +368,7 @@ export default function WheelsEvent() {
 
           {/* === TOP RIGHT === */}
           <div
+            className="scanline-container"
             style={{
               borderBottom: "0.05vw solid #fff",
               display: "flex",
@@ -241,6 +382,7 @@ export default function WheelsEvent() {
             }}
           >
             <div
+              className="cyber-text glitch-text slide-in-right"
               style={{
                 fontFamily: "sans-serif",
                 fontSize: "clamp(2rem, 12vw, 11rem)",
@@ -254,7 +396,7 @@ export default function WheelsEvent() {
             </div>
 
             <div
-              className="barcode-container"
+              className="barcode-container slide-in-right"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -281,6 +423,7 @@ export default function WheelsEvent() {
               </div>
 
               <div
+                className="flicker-text"
                 style={{
                   fontSize: "clamp(1rem, 3vw, 5rem)",
                   fontWeight: 900,
@@ -327,6 +470,7 @@ export default function WheelsEvent() {
             }}
           >
             <div
+              className="cyber-text glitch-text"
               style={{
                 fontFamily: "'Michroma', sans-serif",
                 fontSize: "clamp(2rem, 7vw, 8rem)",
@@ -392,6 +536,7 @@ export default function WheelsEvent() {
             </div>
 
             <div
+              className="cyber-text"
               style={{
                 fontSize: "clamp(2rem, 5.5vw, 6rem)",
                 fontWeight: 200,
@@ -406,6 +551,7 @@ export default function WheelsEvent() {
             </div>
 
             <div
+              className="flicker-text"
               style={{
                 alignSelf: "flex-end",
                 fontSize: "clamp(1rem, 1.8vw, 2rem)",

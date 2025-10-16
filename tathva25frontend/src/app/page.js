@@ -11,6 +11,8 @@ export default function Home() {
         {/* <Hero /> */}
 
         <ResponsiveLayout />
+        <ResponsiveLayout />
+        <ResponsiveLayout />
         {/* <Sidebar /> */}
       </main>
     </div>

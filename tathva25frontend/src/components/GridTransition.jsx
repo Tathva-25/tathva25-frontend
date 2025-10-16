@@ -5,8 +5,9 @@ export default function GridTransition({
   children,
   duration = 3000,
   transitionImage = "/images/wheels_bg_img.png",
+  showInitialAnimation = false, // Controls whether to show the initial grid transition
 }) {
-  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(showInitialAnimation);
   const [revealedCells, setRevealedCells] = useState(new Set());
   const [hoveredCells, setHoveredCells] = useState(new Set());
 
@@ -24,6 +25,12 @@ export default function GridTransition({
   const CELL_DELAY = TRANSITION_DURATION / TOTAL_CELLS;
 
   useEffect(() => {
+    // Only run the transition if showInitialAnimation is true
+    if (!showInitialAnimation) {
+      setIsTransitioning(false);
+      return;
+    }
+
     // Start the transition after a brief delay
     const startDelay = setTimeout(() => {
       // Create array of all cell indices
@@ -48,7 +55,7 @@ export default function GridTransition({
     }, INITIAL_DELAY); // Initial delay before starting
 
     return () => clearTimeout(startDelay);
-  }, [CELL_DELAY, INITIAL_DELAY, TOTAL_CELLS]);
+  }, [CELL_DELAY, INITIAL_DELAY, TOTAL_CELLS, showInitialAnimation]);
 
   // Get nearby cells within a radius
   const getNearbyCells = (cellIndex, radius) => {
