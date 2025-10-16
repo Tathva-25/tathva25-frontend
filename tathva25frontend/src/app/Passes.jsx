@@ -1,38 +1,46 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import gsap from "gsap";
 import Image from "next/image";
+import gsap from "gsap";
 import Ticket from "./Ticket";
-import { Playfair_Display } from "next/font/google";
-import { Anek_Malayalam } from "next/font/google";
-import { Oswald } from "next/font/google";
+import TicketMobile from "./TicketMobile";
+import { Playfair_Display, Inter, Oswald } from "next/font/google";
+import { Michroma } from "next/font/google";
 
-const pd = Playfair_Display({
+const osw = Oswald({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
 });
 
-const anek = Anek_Malayalam({
+const mi = Michroma({
   subsets: ["latin"],
-  weight: ["400", "600", "200"],
+  weight: ["400"],
   display: "swap",
 });
 
-const osw = Oswald({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  weight: ["400", "900"],
   display: "swap",
 });
 
 function Passes() {
+  const [isMobile, setIsMobile] = useState(false);
   const [centerCard, setCenterCard] = useState(1);
   const cards = [0, 1, 2];
-  const containerRef = useRef(null);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const rulerRef = useRef(null);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 700);
+    window.addEventListener("resize", () =>
+      setIsMobile(window.innerWidth < 700)
+    );
+    return () => window.removeEventListener("resize");
+  }, []);
 
   const ticketData = [
     {
@@ -53,8 +61,12 @@ function Passes() {
   ];
 
   useEffect(() => {
+    gsap.set([".card-0", ".card-1", ".card-2"], {
+      clearProps: "all",
+    });
+
     gsap.set(".card-0", {
-      x: "-120px",
+      x: `${isMobile ? "-170%" : "-35%"}`,
       scale: 0.8,
       opacity: 0.6,
       zIndex: 5,
@@ -67,20 +79,32 @@ function Passes() {
     });
 
     gsap.set(".card-2", {
-      x: "120px",
+      x: `${isMobile ? "170%" : "35%"}`,
       scale: 0.8,
       opacity: 0.6,
       zIndex: 5,
     });
-  }, []);
+
+    setCenterCard(1);
+  }, [isMobile]);
 
   const moveToCenter = (clicked) => {
     if (clicked === centerCard) return;
 
     const positions = [
-      { x: "-25%", scale: 0.8, opacity: 0.6, zIndex: 5 },
+      {
+        x: `${isMobile ? "-170%" : "-35%"}`,
+        scale: 0.8,
+        opacity: 0.6,
+        zIndex: 5,
+      },
       { x: "0%", scale: 1, opacity: 1, zIndex: 10 },
-      { x: "25%", scale: 0.8, opacity: 0.6, zIndex: 5 },
+      {
+        x: `${isMobile ? "170%" : "35%"}`,
+        scale: 0.8,
+        opacity: 0.6,
+        zIndex: 5,
+      },
     ];
 
     let order = [...cards];
@@ -136,13 +160,24 @@ function Passes() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className="w-screen h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center"
+      className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center overflow-hidden"
       style={{ backgroundImage: "url('/bg.png')" }}
     >
+      {/* sidebar */}
+      <Image
+        src="/sideborder.png"
+        alt="sidebar"
+        width={30}
+        height={100}
+        className={`${isMobile ? "hidden" : ""} absolute h-screen left-0 z-10`}
+      />
+
       {/* top left text */}
       <div className="">
         <h1
-          className={`${pd.className} text-4xl border-b-2 border-dashed z-20 relative mb-70`}
+          className={`${inter.className} text-6xl font-bold z-20 relative ${
+            isMobile ? "mb-140" : "mb-120"
+          }`}
         >
           PASSES
         </h1>
@@ -153,33 +188,99 @@ function Passes() {
           className={`card card-${i} absolute cursor-pointer`}
           onClick={() => moveToCenter(i)}
         >
-          <Ticket day={ticket.day} date={ticket.date} price={ticket.price} />
+          {isMobile ? (
+            <TicketMobile
+              day={ticket.day}
+              date={ticket.date}
+              price={ticket.price}
+            />
+          ) : (
+            <Ticket day={ticket.day} date={ticket.date} price={ticket.price} />
+          )}
         </div>
       ))}
-      {/* ruler
-      <div className="relative w-[600px] mx-auto mt-64 overflow-hidden">
-        <div ref={rulerRef} className="ruler-strip flex flex-nowrap">
-          {[1, 2, 3].map((num) => (
-            <div key={num} className="relative flex-shrink-0 w-[1000px]">
-              <Image
-                className="w-full object-contain"
-                width={1000}
-                height={500}
-                src="/ruler.png"
-                alt="ruler"
-              />
-              <span className={`${pd.className} absolute left-[4%] top-[35%]`}>
-                DAY 1
-              </span>
-              <span className={`${pd.className} absolute left-[27%] top-[35%]`}>
-                DAY 2
-              </span>
-              <span className={`${pd.className} absolute left-[50%] top-[35%]`}>
-                DAY 3
-              </span>
-            </div>
-          ))}
-        </div>
+
+      {/* arrows  */}
+      {/* <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative overflow-x-hidden">
+        <Image
+          src="/arrows2.svg"
+          alt="arrow"
+          width={10}
+          height={10}
+          className="rotate-180 absolute left-0 top-[20%] z-0 w-30 h-auto sm:w-60 md:w-72 lg:w-80"
+        />
+
+        <span
+          className={`${mi.className} cursor-pointer absolute top-[42%] left-[25%] hover:scale-110 transition text-sm sm:text-md md:text-lg lg:text-2xl`}
+          onClick={() => {
+            const prev = (centerCard + cards.length - 1) % cards.length;
+            moveToCenter(prev);
+          }}
+        >
+          PREV
+        </span>
+
+        <Image
+          src="/bordersvg.svg"
+          alt="arrow"
+          width={10}
+          height={10}
+          className="rotate-180 absolute w-6 left-[45%] bottom-[16%]"
+        />
+        <Image
+          src="/bordersvg.svg"
+          alt="arrow"
+          width={10}
+          height={10}
+          className="rotate-90 absolute w-6 right-[46.5%] bottom-[16%]"
+        />
+
+        <span
+          className={`${mi.className} cursor-pointer absolute top-[42%] right-[25%] hover:scale-110 transition text-sm sm:text-md md:text-lg lg:text-2xl`}
+          onClick={() => {
+            const next = (centerCard + 1) % cards.length;
+            moveToCenter(next);
+          }}
+        >
+          NEXT
+        </span>
+
+        <Image
+          src="/bordersvg.svg"
+          alt="arrow"
+          width={10}
+          height={10}
+          className="rotate-270 absolute w-6 left-[45%] top-[25%]"
+        />
+        <Image
+          src="/bordersvg.svg"
+          alt="arrow"
+          width={10}
+          height={10}
+          className="rotate-0 absolute w-6 right-[46.5%] top-[25%]"
+        />
+
+        <span
+          className={`${osw.className} absolute top-[38%] right-[49.3%] text-5xl`}
+        >
+          {String(ticketData[centerCard].day).padStart(2, "0")}
+        </span>
+
+        {/* <Image
+          src="/bordertiles.png"
+          alt="border"
+          width={30}
+          height={100}
+          className="absolute h-screen left-0"
+        /> */}
+
+      {/* <Image
+          src="/arrows2.svg"
+          alt="arrow"
+          width={10}
+          height={10}
+          className="absolute right-0 top-[20%] origin-right w-30 h-auto sm:w-60 md:w-72 lg:w-80"
+        />
       </div> */}
     </section>
   );
