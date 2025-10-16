@@ -141,7 +141,7 @@ export default function Sidebar() {
 
                     <div className="mt-16">
                         <div
-                            className="text-[20px] whitespace-nowrap mt-35"
+                            className="text-[20px] whitespace-nowrap mt-10"
                             style={{
                                 transform: "rotate(90deg)",
                                 transformOrigin: "center",
