@@ -170,52 +170,53 @@ const Proshow = () => {
           </div> */}
         </div>
 
-        {/* Text content */}
-        <div className="flex flex-col mt-6 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-6 z-30 overflow-hidden">
-          <div className="relative h-12 overflow-hidden">
-            {desc.map((item, index) => (
-              <div
-                key={index}
-                className="absolute w-full transition-all duration-500 ease-out"
-                style={{
-                  transform: currentIndex === index 
-                    ? 'translateY(0)' 
-                    : currentIndex > index 
-                      ? 'translateY(-100%)' 
-                      : 'translateY(100%)',
-                  opacity: currentIndex === index ? 1 : 0,
-                }}
-              >
-                <div className={`text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="relative min-h-[200px] overflow-hidden">
-            {desc.map((item, index) => (
-              <div
-                key={index}
-                className="absolute w-full transition-all duration-500 ease-out"
-                style={{
-                  transform: currentIndex === index 
-                    ? 'translateY(0)' 
-                    : currentIndex > index 
-                      ? 'translateY(-100%)' 
-                      : 'translateY(100%)',
-                  opacity: currentIndex === index ? 1 : 0,
-                }}
-              >
-                <div className="text-gray-700 leading-relaxed text-sm md:text-base">
-                  {item[1]}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-center ml-10  md:justify-start sm:mt-8 ">
-            <DotGridButton text="Book Your Pass" />
-          </div>
+      {/* Text content */}
+      <div className="flex flex-col mt-16 md:mt-0 text-center md:text-left gap-6 md:w-[40%]  z-30 overflow-hidden">
+        <div className="relative h-12 overflow-hidden">
+          {desc.map((item, index) => (
+            <div
+              key={index}
+              className="absolute w-full transition-all duration-500 ease-out"
+              style={{
+                transform: currentIndex === index 
+                  ? 'translateY(0)' 
+                  : currentIndex > index 
+                    ? 'translateY(-100%)' 
+                    : 'translateY(100%)',
+                opacity: currentIndex === index ? 1 : 0,
+              }}
+            >
+              <div className={`text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
+            </div>
+          ))}
         </div>
+        
+        <div className="relative min-h-[200px] overflow-hidden">
+          {desc.map((item, index) => (
+            <div
+              key={index}
+              className="absolute w-full transition-all duration-500 ease-out"
+              style={{
+                transform: currentIndex === index 
+                  ? 'translateY(0)' 
+                  : currentIndex > index 
+                    ? 'translateY(-100%)' 
+                    : 'translateY(100%)',
+                opacity: currentIndex === index ? 1 : 0,
+              }}
+            >
+              <div className="text-gray-700 leading-relaxed text-sm md:text-base">
+                {item[1]}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Button - separately controlled for mobile */}
+        <div className="flex justify-center -ml-10 mt-4 md:ml-0 md:justify-start md:mt-8">
+          <DotGridButton text="Book Your Pass" />
+        </div>
+      </div>
       </div>
 
 

@@ -7,13 +7,12 @@ import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
 import heroAvatar from "../../../public/images/avatar-body.png";
 import wheel from "../../../public/images/wheel.png";
-import Background from "../../../public/images/Background.png";
+import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
 import Lines from "./lines";
-import Ripple from "./particles";
+
 
 gsap.registerPlugin(ScrollTrigger);
-
 const customFont = localfont({
   src: "../../../public/fonts/neoform.otf",
 });
@@ -139,7 +138,7 @@ export const Hero = () => {
         <div>
           <Image
             src={Background}
-            className="absolute  md:w-[100vw] md:h-auto h-screen inset-0 object-cover  md:rotate-0  overflow-x-hidden"
+            className="absolute  md:w-[100vw] md:h-auto h-screen inset-0 object-cover  md:rotate-0  overflow-x-hidden scale-110"
             alt="Background"
             fill
             priority
@@ -147,11 +146,27 @@ export const Hero = () => {
             sizes="100vw"
           />
         </div>
+        <div className="absolute  md:w-[80vw] md:h-auto h-screen inset-0 object-cover  md:rotate-0 ml-25 overflow-x-hidden scale-100">
+          <Image 
+          src='/images/Lines.png'
+          alt="Grid Lines"
+          fill
+          quality={90}/>
+          
+        </div>
+        <div className=" w-200 h-180 absolute -left-16 -top-67">
+          <Image
+            src='/images/shade-1.png'
+            alt="upper shade"
+            fill
+            quality={90}
+            className="object-contain"
+          />
+        </div>
+        
 
         <div className="flex flex-col items-center justify-between h-full gap-4">
-          <div className="absolute inset-0 flex justify-center items-center mt-12">
-            <Lines />
-          </div>
+          
 
           {/* TATHVA Text - Centered */}
           <div className="flex-1 flex items-center justify-center w-full ">
@@ -170,9 +185,7 @@ export const Hero = () => {
 
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
-            <div className="absolute inset-0 flex justify-center items-center pointer-events-none -mt-16">
-              <Ripple />
-            </div>
+            
             <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center -mt-6">
               <span
                 className={`${
@@ -187,7 +200,7 @@ export const Hero = () => {
 
             <div className="THIS ONE!!">
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-20 scale-110 ">
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-30 scale-120 ">
                 <Image
                   ref={wheelRef}
                   src={wheel}
@@ -204,7 +217,7 @@ export const Hero = () => {
                 <Image
                   src={heroAvatar}
                   alt="Avatar"
-                  className="w-full h-full object-contain scale-136"
+                  className="w-full h-full object-contain scale-150 -mt-5"
                   fill
                   sizes="(max-width: 768px) 90vw, 500px"
                   priority
