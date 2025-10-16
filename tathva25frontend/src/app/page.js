@@ -12,11 +12,11 @@ import Proshow from "@/components/proshow";
 export default function Home() {
   return (
     <div>
-      <Navbar />
-        <Hero />
+      {/* <Navbar /> */}
+        {/* <Hero />
         <Explore/>
         <Proshow/>
-        <ResponsiveLayout/>
+        <ResponsiveLayout/> */}
         <Sidebar />
     </div>
   );

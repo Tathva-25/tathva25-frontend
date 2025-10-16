@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import ResponsiveLayout from "../Wheels";
 import Proshow from "@/components/proshow";
 import Explore from "@/app/components/Explore";
+import { Hero } from "./hero";
 export default function Sidebar() {
   const items = [
     { num: 1, label: "Home" },
@@ -79,7 +80,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="fixed top-0 left-0 h-screen w-12 z-50 bg-transparent">
+      <aside className="fixed top-0 left-0 h-screen w-12 z-50 bg-transparent ">
         {/* outer borders */}
         <div className="absolute inset-y-0 left-0 w-full pointer-events-none">
           <div className="h-full border-l border-black/90" />
@@ -131,9 +132,7 @@ export default function Sidebar() {
                     }}
                   />
 
-                  {/* Content */}
                   <div className="relative z-10 w-full flex flex-col items-center">
-                    {/* number - rotated */}
                     <span
                       className={`font-mono text-[20px] inline-block mt-1 transition-all duration-300 ${
                         isActive && progress > 30 ? "text-white" : "text-black"
@@ -143,7 +142,6 @@ export default function Sidebar() {
                       {String(item.num).padStart(2, "0")}/
                     </span>
 
-                    {/* label below number - vertical */}
                     <div className="w-full flex justify-center mt-2 mb-5">
                       <div
                         className={`font-mono text-[16px] whitespace-nowrap transition-all duration-300 ${
@@ -187,27 +185,22 @@ export default function Sidebar() {
       </aside>
 
       <div className="ml-12">
-        {items.map((item) => (
-          <section
-            key={item.num}
-            id={`section-${item.num}`}
-            className="min-h-screen flex items-center justify-center border-b-2 border-gray-200"
-            style={{ backgroundColor: `hsl(${item.num * 60}, 30%, 95%)` }}
-          >
-            {item.label === "Explore" ? (
-              <Explore />
-            ) : item.label === "Proshow" ? (
-              <Proshow />
-            ) : item.label === "Wheels" ? (
-              <ResponsiveLayout />
-            ) : (
-              <div className="text-center">
-                <h2 className="text-6xl font-bold mb-4">{item.label}</h2>
-                <p className="text-xl text-gray-600">Section {item.num}</p>
-              </div>
-            )}
-          </section>
-        ))}
+            <section id="section-1" >
+            <Hero/>
+        
+            </section>
+
+
+             <section id="section-2" >
+            <Explore/>
+        
+            </section>
+
+            
+             <section id="section-3" >
+            <Proshow/>
+        
+            </section>
 
         <section
           id={`section-footer`}
