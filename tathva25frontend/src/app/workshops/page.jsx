@@ -10,6 +10,13 @@ export default function WorkshopsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [scale, setScale] = useState(1);
+
+  const desktopColumnGap = 5; // vw
+  const desktopRowGap = 3; // vw
+  const tabletColumnGap = 8; // vw
+  const tabletRowGap = 0; // vw
+  const mobileGapPx = 20; // px
 
   const formatDate = (dateString) =>
     dateString
@@ -36,14 +43,38 @@ export default function WorkshopsPage() {
         setLoading(false);
       }
     };
-
     fetchWorkshops();
   }, []);
 
-  // Search filtering
+  useEffect(() => {
+    function calcScale() {
+      const width = window.innerWidth;
+      let cardVW = 25; // desktop default
+      if (width <= 500) cardVW = 85; // mobile breakpoint
+      else if (width <= 1024) cardVW = 35; // tablet breakpoint
+
+      const cardWidthPx = (width * cardVW) / 100;
+      const scaleFactor = cardWidthPx / 411;
+      setScale(scaleFactor);
+    }
+
+    calcScale();
+    window.addEventListener("resize", calcScale);
+    return () => window.removeEventListener("resize", calcScale);
+  }, []);
+
   const searchedWorkshops = workshops.filter((workshop) =>
     workshop.heading.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const filteredWorkshops = searchedWorkshops.filter((w) => !w.isFull);
+
+  const sortedWorkshops = [
+    ...filteredWorkshops.filter(
+      (w) => !w.picture?.trim().endsWith("-DUMMY.jpg")
+    ),
+    ...filteredWorkshops.filter((w) => w.picture?.trim().endsWith("-DUMMY.jpg")),
+  ];
 
   if (loading) {
     return (
@@ -66,18 +97,6 @@ export default function WorkshopsPage() {
       </div>
     );
   }
-
-  const filteredWorkshops = searchedWorkshops.filter((w) => !w.isFull);
-
-  // Sort: real images first, dummy ones (ending with "-DUMMY.jpg") last
-  const sortedWorkshops = [
-    ...filteredWorkshops.filter(
-      (w) => !w.picture?.trim().endsWith("-DUMMY.jpg")
-    ),
-    ...filteredWorkshops.filter((w) =>
-      w.picture?.trim().endsWith("-DUMMY.jpg")
-    ),
-  ];
 
   return (
     <div className="bg-white min-h-screen py-4 sm:py-10 px-4 sm:px-8">
@@ -109,78 +128,101 @@ export default function WorkshopsPage() {
         </div>
       </div>
 
-      <div className="mx-auto">
-        {sortedWorkshops.length === 0 ? (
-          <p className="text-center text-gray-600 text-lg">
-            No workshops found matching your search.
-          </p>
-        ) : (
-          <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
-            {sortedWorkshops.map((workshop, index) => {
-              const {
-                id,
-                heading,
-                description,
-                price,
-                datetime,
-                time,
-                venue,
-                picture,
-              } = workshop;
+      {sortedWorkshops.length === 0 ? (
+        <p className="text-center text-gray-600 text-lg">
+          No workshops found matching your search.
+        </p>
+      ) : (
+        <div className="container">
+          {sortedWorkshops.map((workshop, index) => {
+            const { id, heading, description, picture } = workshop;
+            const barcodeValue = String(id).padStart(7, "0");
+            const fullDescription = description ?? "No description available";
 
-              // Generate barcode value based on workshop ID
-              const barcodeValue = String(id).padStart(7, "0");
-
-              // Format description with additional info
-              const fullDescription = `${
-                description ?? "No description available"
-              } `;
-
-              return (
-                <Link
-                  href={`/workshops/${id}`}
-                  key={id}
-                  className="block transform hover:scale-105 transition-transform duration-300"
-                >
-                  <div className="workshop-card-container">
-                    <Card
-                      number={String(index + 1).padStart(2, "0")}
-                      imageUrl={picture || "/images/card_01.png"}
-                      heading={heading ?? "Untitled Workshop"}
-                      description={fullDescription}
-                      barcodeValue={barcodeValue}
-                      sideImageUrl="/images/misc.png"
-                    />
-                  </div>
+            return (
+              <div
+                className="card-wrapper"
+                key={id}
+                style={{ transform: `scale(${scale})`, transformOrigin: "top left" }}
+              >
+                <Link href={`/workshops/${id}`}>
+                  <Card
+                    number={String(index + 1).padStart(2, "0")}
+                    imageUrl={picture || "/images/card_01.png"}
+                    heading={heading ?? "Untitled Workshop"}
+                    description={fullDescription}
+                    barcodeValue={barcodeValue}
+                    sideImageUrl="/images/misc.png"
+                  />
                 </Link>
-              );
-            })}
-          </div>
-        )}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <style jsx>{`
-        .workshop-card-container {
-          margin-bottom: 2rem;
-          transition: all 0.3s ease;
+        /* Box sizing */
+        .container,
+        .card-wrapper {
+          box-sizing: border-box;
         }
 
-        .workshop-card-container:hover {
-          filter: brightness(1.05);
+        /* Desktop */
+        .container {
+          min-height: 100vh;
+          background-color: #fff;
+          display: grid;
+          justify-content: center;
+          align-content: center;
+          max-width: 100vw;
+          overflow-x: hidden;
+
+          grid-template-columns: repeat(3, 25vw);
+          column-gap: ${desktopColumnGap}vw;
+          row-gap: ${desktopRowGap}vw;
+
+          padding-left: 0;
+          padding-right: 0;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-          .workshop-card-container {
-            transform: scale(0.85);
-            margin-bottom: 1rem;
+        .card-wrapper {
+          width: 25vw;
+          height: calc(25vw * 1.6);
+          max-width: 100%;
+          margin: 0;
+          cursor: pointer;
+        }
+
+        /* Tablet */
+        @media (min-width: 501px) and (max-width: 1024px) {
+          .container {
+            grid-template-columns: repeat(2, 35vw);
+            column-gap: ${tabletColumnGap}vw;
+            row-gap: ${tabletRowGap}vw;
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+          }
+          .card-wrapper {
+            width: 35vw;
+            height: calc(35vw * 1.7);
           }
         }
 
-        @media (max-width: 480px) {
-          .workshop-card-container {
-            transform: scale(0.7);
-            margin-bottom: 0.5rem;
+        /* Mobile */
+        @media (max-width: 500px) {
+          .container {
+            grid-template-columns: 85vw;
+            column-gap: ${mobileGapPx}px;
+            row-gap: ${mobileGapPx}px;
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+          }
+          .card-wrapper {
+            width: 85vw;
+            height: calc(85vw * 1.6);
           }
         }
       `}</style>

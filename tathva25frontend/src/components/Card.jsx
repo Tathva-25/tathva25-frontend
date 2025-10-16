@@ -1,4 +1,10 @@
 import { useBarcode } from "next-barcode";
+
+function truncateText(text, maxLength) {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+}
+
 export default function Card({
   number,
   imageUrl,
@@ -36,7 +42,7 @@ export default function Card({
         background: "#f9f9f8",
         boxSizing: "border-box",
       }}
-      className="shadow-xl"
+      className="shadow-xl "
     >
       {/* Number at top-left of image (Zen Dots font) */}
       <div
@@ -145,7 +151,7 @@ export default function Card({
           paddingLeft: sideGap,
           paddingRight: sideGap,
           position: "relative",
-          top: "-1.5%",
+          top: "-.5%",
           left: 0,
         }}
       >
@@ -162,21 +168,23 @@ export default function Card({
           paddingRight: sideGap,
         }}
       >
-        {/* Description - 50% width */}
+        {/* Description truncated to ~140 characters */}
         <div
           style={{
             fontFamily: "'Open Sans', sans-serif",
             fontWeight: 400,
-            fontSize: 15,
+            fontSize: 14,
             color: "#444",
             lineHeight: 1.14,
             letterSpacing: "1px",
-            width: "60%",
+            width: "70%",
             textAlign: "justify",
             minHeight: 60,
+            marginTop: "-5px",
+            overflow: "hidden",
           }}
         >
-          {description}
+          {truncateText(description, 140)}
         </div>
 
         {/* Right image - 35% width (sideImageUrl prop) */}
@@ -205,8 +213,8 @@ export default function Card({
         style={{
           position: "absolute",
           right: sideGap,
-          bottom: 12,
-          maxWidth: "35%",
+          bottom: 9,
+          maxWidth: "30%",
           height: "auto",
           pointerEvents: "none",
           userSelect: "none",
