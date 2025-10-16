@@ -50,7 +50,7 @@ const YourComponent = () => {
                         <div className="absolute left-[50%] top-[50%] transform -translate-x-[50%] -translate-y-[50%] flex gap-4 sm:gap-6 lg:gap-8 w-[80vw]">
 
                             {/* Card 1 */}
-                            <div className="w-[23vw] relative">
+                            <div className="w-[26vw] relative">
                                 <Image
                                     src={Card1}
                                     alt="Card 1"
@@ -58,72 +58,66 @@ const YourComponent = () => {
                                     priority
                                 />
                                 <div className={`absolute bottom-[15%] left-1/2 transform -translate-x-[9vw] -translate-y-[2vw] w-[18vw] text-center ${customFont.className}`}>
-                                    <div className="text-white mb-[1vw] text-[1.5vw] font-medium drop-shadow-[_2px_4px_rgba(0,0,0,2)]">
-                                        Stay in the loop
+                                    <div className="text-white mb-[1vw] text-[1.7vw] font-medium drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
+                                        Any queries? Contact us!
                                     </div>
-                                    <div className="flex flex-col gap-[0.8vw]">
-                                        <input
-                                            type="email"
-                                            placeholder="Enter your email"
-                                            className="w-[17vw] px-[0.8vw] py-[0.3vw] text-white bg-transparent border-b border-gray-300 text-[1vw] focus:outline-none focus:border-b-2 focus:border-blue-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
-                                        />
-                                        <button className="w-[17vw] bg-gray-800 text-white py-[0.6vw] rounded-lg text-[1vw] font-medium hover:bg-gray-900 transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
-                                            Subscribe
-                                        </button>
+                                    <div className="flex flex-col text-white items-start -translate-x-[0.5vw] w-[22vw] text-[1.3vw] gap-[0.8vw]">
+                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)]">EMAIL:  tathva2025@gmail.com</div>
+                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)]">PHONE:  +91 55555 55555</div>
                                     </div>
-                                    <div className="absolute inset-0 w-[10vw] -translate-y-[9vw] translate-x-[4vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                                    <div className="absolute inset-0 w-[10vw] -translate-y-[9vw] translate-x-[4vw] drop-shadow-[0_0_8px_rgba(0,0,0,1)]">
                                         <img src={Tathvalogo.src} />
                                     </div>
-                                    <div className="absolute inset-0 w-[6vw] -translate-x-[1vw] translate-y-[12vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                                        <img src={Rect.src} />
+                                    <div className="absolute inset-0 w-[10vw] text-[1vw] text-white translate-x-[5vw] translate-y-[14.5vw] drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
+                                        © TATHVA 2025
                                     </div>
                                 </div>
                             </div>
 
                             {/* Privacy & Terms Buttons */}
                             <div className="flex gap-8 text-white absolute inset-1 translate-y-[10vw] translate-x-[26vw]">
-                                <button className="bg-transparent border border-2 h-[2.3vw] text-[1.2vw] w-[10vw] -translate-x-[5vw] translate-y-[13vw]">Privacy Policy</button>
-                                <button className="bg-transparent border border-2 h-[2.3vw] text-[1.2vw] w-[10vw] -translate-x-[4vw] translate-y-[13vw]">Terms of Service</button>
+                                <button className="bg-black border-2 h-[2.3vw] text-[1.2vw] w-[12vw] -translate-x-[2vw] translate-y-[16vw]">Privacy Policy</button>
+                                <button className="bg-black border-2 hover:border-gray-900 h-[2.3vw] text-[1.2vw] w-[12vw] -translate-x-[3vw] translate-y-[16vw]">Terms of Service</button>
                             </div>
 
                             {/* Card 2 */}
-                            <div className="w-[45vw] relative">
+                            <div className="w-[50vw] relative">
                                 <Image
                                     src={Card2}
                                     alt="Card 2"
                                     className="w-full h-auto object-contain drop-shadow-lg"
                                     priority
                                 />
-                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[27vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${customFont.className}`}>
+                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[29vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${customFont.className}`}>
                                     [QUICK LINKS]
                                 </div>
-                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[23vw] text-[1.6vw] translate-y-[6vw] gap-8 ${customFont.className}`}>
+                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[25vw] text-[1.6vw] translate-y-[6vw] gap-8 ${customFont.className}`}>
                                     <div className="flex flex-col">
-                                        <button className="hover:text-[#F1D233]">Home</button>
-                                        <button className="hover:text-[#F1D233]">Lecures</button>
-                                        <button className="hover:text-[#F1D233]">Events</button>
-                                        <button className="hover:text-[#F1D233]" >Workshops</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Home</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Lecures</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Events</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Workshops</button>
                                     </div>
                                     <div className="flex flex-col">
-                                        <button className="hover:text-[#F1D233]">Map</button>
-                                        <button className="hover:text-[#F1D233]">Contact</button>
-                                        <button className="hover:text-[#F1D233]">Team</button>
-                                        <button className="hover:text-[#F1D233]">FAQs</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Map</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Contact</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Team</button>
+                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">FAQs</button>
                                     </div>
                                 </div>
-                                <div className="absolute inset-0 translate-x-[27vw] translate-y-[17vw] w-[10vw]">
+                                <div className="absolute inset-0 translate-x-[30vw] translate-y-[17.5vw] w-[10vw]">
                                     <img src={Line.src} />
                                 </div>
-                                <div className={`absolute inset-0 translate-y-[18vw] translate-x-[28vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${customFont.className}`}>
+                                <div className={`absolute inset-0 translate-y-[19vw] translate-x-[31vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${customFont.className}`}>
                                     [SOCIALS]
                                 </div>
-                                <div className="absolute inset-0 translate-y-[22vw] w-[2vw] translate-x-[24vw]">
+                                <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[27vw]">
                                     <img src={Insta.src} />
                                 </div>
-                                <div className="absolute inset-0 translate-y-[22vw] w-[2vw] translate-x-[30vw]">
+                                <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[33vw]">
                                     <img src={Fb.src} />
                                 </div>
-                                <div className="absolute inset-0 translate-y-[22vw] w-[2vw] translate-x-[36vw]">
+                                <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[39vw]">
                                     <img src={Linkd.src} />
                                 </div>
                             </div>
@@ -137,15 +131,15 @@ const YourComponent = () => {
             <footer className="md:hidden relative flex flex-col bg-cover bg-no-repeat bg-center overflow-hidden">
                 {/* Background */}
                 <div
-                    className="absolute inset-0 bg-contain w-full top-[13%] h-full z-0 bg-no-repeat"
+                    className="absolute inset-0 bg-cover w-full top-[13%] h-full z-0 bg-no-repeat"
                     style={{ backgroundImage: `url(${BackgroundMobile.src})` }}
                 />
 
                 {/* Main Content Container */}
-                <div className="relative z-10 w-full px-6 py-[50vw] flex flex-col items-center justify-center">
+                <div className="relative z-10 w-full mt-[5vw] px-6 py-[5vw] flex flex-col items-center justify-center">
 
                     {/* Mobile Card */}
-                    <div className="w-[80vw] max-w-md translate-y-[0vw] absolute">
+                    <div className="w-[80vw] max-w-md -translate-y-[5.5vw] trelative">
                         <Image
                             src={CardMobile}
                             alt="Mobile Card"
@@ -157,16 +151,16 @@ const YourComponent = () => {
                         <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
 
                             {/* Logo */}
-                            <div className="w-[17vw] mb-4 translate-x-[17vw] translate-y-[20vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                            <div className="w-[14vw] mb-4 translate-x-[19vw] translate-y-[40vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                                 <Image src={Tathvalogo} alt="Tathva Logo" />
                             </div>
-                            <div className="flex flex-col absolute inset-0 text-white font-bold  text-[3.3vw] translate-x-[7vw] translate-y-[47vw]">
+                            <div className="flex flex-col relative text-white font-bold  text-[3.3vw] -translate-x-[10vw] translate-y-[25vw]">
                                 <span>Any queries?</span>
                                 <span>Contact <span className="font-extrabold">+91 55555555</span></span>
                             </div>
 
                             {/*Quick links*/}
-                            <div className={`absolute inset-0 text-white flex flex-row translate-x-[12vw] text-[3.3vw] translate-y-[12vw] gap-8 ${customFont.className}`}>
+                            <div className={`relative inset-0 text-white flex flex-row translate-x-[2vw] text-[3.3vw] -translate-y-[27vw] gap-8 ${customFont.className}`}>
                                 <div className="flex flex-col gap-4">
                                     <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Home</button>
                                     <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Lecures</button>
@@ -184,7 +178,7 @@ const YourComponent = () => {
                     </div>
 
                     {/* Privacy & Terms Buttons */}
-                    <div className="flex gap-4 text-white mt-[-7vw]">
+                    <div className="flex gap-4 text-white mt-[-7vw] translate-y-[3vw]">
                         <button className="bg-transparent border border-2 px-4 py-1 text-xs rounded">
                             Privacy Policy
                         </button>
