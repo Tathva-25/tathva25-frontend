@@ -1,123 +1,219 @@
-import Image from "next/image"
-import { Michroma } from "next/font/google"
-import DotGridButton from "@/component/DotGridButton"
+import { useBarcode } from "next-barcode";
+export default function Card({
+  number,
+  imageUrl,
+  heading,
+  description,
+  barcodeValue,
+  sideImageUrl, // right side image next to description
+}) {
+  const cardWidth = 411;
+  const imageWidth = 387;
+  const sideGap = (cardWidth - imageWidth) / 2; // 12px
+  const numberBoxHeight = 29;
 
-const michroma = Michroma({ subsets: ["latin"], weight: "400" })
+  const { inputRef } = useBarcode({
+    value: barcodeValue,
+    options: {
+      format: "CODE128",
+      width: 1,
+      height: 22,
+      displayValue: false,
+      background: "transparent",
+      lineColor: "#111",
+      margin: 0,
+    },
+  });
 
-const Card = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
   return (
-    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-xl bg-white`}>
-      {/* Image Section - 3:4 ratio */}
-      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[75vh] lg:mt-0">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className=""
-          priority
+    <div
+      style={{
+        width: cardWidth,
+        height: 649,
+        border: "3px solid #e0e0e0",
+        overflow: "hidden",
+        position: "relative",
+        background: "#f9f9f8",
+        boxSizing: "border-box",
+      }}
+      className="shadow-xl"
+    >
+      {/* Number at top-left of image (Zen Dots font) */}
+      <div
+        style={{
+          position: "absolute",
+          top: sideGap,
+          left: sideGap,
+          width: 46,
+          height: numberBoxHeight,
+          display: "flex",
+          alignItems: "center",
+          fontFamily: "'Zen Dots', sans-serif",
+          fontWeight: 400,
+          fontSize: 24,
+          color: "#4B5563",
+          letterSpacing: "2%",
+          zIndex: 2,
+        }}
+      >
+        {number}
+      </div>
+
+      {/* Image container */}
+      <div
+        style={{
+          width: imageWidth,
+          height: 461,
+          position: "relative",
+          margin: `${sideGap}px auto 12px auto`,
+          overflow: "hidden",
+          WebkitClipPath: "url(#card-shape)",
+          clipPath: "url(#card-shape)",
+          background: "#d9d9d9",
+        }}
+      >
+        <img
+          src={imageUrl}
+          alt={heading}
+          width={imageWidth}
+          height={461}
+          style={{
+            display: "block",
+            width: imageWidth,
+            height: 461,
+            objectFit: "cover",
+            margin: 0,
+            padding: 0,
+          }}
+          draggable={false}
         />
+        <svg width="0" height="0">
+          <clipPath id="card-shape" clipPathUnits="userSpaceOnUse">
+            <path d="M35.8649 32.911H2.16216H1V462H294.446C294.446 462 313.149 433.508 325.824 433.508H387V1H65.5C55.4279 11.637 46.7297 32.911 35.8649 32.911Z" />
+          </clipPath>
+        </svg>
       </div>
 
-      {/* Content Section */}
-      <div className="flex flex-col w-full lg:w-[55%]">
-        {/* Title Section */}
-        <div className="px-6 lg:px-10 py-3 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl lg:text-5xl font-normal tracking-wide">
-            {title}
-          </h1>
-          <p className="text-base lg:text-lg mt-3 text-gray-600">
-            {tagline}
-          </p>
+      {/* Barcode container positioned bottom right of image */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 165,
+          right: 26,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+          background: "transparent",
+          minWidth: 30,
+          zIndex: 9999,
+          transform: "scale(0.7)",
+          transformOrigin: "right bottom",
+        }}
+      >
+        <svg ref={inputRef} style={{ width: "40px", height: 11 }} />
+        <span
+          style={{
+            fontSize: 5,
+            color: "#555",
+            letterSpacing: "0.5px",
+            fontFamily: "monospace",
+            marginTop: 2,
+            textAlign: "right",
+            userSelect: "none",
+          }}
+        >
+          {barcodeValue}
+        </span>
+      </div>
+
+      {/* Heading below the image, moved 5% upward */}
+      <div
+        style={{
+          marginTop: 20,
+          fontFamily: "'Jost', sans-serif",
+          fontWeight: 700,
+          fontSize: 24,
+          letterSpacing: "3%",
+          lineHeight: 1.2,
+          color: "#000",
+          width: "auto",
+          height: 40,
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 12,
+          paddingLeft: sideGap,
+          paddingRight: sideGap,
+          position: "relative",
+          top: "-1.5%",
+          left: 0,
+        }}
+      >
+        {heading}
+      </div>
+
+      {/* Container div with description and right side image */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: "10px",
+          paddingLeft: sideGap,
+          paddingRight: sideGap,
+        }}
+      >
+        {/* Description - 50% width */}
+        <div
+          style={{
+            fontFamily: "'Open Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: 15,
+            color: "#444",
+            lineHeight: 1.14,
+            letterSpacing: "1px",
+            width: "60%",
+            textAlign: "justify",
+            minHeight: 60,
+          }}
+        >
+          {description}
         </div>
 
-        {/* Info Icons Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-6 lg:px-10 py-6 lg:py-8">
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/calendar.svg"
-              alt="calendar"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
+        {/* Right image - 35% width (sideImageUrl prop) */}
+        <div
+          style={{
+            width: "35%",
+            height: 93,
+            overflow: "hidden",
+          }}
+        >
+          {sideImageUrl && (
+            <img
+              src={sideImageUrl}
+              alt=""
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              draggable={false}
             />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Date</p>
-              <p className="font-bold text-lg lg:text-base break-words">{date}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/clock.svg"
-              alt="clock"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Time</p>
-              <p className="font-bold text-lg lg:text-base">{time}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/pin.svg"
-              alt="pin"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Venue</p>
-              <p className="font-bold text-lg lg:text-base break-words">{venue}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/tag.svg"
-              alt="tag"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Price</p>
-              <p className="font-bold text-lg lg:text-base">₹ {price}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Description Section */}
-        <div className="px-6 lg:px-10 py-6 border-t border-gray-200">
-          <h2 className="font-bold text-xl lg:text-2xl mb-3">Description</h2>
-          <p className="text-lg lg:text-base leading-relaxed text-gray-700">
-            {desc}
-          </p>
-        </div>
-
-        {/* Policies Section */}
-        <div className="px-6 lg:px-10 py-4 space-y-3">
-          <div className="text-xs lg:text-lg leading-relaxed">
-            <span className="font-bold">Note: </span>
-            <span className="text-gray-700">Ticket details are automatically taken from your profile. You can update them on the profile page.</span>
-          </div>
-          <div className="text-xs lg:text-lg leading-relaxed">
-            <span className="font-bold">Refund Policy: </span>
-            <span className="text-gray-700">All tickets are non-refundable and non-transferable except in the case of event cancellation or technical issues.</span>
-          </div>
-        </div>
-
-        {/* Register Button */}
-        <div className="px-6 lg:px-10 pt-4 pb-6">
-          <button className="w-full lg:w-auto px-8 py-3 bg-white border-2 border-black text-xl lg:text-2xl font-normal hover:bg-black hover:text-white transition-colors duration-200">
-            Register Now
-          </button>
+          )}
         </div>
       </div>
+
+      {/* Card line image at bottom right, no background, empty alt */}
+      <img
+        src="/images/card_line.png"
+        alt=""
+        style={{
+          position: "absolute",
+          right: sideGap,
+          bottom: 12,
+          maxWidth: "35%",
+          height: "auto",
+          pointerEvents: "none",
+          userSelect: "none",
+          background: "none",
+          zIndex: 3,
+        }}
+      />
     </div>
-  )
+  );
 }
-
-export default Card
