@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 
-export default function Hero() {
+export default function Expo() {
   const borderThickness = 20;
 
   const [metrics, setMetrics] = useState({
