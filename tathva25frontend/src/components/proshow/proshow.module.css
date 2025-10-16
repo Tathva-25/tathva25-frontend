@@ -1,4 +1,4 @@
-.animateSlowSpin {
+.animateSpin{
   animation: slowspin 25s linear infinite; /* 20s per full rotation */
   transform-origin: center center; /* ✅ Ensures rotation stays centered */
   display: block;

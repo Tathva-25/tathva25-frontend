@@ -130,7 +130,6 @@ const Proshow = () => {
               height={400}
               className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%]` + style.animateSlowSpin}
            
-              priority
             />
           </div>
 
