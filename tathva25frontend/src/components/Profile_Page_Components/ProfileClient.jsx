@@ -223,9 +223,6 @@ export default function ProfileClient({ user }) {
     };
     return (
         <>
-            {/* ======================================================================================= */}
-            {/* 1. DESKTOP LAYOUT (xl screens and up) */}
-            {/* ======================================================================================= */}
             <div className={` ${jakarta.className} min-h-screen bg-gray-100 p-8 hidden xl:flex flex-col gap-8 font-sans   `}>
                 <div className="flex-1 flex gap-8">
                     <div className="w-84 flex flex-col gap-8 flex-shrink-0">

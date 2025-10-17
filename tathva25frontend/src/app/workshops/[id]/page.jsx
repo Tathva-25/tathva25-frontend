@@ -3,8 +3,14 @@ import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
+  console.log(process.env.NEXT_PUBLIC_API)
+
+
 async function getCompetition(id) {
+  
   const url = `${process.env.NEXT_PUBLIC_API}/api/events/details/${id}`;
+  console.log(url)
+
   try {
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return null;
@@ -57,8 +63,9 @@ export default async function Page({ params }) {
       : comp.price || 0;
 
   return (
-    <div className="flex justify-center min-h-screen items-center h-[100vh] p-4">
+    <div className="flex justify-center min-h-screen items-center  md:p-4">
       <CardDetails
+        id={id}
         src={src}
         alt={alt}
         title={title}

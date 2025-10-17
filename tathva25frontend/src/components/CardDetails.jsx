@@ -3,26 +3,55 @@
 import Image from "next/image"
 import { Michroma } from "next/font/google"
 import DotGridButton from "./DotGridButton"
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
+import ModalWrapper from "@/app/components/modelWrapper"
 const michroma = Michroma({ subsets: ["latin"], weight: "400" })
 
-const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, bigDesc }) => {
+export default function CardDetails({ id, src, alt, title, tagline, date, time, venue, price, desc, bigDesc }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
+  const [workshop, setWorkshop] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchEvent() {
+      try {
+        const url = `${process.env.NEXT_PUBLIC_API}/api/events/details/${id}`
+        console.log("Fetching:", url)
+        const res = await fetch(url)
+        if (!res.ok) throw new Error("Failed to fetch workshop data")
+        const data = await res.json()
+        setWorkshop(data.event || null)
+      } catch (err) {
+        console.error("Error fetching workshop:", err)
+        setWorkshop(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+    if (id) fetchEvent()
+  }, [id])
 
   // Determine if there is content for the popup
-  const hasBigDesc = bigDesc && bigDesc.trim() !== "";
+  const hasBigDesc = bigDesc && bigDesc.trim() !== ""
+
+  if (loading) {
+    return (
+      <div className="w-full text-center py-20 text-gray-600">
+        Loading event details...
+      </div>
+    )
+  }
 
   return (
-    <div className={`${michroma.className} scale-80 w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white overflow-x-hidden`}>
-      {/* Image Section - 3:4 ratio */}
-      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[69vh] lg:mt-0">
+    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl overflow-x-hidden`}>
+      {/* Image Section */}
+      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0">
         <Image
           src={src}
           alt={alt}
           fill
-          className="object-cover" // Added object-cover to ensure image fills correctly
+          className="object-cover"
           priority
         />
       </div>
@@ -39,66 +68,15 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
           </p>
         </div>
 
-        {/* Info Icons Grid */}
+        {/* Info Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-6 lg:px-10 py-6 lg:py-8 w-full">
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/calendar.svg"
-              alt="calendar"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Date</p>
-              <p className="font-bold text-lg lg:text-base break-words">{date}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/clock.svg"
-              alt="clock"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Time</p>
-              <p className="font-bold text-lg lg:text-base">{time}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/pin.svg"
-              alt="pin"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Venue</p>
-              <p className="font-bold text-lg lg:text-base break-words">{venue}</p>
-            </div>
-          </div>
-          
-          <div className="flex items-start gap-3">
-            <Image
-              src="/images/tag.svg"
-              alt="tag"
-              width={24}
-              height={24}
-              className="w-6 h-6 flex-shrink-0"
-            />
-            <div className="min-w-0">
-              <p className="text-lg text-gray-600">Price</p>
-              <p className="font-bold text-lg lg:text-base">₹ {price}</p>
-            </div>
-          </div>
+          <InfoItem icon="/images/calendar.svg" label="Date" value={date} />
+          <InfoItem icon="/images/clock.svg" label="Time" value={time} />
+          <InfoItem icon="/images/pin.svg" label="Venue" value={venue} />
+          <InfoItem icon="/images/tag.svg" label="Price" value={`₹ ${price}`} />
         </div>
 
-        {/* Description Section */}
+        {/* Description */}
         <div className="px-6 lg:px-10 py-6 border-t border-gray-200 w-full">
           <div className="flex items-center gap-2 mb-3">
             <h2 className="font-bold text-xl lg:text-2xl">Description</h2>
@@ -106,19 +84,19 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
               onClick={() => setIsPopupOpen(true)}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              disabled={!hasBigDesc} // <-- BUTTON IS DISABLED HERE
+              disabled={!hasBigDesc}
               className="transition-transform duration-300 flex hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded p-1 disabled:opacity-30 disabled:cursor-not-allowed disabled:scale-100"
               aria-label="View full description"
             >
               <span>See more</span>
-              <svg 
-                width="24" 
-                height="24" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
                 strokeLinejoin="round"
                 className={`transition-transform duration-300 ${isHovered && hasBigDesc ? 'rotate-[0deg]' : 'rotate-90'}`}
               >
@@ -132,67 +110,70 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
           </p>
         </div>
 
-        {/* Policies Section */}
+        {/* Policies */}
         <div className="px-6 lg:px-10 py-4 space-y-3 w-full">
-          <div className="text-xs lg:text-lg leading-relaxed">
-            <span className="font-bold">Note: </span>
-            <span className="text-gray-700">Ticket details are automatically taken from your profile. You can update them on the profile page.</span>
-          </div>
-          <div className="text-xs lg:text-lg leading-relaxed">
-            <span className="font-bold">Refund Policy: </span>
-            <span className="text-gray-700">All tickets are non-refundable and non-transferable except in the case of event cancellation or technical issues.</span>
-          </div>
+          <Policy title="Note" text="Ticket details are automatically taken from your profile. You can update them on the profile page." />
+          <Policy title="Refund Policy" text="All tickets are non-refundable and non-transferable except in case of event cancellation or technical issues." />
         </div>
 
-        {/* Register Button */}
-        <div className="px-6 lg:px-15 pt-4 pb-6 w-full flex justify-center gap-25">
-          <div className="flex justify-center">
-            <DotGridButton text="Register Now" min_width={50} className="max-w-[20px] lg:max-w-[50px]"/>
-          </div>
-          <div className="flex justify-center">
-            <DotGridButton text="Display Brochure" min_width={50} className="max-w-[20px] lg:max-w-[50px]" />
-          </div>
+           <div className="mt-10 sm:mt-8 flex">
+                <ModalWrapper workshopData={workshop} />
+              </div>
+
+        {/* Buttons */}
+        <div className="px-6 lg:px-15 pt-4 pb-6 w-full flex justify-center gap-10">
+          <DotGridButton text="Display Brochure" min_width={50} className="max-w-[20px] lg:max-w-[50px]" />
         </div>
       </div>
 
-      {/* Full Description Popup */}
+      {/* Popup */}
       {isPopupOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={() => setIsPopupOpen(false)}
-        >
-          <div 
-            className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="sticky top-0 bg-white border-b border-gray-200 px-6 lg:px-10 py-4 flex items-center justify-between">
-              <h2 className="font-bold text-2xl lg:text-3xl">Details</h2>
-              <button
-                onClick={() => setIsPopupOpen(false)}
-                className="text-gray-500 hover:text-gray-700 transition-colors p-2 hover:bg-gray-100 rounded-full"
-                aria-label="Close popup"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
-            </div>
-            <div className="px-6 lg:px-10 py-6 overflow-y-auto">
-              <div className="text-base lg:text-lg leading-relaxed text-gray-700 whitespace-pre-wrap">
-                {/* --- CONTENT IS NOW CONDITIONAL --- */}
-                {hasBigDesc ? (
-                  bigDesc
-                ) : (
-                  <p className="italic text-gray-500">No further details to be shown.</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <Popup onClose={() => setIsPopupOpen(false)} hasBigDesc={hasBigDesc} bigDesc={bigDesc} />
       )}
     </div>
   )
 }
 
-export default CardDetails
+function InfoItem({ icon, label, value }) {
+  return (
+    <div className="flex items-start gap-3">
+      <Image src={icon} alt={label} width={24} height={24} className="w-6 h-6 flex-shrink-0" />
+      <div className="min-w-0">
+        <p className="text-lg text-gray-600">{label}</p>
+        <p className="font-bold text-lg lg:text-base break-words">{value}</p>
+      </div>
+    </div>
+  )
+}
+
+function Policy({ title, text }) {
+  return (
+    <div className="text-xs lg:text-lg leading-relaxed">
+      <span className="font-bold">{title}: </span>
+      <span className="text-gray-700">{text}</span>
+    </div>
+  )
+}
+
+function Popup({ onClose, hasBigDesc, bigDesc }) {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 lg:px-10 py-4 flex items-center justify-between">
+          <h2 className="font-bold text-2xl lg:text-3xl">Details</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 transition-colors p-2 hover:bg-gray-100 rounded-full" aria-label="Close popup">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div className="px-6 lg:px-10 py-6 overflow-y-auto">
+          <div className="text-base lg:text-lg leading-relaxed text-gray-700 whitespace-pre-wrap">
+            {hasBigDesc ? bigDesc : <p className="italic text-gray-500">No further details to be shown.</p>}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

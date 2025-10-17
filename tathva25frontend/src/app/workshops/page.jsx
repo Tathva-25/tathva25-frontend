@@ -20,6 +20,8 @@ export default function WorkshopsPage() {
         })
       : "TBA";
 
+      
+  console.log(process.env.NEXT_PUBLIC_API)
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
