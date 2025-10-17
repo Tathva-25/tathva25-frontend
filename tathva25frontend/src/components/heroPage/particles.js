@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 // --- CONFIGURATION CONSTANTS ---
 const INITIAL_RING_RADIUS = 150;
-const NUM_PARTICLES_PER_RIPPLE = 17;
+const NUM_PARTICLES_PER_RIPPLE = 10;
 const RIPPLE_SPEED = 2;
 const MAX_DISTANCE = 1000;
 const RIPPLE_INTERVAL_MS = 700;
@@ -88,6 +88,7 @@ const Ripple = () => {
    * Draw a sparkle/star shape with glow
    */
   const drawSparkle = (ctx, x, y, size, rotation, opacity) => {
+    
     if (opacity <= 0) return;
 
     ctx.save();

@@ -1,5 +1,12 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+import localfont from 'next/font/local';
+
+
+const someFont = localfont({
+    src: '../../public/fonts/michroma.ttf',
+    display: 'swap', // Add this for better loading
+})
 
 export default function Expo() {
   const borderThickness = 20;
@@ -250,7 +257,7 @@ export default function Expo() {
 
       {/* Paragraph 1 - desktop only */}
       {isDesktop && (
-        <p
+        <p className={`${someFont.className}`}
           style={{
             position: "absolute",
             top: colWidth * 0.25,
