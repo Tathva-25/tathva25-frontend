@@ -60,7 +60,7 @@ function Region() {
                     OCT 24, 25
                   </span>
                 </div>
-                <div className={`bg-black py-1 ${schabo.className} relative top-1 `}>
+                <div className={`bg-black py-1 ${schabo.className} relative top-3 `}>
                   <span className="robopagetitle">l</span>
                 </div>
                 <span className={`${michroma.className} relative left-2.5`}>
