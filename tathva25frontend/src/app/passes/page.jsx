@@ -16,11 +16,11 @@ const mi = Michroma({
 });
 
 const fontspring = localFont({
-  src: "../../public/fonts/fontspring.otf",
+  src: "../../../public/fonts/fontspring.otf",
 });
 
 const neoform = localFont({
-  src: "../../public/fonts/neoform.otf",
+  src: "../../../public/fonts/neoform.otf",
 });
 
 function Page() {
@@ -31,11 +31,15 @@ function Page() {
   const touchEndX = useRef(0);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 640);
-    window.addEventListener("resize", () =>
-      setIsMobile(window.innerWidth < 640)
-    );
-    return () => window.removeEventListener("resize");
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    // set initial state
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const ticketData = [
@@ -257,7 +261,7 @@ function Page() {
           </div>
 
           {/* PREV TEXT */}
-          <span
+          {!isMobile && <span
             className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
             onClick={() => {
               const prev = (centerCard + cards.length - 1) % cards.length;
@@ -268,7 +272,7 @@ function Page() {
             onTouchEnd={(e) => e.stopPropagation()}
           >
             PREV
-          </span>
+          </span>}
         </div>
 
         {/* CENTER - DAY NUMBER */}
@@ -281,7 +285,7 @@ function Page() {
         {/* RIGHT SECTION */}
         <div className="flex items-center ">
           {/* NEXT TEXT */}
-          <span
+          {!isMobile && (<span
             className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
             onClick={() => {
               const next = (centerCard + 1) % cards.length;
@@ -292,7 +296,7 @@ function Page() {
             onTouchEnd={(e) => e.stopPropagation()}
           >
             NEXT
-          </span>
+          </span>)}
 
           {/* RIGHT ARROWS */}
           <div

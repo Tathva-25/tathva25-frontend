@@ -7,7 +7,7 @@ import localFont from "next/font/local";
 import style from "./proshow.module.css";
 import { Michroma } from "next/font/google";
 import { keyframes } from "motion";
-
+import { useRouter } from "next/navigation";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
@@ -16,39 +16,32 @@ const akiraExpanded = localFont({
   variable: "--font-akira",
 });
 
-// Placeholder for DotGridButton - replace with your actual component
-// const DotGridButton = ({ text }) => (
-//   <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-//     {text}
-//   </button>
-// );
-
 const Proshow = () => {
+  const router = useRouter();
   const images = [
-    "/images/embla1.png",
-    "/images/embla2.png",
-    "/images/embla3.png",
-     "/images/embla3.png",
+    "/images/mithoon.png",
+    "/images/arivu.png",
+    "/images/sa.png",
+    "/images/mhr.png", // Fourth image for the fourth artist
   ];
- const artists = [
-  [
-    "Mithoon",
-    "A master of soulful melodies, Mithoon crafts compositions that blend classical richness with modern soundscapes. Each song resonates deeply, leaving a lasting emotional imprint on listeners, making him one of the most sought-after composers in contemporary Indian music."
-  ],
-  [
-    "Arivu",
-    "Arivu’s music is a bold voice of identity, culture, and resistance. With lyrics rooted in truth and societal commentary, his performances inspire reflection and empowerment, bridging the gap between tradition and modern expression."
-  ],
-  [
-    "SA",
-    "A rising figure in the Malayalam hip-hop scene, SA captivates audiences with his dynamic rap and lyrical precision. His collaborations are celebrated for their energy and authenticity, delivering impactful storytelling through rhythm and rhyme."
-  ],
-  [
-    "MHR",
-    "Known for his innovative production and genre-blending beats, MHR pushes the boundaries of contemporary Malayalam music. His tracks combine EDM, hip-hop, and local influences, creating immersive audio experiences that resonate with audiences everywhere."
-  ]
-];
-
+  const artists = [
+    [
+      "Mithoon",
+      "A master of soulful melodies, Mithoon crafts compositions that blend classical richness with modern soundscapes. Each song resonates deeply, leaving a lasting emotional imprint on listeners, making him one of the most sought-after composers in contemporary Indian music.",
+    ],
+    [
+      "Arivu",
+      "Arivu’s music is a bold voice of identity, culture, and resistance. With lyrics rooted in truth and societal commentary, his performances inspire reflection and empowerment, bridging the gap between tradition and modern expression.",
+    ],
+    [
+      "SA",
+      "A rising figure in the Malayalam hip-hop scene, SA captivates audiences with his dynamic rap and lyrical precision. His collaborations are celebrated for their energy and authenticity, delivering impactful storytelling through rhythm and rhyme.",
+    ],
+    [
+      "MHR",
+      "Known for his innovative production and genre-blending beats, MHR pushes the boundaries of contemporary Malayalam music. His tracks combine EDM, hip-hop, and local influences, creating immersive audio experiences that resonate with audiences everywhere.",
+    ],
+  ];
 
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -81,14 +74,15 @@ const Proshow = () => {
           trigger: section,
           start: "top top",
           end: () => `+=${window.innerHeight * 1.15}`,
-          //reduce the above to reduce the amount of scroll needed to trigger hori-scroll
           pin: true,
           scrub: 1,
           onUpdate: (self) => {
             setScrollProgress(self.progress);
-            const rawIndex = self.progress * 2;
+            // MODIFICATION 1: Changed multiplier to 3 for 4 items (indices 0-3)
+            const rawIndex = self.progress * 3;
             const snappedIndex = Math.round(rawIndex);
-            setCurrentIndex(snappedIndex % 3);
+            // MODIFICATION 2: Set index directly to allow values 0, 1, 2, 3
+            setCurrentIndex(snappedIndex);
           },
         });
       }
@@ -104,16 +98,27 @@ const Proshow = () => {
   }, []);
 
   const getImageTransform = (imageIndex) => {
-    const rotationProgress = Math.round(scrollProgress * 2);
-    let position = (imageIndex - rotationProgress + 6) % 3;
+    // MODIFICATION 3: Changed multiplier to 3 to match onUpdate logic
+    const rotationProgress = Math.round(scrollProgress * 3);
 
+    // MODIFICATION 4: Added a 4th "hidden" position for the item not in view
     const positions = {
-      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 },
-      1: { x: 0, scale: 1.1, opacity: 1, z: 30 },
-      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 },
+      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 }, // Left
+      1: { x: 0, scale: 1.1, opacity: 1, z: 30 }, // Center
+      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 }, // Right
+      3: { x: 0, scale: 0.5, opacity: 0, z: 0 }, // Hidden
     };
 
+    // MODIFICATION 5: Updated formula to cycle through 4 items using modulo 4
+    // This keeps the left-center-right visual while rotating all four items
+    let position = (imageIndex - rotationProgress + 1 + 4) % 4;
+
     const pos = positions[position];
+
+    // Handle case where pos might be undefined during quick scrolls
+    if (!pos) {
+        return { transform: 'translateX(0px) scale(0.5)', opacity: 0, zIndex: 0 };
+    }
 
     return {
       transform: `translateX(${pos.x}px) scale(${pos.scale})`,
@@ -128,16 +133,8 @@ const Proshow = () => {
       className="h-screen relative overflow-hidden"
     >
       <div>
-                {/* <Image
-                  src='/images/grain-bg.png'
-                  className="absolute -mt-68 md:-mt-0 md:w-[100vw] md:h-auto  inset-0 object-cover md:rotate-0 overflow-x-hidden scale-110"
-                  alt="Background-grain"
-                  fill
-                  priority
-                  quality={90}
-                  sizes="100vw"
-                /> */}
-        </div>
+        {/* Background Image Placeholder */}
+      </div>
 
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}
@@ -191,7 +188,7 @@ const Proshow = () => {
             `}
           </style>
 
-          {/* Carousel - All 3 images rendered, positions calculated */}
+          {/* Carousel */}
           <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse" 
               style={{ 
@@ -218,20 +215,6 @@ const Proshow = () => {
               ))}
             </div>
           </div>
-
-          {/* Progress indicators */}
-          {/* <div className="absolute bottom-[-190px] md:bottom-[-220px] left-1/2 -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
-              <div
-                key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  currentIndex === index
-                    ? "bg-blue-600 w-6"
-                    : "bg-gray-400"
-                }`}
-              />
-            ))}
-          </div> */}
         </div>
 
       {/* Text content */}
@@ -277,7 +260,7 @@ const Proshow = () => {
         </div>
 
         {/* Button - separately controlled for mobile */}
-        <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8">
+        <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
           <DotGridButton text="Book Your Pass" />
         </div>
       </div>

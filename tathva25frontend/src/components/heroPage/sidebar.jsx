@@ -21,10 +21,10 @@ export default function Sidebar() {
   const items = [
     { num: 1, label: "Home" },
     { num: 2, label: "Explore" },
-    { num: 3, label: "Proshow" },
-    { num: 4, label: "Wheels" },
-    { num: 5, label: "Expo" },
-    { num: 6, label: "RoboWars" },
+    { num: 3, label: "RoboWars" },
+    { num: 4, label: "Proshow" },
+    { num: 5, label: "Wheels" },
+    { num: 6, label: "Expo" },
     { num: 7, label: "GPC" },
   ];
 
@@ -328,19 +328,21 @@ export default function Sidebar() {
         </section>
 
         <section id="section-3">
-          <Proshow />
+          <Robowars />
         </section>
 
         <section id="section-4">
+          <Proshow />
+        </section>
+
+        <section id="section-5">
           <ResponsiveLayout />
         </section>
-        <section id="section-5">
+        <section id="section-6">
           <Expo />
         </section>
 
-        <section id="section-6">
-          <Robowars />
-        </section>
+
 
         <section id="section-7">
           <GamePage />
