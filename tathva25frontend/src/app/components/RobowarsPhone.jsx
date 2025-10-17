@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import DotGridButton from "@/components/DotGridButton";
 
 /*FONTS*/
 const spacemono = Space_Mono({
@@ -12,32 +13,10 @@ const schabo = localFont({
   src: "../../../public/fonts/schabo.woff2",
 });
 
-function Loader() {
-  return (
-    <>
-      <div className="absolute scale-80 sm:scale-100 -left-[45px] flex mt-10 ml-10 mr-30">
-        <div
-          className="loader-item-mob opacity-0"
-          style={{ animationDelay: "0s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
-        <div
-          className="loader-item-mob opacity-0"
-          style={{ animationDelay: "0.4s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
-        <div
-          className="loader-item-mob opacity-0"
-          style={{ animationDelay: "0.8s" }}
-        >
-          <ImgtoImage src="/roboloader.png" alt="roboloader" />
-        </div>
-      </div>
-    </>
-  );
-}
+const michroma = localFont({
+  src: "../../../public/fonts/michroma.ttf",
+});
+
 
 function Line() {
   return (
@@ -75,31 +54,35 @@ function Region() {
             <div>
               <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
                 <div
-                  className={`bg-black px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className}`}
+                  className={`bg-black m-2 mt-8 px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className} w-[80vw] text-left`}
                 >
-                  <span className="text-white robopagetitle tracking-wider">
-                    OCT 26,27
+                  <span className={`text-white ${michroma.className} robopagetitle tracking-widest`}>
+                    OCT 24, 25
                   </span>
                 </div>
-                <div className={`bg-black py-1 ${schabo.className}`}>
+                <div className={`bg-black py-1 ${schabo.className} relative top-3 `}>
                   <span className="robopagetitle">l</span>
                 </div>
-
-                <div
-                  className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
-                >
-                  <span>30 x 30 FT. ARENA</span>
-                  <span>15KG \ 60KG</span>
-                </div>
+                <span className={`${michroma.className} relative left-2.5`}>
+                  PRIZES WORTH INR 8 LAKH
+                </span>
+                
               </div>
             </div>
-            <div className={`text-black ${schabo.className}`}>
-              <span className="robopagetitle tracking-wider">
-                PRIZES WORTH INR 8 LAKH
-              </span>
+            <div className={`text-black ${schabo.className} flex items-center justify-around`}>
+              <div
+                  className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center`}
+                >
+                  <span>30 x 30 FT. ARENA</span>
+                  <span>8KG \ 15KG</span>
+                </div>
+              <div className="scale-60 relative left-4">
+                <DotGridButton text="Learn More"/>
+              </div>
             </div>
           </div>
         </div>
+        
         <div className="w-full h-full">
           <ImgtoImage src="/barcode.png" alt="barcode" />
         </div>
@@ -112,7 +95,7 @@ function Picture() {
   return (
     <div className="w-full">
       <div className="w-full">
-        <ImgtoImage src="/robomob.png" alt="robowars" />
+        <ImgtoImage src="/robomob2.png" alt="robowars" />
       </div>
     </div>
   );
@@ -121,12 +104,9 @@ function Picture() {
 export default function RobowarsPhone() {
   return (
     <>
-      <div className="relative bg-[url('/robopagebg.png')] bg-cover">
-        <Line />
-        <Loader />
+      <div className="relative ">
         <Picture />
         <Region />
-        <Line />
       </div>
     </>
   );
