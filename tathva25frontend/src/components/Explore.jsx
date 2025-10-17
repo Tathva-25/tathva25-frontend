@@ -51,7 +51,7 @@ export default function Explore() {
         >
           {/* Background Image */}
           <div
-            className="absolute inset-0 z-0"
+            className="absolute inset-0 z-0 transition-transform duration-300 ease-out hover:scale-110"
             style={{
               backgroundImage: `url(${char.image})`,
               backgroundSize: "cover",

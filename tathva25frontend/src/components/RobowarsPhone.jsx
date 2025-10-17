@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import Picture from "./Picture";
 
 /*FONTS*/
 const spacemono = Space_Mono({
@@ -108,15 +109,6 @@ function Region() {
   );
 }
 
-function Picture() {
-  return (
-    <div className="w-full">
-      <div className="w-full">
-        <ImgtoImage src="/robomob.png" alt="robowars" />
-      </div>
-    </div>
-  );
-}
 
 export default function RobowarsPhone() {
   return (
@@ -124,7 +116,7 @@ export default function RobowarsPhone() {
       <div className="relative bg-[url('/robopagebg.png')] bg-cover">
         <Line />
         <Loader />
-        <Picture />
+        <Picture imageSrc="/robomob2.png"/>
         <Region />
         <Line />
       </div>
