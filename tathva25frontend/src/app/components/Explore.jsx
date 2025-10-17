@@ -112,66 +112,70 @@ const SchoolInfo = ({ school }) => (
   </div>
 );
 
-// **********************************
-// UPDATED COMPONENT: EventCard
-// Wrapped in <Link> for navigation
-// Adjusted for better mobile layout
-// **********************************
 const EventCard = ({ event, index }) => {
   const isFirst = index === 0;
   const isSecond = index === 1;
   const isThird = index === 2;
-  
-  // Calculate href path
+
   const hrefPath = `/${event.surname.toLowerCase().replace(/\s+/g, '')}`;
 
   return (
-    <Link href={hrefPath} passHref legacyBehavior>
-      <a className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group block">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundImage: `url('${event.image}')` }}
-        ></div>
+    <Link
+      href={hrefPath}
+      className="relative w-full h-[30vh] sm:h-[35vh] md:h-[40vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group block transition-transform duration-300 hover:scale-105"
+    >
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
+        style={{ backgroundImage: `url('${event.image}')` }}
+      ></div>
 
-        {/* Overlay content */}
-        <div className="relative z-10 w-full h-full py-4 sm:py-6">
-          <div className="relative w-full h-full p-3 sm:p-4 flex flex-col justify-between border-2 border-white/25">
-            {/* Layout variations - Simplified for responsiveness */}
-            <div
-              className={`flex flex-col h-full ${
-                isSecond ? 'items-center justify-center' : 'justify-between'
-              }`}
-            >
-              {isSecond ? (
-                // Centered layout for the second card (Competitions)
-                <div className="flex flex-col items-center michroma gap-4">
-                  <LargeSurname name={event.name} surname={event.surname} />
-                </div>
-              ) : (
-                // Split layout for the first and third cards (Workshops & Lectures)
+      {/* Overlay content */}
+      <div className="relative z-10 w-full h-full py-4 sm:py-6">
+        <div className="relative w-full h-full p-3 sm:p-4 flex flex-col justify-between border-2 border-white/25">
+          <div
+            className={`flex flex-col h-full ${
+              isSecond ? 'items-center justify-center' : 'justify-between'
+            }`}
+          >
+            {isSecond ? (
+              <div className="flex flex-col items-center michroma gap-4">
+                <LargeSurname name={event.name} surname={event.surname} />
+              </div>
+            ) : (
+              <div
+                className={`flex flex-col h-full justify-between gap-4 ${
+                  isThird ? 'sm:flex-row-reverse' : 'sm:flex-row'
+                }`}
+              >
                 <div
-                  className={`flex flex-col h-full justify-between gap-4 ${
-                    isThird ? 'sm:flex-row-reverse' : 'sm:flex-row'
+                  className={`flex-shrink-0 ${
+                    isThird ? 'text-left' : 'text-right'
+                  } max-w-full sm:max-w-[45%]`}
+                >
+                  <LargeSurname name={event.name} surname={event.surname} />
+                  <div
+                    className={`flex gap-1 mt-2 ${
+                      isThird ? 'justify-start' : 'justify-end'
+                    }`}
+                  >
+                    <VerticalStripes count={9} size="small" />
+                  </div>
+                </div>
+                <div
+                  className={`flex-shrink-0 self-start ${
+                    isThird ? 'sm:self-end' : 'sm:self-start'
                   }`}
                 >
-                  <div className={`flex-shrink-0 ${isThird ? 'text-left' : 'text-right'} max-w-full sm:max-w-[45%]`}>
-                    <LargeSurname name={event.name} surname={event.surname} />
-                    <div className={`flex gap-1 mt-2 ${isThird ? 'justify-start' : 'justify-end'}`}>
-                      <VerticalStripes count={9} size="small" />
-                    </div>
-                  </div>
-                  <div className={`flex-shrink-0 self-start ${isThird ? 'sm:self-end' : 'sm:self-start'}`}>
-                    <SchoolInfo school={event.school} />
-                  </div>
+                  <SchoolInfo school={event.school} />
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        <div className="absolute inset-0 pointer-events-none opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.1)_2px,rgba(255,255,255,0.1)_4px)]" />
-      </a>
+      <div className="absolute inset-0 pointer-events-none opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.1)_2px,rgba(255,255,255,0.1)_4px)]" />
     </Link>
   );
 };
