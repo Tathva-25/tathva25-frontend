@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import DotGridButton from "@/components/DotGridButton";
 
 /*FONTS*/
 const spacemono = Space_Mono({
@@ -93,13 +94,17 @@ function Region() {
                 </div>
               </div>
             </div>
-            <div className={`text-black ${schabo.className}`}>
+            <div className={`text-black ${schabo.className} flex items-center`}>
               <span className="robopagetitle tracking-wider">
                 PRIZES WORTH INR 8 LAKH
               </span>
+              <div className="scale-60 relative left-4">
+                <DotGridButton text="Learn More"/>
+              </div>
             </div>
           </div>
         </div>
+        
         <div className="w-full h-full">
           <ImgtoImage src="/barcode.png" alt="barcode" />
         </div>
@@ -121,7 +126,7 @@ function Picture() {
 export default function RobowarsPhone() {
   return (
     <>
-      <div className="relative bg-[url('/robopagebg.png')] bg-cover">
+      <div className="relative bg-[url('/K.png')] bg-cover">
         <Line />
         <Loader />
         <Picture />
