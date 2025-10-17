@@ -12,9 +12,11 @@ const michroma = Michroma({
 export default function DotGridButton({
   text = "Experience It",
   dotColor = "#5227FF",
+  min_width=250,
+  min_height=50,
 }) {
   return (
-    <div className="relative inline-block min-w-[250px] min-h-[50px]">
+    <div className={`relative inline-block min-w-[${min_width}px] min-h-[${min_height}px]`}>
       {/* DotGrid background */}
       <div className="absolute inset-0 bg-black -inset-x-10 -inset-y-2">
         <DotGrid

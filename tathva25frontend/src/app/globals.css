@@ -20,6 +20,12 @@
   animation: scroll-left 15s linear infinite;
 }
 
+/*
+ * Keyframes for the right-to-left sliding animation.
+ * We move the background position from far right (200%) to far left (-200%)
+ * to ensure the effect slides completely across the text.
+ */
+
 @keyframes scroll-left {
   0% {
     transform: translateX(0);

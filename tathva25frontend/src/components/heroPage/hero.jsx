@@ -173,7 +173,7 @@ export const Hero = () => {
             <div className="absolute inset-0 flex justify-center items-center pointer-events-none -mt-16">
               <Ripple />
             </div>
-            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center -mt-6">
+            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center -mt-24">
               <span
                 className={`${
                   customFont.className
@@ -187,7 +187,7 @@ export const Hero = () => {
 
             <div className="THIS ONE!!">
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-20 scale-110 ">
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-20 scale-140 ">
                 <Image
                   ref={wheelRef}
                   src={wheel}
@@ -200,7 +200,7 @@ export const Hero = () => {
               </div>
 
               {/* Avatar - Middle Layer */}
-              <div className="absolute inset-0 flex items-center justify-center ">
+              <div className="absolute inset-0 flex items-center justify-center scale-130 -bottom-30">
                 <Image
                   src={heroAvatar}
                   alt="Avatar"
