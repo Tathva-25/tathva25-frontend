@@ -137,20 +137,15 @@ function Region() {
         <div className="flex w-full h-full justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
             <div>
-              <div className="flex gap-2 sm:gap-3 md:gap-5 lg:gap-10 flex-wrap items-center">
+              <div>
                 <div
-                  className={`bg-black px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${michroma.className}`}
+                  className={`bg-black mt-6 text-white px-4 flex justify-between text-2xl sm:text-3xl ${michroma.className}`}
                 >
-                  <span className="text-white robopagetitle tracking-wider">
-                    OCT 26,27
-                  </span>
+                  <span>OCT 26,27</span>
+                  <span className="bg-white">l</span>
                 </div>
-                <div className={`bg-black py-1 ${michroma.className}`}>
-                  <span className="robopagetitle">l</span>
-                </div>
-
                 <div
-                  className={`${michroma.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col`}
+                  className={`${michroma.className} mt-5 text-[18px]  flex flex-col`}
                 >
                   <span>30 x 30 FT. ARENA</span>
                   <span>15KG \ 60KG</span>
@@ -158,13 +153,13 @@ function Region() {
               </div>
             </div>
             <div className={`text-black ${michroma.className}`}>
-              <span className="robopagetitle tracking-wider">
+              <span className=" tracking-wider text-2xl sm:text-3xl">
                 PRIZES WORTH INR 8 LAKH
               </span>
             </div>
           </div>
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full scale-75">
           <ImgtoImage src="/barcode.png" alt="barcode" />
         </div>
       </div>
