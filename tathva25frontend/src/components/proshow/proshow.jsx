@@ -5,7 +5,12 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import localFont from "next/font/local";
 import style from "./proshow.module.css";
+import { Michroma } from "next/font/google";
 import { keyframes } from "motion";
+
+
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
+
 const akiraExpanded = localFont({
   src: "../../../public/fonts/Akira-Expanded.otf",
   variable: "--font-akira",
@@ -23,21 +28,27 @@ const Proshow = () => {
     "/images/embla1.png",
     "/images/embla2.png",
     "/images/embla3.png",
+     "/images/embla3.png",
   ];
-  const desc = [
-    [
-      "Arivu",
-      "From the earliest days of their career, this artist has been fascinated by the interplay of light and shadow, often using vivid contrasts to evoke deep emotion. Their work transcends traditional boundaries, blending elements of realism with abstract motifs that challenge the viewer to look beyond the surface.",
-    ],
-    [
-      "Shilpa Rao",
-      "Beyond their paintings, the artist has explored multiple mediums, including sculpture and digital installations, constantly pushing the limits of their creative expression. Each piece seems to tell a story that evolves with the viewer's interpretation, revealing hidden layers and textures upon closer inspection.",
-    ],
-    [
-      "Fejo",
-      "What sets this artist apart is their ability to connect with audiences on a profoundly personal level. Through interviews and public talks, they reveal an unwavering dedication to their craft, emphasizing experimentation and emotional honesty. Their legacy is not only in the art itself but in the inspiration it sparks",
-    ],
-  ];
+ const artists = [
+  [
+    "Mithoon",
+    "A master of soulful melodies, Mithoon crafts compositions that blend classical richness with modern soundscapes. Each song resonates deeply, leaving a lasting emotional imprint on listeners, making him one of the most sought-after composers in contemporary Indian music."
+  ],
+  [
+    "Arivu",
+    "Arivu’s music is a bold voice of identity, culture, and resistance. With lyrics rooted in truth and societal commentary, his performances inspire reflection and empowerment, bridging the gap between tradition and modern expression."
+  ],
+  [
+    "SA",
+    "A rising figure in the Malayalam hip-hop scene, SA captivates audiences with his dynamic rap and lyrical precision. His collaborations are celebrated for their energy and authenticity, delivering impactful storytelling through rhythm and rhyme."
+  ],
+  [
+    "MHR",
+    "Known for his innovative production and genre-blending beats, MHR pushes the boundaries of contemporary Malayalam music. His tracks combine EDM, hip-hop, and local influences, creating immersive audio experiences that resonate with audiences everywhere."
+  ]
+];
+
 
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -117,7 +128,7 @@ const Proshow = () => {
       className="h-screen relative overflow-hidden"
     >
       <div>
-                <Image
+                {/* <Image
                   src='/images/grain-bg.png'
                   className="absolute -mt-68 md:-mt-0 md:w-[100vw] md:h-auto  inset-0 object-cover md:rotate-0 overflow-x-hidden scale-110"
                   alt="Background-grain"
@@ -125,16 +136,16 @@ const Proshow = () => {
                   priority
                   quality={90}
                   sizes="100vw"
-                />
+                /> */}
         </div>
 
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}
-        <div className="absolute font-black hidden md:block top-10 left-20 text-sm z-40">
+        <div className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}>
           11.3210°N <br />
           75.9320°E
         </div>
-        <div className="absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40">
+        <div className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}>
           Be there <br />
           Feel it <br />
           Live it
@@ -164,7 +175,7 @@ const Proshow = () => {
           </div>
 
           <style>
-            {`
+            {` 
               .animateSpin {
                 animation: slowspin 15s linear infinite;
               }
@@ -226,7 +237,7 @@ const Proshow = () => {
       {/* Text content */}
       <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
         <div className="relative h-10 overflow-hidden">
-          {desc.map((item, index) => (
+          {artists.map((item, index) => (
             <div
               key={index}
               className="absolute w-full transition-all duration-500 ease-out"
@@ -239,16 +250,16 @@ const Proshow = () => {
                 opacity: currentIndex === index ? 1 : 0,
               }}
             >
-              <div className={`text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
+              <div className={`md:px-6 text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
             </div>
           ))}
         </div>
         
-        <div className="relative min-h-[200px] -mt-7 md: -mt-0 overflow-hidden">
-          {desc.map((item, index) => (
+        <div className="relative min-h-[200px] -mt-7 md:-mt-0 overflow-hidden">
+          {artists.map((item, index) => (
             <div
               key={index}
-              className="absolute w-full transition-all duration-500 ease-out"
+              className={`${michroma.className} absolute w-full transition-all duration-500 ease-out`}
               style={{
                 transform: currentIndex === index 
                   ? 'translateY(0)' 
@@ -258,7 +269,7 @@ const Proshow = () => {
                 opacity: currentIndex === index ? 1 : 0,
               }}
             >
-              <div className="text-gray-700 leading-relaxed text-sm md:text-base">
+              <div className="leading-relaxed text-sm md:px-6 ">
                 {item[1]}
               </div>
             </div>
