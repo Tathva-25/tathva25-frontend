@@ -17,6 +17,10 @@ const schabo = localFont({
   src: "../../../public/fonts/schabo.woff2",
 });
 
+const michroma = localFont({
+  src: "../../../public/fonts/michroma.ttf",
+});
+
 function ResponsiveImage({ src, alt, className = "" }) {
   return (
     <Image
@@ -273,7 +277,7 @@ function Region() {
                 <div
                   className={`bg-black px-3 md:pr-20 py-2  ${schabo.className}`}
                 >
-                  <span className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl tracking-wider">
+                  <span className={`text-white text-xl md:text-2xl ${michroma.className} lg:text-3xl xl:text-4xl tracking-wider`}>
                     OCT 26,27
                   </span>
                 </div>
@@ -285,17 +289,17 @@ function Region() {
                 </div>
 
                 <div
-                  className={`${spacemono.className} text-lg md:text-xl lg:text-2xl xl:text-3xl text-black`}
+                  className={`${michroma.className} text-lg md:text-xl lg:text-2xl xl:text-3xl text-black`}
                 >
                   <div className="flex flex-col">
                     <span>30 x 30 FT. ARENA</span>
-                    <span>15KG \ 60KG</span>
+                    <span>8KG \ 15KG</span>
                   </div>
                 </div>
               </div>
 
               <div className={`text-black ${schabo.className}`}>
-                <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-wider">
+                <span className={`text-2xl md:text-3xl lg:text-4xl  ${michroma.className} tracking-wider`}>
                   PRIZES WORTH INR 8 LAKH
                 </span>
               </div>
@@ -303,7 +307,7 @@ function Region() {
           </div>
           <div className="md:col-span-1 flex justify-center md:justify-end">
             <div className="flex flex-row items-center space-y-2 mt-8 md:mt-12 lg:mt-16 md:mr-20">
-              <div className="relative right-32 scale-90 top-1 mr-4">
+              <div className="scale-90 relative right-32 top-1 ">
                 <DotGridButton text="Learn More"/>
               </div>
               <BarcodeImage src="/barcode.png" alt="event-code" />
