@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 import style from "./proshow.module.css";
 import { Michroma } from "next/font/google";
 import { keyframes } from "motion";
+import { useRouter } from "next/navigation";
 
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
@@ -24,6 +25,7 @@ const akiraExpanded = localFont({
 // );
 
 const Proshow = () => {
+  const router = useRouter();
   const images = [
     "/images/embla1.png",
     "/images/embla2.png",
@@ -277,7 +279,7 @@ const Proshow = () => {
         </div>
 
         {/* Button - separately controlled for mobile */}
-        <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8">
+        <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
           <DotGridButton text="Book Your Pass" />
         </div>
       </div>
