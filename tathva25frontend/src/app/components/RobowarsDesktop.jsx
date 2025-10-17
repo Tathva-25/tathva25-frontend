@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Space_Mono } from "next/font/google";
+import { Space_Mono, Michroma } from "next/font/google";
 import localFont from "next/font/local";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
@@ -11,6 +11,11 @@ const spacemono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-space-mono",
+});
+const michroma = Michroma({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-michroma",
 });
 const schabo = localFont({
   src: "../../../public/fonts/schabo.woff2",
@@ -120,7 +125,7 @@ function Loader() {
   }, []);
 
   return (
-    <div className="absolute w-full flex justify-end md:-right-60 md:justify-end pr-2 md:pr-8 lg:pr-6 pt-16 lg:-translate-y-5 lg:translate-0 md:-top-10  lg:top-auto lg:right-auto lg:pt-24 xl:pt-32 pb-4">
+    <div className="absolute w-full flex justify-end md:-right-60 md:justify-end pr-2 md:pr-8 lg:pr-6 pt-16 lg:-translate-y-5 lg:translate-0 md:-top-10  lg:top-auto lg:-right-20 lg:pt-24 xl:pt-32 pb-4">
       <div ref={loaderRef} className="flex scale-50 md:scale-50 lg:scale-75">
         <div className="loader-item opacity-0">
           <ResponsiveImage
@@ -176,81 +181,6 @@ function Loader() {
   );
 }
 
-function CircuitLines() {
-  const linesRef = useRef(null);
-
-  useEffect(() => {
-    const paths = linesRef.current.querySelectorAll("path");
-
-    gsap.set(paths, {
-      strokeDasharray: 1000,
-      strokeDashoffset: 1000,
-      opacity: 0,
-    });
-
-    ScrollTrigger.create({
-      trigger: linesRef.current,
-      start: "top 60%",
-      onEnter: () => {
-        gsap.to(paths, {
-          strokeDashoffset: 0,
-          opacity: 0.3,
-          duration: 3,
-          repeat: -1,
-          ease: "power2.inOut",
-          stagger: {
-            amount: 2,
-            repeat: -1,
-            repeatDelay: 1,
-          },
-        });
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
-
-  return (
-    <div ref={linesRef} className="fixed inset-0 pointer-events-none z-0">
-      <svg className="w-full h-full opacity-30">
-        <defs>
-          <linearGradient
-            id="circuitGradient"
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="0%"
-          >
-            <stop offset="0%" stopColor="#00ffff" stopOpacity="0" />
-            <stop offset="50%" stopColor="#00ffff" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#00ffff" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M0,50 Q200,100 400,50 T800,50"
-          stroke="url(#circuitGradient)"
-          strokeWidth="2"
-          fill="none"
-        />
-        <path
-          d="M0,150 Q300,200 600,150 T1200,150"
-          stroke="url(#circuitGradient)"
-          strokeWidth="1.5"
-          fill="none"
-        />
-        <path
-          d="M200,300 Q500,350 800,300 T1400,300"
-          stroke="url(#circuitGradient)"
-          strokeWidth="1"
-          fill="none"
-        />
-      </svg>
-    </div>
-  );
-}
-
 function Picture() {
   return (
     <div className="w-full">
@@ -270,21 +200,21 @@ function Region() {
             <div className="space-y-4 md:space-y-6">
               <div className="flex flex-wrap gap-2 md:gap-4 items-center">
                 <div
-                  className={`bg-black px-3 md:pr-20 py-2  ${schabo.className}`}
+                  className={`bg-black px-3 md:pr-20 py-2  ${michroma.className}`}
                 >
-                  <span className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl tracking-wider">
+                  <span className="text-white text-xl md:text-2xl lg:text-2xl xl:text-3xl tracking-wider">
                     OCT 26,27
                   </span>
                 </div>
 
-                <div className={`bg-black px-2 py-2 ${schabo.className}`}>
+                <div className={`bg-black px-2 py-[7px] ${michroma.className}`}>
                   <span className="text-black text-xl md:text-2xl lg:text-3xl xl:text-4xl">
                     |
                   </span>
                 </div>
 
                 <div
-                  className={`${spacemono.className} text-lg md:text-xl lg:text-2xl xl:text-3xl text-black`}
+                  className={`${michroma.className} text-lg md:text-lg lg:text-xl xl:text-2xl text-black`}
                 >
                   <div className="flex flex-col">
                     <span>30 x 30 FT. ARENA</span>
@@ -293,8 +223,8 @@ function Region() {
                 </div>
               </div>
 
-              <div className={`text-black ${schabo.className}`}>
-                <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl tracking-wider">
+              <div className={`text-black ${michroma.className}`}>
+                <span className="text-lg md:text-xl lg:text-xl xl:text-2xl tracking-wider">
                   PRIZES WORTH INR 8 LAKH
                 </span>
               </div>
@@ -419,11 +349,9 @@ export default function RobowarsDesktop({ link }) {
   return (
     <div
       ref={containerRef}
-      className="bg-red-400 bg-cover bg-center bg-no-repeat relative overflow-hidden"
+      className=" bg-cover bg-center bg-no-repeat relative overflow-hidden"
       style={{ backgroundSize: "100%" }}
     >
-      <CircuitLines />
-
       <div className="w-full relative z-10">
         <div ref={loaderRef}>
           <Loader />
