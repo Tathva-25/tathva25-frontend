@@ -55,10 +55,6 @@ const VerticalStripes = ({ count = 7, size = "large" }) => {
   );
 };
 
-// **********************************
-// UPDATED COMPONENT: LargeSurname
-// Added responsive text sizes and the rotating icon
-// **********************************
 const LargeSurname = ({ name, surname }) => (
   <div>
     <div className="text-[10px] sm:text-[11px] tracking-[0.15em] text-white/40 font-medium michroma mb-1">
@@ -68,7 +64,6 @@ const LargeSurname = ({ name, surname }) => (
       <div className="text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[0.85] font-black italic tracking-tight break-words text-white [text-shadow:_0_0_2px_rgba(255,255,255,0.25)]">
         {surname}
       </div>
-      {/* Arrow Icon */}
       <div className="mt-1.5 transform transition duration-300 group-hover:rotate-45 flex-shrink-0">
         <svg
           width="24"
@@ -76,7 +71,7 @@ const LargeSurname = ({ name, surname }) => (
           viewBox="0 0 24 24"
           fill="none"
           stroke={ACCENT_COLOR}
-          strokeWidth="3" // Increased strokeWidth for a bolder look
+          strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
           className="w-4 h-4 sm:w-5 sm:h-5"
@@ -116,18 +111,10 @@ const SchoolInfo = ({ school }) => (
   </div>
 );
 
-// **********************************
-// UPDATED COMPONENT: EventCard
-// Wrapped in <Link> for navigation
-// Adjusted for better mobile layout
-// **********************************
 const EventCard = ({ event, index }) => {
   const isFirst = index === 0;
   const isSecond = index === 1;
   const isThird = index === 2;
-  
-  // Calculate href path
-  const hrefPath = `/${event.surname.toLowerCase().replace(/\s+/g, '')}`;
 
   return (
     <Link
@@ -159,33 +146,45 @@ const EventCard = ({ event, index }) => {
               isSecond ? "justify-center" : "justify-between"
             }`}
           >
-            {isFirst && (
+            {isFirst ? (
               <>
                 <SchoolInfo school={event.school} />
                 <div className="text-right max-w-[45%]">
                   <LargeSurname name={event.name} surname={event.surname} />
                 </div>
-              ) : (
-                // Split layout for the first and third cards (Workshops & Lectures)
+              </>
+            ) : (
+              <div
+                className={`flex flex-col h-full justify-between gap-4 ${
+                  isThird ? "sm:flex-row-reverse" : "sm:flex-row"
+                }`}
+              >
                 <div
-                  className={`flex flex-col h-full justify-between gap-4 ${
-                    isThird ? 'sm:flex-row-reverse' : 'sm:flex-row'
-                  }`}
+                  className={`flex-shrink-0 ${
+                    isThird ? "text-left" : "text-right"
+                  } max-w-full sm:max-w-[45%]`}
                 >
-                  <div className={`flex-shrink-0 ${isThird ? 'text-left' : 'text-right'} max-w-full sm:max-w-[45%]`}>
-                    <LargeSurname name={event.name} surname={event.surname} />
-                    <div className={`flex gap-1 mt-2 ${isThird ? 'justify-start' : 'justify-end'}`}>
-                      <VerticalStripes count={9} size="small" />
-                    </div>
-                  </div>
-                  <div className={`flex-shrink-0 self-start ${isThird ? 'sm:self-end' : 'sm:self-start'}`}>
-                    <SchoolInfo school={event.school} />
+                  <LargeSurname name={event.name} surname={event.surname} />
+                  <div
+                    className={`flex gap-1 mt-2 ${
+                      isThird ? "justify-start" : "justify-end"
+                    }`}
+                  >
+                    <VerticalStripes count={9} size="small" />
                   </div>
                 </div>
-              )}
-            </div>
+                <div
+                  className={`flex-shrink-0 self-start ${
+                    isThird ? "sm:self-end" : "sm:self-start"
+                  }`}
+                >
+                  <SchoolInfo school={event.school} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
       <div className="absolute inset-0 pointer-events-none opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.1)_2px,rgba(255,255,255,0.1)_4px)]" />
     </Link>
@@ -196,12 +195,7 @@ export default function Explore() {
   return (
     <div className="w-full min-h-screen bg-white flex flex-col items-center michroma justify-center gap-4 px-4 py-8">
       {EVENTS.map((event, index) => (
-        <EventCard
-          key={event.id}
-          event={event}
-          index={index}
-          link={event.link}
-        />
+        <EventCard key={event.id} event={event} index={index} />
       ))}
     </div>
   );
