@@ -66,14 +66,14 @@ const menuItems = [
     img2: "/menu10.png",
   },
   {
-    name: "ACCOMODATION",
-    link: "/accomodation",
+    name: "ANNOUNCEMENTS",
+    link: "/announcements",
     img1: "/menu_icon11.png",
     img2: "/menu11.png",
   },
   {
-    name: "FAQS",
-    link: "/character-demo",
+    name: "ACCOMODATION",
+    link: "/accomodation",
     img1: "/menu_icon12.png",
     img2: "/menu12.png",
   },
