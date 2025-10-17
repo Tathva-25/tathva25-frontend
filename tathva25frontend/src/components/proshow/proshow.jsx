@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import localFont from 'next/font/local'
 import style from './proshow.module.css'
+import { keyframes } from "motion";
 const akiraExpanded = localFont({
   src: '../../../public/fonts/Akira-Expanded.otf',
   variable: '--font-akira'
@@ -140,10 +141,28 @@ const Proshow = () => {
               alt="Proshow main text"
               width={400}
               height={400}
-              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%]` + style.animateSlowSpin}
-           
+              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
             />
           </div>
+
+          <style>
+            {`
+              .animateSpin {
+                animation: slowspin 15s linear infinite;
+              }
+
+              @keyframes slowspin {
+                from {
+                  transform:  rotate(0deg);
+                }
+                to {
+                  transform:  rotate(360deg);
+                }
+              }
+            `}
+          </style>
+
+
 
           {/* Carousel - All 3 images rendered, positions calculated */}
           <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
