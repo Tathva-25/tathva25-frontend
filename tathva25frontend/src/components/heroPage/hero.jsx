@@ -11,6 +11,7 @@ import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
 import logo from "../../../public/images/tathvawhitelogo.png";
 import Marquee from "@/app/components/Marquee";
+import {useRouter} from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 const customFont = localfont({
@@ -32,7 +33,27 @@ export const Hero = () => {
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
-  const targetText = "TATHVA";
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+        // Check for JWT in localStorage
+        const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
+        setIsLoggedIn(!!jwt);
+  }, []);
+
+  const handleGoogleSignIn = () => {
+        window.location.href =
+            "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
+  };
+
+  const handleVisitDashboard = () => {
+        router.push("/profile");
+  };
+
+
+    const targetText = "TATHVA";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const getRandomChar = () =>
@@ -144,11 +165,21 @@ export const Hero = () => {
     quality={90}
   />
   {/* ✅ Login Button (left of logo) */}
-  <button
-    className={`${newfont.className} absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-  >
-    LOGIN
-  </button>
+        {isLoggedIn ? (
+            <button
+                onClick={handleVisitDashboard}
+                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+            >
+                Profile
+            </button>
+        ) : (
+            <button
+                onClick={handleGoogleSignIn}
+                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+            >
+                LOGIN
+            </button>
+        )}
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>
