@@ -58,7 +58,7 @@ const GamePage = () => {
   return (
     
     <div>
-      <div className="hidden lg:flex bg-white flex-row items-center justify-center relative overflow-x-hidden min-h-screen">
+      <div className="hidden overflow-hidden lg:flex bg-white flex-row items-center justify-center relative overflow-x-hidden min-h-screen">
         {/* <Sidebar/> */}
         {/* <Sidebar /> */}
           {/* Background NEXUS text with hexagons */}
