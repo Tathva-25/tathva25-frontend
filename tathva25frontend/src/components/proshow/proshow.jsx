@@ -100,6 +100,18 @@ const Proshow = () => {
       ref={sectionRef}
       className="h-screen relative overflow-hidden"
     >
+      <div>
+                <Image
+                  src='/images/grain-bg.png'
+                  className="absolute md:w-[100vw] md:h-auto  inset-0 object-cover md:rotate-0 overflow-x-hidden scale-110"
+                  alt="Background-grain"
+                  fill
+                  priority
+                  quality={90}
+                  sizes="100vw"
+                />
+        </div>
+
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}
         <div className="absolute font-black hidden md:block top-10 left-20 text-sm z-40">
@@ -117,12 +129,12 @@ const Proshow = () => {
             alt="Proshow main"
             width={600}
             height={400}
-            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-9 md:translate-y-0"
+            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-2 md:translate-y-0"
             priority
           />
 
           {/* Text Image (overlayed and moves with main image) */}
-          <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-8 md:translate-y-0">
+          <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-2 md:translate-y-0">
             <Image
               src="/images/proshowText.png"
               alt="Proshow main text"
@@ -170,8 +182,8 @@ const Proshow = () => {
         </div>
 
       {/* Text content */}
-      <div className="flex flex-col mt-16 md:mt-0 text-center md:text-left gap-6 md:w-[40%]  z-30 overflow-hidden">
-        <div className="relative h-12 overflow-hidden">
+      <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+        <div className="relative h-10 overflow-hidden">
           {desc.map((item, index) => (
             <div
               key={index}
@@ -190,7 +202,7 @@ const Proshow = () => {
           ))}
         </div>
         
-        <div className="relative min-h-[200px] overflow-hidden">
+        <div className="relative min-h-[200px] -mt-7 md: -mt-0 overflow-hidden">
           {desc.map((item, index) => (
             <div
               key={index}
@@ -212,7 +224,7 @@ const Proshow = () => {
         </div>
 
         {/* Button - separately controlled for mobile */}
-        <div className="flex justify-center -ml-10 mt-4 md:ml-0 md:justify-start md:mt-8">
+        <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8">
           <DotGridButton text="Book Your Pass" />
         </div>
       </div>
