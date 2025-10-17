@@ -4,7 +4,7 @@ import DotGridButton from "./DotGridButton"
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" })
 
-const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
+const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, big_desc}) => {
   return (
     <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white overflow-x-hidden`}>
       {/* Image Section - 3:4 ratio */}
