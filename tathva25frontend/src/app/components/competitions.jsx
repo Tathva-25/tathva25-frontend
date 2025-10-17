@@ -236,7 +236,7 @@ const BottomSvgWithText = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const scale = isMobile ? 1.2 : 0.9;
+  const scale = isMobile ? 1.4 : 0.9; // increased scale for mobile
   const foreignObjectHeight = isMobile ? 450 : 300;
   const shapesDivMaxWidth = isMobile ? "80vw" : "1200px";
   const shapesDivMarginTop = isMobile ? "30px" : "20px";
@@ -353,7 +353,7 @@ const BottomSvgWithText = () => {
           <h1
             style={{
               color: "#000",
-              fontSize: "176.804px",
+              fontSize: isMobile ? "220px" : "176.804px", // increased font size for mobile
               fontStyle: "normal",
               lineHeight: "normal",
               textAlign: "center",
