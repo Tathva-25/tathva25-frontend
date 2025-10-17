@@ -89,6 +89,7 @@ const Ripple = () => {
    */
   const drawSparkle = (ctx, x, y, size, rotation, opacity) => {
     
+
     if (opacity <= 0) return;
 
     ctx.save();
