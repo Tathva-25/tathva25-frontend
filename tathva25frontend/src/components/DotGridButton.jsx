@@ -2,23 +2,27 @@
 
 import DotGrid from "@/components/DotGrid";
 import React from "react";
-import { Michroma } from 'next/font/google';
 
-const michroma = Michroma({
-  weight: '400',
-  subsets: ['latin'],
-});
+import { Michroma } from "next/font/google";
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function DotGridButton({
   text = "Experience It",
   dotColor = "#5227FF",
-  min_width=250,
-  min_height=50,
+  min_width = 250,
+  height = 70,
+  width = 50,
 }) {
   return (
-    <div className={`relative inline-block min-w-[${min_width}px] min-h-[${min_height}px]`}>
+    <div
+      className="relative inline-block"
+      style={{
+        minWidth: `${min_width}px`,
+        // width: `${width}px`,
+      }}
+    >
       {/* DotGrid background */}
-      <div className="absolute inset-0 bg-black -inset-x-10 -inset-y-2">
+      <div className="absolute inset-0 -inset-x-10 -inset-y-2 bg-black">
         <DotGrid
           dotSize={2.3}
           gap={5}
@@ -30,17 +34,7 @@ export default function DotGridButton({
 
       {/* Button foreground */}
       <button
-        className={`
-          relative 
-          px-10 
-          py-2
-          text-white 
-          font-semibold 
-          bg-transparent
-          ${michroma.className}
-          z-10 
-          pointer-events-auto
-        `}
+        className={`relative px-5 py-2 text-white font-semibold bg-transparent z-10 pointer-events-auto ${michroma.className}`}
       >
         {text}
       </button>
