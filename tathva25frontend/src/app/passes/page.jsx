@@ -3,11 +3,11 @@
 import { useEffect, useState, useRef } from "react";
 import localFont from "next/font/local";
 import gsap from "gsap";
-import Ticket from "./Ticket";
-import TicketMobile from "./TicketMobile";
+import Ticket from "../Ticket";
+import TicketMobile from "../TicketMobile";
 import { Inter } from "next/font/google";
 import { Michroma } from "next/font/google";
-import { Arrow } from "./Arrow";
+import { Arrow } from "../Arrow";
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -23,7 +23,7 @@ const neoform = localFont({
   src: "../../public/fonts/neoform.otf",
 });
 
-function Passes() {
+function Page() {
   const [isMobile, setIsMobile] = useState(false);
   const [centerCard, setCenterCard] = useState(1);
   const cards = [0, 1, 2];
@@ -324,4 +324,4 @@ function Passes() {
   );
 }
 
-export default Passes;
+export default Page;
