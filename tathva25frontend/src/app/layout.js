@@ -7,10 +7,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="relative overflow-x-hidden">
-        {/* Background */}
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
