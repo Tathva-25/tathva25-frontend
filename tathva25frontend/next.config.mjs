@@ -1,21 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "tiqr-events.sgp1.cdn.digitaloceanspaces.com",
+        pathname: "/**",
+      },
+    ],
+  },
   turbopack: {
     rules: {
-      '*.svg': {
+      "*.svg": {
         loaders: [
           {
-            loader: '@svgr/webpack',
+            loader: "@svgr/webpack",
             options: {
-              icon: true
-            }
-          }
+              icon: true,
+            },
+          },
         ],
-        as: '*.js'
-      }
-    }
-  }
+        as: "*.js",
+      },
+    },
+  },
 };
 
 export default nextConfig;

@@ -112,7 +112,7 @@ function Picture() {
   return (
     <div className="w-full">
       <div className="w-full">
-        <ImgtoImage src="/robomob.png" alt="robowars" />
+        <ImgtoImage src="/robomob2.png" alt="robowars" />
       </div>
     </div>
   );

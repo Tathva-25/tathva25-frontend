@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
 import DotGridButton from "@/components/DotGridButton";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import localFont from 'next/font/local'
-import style from './proshow.module.css'
+import localFont from "next/font/local";
+import style from "./proshow.module.css";
 import { keyframes } from "motion";
 const akiraExpanded = localFont({
-  src: '../../../public/fonts/Akira-Expanded.otf',
-  variable: '--font-akira'
+  src: "../../../public/fonts/Akira-Expanded.otf",
+  variable: "--font-akira",
 });
 
 // Placeholder for DotGridButton - replace with your actual component
@@ -19,24 +19,39 @@ const akiraExpanded = localFont({
 // );
 
 const Proshow = () => {
-  const images = ["/images/embla1.png", "/images/embla2.png", "/images/embla3.png"];
-  const desc = [
-    ["Arivu", "From the earliest days of their career, this artist has been fascinated by the interplay of light and shadow, often using vivid contrasts to evoke deep emotion. Their work transcends traditional boundaries, blending elements of realism with abstract motifs that challenge the viewer to look beyond the surface."],
-    ["Shilpa Rao", "Beyond their paintings, the artist has explored multiple mediums, including sculpture and digital installations, constantly pushing the limits of their creative expression. Each piece seems to tell a story that evolves with the viewer's interpretation, revealing hidden layers and textures upon closer inspection."],
-    ["Fejo", "What sets this artist apart is their ability to connect with audiences on a profoundly personal level. Through interviews and public talks, they reveal an unwavering dedication to their craft, emphasizing experimentation and emotional honesty. Their legacy is not only in the art itself but in the inspiration it sparks"]
+  const images = [
+    "/images/embla1.png",
+    "/images/embla2.png",
+    "/images/embla3.png",
   ];
-  
+  const desc = [
+    [
+      "Arivu",
+      "From the earliest days of their career, this artist has been fascinated by the interplay of light and shadow, often using vivid contrasts to evoke deep emotion. Their work transcends traditional boundaries, blending elements of realism with abstract motifs that challenge the viewer to look beyond the surface.",
+    ],
+    [
+      "Shilpa Rao",
+      "Beyond their paintings, the artist has explored multiple mediums, including sculpture and digital installations, constantly pushing the limits of their creative expression. Each piece seems to tell a story that evolves with the viewer's interpretation, revealing hidden layers and textures upon closer inspection.",
+    ],
+    [
+      "Fejo",
+      "What sets this artist apart is their ability to connect with audiences on a profoundly personal level. Through interviews and public talks, they reveal an unwavering dedication to their craft, emphasizing experimentation and emotional honesty. Their legacy is not only in the art itself but in the inspiration it sparks",
+    ],
+  ];
+
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const script1 = document.createElement('script');
-    script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js';
+    const script1 = document.createElement("script");
+    script1.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
     script1.async = true;
 
-    const script2 = document.createElement('script');
-    script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
+    const script2 = document.createElement("script");
+    script2.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
     script2.async = true;
 
     document.body.appendChild(script1);
@@ -45,7 +60,7 @@ const Proshow = () => {
     script2.onload = () => {
       const gsap = window.gsap;
       const ScrollTrigger = window.ScrollTrigger;
-      
+
       gsap.registerPlugin(ScrollTrigger);
 
       const section = sectionRef.current;
@@ -53,8 +68,8 @@ const Proshow = () => {
       if (section) {
         ScrollTrigger.create({
           trigger: section,
-          start: 'top top',
-          end: () => `+=${window.innerHeight * 0.8}`,
+          start: "top top",
+          end: () => `+=${window.innerHeight * 1.15}`,
           //reduce the above to reduce the amount of scroll needed to trigger hori-scroll
           pin: true,
           scrub: 1,
@@ -72,23 +87,23 @@ const Proshow = () => {
       if (document.body.contains(script1)) document.body.removeChild(script1);
       if (document.body.contains(script2)) document.body.removeChild(script2);
       if (window.ScrollTrigger) {
-        window.ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
     };
   }, []);
 
   const getImageTransform = (imageIndex) => {
     const rotationProgress = Math.round(scrollProgress * 2);
-    let position = ((imageIndex) - rotationProgress + 6) % 3;
-    
+    let position = (imageIndex - rotationProgress + 6) % 3;
+
     const positions = {
       0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 },
       1: { x: 0, scale: 1.1, opacity: 1, z: 30 },
       2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 },
     };
-    
+
     const pos = positions[position];
-    
+
     return {
       transform: `translateX(${pos.x}px) scale(${pos.scale})`,
       opacity: pos.opacity,
@@ -116,10 +131,13 @@ const Proshow = () => {
       <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
         {/* Coordinates text */}
         <div className="absolute font-black hidden md:block top-10 left-20 text-sm z-40">
-          11.3210°N <br />75.9320°E
+          11.3210°N <br />
+          75.9320°E
         </div>
         <div className="absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40">
-          Be there <br />Feel it <br />Live it
+          Be there <br />
+          Feel it <br />
+          Live it
         </div>
 
         {/* Image section */}
@@ -162,8 +180,6 @@ const Proshow = () => {
             `}
           </style>
 
-
-
           {/* Carousel - All 3 images rendered, positions calculated */}
           <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse" 
@@ -175,7 +191,7 @@ const Proshow = () => {
             />
             <div className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 ">
               {images.map((img, index) => (
-                <div 
+                <div
                   key={index}
                   className="absolute transition-all duration-500 ease-out"
                   style={getImageTransform(index)}
@@ -255,8 +271,6 @@ const Proshow = () => {
         </div>
       </div>
       </div>
-
-
     </div>
   );
 };

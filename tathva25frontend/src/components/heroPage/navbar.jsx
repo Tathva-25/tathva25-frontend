@@ -7,14 +7,14 @@ export default function Navbar() {
     <nav
       className={` fixed top-0 left-0 w-full z-50 transition-all duration-300 `}
     >
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="mr-5   flex justify-between items-center">
         <div className="ml-auto mt-4">
           <Image
             src={logo}
             alt="Tathva Logo"
             width={100}
             height={100}
-            className="h-14 w-auto transition-transform duration-300 hover:scale-105"
+            className="h-10 mt-2 w-auto transition-transform duration-300 hover:scale-105"
             priority
             quality={90}
           />

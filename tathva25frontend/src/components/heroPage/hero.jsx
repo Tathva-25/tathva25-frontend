@@ -9,13 +9,14 @@ import heroAvatar from "../../../public/images/avatar-body.png";
 import wheel from "../../../public/images/wheel.png";
 import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
+import Marquee from "@/app/components/Marquee";
 
 gsap.registerPlugin(ScrollTrigger);
 const customFont = localfont({
   src: "../../../public/fonts/neoform.otf",
 });
 const newfont = localfont({
-  src: "../../../public/fonts/Michroma.ttf"
+  src: "../../../public/fonts/Michroma.ttf",
 });
 const SCRAMBLE_INTERVAL_MS = 40;
 const SCRAMBLE_DURATION_MS = 900;
@@ -44,7 +45,7 @@ export const Hero = () => {
 
     setIsAnimating(true);
     hasAnimatedRef.current = true;
-    const textLength = targetText.length+2;
+    const textLength = targetText.length + 2;
 
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearInterval(timeoutRef.current);
@@ -150,28 +151,54 @@ export const Hero = () => {
           <div className="relative w-full h-full">
             {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
             <div className="absolute top-8 left-0 right-0 text-center z-20">
-              <span className="text-2xl font-semibold text-white">
-                SOUTH INDIA'S BIGGEST FEST
+              <span
+                className={`${newfont.className} text-sm font-semibold text-white`}
+              >
+                /// SOUTH INDIA'S BIGGEST FEST
               </span>
             </div>
 
             {/* Grid System */}
-<div className="flex flex-col h-full">
+            <div className="flex flex-col h-full">
               {/* Row 1 - 10% height */}
               <div className="flex" style={{ height: "15%" }}>
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0.35", border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                  }}
                 ></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                ></div>
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0.35", border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                  }}
                 ></div>
               </div>
 
@@ -179,7 +206,10 @@ export const Hero = () => {
               <div className="flex" style={{ height: "35%" }}>
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0.35", border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                  }}
                 ></div>
                 {[...Array(6)].map((_, i) => (
                   <div
@@ -190,7 +220,10 @@ export const Hero = () => {
                 ))}
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0.35", border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                  }}
                 ></div>
               </div>
 
@@ -198,14 +231,24 @@ export const Hero = () => {
               <div className="flex" style={{ height: "70%" }}>
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0.35", border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                  }}
                 ></div>
-                <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                >
                   <div className="flex flex-col items-center justify-center h-full">
-                    <span className={`${newfont.className}text-2xl font-bold text-white`}>
+                    <span
+                      className={`${newfont.className} text-xl text-black drop-shadow-lg`}
+                    >
                       OCTOBER
                     </span>
-                    <span className={`${newfont.className}text-xl font-semibold mt-2 text-white`}>
+                    <span
+                      className={`${newfont.className} text-xl text-black drop-shadow-lg`}
+                    >
                       23, 24, 25
                     </span>
                   </div>
@@ -219,7 +262,10 @@ export const Hero = () => {
                 ))}
                 <div
                   className="flex items-center justify-center"
-                  style={{ flex: "0.35", border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                  }}
                 ></div>
               </div>
             </div>
@@ -229,20 +275,18 @@ export const Hero = () => {
         {/* Original Content - TATHVA and Images */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-between h-full gap-4">
           {/* TATHVA Text - Centered */}
-          <div className="flex-1 flex items-center justify-center w-full ">
-
-          </div>
+          <div className="flex-1 flex items-center justify-center w-full "></div>
 
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
-            
-            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center -mt-6">
+            <div className="w-full scale-260 pb-20 md:pb-40 max-w-[90vw] md:max-w-7xl text-center -mt-10">
               <span
-                className={`${
-                  customFont.className
-                } inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] tracking-[0.2em] ${
-                  isAnimating ? "tracking-tighter" : ""
-                }`}
+                className={`
+    ${customFont.className}
+    inline-block select-none transition-all duration-200 whitespace-nowrap 
+    text-[30px] md:text-[100px]
+    ${isAnimating ? "tracking-tighter" : ""} text-white
+  `}
               >
                 {displayText}
               </span>
