@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
+import DotGridButton from "@/components/DotGridButton";
 import localfont from 'next/font/local';
 
 
@@ -315,27 +316,20 @@ export default function Expo() {
       </p>
 
       {/* Button */}
-      <button
+      <div
         style={{
           position: "absolute",
           width: isDesktop ? colWidth * 0.75 : colWidth * 0.65,
           height: isDesktop ? colWidth * 0.25 : colWidth * 0.2,
           top: isDesktop ? colWidth * 4.25 : colWidth * 5.25,
           right: isDesktop ? colWidth * 1.2 : colWidth * 0.45,
-          background: "#000",
-          color: "#fff",
-          border: "none",
-          borderRadius: isDesktop ? "11px" : "4.82px",
           opacity: 1,
           zIndex: 20,
-          fontWeight: 600,
-          fontSize: isDesktop ? "1rem" : "0.85rem",
-          cursor: "pointer",
-          clipPath: isDesktop
-            ? `polygon(${colWidth * 0.17}px 0, ${colWidth * 0.75}px 0, ${colWidth * 0.75}px ${colWidth * 0.25}px, 0 ${colWidth * 0.25}px, 0 ${colWidth * 0.1}px)`
-            : `polygon(${colWidth * 0.17}px 0, ${colWidth * 0.75}px 0, ${colWidth * 0.75}px ${colWidth * 0.25}px, 0 ${colWidth * 0.25}px, 0 ${colWidth * 0.1}px)`,
+          cursor: "pointer"
         }}
-      ></button>
+      >
+      <DotGridButton text="Learn More" min_width={225} />
+      </div>
 
       {/* Actual grid tiles */}
       <div className="absolute top-0 left-0 w-full h-full" style={{ zIndex: 15 }}>
