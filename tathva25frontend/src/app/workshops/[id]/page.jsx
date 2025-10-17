@@ -57,7 +57,7 @@ export default async function Page({ params }) {
       : comp.price || 0;
 
   return (
-    <div className="flex justify-center min-h-screen items-center p-4">
+    <div className="flex justify-center min-h-screen items-center h-[100vh] p-4">
       <CardDetails
         src={src}
         alt={alt}
