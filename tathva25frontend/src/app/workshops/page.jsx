@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export default function WorkshopsPage() {
   const [workshops, setWorkshops] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -24,7 +23,6 @@ export default function WorkshopsPage() {
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        setLoading(true);
         const url = `${process.env.NEXT_PUBLIC_API}/api/events/all?type=workshops`;
         const response = await axios.get(url);
         setWorkshops(response.data.events);
@@ -33,7 +31,6 @@ export default function WorkshopsPage() {
         console.error("Error fetching workshops:", err);
         setError(err.message || "Failed to load workshops");
       } finally {
-        setLoading(false);
       }
     };
 
@@ -44,17 +41,6 @@ export default function WorkshopsPage() {
   const searchedWorkshops = workshops.filter((workshop) =>
     workshop.heading.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  if (loading) {
-    return (
-      <div className="bg-white min-h-screen py-16 px-4 sm:px-8 flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-gray-900 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading workshops...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
