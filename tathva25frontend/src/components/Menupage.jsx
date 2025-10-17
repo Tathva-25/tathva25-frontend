@@ -98,28 +98,13 @@ export default function Menupage() {
   }, []);
 
   return (
-    <>
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe3ZPFCxCFME9-1GCbHwAkv8bcPtpC1z_Fdg&s')",
-        }}
-      >
-        <div className="absolute inset-0 bg-black/50"></div>
-      </div>
-      <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg">
-        {/* <div className="absolute z-2 top-[2%] right-[2%] w-full flex px-8 py-4 justify-end">
-        <img src="logo.png" width={200} height={200} alt="Logo" />
-      </div> */}
+    <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg">
 
-        {/* Conditionally render desktop or mobile component */}
-        {isMobile ? (
-          <MenuPhone menuItems={menuItems} currentPath={pathname} />
-        ) : (
-          <MenuDesktop menuItems={menuItems} currentPath={pathname} />
-        )}
-      </div>
-    </>
+      {isMobile ? (
+        <MenuPhone menuItems={menuItems} currentPath={pathname} />
+      ) : (
+        <MenuDesktop menuItems={menuItems} currentPath={pathname} />
+      )}
+    </div>
   );
 }

@@ -20,7 +20,6 @@ export default function MenuPhone({ menuItems, currentPath }) {
   const [circleRotation, setCircleRotation] = useState(0); // Current rotation angle
   const [isAnimating, setIsAnimating] = useState(false); // Prevent multiple animations
   const [dragSelectedIndex, setDragSelectedIndex] = useState(0); // Track selection during drag for haptics
-  const lastHapticIndexRef = useRef(0); // Track last haptic trigger to prevent duplicates
   const bgTextRefs = useRef([]);
   const bottomTextRef = useRef(null);
   const circleItemRefs = useRef([]);
@@ -115,9 +114,8 @@ export default function MenuPhone({ menuItems, currentPath }) {
       });
     }
 
-    // Set initial scaling and image rotations for the selected item immediately
-    // Use requestAnimationFrame to ensure refs are ready without visible delay
-    requestAnimationFrame(() => {
+    // Set initial scaling for the selected item
+    setTimeout(() => {
       circleItemRefs.current.forEach((itemRef, index) => {
         if (itemRef) {
           if (index === initialIndex) {
@@ -133,19 +131,9 @@ export default function MenuPhone({ menuItems, currentPath }) {
               transformOrigin: "center center",
             });
           }
-
-          // Set initial image rotation to keep images straight
-          const img = itemRef.querySelector("img");
-          if (img) {
-            gsap.set(img, {
-              rotation: -initialRotation,
-              transformOrigin: "center center",
-              force3D: true,
-            });
-          }
         }
       });
-    });
+    }, 100); // Small delay to ensure refs are ready
   }, [currentPath, menuItems]); // Re-run when currentPath or menuItems change
 
   // Touch gesture handling for mobile
@@ -177,7 +165,6 @@ export default function MenuPhone({ menuItems, currentPath }) {
 
       // Initialize drag selection tracking for haptics
       setDragSelectedIndex(selectedIndex);
-      lastHapticIndexRef.current = selectedIndex; // Reset haptic tracker
 
       // Update our state to match the actual visual position
       setCircleRotation(actualRotation);
@@ -252,11 +239,9 @@ export default function MenuPhone({ menuItems, currentPath }) {
 
       // Ensure potentialIndex is valid and update visual feedback during drag
       if (potentialIndex >= 0 && potentialIndex < length) {
-        // Trigger haptic feedback ONCE when text/selection changes during drag
-        // Use ref to ensure it only fires once per unique selection
-        if (potentialIndex !== lastHapticIndexRef.current) {
-          triggerSelectionChangeHaptic(); // Haptic when selection changes
-          lastHapticIndexRef.current = potentialIndex; // Update last haptic index
+        // Trigger haptic feedback when selection changes during drag
+        if (potentialIndex !== dragSelectedIndex) {
+          triggerRotationHaptic(); // Light haptic for selection change during drag
           setDragSelectedIndex(potentialIndex);
         }
 
@@ -369,10 +354,10 @@ export default function MenuPhone({ menuItems, currentPath }) {
     }
   };
 
-  // Add lighter haptic for selection change during drag
-  const triggerSelectionChangeHaptic = () => {
+  // Add lighter haptic for rotation feedback
+  const triggerRotationHaptic = () => {
     if ("vibrate" in navigator) {
-      navigator.vibrate(10); // Light vibration when selection changes
+      navigator.vibrate(5); // Very light vibration for rotation
     }
   };
 
@@ -402,8 +387,8 @@ export default function MenuPhone({ menuItems, currentPath }) {
     setIsAnimating(true);
     const targetRotation = getTargetRotation(targetIndex);
 
-    // No additional haptic needed here since it was already triggered during drag
-    // when the selection changed
+    // Trigger haptic feedback on selection change (stronger feedback for final selection)
+    triggerHapticFeedback(15); // Slightly stronger haptic for final selection
 
     // Calculate the shortest rotation path from actual current position
     const actualCurrentRotation = circleContainerRef.current
