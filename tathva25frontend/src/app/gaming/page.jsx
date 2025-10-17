@@ -100,7 +100,7 @@ const GamePage = () => {
                 <DotGridButton text="Learn More"  min_width={40} height={30} width={200}/>
               </div>
             </div>  
-            <div className={`${michroma.className}  text-xl mt-8 mb-6 mr-15  w-[400px]`}>
+            <div className={`${michroma.className} text-center text-xl mt-8 mb-6 mr-15  w-[400px]`}>
               Show off your skills and
               conquer the arena at <span className="text-red-800">Gaming</span>
               <span className="text-red-800">Conclave</span>, where only the
@@ -110,45 +110,53 @@ const GamePage = () => {
       </div>
 
       {/* Phone Componenet */}
-      <div className="lg:hidden bg-gradient-to-r from-white to-[#d8d8d1] h-screen relative overflow-hidden flex flex-col justify-center px-3">
-        <div className="absolute inset-0 pointer-events-none flex flex-col justify-center items-center text-[25vw] leading-[1.1] ">
-          {/* Add the new class here */}
-          <div className={`${effectStyles.effectContainer} ${integralCF.className} font-extrabold flex flex-col justify-between items-center`}
-            style={{
-              WebkitTextStroke: '1px #8d705d', 
-            }}
-          >
-            <div>NEXUS</div>
-            <div>NEXUS</div>
-            <div>NEXUS</div>
-            <div>NEXUS</div>
-            <div>NEXUS</div>
-            <div>NEXUS</div>
-          </div>
-        </div>
-        <div className="textbox relative z-10">
-            <div className={`${michroma.className} text-xs my-0 translate-y-5`}>Tathva25</div>
-            <div className={`text-[12vw] ${integralCF.className} font-bold`}>GPC NEXUS</div>
-            <div className={`${michroma.className} leading-relaxed text-[2vw] w-[70%]`}>
-              Show off your skills and
-              conquer the arena at <span className="text-red-800">Gaming</span>
-              <span className="text-red-800">Conclave</span>, where only the
-              best rise to the top
-            </div>
-        </div>
-        <div className="relative z-10 w-full -translate-y-10 flex justify-center items-center">
-          <Image
-              src={gaming_hero_mobile}
-              // width={500}
-              alt="Hero_Image"
-              className=""
-              priority
-          />
-        </div>
-        <div className="text-right absolute bottom-5 right-13">
-          <DotGridButton text="Learn More" min_height={20} min_width={20}/>
-        </div>
+<div className="lg:hidden bg-gradient-to-r from-white to-[#d8d8d1] min-h-screen relative overflow-hidden flex flex-col px-3 py-6">
+  {/* Background NEXUS text - reduced size for mobile */}
+  <div className="mt-10 absolute inset-0 pointer-events-none flex flex-col justify-center items-center text-[20vw] leading-[1.1] opacity-30">
+    <div className={`${effectStyles.effectContainer} ${integralCF.className} font-extrabold flex tracking-[0.2em] flex-col justify-between items-center ml-5`}
+      style={{
+        WebkitTextStroke: '1px #8d705d', 
+      }}
+    >
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+      <div>NEXUS</div>
+    </div>
+  </div>
+
+  {/* Content Container */}
+  <div className="relative z-10 flex flex-col sm:gap-4">
+    {/* Text Box */}
+    <div className="textbox">
+      <div className={`text-5xl ${integralCF.className} font-bold mb-3`}>GPC NEXUS</div>
+      <div className={`${michroma.className} leading-relaxed text-sm `}>
+        Show off your skills and
+        conquer the arena at <span className="text-red-800">Gaming Conclave</span>, where only the
+        best rise to the top
       </div>
+    </div>
+
+    {/* Image Container */}
+    <div className="w-full flex justify-center sm:py-4">
+      <Image
+        src={gaming_hero_mobile}
+        alt="Hero_Image"
+        className="w-full h-auto max-w-sm object-contain"
+        priority
+      />
+    </div>
+
+    {/* Button */}
+    <div className="flex justify-center mt-">
+      <DotGridButton text="Learn More" min_height={20} min_width={20}/>
+    </div>
+  </div>
+</div>
     </div>
   )
 }
