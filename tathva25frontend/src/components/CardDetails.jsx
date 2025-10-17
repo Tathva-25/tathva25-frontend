@@ -15,9 +15,9 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
   const hasBigDesc = bigDesc && bigDesc.trim() !== "";
 
   return (
-    <div className={`${michroma.className} scale-80 w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white overflow-x-hidden`}>
+    <div className={`${michroma.className} lg:scale-80 w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white overflow-x-hidden`}>
       {/* Image Section - 3:4 ratio */}
-      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[69vh] lg:mt-0">
+      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 lg:mt-0">
         <Image
           src={src}
           alt={alt}
@@ -145,12 +145,12 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
         </div>
 
         {/* Register Button */}
-        <div className="px-6 lg:px-15 pt-4 pb-6 w-full flex justify-center gap-25">
+        <div className="px-2 lg:px-6 pt-4 pb-6 w-full flex justify-center gap-5">
           <div className="flex justify-center">
-            <DotGridButton text="Register Now" min_width={50} className="max-w-[20px] lg:max-w-[50px]"/>
+            <DotGridButton text="Register Now" min_width={50} className="max-w-[15px] lg:max-w-[50px]"/>
           </div>
           <div className="flex justify-center">
-            <DotGridButton text="Display Brochure" min_width={50} className="max-w-[20px] lg:max-w-[50px]" />
+            <DotGridButton text="Display Brochure" min_width={50} className="max-w-[15px] lg:max-w-[50px]" />
           </div>
         </div>
       </div>
