@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Alumni_Sans } from "next/font/google";
-
+import Link from "next/link";
 const alumniSans = Alumni_Sans({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
@@ -273,8 +273,9 @@ export default function MenuDesktop({ menuItems, currentPath }) {
             const isSelected = selectedIndex === i;
 
             return (
-              <div
+              <Link
                 key={i}
+                href={menuItems[i].link}
                 ref={(el) => (circleItemRefs.current[i] = el)}
                 className={`absolute w-10 h-10 flex items-center justify-center cursor-pointer overflow-hidden `}
                 style={{
@@ -293,7 +294,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
                   alt={menuItems[i].name}
                   className="-rotate-8"
                 />
-              </div>
+              </Link>
             );
           })}
         </div>

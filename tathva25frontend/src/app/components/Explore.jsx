@@ -1,40 +1,45 @@
-'use client';
+"use client";
+
+import Link from "next/link";
 
 const EVENTS = [
   {
     id: 1,
-    name: 'TECHNICAL',
-    surname: 'WORKSHOPS',
-    image: '/workshops.png',
-    school: 'INNOVATE - BUILD - LEARN',
+    name: "TECHNICAL",
+    surname: "WORKSHOPS",
+    image: "/workshops.png",
+    school: "INNOVATE - BUILD - LEARN",
     subtitle:
-      'Hands-on sessions led by experts, where you craft, code, and create the future.',
+      "Hands-on sessions led by experts, where you craft, code, and create the future.",
+    link: "/workshops",
   },
   {
     id: 2,
-    name: 'THRILLING',
-    surname: 'COMPETITIONS',
-    image: '/competitions.png',
-    school: 'INNOVATE - COMPETE - CONQUER',
+    name: "THRILLING",
+    surname: "COMPETITIONS",
+    image: "/competitions.png",
+    school: "INNOVATE - COMPETE - CONQUER",
     subtitle:
-      'Battle through tech, design, and innovation challenges to prove your mettle.',
+      "Battle through tech, design, and innovation challenges to prove your mettle.",
+    link: "/competitions",
   },
   {
     id: 3,
-    name: 'INSIGHTFUL',
-    surname: 'LECTURES',
-    image: '/lecture.png',
-    school: 'THINK - INSPIRE - INNOVATE',
+    name: "INSIGHTFUL",
+    surname: "LECTURES",
+    image: "/lecture.png",
+    school: "THINK - INSPIRE - INNOVATE",
     subtitle:
-      'Engage with pioneers and visionaries who redefine the boundaries of possibility.',
+      "Engage with pioneers and visionaries who redefine the boundaries of possibility.",
+    link: "/lectures",
   },
 ];
 
-const ACCENT_COLOR = 'white';
+const ACCENT_COLOR = "white";
 
-const VerticalStripes = ({ count = 7, size = 'large' }) => {
-  const heightClass = size === 'large' ? 'h-16' : 'h-8';
-  const widthClass = size === 'large' ? 'w-2' : 'w-1.5';
+const VerticalStripes = ({ count = 7, size = "large" }) => {
+  const heightClass = size === "large" ? "h-16" : "h-8";
+  const widthClass = size === "large" ? "w-2" : "w-1.5";
 
   return (
     <div className="flex gap-1">
@@ -42,7 +47,7 @@ const VerticalStripes = ({ count = 7, size = 'large' }) => {
         <div
           key={i}
           className={`${widthClass} ${heightClass} -skew-x-12 ${
-            i % 2 === 0 ? 'bg-white/80' : 'bg-transparent'
+            i % 2 === 0 ? "bg-white/80" : "bg-transparent"
           }`}
         />
       ))}
@@ -94,7 +99,10 @@ const EventCard = ({ event, index }) => {
   const isThird = index === 2;
 
   return (
-    <div className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group">
+    <Link
+      className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group"
+      href={event.link}
+    >
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
@@ -108,16 +116,16 @@ const EventCard = ({ event, index }) => {
           <div
             className={`flex items-start ${
               isSecond
-                ? 'justify-center'
+                ? "justify-center"
                 : isThird
-                ? 'justify-between flex-row-reverse'
-                : 'justify-between'
+                ? "justify-between flex-row-reverse"
+                : "justify-between"
             }`}
           ></div>
 
           <div
             className={`flex items-end ${
-              isSecond ? 'justify-center' : 'justify-between'
+              isSecond ? "justify-center" : "justify-between"
             }`}
           >
             {isFirst && (
@@ -154,7 +162,7 @@ const EventCard = ({ event, index }) => {
       </div>
 
       <div className="absolute inset-0 pointer-events-none opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.1)_2px,rgba(255,255,255,0.1)_4px)]" />
-    </div>
+    </Link>
   );
 };
 
@@ -162,7 +170,12 @@ export default function Explore() {
   return (
     <div className="w-full min-h-screen bg-white  flex flex-col items-center michroma justify-center gap-4 px-4">
       {EVENTS.map((event, index) => (
-        <EventCard key={event.id} event={event} index={index} />
+        <EventCard
+          key={event.id}
+          event={event}
+          index={index}
+          link={event.link}
+        />
       ))}
     </div>
   );

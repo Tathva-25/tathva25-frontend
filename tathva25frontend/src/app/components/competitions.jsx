@@ -128,10 +128,30 @@ const TopSvg = () => (
     />
 
     {/* Decorative elements */}
-    <DecorativeImage src="/images/competitions_design01.svg" x="308" y={100} width="4rem" />
-    <DecorativeImage src="/images/competitions_design02.svg" x="800" y={70} width="12rem" />
-    <DecorativeImage src="/images/competitions_design01.svg" x="1370" y={100} width="4rem" />
-    <DecorativeImage src="/images/tathva_logo.svg" x="1650" y={-10} width="8rem" />
+    <DecorativeImage
+      src="/images/competitions_design01.svg"
+      x="308"
+      y={100}
+      width="4rem"
+    />
+    <DecorativeImage
+      src="/images/competitions_design02.svg"
+      x="800"
+      y={70}
+      width="12rem"
+    />
+    <DecorativeImage
+      src="/images/competitions_design01.svg"
+      x="1370"
+      y={100}
+      width="4rem"
+    />
+    <DecorativeImage
+      src="/images/tathva_logo.svg"
+      x="1650"
+      y={-10}
+      width="8rem"
+    />
 
     {/* Gradient definition */}
     <defs>
