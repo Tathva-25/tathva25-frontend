@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 const EVENTS = [
   {
@@ -50,21 +51,44 @@ const VerticalStripes = ({ count = 7, size = 'large' }) => {
   );
 };
 
+// **********************************
+// UPDATED COMPONENT: LargeSurname
+// Added responsive text sizes and the rotating icon
+// **********************************
 const LargeSurname = ({ name, surname }) => (
   <div>
-    <div className="text-[11px] tracking-[0.15em] text-white/40 font-medium michroma mb-1">
+    <div className="text-[10px] sm:text-[11px] tracking-[0.15em] text-white/40 font-medium michroma mb-1">
       {name}
     </div>
-    <div className="text-[56px] sm:text-[64px] md:text-[72px] leading-[0.85] font-black italic tracking-tight break-words text-white [text-shadow:_0_0_2px_rgba(255,255,255,0.25)]">
-      {surname}
+    <div className="flex items-start gap-2">
+      <div className="text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[0.85] font-black italic tracking-tight break-words text-white [text-shadow:_0_0_2px_rgba(255,255,255,0.25)]">
+        {surname}
+      </div>
+      {/* Arrow Icon */}
+      <div className="mt-1.5 transform transition duration-300 group-hover:rotate-45 flex-shrink-0">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke={ACCENT_COLOR}
+          strokeWidth="3" // Increased strokeWidth for a bolder look
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-4 h-4 sm:w-5 sm:h-5"
+        >
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </div>
     </div>
   </div>
 );
 
 const SchoolInfo = ({ school }) => (
   <div>
-    <div className="relative flex items-center gap-2 p-2.5 mt-2 max-w-[400px] bg-black/60 clip-polygon">
-      <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center bg-white/20">
+    <div className="relative flex items-center gap-2 p-2 mt-2 max-w-[400px] bg-black/60 clip-polygon">
+      <div className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center bg-white/20">
         <svg
           width="12"
           height="12"
@@ -72,7 +96,7 @@ const SchoolInfo = ({ school }) => (
           fill="none"
           stroke={ACCENT_COLOR}
           strokeWidth="2"
-          className="opacity-90"
+          className="opacity-90 w-2.5 h-2.5 sm:w-3 sm:h-3"
         >
           <circle cx="12" cy="12" r="10" />
           <line x1="2" y1="12" x2="22" y2="12" />
@@ -80,7 +104,7 @@ const SchoolInfo = ({ school }) => (
         </svg>
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-[8px] leading-[1.3] text-white/80 font-semibold tracking-wide">
+        <div className="text-[7px] sm:text-[8px] leading-[1.3] text-white/80 font-semibold tracking-wide">
           {school}
         </div>
       </div>
@@ -88,79 +112,73 @@ const SchoolInfo = ({ school }) => (
   </div>
 );
 
+// **********************************
+// UPDATED COMPONENT: EventCard
+// Wrapped in <Link> for navigation
+// Adjusted for better mobile layout
+// **********************************
 const EventCard = ({ event, index }) => {
   const isFirst = index === 0;
   const isSecond = index === 1;
   const isThird = index === 2;
+  
+  // Calculate href path
+  const hrefPath = `/${event.surname.toLowerCase().replace(/\s+/g, '')}`;
 
   return (
-    <div className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group">
-      {/* Background image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
-        style={{ backgroundImage: `url('${event.image}')` }}
-      ></div>
+    <Link href={hrefPath} passHref legacyBehavior>
+      <a className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group block">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
+          style={{ backgroundImage: `url('${event.image}')` }}
+        ></div>
 
-      {/* Overlay content */}
-      <div className="relative z-10 w-full h-full py-6">
-        <div className="relative w-full h-full p-4 flex flex-col justify-between border-2 border-white/25">
-          {/* Layout variations */}
-          <div
-            className={`flex items-start ${
-              isSecond
-                ? 'justify-center'
-                : isThird
-                ? 'justify-between flex-row-reverse'
-                : 'justify-between'
-            }`}
-          ></div>
-
-          <div
-            className={`flex items-end ${
-              isSecond ? 'justify-center' : 'justify-between'
-            }`}
-          >
-            {isFirst && (
-              <>
-                <SchoolInfo school={event.school} />
-                <div className="text-right max-w-[45%]">
+        {/* Overlay content */}
+        <div className="relative z-10 w-full h-full py-4 sm:py-6">
+          <div className="relative w-full h-full p-3 sm:p-4 flex flex-col justify-between border-2 border-white/25">
+            {/* Layout variations - Simplified for responsiveness */}
+            <div
+              className={`flex flex-col h-full ${
+                isSecond ? 'items-center justify-center' : 'justify-between'
+              }`}
+            >
+              {isSecond ? (
+                // Centered layout for the second card (Competitions)
+                <div className="flex flex-col items-center michroma gap-4">
                   <LargeSurname name={event.name} surname={event.surname} />
-                  <div className="flex gap-1 justify-end mt-2">
-                    <VerticalStripes count={9} size="small" />
+                </div>
+              ) : (
+                // Split layout for the first and third cards (Workshops & Lectures)
+                <div
+                  className={`flex flex-col h-full justify-between gap-4 ${
+                    isThird ? 'sm:flex-row-reverse' : 'sm:flex-row'
+                  }`}
+                >
+                  <div className={`flex-shrink-0 ${isThird ? 'text-left' : 'text-right'} max-w-full sm:max-w-[45%]`}>
+                    <LargeSurname name={event.name} surname={event.surname} />
+                    <div className={`flex gap-1 mt-2 ${isThird ? 'justify-start' : 'justify-end'}`}>
+                      <VerticalStripes count={9} size="small" />
+                    </div>
+                  </div>
+                  <div className={`flex-shrink-0 self-start ${isThird ? 'sm:self-end' : 'sm:self-start'}`}>
+                    <SchoolInfo school={event.school} />
                   </div>
                 </div>
-              </>
-            )}
-
-            {isSecond && (
-              <div className="flex flex-col items-center michroma gap-4">
-                <LargeSurname name={event.name} surname={event.surname} />
-              </div>
-            )}
-
-            {isThird && (
-              <>
-                <div className="text-left max-w-[45%]">
-                  <LargeSurname name={event.name} surname={event.surname} />
-                  <div className="flex gap-1 justify-start mt-2">
-                    <VerticalStripes count={9} size="small" />
-                  </div>
-                </div>
-                <SchoolInfo school={event.school} />
-              </>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="absolute inset-0 pointer-events-none opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.1)_2px,rgba(255,255,255,0.1)_4px)]" />
-    </div>
+        <div className="absolute inset-0 pointer-events-none opacity-5 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.1)_2px,rgba(255,255,255,0.1)_4px)]" />
+      </a>
+    </Link>
   );
 };
 
 export default function Explore() {
   return (
-    <div className="w-full min-h-screen bg-white  flex flex-col items-center michroma justify-center gap-4 px-4">
+    <div className="w-full min-h-screen bg-white flex flex-col items-center michroma justify-center gap-4 px-4 py-8">
       {EVENTS.map((event, index) => (
         <EventCard key={event.id} event={event} index={index} />
       ))}
