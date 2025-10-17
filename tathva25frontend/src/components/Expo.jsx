@@ -328,7 +328,7 @@ export default function Expo() {
           cursor: "pointer"
         }}
       >
-      <DotGridButton text="Learn More" min_width={225} />
+      <DotGridButton text="Learn More" />
       </div>
 
       {/* Actual grid tiles */}
