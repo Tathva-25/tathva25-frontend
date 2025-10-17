@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import DotGridButton from "@/components/DotGridButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -301,7 +302,10 @@ function Region() {
             </div>
           </div>
           <div className="md:col-span-1 flex justify-center md:justify-end">
-            <div className="flex flex-col items-center space-y-2 mt-8 md:mt-12 lg:mt-16 md:mr-20">
+            <div className="flex flex-row items-center space-y-2 mt-8 md:mt-12 lg:mt-16 md:mr-20">
+              <div className="relative right-32 scale-90 top-1 mr-4">
+                <DotGridButton text="Learn More"/>
+              </div>
               <BarcodeImage src="/barcode.png" alt="event-code" />
             </div>
           </div>
