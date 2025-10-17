@@ -66,8 +66,8 @@ const menuItems = [
     img2: "/menu10.png",
   },
   {
-    name: "BLOG",
-    link: "/blog",
+    name: "ANNOUNCEMENTS",
+    link: "/announcements",
     img1: "/menu_icon11.png",
     img2: "/menu11.png",
   },
@@ -99,7 +99,6 @@ export default function Menupage() {
 
   return (
     <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg">
-
       {isMobile ? (
         <MenuPhone menuItems={menuItems} currentPath={pathname} />
       ) : (
