@@ -319,13 +319,14 @@ export default function Expo() {
       <div
         style={{
           position: "absolute",
-          width: isDesktop ? colWidth * 0.75 : colWidth * 0.65,
+          width: isDesktop ? colWidth * 0.75 : colWidth * 0.6,
           height: isDesktop ? colWidth * 0.25 : colWidth * 0.2,
-          top: isDesktop ? colWidth * 4.25 : colWidth * 5.25,
-          right: isDesktop ? colWidth * 1.2 : colWidth * 0.45,
+          top: isDesktop ? colWidth * 4.25 : colWidth * 5.5,
+          right: isDesktop ? colWidth * 1.2 : colWidth * 1.45,
           opacity: 1,
           zIndex: 20,
-          cursor: "pointer"
+          cursor: "pointer",
+          scale: isDesktop ? 1 : 0.75
         }}
       >
       <DotGridButton text="Learn More" />
