@@ -5,7 +5,7 @@ const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 export default function Marquee({ text }) {
   return (
     <div
-      className={`${michroma.className} w-full overflow-hidden border-t-2 border-b-2 border-black bg-white`}
+      className={`${michroma.className} w-full overflow-hidden  border-black bg-white`}
     >
       <div className="whitespace-nowrap animate-marquee py-2 flex">
         {/* Repeat text multiple times for seamless scroll */}

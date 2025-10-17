@@ -51,10 +51,6 @@ const VerticalStripes = ({ count = 7, size = 'large' }) => {
   );
 };
 
-// **********************************
-// UPDATED COMPONENT: LargeSurname
-// Added responsive text sizes and the rotating icon
-// **********************************
 const LargeSurname = ({ name, surname }) => (
   <div>
     <div className="text-[10px] sm:text-[11px] tracking-[0.15em] text-white/40 font-medium michroma mb-1">
@@ -72,7 +68,7 @@ const LargeSurname = ({ name, surname }) => (
           viewBox="0 0 24 24"
           fill="none"
           stroke={ACCENT_COLOR}
-          strokeWidth="3" // Increased strokeWidth for a bolder look
+          strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
           className="w-4 h-4 sm:w-5 sm:h-5"
@@ -122,11 +118,11 @@ const EventCard = ({ event, index }) => {
   return (
     <Link
       href={hrefPath}
-      className="relative w-full h-[30vh] sm:h-[35vh] md:h-[40vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group block transition-transform duration-300 hover:scale-105"
+      className="relative w-full h-[28vh] sm:h-[35vh] md:h-[40vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group block transition-all duration-300"
     >
       {/* Background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
+        className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-110"
         style={{ backgroundImage: `url('${event.image}')` }}
       ></div>
 

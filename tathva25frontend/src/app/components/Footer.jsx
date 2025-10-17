@@ -10,15 +10,12 @@ import Insta from "../../../public/images/instagram.png";
 import Linkd from "../../../public/images/linkedin.png";
 import Tathvalogo from "../../../public/images/tathvawhitelogo.png";
 import Image from 'next/image';
-import localfont from 'next/font/local';
 import Arrow from "../../../public/images/arrow.png";
+import { Michroma} from "next/font/google";
 
 import BackgroundMobile from "../../../public/images/backgroundmobile.png";
 import CardMobile from "../../../public/images/cardMobile.png";
-
-const customFont = localfont({
-    src: '../../../public/fonts/nippo.otf',
-})
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 const YourComponent = () => {
     return (
@@ -56,7 +53,7 @@ const YourComponent = () => {
                                     className="w-full h-auto object-contain drop-shadow-lg"
                                     priority
                                 />
-                                <div className={`absolute bottom-[15%] left-1/2 transform -translate-x-[9vw] -translate-y-[2vw] w-[18vw] text-center ${customFont.className}`}>
+                                <div className={`absolute bottom-[15%] left-1/2 transform -translate-x-[9vw] -translate-y-[2vw] w-[18vw] text-center ${michroma.className}`}>
                                     <div className="text-white mb-[1vw] text-[1.7vw] font-medium drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
                                         Any queries? Contact us!
                                     </div>
@@ -87,10 +84,10 @@ const YourComponent = () => {
                                     className="w-full h-auto object-contain drop-shadow-lg"
                                     priority
                                 />
-                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[29vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${customFont.className}`}>
+                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[29vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
                                     [QUICK LINKS]
                                 </div>
-                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[25vw] text-[1.6vw] translate-y-[6vw] gap-8 ${customFont.className}`}>
+                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[25vw] text-[1.6vw] translate-y-[6vw] gap-8 ${michroma.className}`}>
                                     <div className="flex flex-col">
                                         <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Home</button>
                                         <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Lecures</button>
@@ -107,7 +104,7 @@ const YourComponent = () => {
                                 <div className="absolute inset-0 translate-x-[30vw] translate-y-[17.5vw] w-[10vw]">
                                     <img src={Line.src} />
                                 </div>
-                                <div className={`absolute inset-0 translate-y-[19vw] translate-x-[31vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${customFont.className}`}>
+                                <div className={`absolute inset-0 translate-y-[19vw] translate-x-[31vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
                                     [SOCIALS]
                                 </div>
                                 <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[27vw]">
@@ -159,7 +156,7 @@ const YourComponent = () => {
                             </div>
 
                             {/*Quick links*/}
-                            <div className={`relative inset-0 text-white flex flex-row translate-x-[2vw] text-[3.3vw] -translate-y-[27vw] gap-8 ${customFont.className}`}>
+                            <div className={`relative inset-0 text-white flex flex-row translate-x-[2vw] text-[3.3vw] -translate-y-[27vw] gap-8 ${michroma.className}`}>
                                 <div className="flex flex-col gap-4">
                                     <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Home</button>
                                     <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Lecures</button>

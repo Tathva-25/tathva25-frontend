@@ -9,6 +9,7 @@ import heroAvatar from "../../../public/images/avatar-body.png";
 import wheel from "../../../public/images/wheel.png";
 import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
+import Marquee from "@/app/components/Marquee";
 
 gsap.registerPlugin(ScrollTrigger);
 const customFont = localfont({
