@@ -150,8 +150,8 @@ export const Hero = () => {
           <div className="relative w-full h-full">
             {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
             <div className="absolute top-8 left-0 right-0 text-center z-20">
-              <span className="text-2xl font-semibold text-white">
-                SOUTH INDIA'S BIGGEST FEST
+             <span className={`${newfont.className} text-sm font-semibold text-white`}>
+                /// SOUTH INDIA'S BIGGEST FEST
               </span>
             </div>
 
@@ -202,12 +202,13 @@ export const Hero = () => {
                 ></div>
                 <div className="flex-1 flex items-center justify-center" style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}>
                   <div className="flex flex-col items-center justify-center h-full">
-                    <span className={`${newfont.className}text-2xl font-bold text-white`}>
-                      OCTOBER
-                    </span>
-                    <span className={`${newfont.className}text-xl font-semibold mt-2 text-white`}>
-                      23, 24, 25
-                    </span>
+               <span className={`${newfont.className} text-xl text-black drop-shadow-lg`}>
+  OCTOBER
+</span>
+<span className={`${newfont.className} text-xl text-black drop-shadow-lg`}>
+  23, 24, 25
+</span>
+
                   </div>
                 </div>
                 {[...Array(5)].map((_, i) => (
@@ -236,16 +237,18 @@ export const Hero = () => {
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
             
-            <div className="w-full scale-240 pb-20 md:pb-40 max-w-[90vw] md:max-w-5xl text-center -mt-6">
-              <span
-                className={`${
-                  customFont.className
-                } inline-block select-none transition-all duration-200 whitespace-nowrap text-[30px] md:text-[100px] tracking-[0.2em] ${
-                  isAnimating ? "tracking-tighter" : ""
-                }`}
-              >
-                {displayText}
-              </span>
+            <div className="w-full scale-260 pb-20 md:pb-40 max-w-[90vw] md:max-w-7xl text-center -mt-10">
+ <span
+  className={`
+    ${customFont.className}
+    inline-block select-none transition-all duration-200 whitespace-nowrap 
+    text-[30px] md:text-[100px]
+    ${isAnimating ? "tracking-tighter" : ""} text-white
+  `}
+>
+  {displayText}
+</span>
+
             </div>
 
             <div>

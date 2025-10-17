@@ -3,7 +3,8 @@ import Navbar from "@/components/heroPage/navbar";
 import Sidebar from "@/components/heroPage/sidebar";
 export default function Home() {
   return (
-    <div>
+    <div className="michroma">
+   
       <Navbar />
           
       <Sidebar />
