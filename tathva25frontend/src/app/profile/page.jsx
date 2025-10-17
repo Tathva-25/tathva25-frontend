@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwtRequired from "@/axios/jwtRequired";
-import Link from "next/link"; // Import Link for navigation
+// import Link from "next/link"; // Import Link for navigation
 import ProfileClient from "@/components/Profile_Page_Components/ProfileClient";
 
 export default function ProfilePage() {
@@ -62,17 +62,17 @@ export default function ProfilePage() {
     </div>;
   }
 
-  const PageContainer = ({ children }) => (
-      <div className="" >
-        <Link href="/" className="absolute top-5 left-10 z-20" style={{ textDecoration: 'none', color: 'inherit', marginBottom: '1.5rem', display: 'inline-block' }}>
-        <span style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
-          &larr;  Home
-        </span>
-        </Link>
-
-        {children}
-      </div>
-  );
+  // const PageContainer = ({ children }) => (
+  //     <div className="" >
+  //       <Link href="/" className="absolute top-5 left-10 z-20" style={{ textDecoration: 'none', color: 'inherit', marginBottom: '1.5rem', display: 'inline-block' }}>
+  //       <span style={{ fontWeight: 'bold', fontSize: '1.5rem' }}>
+  //         &larr;  Home
+  //       </span>
+  //       </Link>
+  //
+  //       {children}
+  //     </div>
+  // );
 
   if (!user) {
     return (
@@ -81,8 +81,8 @@ export default function ProfilePage() {
   }
 
   return (
-      <PageContainer>
+      // <PageContainer>
         <ProfileClient user={user} />
-      </PageContainer>
+      // {/*</PageContainer>*/}
   );
 }
