@@ -265,7 +265,7 @@ export default function Expo() {
             right: colWidth * 0.75,
             maxHeight: 21 * 9 + "px",
             overflow: "hidden",
-            fontFamily: "'Space Mono', monospace",
+            // fontFamily: "'Space Mono', monospace",
             fontWeight: 500,
             fontStyle: "normal",
             fontSize: "19px",
@@ -286,10 +286,10 @@ export default function Expo() {
       )}
 
       {/* Paragraph 2 */}
-      <p
+      <p className={`${someFont.className}`}
         style={{
           position: "absolute",
-          fontFamily: "'Space Mono', monospace",
+          // fontFamily: "'Space Mono', monospace",
           fontWeight: isDesktop ? 500 : 500,
           fontStyle: "normal",
           fontSize: isDesktop ? "19px" : "16px",
