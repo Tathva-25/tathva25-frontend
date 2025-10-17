@@ -10,6 +10,7 @@ import MenuWrapper from "../MenuWrapper";
 import GamePage from "@/app/gaming/page";
 import { Hero } from "./hero";
 import localfont from "next/font/local";
+import YourComponent from "../footer";
 
 const someFont = localfont({
   src: "../../../public/fonts/michroma.ttf",
@@ -347,12 +348,9 @@ export default function Sidebar() {
 
         <section
           id={`section-footer`}
-          className="h-screen flex items-center justify-center bg-black border-b-2 border-gray-200"
+          
         >
-          <div className="text-center">
-            <h2 className="text-6xl font-bold mb-4">Footer</h2>
-            <p className="text-xl text-gray-600">Section Footer</p>
-          </div>
+          <YourComponent/>
         </section>
       </div>
     </>
