@@ -2,12 +2,22 @@
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Alumni_Sans } from "next/font/google";
+import localFont from "next/font/local";
+import { Michroma } from "next/font/google";
 import Link from "next/link";
+
 const alumniSans = Alumni_Sans({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-alumni-sans",
 });
+
+const akiraExpanded = localFont({
+  src: "../../public/fonts/Akira-Expanded.otf",
+  variable: "--font-akira",
+});
+
+const michroma = Michroma({ subsets: ["latin"], weight: "400" })
 
 export default function MenuDesktop({ menuItems, currentPath }) {
   // TEXT COLOR CONFIGURATION - Change these to modify the text colors
@@ -221,7 +231,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
     <>
       <div
         id="bg-text"
-        className="absolute overflow-hidden whitespace-nowrap w-full top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%] text-[90px] sm:text-[180px] md:text-[320px] lg:text-[420px]"
+        className= {`${michroma.className} absolute overflow-hidden whitespace-nowrap font-extrabold w-full top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%] sm:text-[80px] md:text-[100px] mt-[30vh] lg:text-[150px]`}
         style={{ color: BG_TEXT_COLOR }}
       >
         {fadedtext && (
@@ -234,7 +244,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
               <span
                 key={`${fadedtext}-${i}`}
                 ref={(el) => (bgTextRefs.current[i] = el)}
-                className={`${alumniSans.className} font-[700] flex-shrink-0`}
+                className={` font-[700] flex-shrink-0`}
                 style={{ opacity: 1 }}
               >
                 {fadedtext}
@@ -318,7 +328,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
       {fadedtext && (
         <div
           ref={bottomTextRef}
-          className={`mt-4 ${alumniSans.className} font-[700] absolute text-9xl -bottom-[1%]`}
+          className={`mt-4 ${michroma.className} font-[700] absolute text-5xl bottom-[5%]`}
           style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
         >
           {fadedtext}
