@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 // --- CONFIGURATION CONSTANTS ---
 const INITIAL_RING_RADIUS = 150;
-const NUM_PARTICLES_PER_RIPPLE = 17;
+const NUM_PARTICLES_PER_RIPPLE = 15;
 const RIPPLE_SPEED = 2;
 const MAX_DISTANCE = 1000;
 const RIPPLE_INTERVAL_MS = 700;
