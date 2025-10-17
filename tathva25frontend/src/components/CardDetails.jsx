@@ -1,21 +1,27 @@
-import Image from "next/image"
-import { Michroma } from "next/font/google"
-import DotGridButton from "./DotGridButton"
+import Image from "next/image";
+import { Michroma } from "next/font/google";
+import DotGridButton from "./DotGridButton";
 
-const michroma = Michroma({ subsets: ["latin"], weight: "400" })
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
-const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, }) => {
+const CardDetails = ({
+  src,
+  alt,
+  title,
+  tagline,
+  date,
+  time,
+  venue,
+  price,
+  desc,
+}) => {
   return (
-    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white`}>
+    <div
+      className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white`}
+    >
       {/* Image Section - 3:4 ratio */}
-      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[69vh] lg:mt-0">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className=""
-          priority
-        />
+      <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 lg:mt-0">
+        <Image src={src} alt={alt} fill className="" priority />
       </div>
 
       {/* Content Section */}
@@ -25,9 +31,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
           <h1 className="text-3xl lg:text-5xl font-normal tracking-wide">
             {title}
           </h1>
-          <p className="text-base lg:text-lg mt-3 text-gray-600">
-            {tagline}
-          </p>
+          <p className="text-base lg:text-lg mt-3 text-gray-600">{tagline}</p>
         </div>
 
         {/* Info Icons Grid */}
@@ -42,10 +46,12 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
             />
             <div className="min-w-0">
               <p className="text-lg text-gray-600">Date</p>
-              <p className="font-bold text-lg lg:text-base break-words">{date}</p>
+              <p className="font-bold text-lg lg:text-base break-words">
+                {date}
+              </p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <Image
               src="/images/clock.svg"
@@ -59,7 +65,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
               <p className="font-bold text-lg lg:text-base">{time}</p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <Image
               src="/images/pin.svg"
@@ -70,10 +76,12 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
             />
             <div className="min-w-0">
               <p className="text-lg text-gray-600">Venue</p>
-              <p className="font-bold text-lg lg:text-base break-words">{venue}</p>
+              <p className="font-bold text-lg lg:text-base break-words">
+                {venue}
+              </p>
             </div>
           </div>
-          
+
           <div className="flex items-start gap-3">
             <Image
               src="/images/tag.svg"
@@ -101,11 +109,17 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
         <div className="px-6 lg:px-10 py-4 space-y-3">
           <div className="text-xs lg:text-lg leading-relaxed">
             <span className="font-bold">Note: </span>
-            <span className="text-gray-700">Ticket details are automatically taken from your profile. You can update them on the profile page.</span>
+            <span className="text-gray-700">
+              Ticket details are automatically taken from your profile. You can
+              update them on the profile page.
+            </span>
           </div>
           <div className="text-xs lg:text-lg leading-relaxed">
             <span className="font-bold">Refund Policy: </span>
-            <span className="text-gray-700">All tickets are non-refundable and non-transferable except in the case of event cancellation or technical issues.</span>
+            <span className="text-gray-700">
+              All tickets are non-refundable and non-transferable except in the
+              case of event cancellation or technical issues.
+            </span>
           </div>
         </div>
 
@@ -117,7 +131,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CardDetails
+export default CardDetails;
