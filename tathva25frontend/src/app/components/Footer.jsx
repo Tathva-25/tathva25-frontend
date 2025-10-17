@@ -7,6 +7,7 @@ import Dec2 from "../../../public/images/dec2.png";
 import Line from "../../../public/images/line.png";
 import Fb from "../../../public/images/facebook.png";
 import Insta from "../../../public/images/instagram.png";
+import line from "../../../public/images/footerline.png";
 import Linkd from "../../../public/images/linkedin.png";
 import Tathvalogo from "../../../public/images/tathvawhitelogo.png";
 import Image from 'next/image';
@@ -53,18 +54,18 @@ const YourComponent = () => {
                                     className="w-full h-auto object-contain drop-shadow-lg"
                                     priority
                                 />
-                                <div className={`absolute bottom-[15%] left-1/2 transform -translate-x-[9vw] -translate-y-[2vw] w-[18vw] text-center ${michroma.className}`}>
-                                    <div className="text-white mb-[1vw] text-[1.7vw] font-medium drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
+                                <div className={`absolute bottom-[15%] left-1/2 transform -translate-x-[9vw] -translate-y-[2vw] w-[18vw] text-center flex flex-col justify-center items-center ${michroma.className}`}>
+                                    <div className="text-white relative bottom-10 right-3 mb-[1vw] text-[1.7vw] font-medium drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
                                         Any queries? Contact us!
                                     </div>
-                                    <div className="flex flex-col text-white items-start -translate-x-[0.5vw] w-[22vw] text-[1.3vw] gap-[0.8vw]">
-                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)]">EMAIL:  tathva2025@gmail.com</div>
-                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)]">PHONE:  +91 55555 55555</div>
+                                    <div className="flex flex-col relative bottom-8 text-white items-start -translate-x-[0.5vw] w-[22vw] text-[1.3vw] gap-[0.8vw]">
+                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)] scale-80 w-[40vw] relative right-32">EMAIL :  tathva2025@gmail.com</div>
+                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)] scale-80 w-[40vw] relative right-37">PHONE:  +91 8281955667</div>
                                     </div>
-                                    <div className="absolute inset-0 w-[10vw] -translate-y-[10.6vw] translate-x-[4vw] drop-shadow-[0_0_8px_rgba(0,0,0,1)]">
+                                    <div className="absolute inset-0 w-[10vw] -translate-y-[11vw] translate-x-[4vw] drop-shadow-[0_0_8px_rgba(0,0,0,1)]">
                                         <img src={Tathvalogo.src} />
                                     </div>
-                                    <div className="absolute inset-0 w-[10vw] text-[1vw] text-white translate-x-[5vw] translate-y-[14.5vw] drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
+                                    <div className="absolute inset-0 text-white translate-x-[-4.75vw] translate-y-[10vw] drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
                                         © TATHVA 2025
                                     </div>
                                 </div>
@@ -84,27 +85,27 @@ const YourComponent = () => {
                                     className="w-full h-auto object-contain drop-shadow-lg"
                                     priority
                                 />
-                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[29vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
+                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[27vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
                                     [QUICK LINKS]
                                 </div>
-                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[25vw] text-[1.6vw] translate-y-[6vw] gap-8 ${michroma.className}`}>
-                                    <div className="flex flex-col">
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Home</button>
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Lecures</button>
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Events</button>
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Workshops</button>
+                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[25vw] text-[1.6vw] translate-y-[6vw] gap-12 ${michroma.className}`}>
+                                    <div className="flex flex-col relative right-4">
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Home</button>
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Lecures</button>
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Events</button>
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Workshops</button>
                                     </div>
-                                    <div className="flex flex-col">
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Map</button>
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Contact</button>
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">Team</button>
-                                        <button className="hover:text-[#F1D233] transition-colors duration-200 ease-in-out">FAQs</button>
+                                    <div className="flex flex-col relative right-4">
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Map</button>
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Contact</button>
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Team</button>
+                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">FAQs</button>
                                     </div>
                                 </div>
                                 <div className="absolute inset-0 translate-x-[30vw] translate-y-[17.5vw] w-[10vw]">
                                     <img src={Line.src} />
                                 </div>
-                                <div className={`absolute inset-0 translate-y-[19vw] translate-x-[31vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
+                                <div className={`absolute inset-0 translate-y-[19vw] translate-x-[28vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
                                     [SOCIALS]
                                 </div>
                                 <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[27vw]">
