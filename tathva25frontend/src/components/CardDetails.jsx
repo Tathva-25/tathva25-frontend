@@ -11,15 +11,18 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
+  // Determine if there is content for the popup
+  const hasBigDesc = bigDesc && bigDesc.trim() !== "";
+
   return (
-    <div className={`${michroma.className} w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white overflow-x-hidden`}>
+    <div className={`${michroma.className} scale-80 w-full max-w-7xl shadow-2xl flex flex-col lg:flex-row rounded-b-2xl lg:rounded-xl bg-white overflow-x-hidden`}>
       {/* Image Section - 3:4 ratio */}
       <div className="relative lg:w-[45%] aspect-[3/4] min-h-0 mt-[69vh] lg:mt-0">
         <Image
           src={src}
           alt={alt}
           fill
-          className=""
+          className="object-cover" // Added object-cover to ensure image fills correctly
           priority
         />
       </div>
@@ -27,7 +30,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
       {/* Content Section */}
       <div className="flex flex-col items-center w-full lg:w-[55%]">
         {/* Title Section */}
-        <div className="px-6 lg:px-10 py-3 pb-6 border-b border-gray-200 text-center">
+        <div className="px-6 lg:px-10 py-3 pb-6 border-b border-gray-200 text-center w-full">
           <h1 className="text-3xl lg:text-5xl font-normal tracking-wide">
             {title}
           </h1>
@@ -37,7 +40,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
         </div>
 
         {/* Info Icons Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-6 lg:px-10 py-6 lg:py-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 px-6 lg:px-10 py-6 lg:py-8 w-full">
           <div className="flex items-start gap-3">
             <Image
               src="/images/calendar.svg"
@@ -96,16 +99,18 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
         </div>
 
         {/* Description Section */}
-        <div className="px-6 lg:px-10 py-6 border-t border-gray-200">
+        <div className="px-6 lg:px-10 py-6 border-t border-gray-200 w-full">
           <div className="flex items-center gap-2 mb-3">
             <h2 className="font-bold text-xl lg:text-2xl">Description</h2>
             <button
               onClick={() => setIsPopupOpen(true)}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="transition-transform duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded p-1"
+              disabled={!hasBigDesc} // <-- BUTTON IS DISABLED HERE
+              className="transition-transform duration-300 flex hover:scale-110 focus:outline-none focus:ring-2 focus:ring-gray-400 rounded p-1 disabled:opacity-30 disabled:cursor-not-allowed disabled:scale-100"
               aria-label="View full description"
             >
+              <span>See more</span>
               <svg 
                 width="24" 
                 height="24" 
@@ -115,7 +120,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
                 strokeWidth="2" 
                 strokeLinecap="round" 
                 strokeLinejoin="round"
-                className={`transition-transform duration-300 ${isHovered ? 'rotate-[0deg]' : 'rotate-90'}`}
+                className={`transition-transform duration-300 ${isHovered && hasBigDesc ? 'rotate-[0deg]' : 'rotate-90'}`}
               >
                 <line x1="7" y1="17" x2="17" y2="7"></line>
                 <polyline points="7 7 17 7 17 17"></polyline>
@@ -128,7 +133,7 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
         </div>
 
         {/* Policies Section */}
-        <div className="px-6 lg:px-10 py-4 space-y-3">
+        <div className="px-6 lg:px-10 py-4 space-y-3 w-full">
           <div className="text-xs lg:text-lg leading-relaxed">
             <span className="font-bold">Note: </span>
             <span className="text-gray-700">Ticket details are automatically taken from your profile. You can update them on the profile page.</span>
@@ -153,11 +158,11 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
       {/* Full Description Popup */}
       {isPopupOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-10 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => setIsPopupOpen(false)}
         >
           <div 
-            className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden"
+            className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 lg:px-10 py-4 flex items-center justify-between">
@@ -173,10 +178,15 @@ const CardDetails = ({src, alt, title, tagline, date, time, venue, price, desc, 
                 </svg>
               </button>
             </div>
-            <div className="px-6 lg:px-10 py-6 overflow-y-auto max-h-[calc(85vh-80px)]">
-              <p className="text-base lg:text-lg leading-relaxed text-gray-700 whitespace-pre-wrap">
-                {bigDesc}
-              </p>
+            <div className="px-6 lg:px-10 py-6 overflow-y-auto">
+              <div className="text-base lg:text-lg leading-relaxed text-gray-700 whitespace-pre-wrap">
+                {/* --- CONTENT IS NOW CONDITIONAL --- */}
+                {hasBigDesc ? (
+                  bigDesc
+                ) : (
+                  <p className="italic text-gray-500">No further details to be shown.</p>
+                )}
+              </div>
             </div>
           </div>
         </div>

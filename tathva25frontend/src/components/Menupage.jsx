@@ -48,8 +48,8 @@ const menuItems = [
     img2: "/menu7.png",
   },
   {
-    name: "ABOUT",
-    link: "/about",
+    name: "WORKSHOP",
+    link: "/workshops",
     img1: "/menu_icon8.png",
     img2: "/menu8.png",
   },
