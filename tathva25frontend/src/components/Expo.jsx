@@ -1,15 +1,10 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-import localfont from 'next/font/local';
-
-
-const someFont = localfont({
-    src: '../../public/fonts/michroma.ttf',
-    display: 'swap', // Add this for better loading
-})
+import DotGridButton from "@/components/DotGridButton";
 
 export default function Expo() {
   const borderThickness = 20;
+  const desktopBreakpoint = 640;
 
   const [metrics, setMetrics] = useState({
     h: 0,
@@ -20,10 +15,31 @@ export default function Expo() {
     vw: 0,
   });
 
-  const desktopBreakpoint = 640;
+  useEffect(() => {
+    function update() {
+      const vh = window.innerHeight;
+      const vw = window.innerWidth;
+      const isDesktop = vw >= desktopBreakpoint;
+      const rowCount = isDesktop ? 5 : 7;
+      const h = vh - 2 * borderThickness;
+      const rowHeight = h / rowCount;
+      const numCols = Math.max(1, Math.floor(vw / rowHeight));
+      const colWidth = rowHeight;
+      const remainingSpace = vw - numCols * colWidth;
+      const sideMargin = remainingSpace / 2;
+      setMetrics({ h, rowHeight, colWidth, numCols, sideMargin, vw });
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const { h, rowHeight, colWidth, numCols, sideMargin, vw } = metrics;
+  const isDesktop = vw >= desktopBreakpoint;
+  const rowCount = isDesktop ? 5 : 7;
 
   const desktopSelectedCoords = useMemo(() => {
-    const centralCol = Math.floor((metrics.numCols + 1) / 2);
+    const centralCol = Math.floor((numCols + 1) / 2);
     return [
       [1, centralCol],
       [2, centralCol],
@@ -38,10 +54,10 @@ export default function Expo() {
       [3, centralCol + 1],
       [3, centralCol + 2],
     ];
-  }, [metrics.numCols]);
+  }, [numCols]);
 
   const mobileSelectedCoords = useMemo(() => {
-    const n = metrics.numCols || 1;
+    const n = numCols || 1;
     return [
       [2, n],
       ...Array.from({ length: n }, (_, i) => [3, i + 1]),
@@ -50,36 +66,15 @@ export default function Expo() {
       [6, 1],
       [6, 2],
     ];
-  }, [metrics.numCols]);
+  }, [numCols]);
 
-  const isDesktop = metrics.vw >= desktopBreakpoint;
   const selectedCoords = isDesktop
     ? desktopSelectedCoords
     : mobileSelectedCoords;
-  const rowCount = isDesktop ? 5 : 7;
-
-  useEffect(() => {
-    function update() {
-      const vh = window.innerHeight;
-      const vw = window.innerWidth;
-      const h = vh - 2 * borderThickness;
-      const rowHeight = h / rowCount;
-      const numCols = Math.max(1, Math.floor(vw / rowHeight));
-      const colWidth = rowHeight;
-      const remainingSpace = vw - numCols * colWidth;
-      const sideMargin = remainingSpace / 2;
-      setMetrics({ h, rowHeight, colWidth, numCols, sideMargin, vw });
-    }
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [rowCount, isDesktop]);
 
   function isSelected(row, col) {
     return selectedCoords.some(([r, c]) => r === row && c === col);
   }
-
-  const { h, rowHeight, colWidth, numCols, sideMargin } = metrics;
 
   const centralRow = Math.ceil(rowCount / 2);
   const centralCol = Math.ceil(numCols / 2);
@@ -156,6 +151,40 @@ export default function Expo() {
     }
   }
 
+  function getTextProperties(vw, colWidth) {
+    if (vw >= 1280) {
+      return {
+        fontSize: `${colWidth * 0.6}px`,
+        lineHeight: 1.25,
+        left: colWidth * 0.4,
+        top: colWidth * 0.45,
+      };
+    } else if (vw >= 1024) {
+      return {
+        fontSize: `${colWidth * 0.48}px`,
+        lineHeight: 1.2,
+        left: colWidth * 0.3,
+        top: colWidth * 0.6,
+      };
+    } else if (vw >= 640) {
+      return {
+        fontSize: `${colWidth * 0.37}px`,
+        lineHeight: 1.15,
+        left: colWidth * 0.3,
+        top: colWidth * 0.7,
+      };
+    } else {
+      return {
+        fontSize: "2.5rem",
+        lineHeight: 1.1,
+        left: colWidth * 0.4,
+        top: colWidth * 0.8,
+      };
+    }
+  }
+
+  const textStyles = getTextProperties(vw, colWidth);
+
   return (
     <section
       className="relative w-full h-screen overflow-x-hidden"
@@ -228,26 +257,23 @@ export default function Expo() {
         />
       ))}
 
-      {/* H1 */}
+      {/* H1 heading */}
       <h1
         style={{
+          fontFamily: "'AkiraExpandedDemo', sans-serif",
           position: "absolute",
-          top: isDesktop ? colWidth * 0.38 : colWidth * 0.48,
-          left: isDesktop ? colWidth * 0.75 : colWidth * 0.6,
+          fontSize: textStyles.fontSize,
+          lineHeight: textStyles.lineHeight,
+          left: textStyles.left,
+          top: textStyles.top,
           margin: 0,
-          fontFamily: "SCHABO, sans-serif",
           fontWeight: 400,
           fontStyle: "normal",
-          fontSize: isDesktop ? `${colWidth * 0.85}px` : "5rem",
-          lineHeight: isDesktop ? `${colWidth * 0.85}px` : "5rem",
-          letterSpacing: "4%",
-          verticalAlign: "middle",
           color: "#000",
           zIndex: 50,
-          whiteSpace: "normal",
-          maxHeight: isDesktop ? colWidth * 2 : "12rem",
-          overflow: "hidden",
           userSelect: "none",
+          whiteSpace: "normal",
+          maxHeight: "12rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -257,7 +283,7 @@ export default function Expo() {
 
       {/* Paragraph 1 - desktop only */}
       {isDesktop && (
-        <p className={`${someFont.className}`}
+        <p
           style={{
             position: "absolute",
             top: colWidth * 0.25,
@@ -271,7 +297,6 @@ export default function Expo() {
             fontSize: "19px",
             lineHeight: "21px",
             letterSpacing: "2%",
-            verticalAlign: "middle",
             color: "#000",
             margin: 0,
             zIndex: 50,
@@ -290,19 +315,20 @@ export default function Expo() {
         style={{
           position: "absolute",
           fontFamily: "'Space Mono', monospace",
-          fontWeight: isDesktop ? 500 : 500,
+          fontWeight: 500,
           fontStyle: "normal",
           fontSize: isDesktop ? "19px" : "16px",
           lineHeight: isDesktop ? "21px" : "13px",
           letterSpacing: "2%",
-          verticalAlign: "middle",
           color: "#000",
           margin: 0,
           zIndex: 50,
           bottom: isDesktop ? colWidth * 1.35 : "auto",
           right: isDesktop ? colWidth * 0.25 : colWidth * 0.35,
           left: isDesktop ? (centralCol + 1.5) * colWidth : colWidth * 0.45,
-          top: isDesktop ? "auto" : borderThickness + 6 * rowHeight + colWidth * 0.25,
+          top: isDesktop
+            ? "auto"
+            : borderThickness + 6 * rowHeight + colWidth * 0.25,
           textAlign: "left",
           maxWidth: isDesktop ? 400 : "80%",
           padding: isDesktop ? 0 : "0 10px",
@@ -310,37 +336,45 @@ export default function Expo() {
           userSelect: "none",
         }}
       >
-        Tathva&apos;22 Interface is all about technology, the trending, the
+        Tathva&apos;25 Interface is all about technology, the trending, the
         innovations, the age-old, and many more.
       </p>
 
-      {/* Button */}
-      <button
+      {/* Wrapper div for DotGridButton with absolute positioning */}
+      {/* Wrapper div with scale to reduce button size */}
+      <div
         style={{
           position: "absolute",
-          width: isDesktop ? colWidth * 0.75 : colWidth * 0.65,
+          width: isDesktop ? colWidth * 0.95 : colWidth * 1.2,
           height: isDesktop ? colWidth * 0.25 : colWidth * 0.2,
-          top: isDesktop ? colWidth * 4.25 : colWidth * 5.25,
-          right: isDesktop ? colWidth * 1.2 : colWidth * 0.45,
-          background: "#000",
-          color: "#fff",
-          border: "none",
-          borderRadius: isDesktop ? "11px" : "4.82px",
-          opacity: 1,
+          top: isDesktop ? colWidth * 4.25 : colWidth * 5.5,
+          right: isDesktop ? colWidth * 1.2 : colWidth * 0.5,
           zIndex: 20,
-          fontWeight: 600,
-          fontSize: isDesktop ? "1rem" : "0.85rem",
-          cursor: "pointer",
-          clipPath: isDesktop
-            ? `polygon(${colWidth * 0.17}px 0, ${colWidth * 0.75}px 0, ${colWidth * 0.75}px ${colWidth * 0.25}px, 0 ${colWidth * 0.25}px, 0 ${colWidth * 0.1}px)`
-            : `polygon(${colWidth * 0.17}px 0, ${colWidth * 0.75}px 0, ${colWidth * 0.75}px ${colWidth * 0.25}px, 0 ${colWidth * 0.25}px, 0 ${colWidth * 0.1}px)`,
+          transform: isDesktop ? "scale(0.7)": "scale(0.4)", // 80% size scaling - adjust as needed
+          transformOrigin: "top right", // origin where scaling anchors
         }}
-      ></button>
+      >
+        <DotGridButton text="Explore" />
+      </div>
 
       {/* Actual grid tiles */}
-      <div className="absolute top-0 left-0 w-full h-full" style={{ zIndex: 15 }}>
+      <div
+        className="absolute top-0 left-0 w-full h-full"
+        style={{ zIndex: 15 }}
+      >
         {tiles}
       </div>
+
+      {/* Font-face declaration */}
+      <style jsx>{`
+        @font-face {
+          font-family: "AkiraExpandedDemo";
+          src: url("/fonts/Akira Expanded Demo.woff2") format("woff2");
+          font-display: swap;
+          font-weight: normal;
+          font-style: normal;
+        }
+      `}</style>
     </section>
   );
 }
