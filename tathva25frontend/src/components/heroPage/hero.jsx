@@ -19,8 +19,8 @@ const newfont = localfont({
   src: "../../../public/fonts/Michroma.ttf",
 });
 const SCRAMBLE_INTERVAL_MS = 40;
-const SCRAMBLE_DURATION_MS = 900;
-const REVEAL_INTERVAL_MS = 110;
+const SCRAMBLE_DURATION_MS = 5000;
+const REVEAL_INTERVAL_MS = 100;
 
 export const Hero = () => {
   const [displayText, setDisplayText] = useState("TATHVA");
@@ -147,130 +147,421 @@ export const Hero = () => {
         </div>
 
         {/* Grid Overlay */}
-        <div className="absolute inset-0 z-10">
-          <div className="relative w-full h-full">
-            {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
-            <div className="absolute top-8 left-0 right-0 text-center z-20">
-              <span
-                className={`${newfont.className} text-sm font-semibold text-white`}
-              >
-                /// SOUTH INDIA'S BIGGEST FEST
-              </span>
+    <div className="absolute inset-0 z-10">
+      <div className="relative w-full h-full">
+        {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
+        <div className="absolute top-18 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
+          <span className={`${newfont.className} text-sm font-semibold text-white`}>
+            /// SOUTH INDIA'S BIGGEST FEST
+          </span>
+        </div>
+
+        {/* Grid System */}
+        <div className="flex flex-col h-full w-full">
+          {/* Row 1 - Top row - 15% height */}
+          <div className="flex flex-nowrap" style={{ height: "15%" }}>
+            {/* Side columns - hidden on mobile */}
+            <div
+              className="hidden md:flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            {/* Main columns - always 6 visible */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            {/* Side columns - hidden on mobile */}
+            <div
+              className="hidden md:flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+          </div>
+
+          {/* Row 2 - Middle row - 25% on mobile, 35% on desktop */}
+          <div 
+            className="flex flex-nowrap md:hidden" 
+            style={{ height: "10%" }} /* Mobile: 25% height */
+          >
+            <div
+              className="hidden md:flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            {/* 6 columns - always visible */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            <div
+              className="hidden md:flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+          </div>
+
+          {/* Row 2 - Desktop version - 35% height */}
+          <div 
+            className="hidden md:flex flex-nowrap" 
+            style={{ height: "35%" }} /* Desktop: 35% height (original) */
+          >
+            <div
+              className="flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            {/* 6 columns - always visible */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            <div
+              className="flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+          </div>
+
+          {/* Row 3 - Bottom row with date - 60% on mobile, 50% on desktop */}
+          <div 
+            className="flex flex-nowrap md:hidden" 
+            style={{ height: "70%" }} /* Mobile: 60% height */
+          >
+            <div
+              className="hidden md:flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            {/* Date column */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            >
+              <div className="flex flex-col items-center justify-center h-full">
+                <span className="text-sm text-black drop-shadow-lg font-semibold hidden md:block">
+                  OCTOBER
+                </span>
+                <span className="text-sm text-black drop-shadow-lg font-semibold hidden md:block">
+                  23, 24, 25
+                </span>
+              </div>
             </div>
+            
+            {/* Remaining 5 columns - always visible */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            <div
+              className="hidden md:flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+          </div>
 
-            {/* Grid System */}
-            <div className="flex flex-col h-full">
-              {/* Row 1 - 10% height */}
-              <div className="flex" style={{ height: "15%" }}>
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    flex: "0.35",
-                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                ></div>
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    flex: "0.35",
-                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                ></div>
-              </div>
-
-              {/* Row 2 - 20% height */}
-              <div className="flex" style={{ height: "35%" }}>
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    flex: "0.35",
-                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                ></div>
-                {[...Array(6)].map((_, i) => (
-                  <div
-                    key={`r2-${i}`}
-                    className="flex-1 flex items-center justify-center"
-                    style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                  ></div>
-                ))}
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    flex: "0.35",
-                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                ></div>
-              </div>
-
-              {/* Row 3 - 70% height */}
-              <div className="flex" style={{ height: "70%" }}>
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    flex: "0.35",
-                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                ></div>
-                <div
-                  className="flex-1 flex items-center justify-center"
-                  style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                >
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <span
-                      className={`${newfont.className} text-xl text-black drop-shadow-lg`}
-                    >
-                      OCTOBER
-                    </span>
-                    <span
-                      className={`${newfont.className} text-xl text-black drop-shadow-lg`}
-                    >
-                      23, 24, 25
-                    </span>
-                  </div>
-                </div>
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={`r3-${i + 2}`}
-                    className="flex-1 flex items-center justify-center"
-                    style={{ border: "0.5px solid rgba(255, 255, 255, 0.3)" }}
-                  ></div>
-                ))}
-                <div
-                  className="flex items-center justify-center"
-                  style={{
-                    flex: "0.35",
-                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                ></div>
+          {/* Row 3 - Desktop version - 50% height */}
+          <div 
+            className="hidden md:flex flex-nowrap" 
+            style={{ height: "50%" }} /* Desktop: 50% height (original) */
+          >
+            <div
+              className="flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            {/* Date column */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            >
+              <div className="flex flex-col items-center justify-center h-full">
+                <span className={`${newfont.className} text-xl text-black drop-shadow-lg`}>
+                  OCTOBER
+                </span>
+                <span className={`${newfont.className} text-xl text-black drop-shadow-lg`}>
+                  23, 24, 25
+                </span>
               </div>
             </div>
+            
+            {/* Remaining 5 columns - always visible */}
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            <div
+              className="flex-1 flex items-center justify-center"
+              style={{ 
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
+            
+            <div
+              className="flex items-center justify-center"
+              style={{
+                flex: "0.35",
+                border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                flexShrink: 0,
+                minWidth: 0,
+              }}
+            ></div>
           </div>
         </div>
+      </div>
+    </div>
+
 
         {/* Original Content - TATHVA and Images */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-between h-full gap-4">
@@ -279,13 +570,13 @@ export const Hero = () => {
 
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
-            <div className="w-full scale-260 pb-20 md:pb-40 max-w-[90vw] md:max-w-7xl text-center -mt-10">
+            <div className="w-full scale-260 pb-110 md:pb-40 max-w-[90vw] md:max-w-7xl text-center ml-1  md:-ml-10">
               <span
                 className={`
     ${customFont.className}
     inline-block select-none transition-all duration-200 whitespace-nowrap 
-    text-[30px] md:text-[100px]
-    ${isAnimating ? "tracking-tighter" : ""} text-white
+    text-[30px] md:text-[100px] tracking-widest
+    ${isAnimating ? "tracking-[0.001em]" : ""} text-white
   `}
               >
                 {displayText}
@@ -294,7 +585,7 @@ export const Hero = () => {
 
             <div>
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center -mt-30 scale-120 ">
+              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center sm:-mt-30 scale-120 -mt-110 ml-1 md:ml-0 ">
                 <Image
                   ref={wheelRef}
                   src={wheel}
@@ -307,7 +598,7 @@ export const Hero = () => {
               </div>
 
               {/* Avatar - Middle Layer */}
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center hidden md:block">
                 <Image
                   src={heroAvatar}
                   alt="Avatar"
@@ -316,6 +607,18 @@ export const Hero = () => {
                   sizes="(max-width: 768px) 90vw, 500px"
                   priority
                 />
+              </div>
+              <div className="absolute inset-0 block sm:hidden flex items-center justify-center">
+                <Image 
+                  src='/images/avatar-2.png'
+                  className="w-full scale-115 -mt-50"
+                  width={100}
+                  height={100}
+                  alt="Avatar Mobile"
+                  priority
+                  
+                />
+
               </div>
             </div>
           </div>
