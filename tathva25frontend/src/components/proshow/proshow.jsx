@@ -236,6 +236,7 @@ const Proshow = () => {
         <div className="flex justify-center -ml-10 mt-4 md:ml-0 md:justify-start md:mt-8">
           <DotGridButton text="Book Your Pass" />
         </div>
+
       </div>
       </div>
 
