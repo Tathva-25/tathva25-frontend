@@ -1,19 +1,13 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import Image from "next/image";
+import localFont from "next/font/local";
 import gsap from "gsap";
 import Ticket from "./Ticket";
 import TicketMobile from "./TicketMobile";
-import { Playfair_Display, Inter, Oswald } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Michroma } from "next/font/google";
 import { Arrow } from "./Arrow";
-
-const osw = Oswald({
-  subsets: ["latin"],
-  weight: ["400"],
-  display: "swap",
-});
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -21,10 +15,12 @@ const mi = Michroma({
   display: "swap",
 });
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "900"],
-  display: "swap",
+const fontspring = localFont({
+  src: "../../public/fonts/fontspring.otf",
+});
+
+const neoform = localFont({
+  src: "../../public/fonts/neoform.otf",
 });
 
 function Passes() {
@@ -35,9 +31,9 @@ function Passes() {
   const touchEndX = useRef(0);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 700);
+    setIsMobile(window.innerWidth < 640);
     window.addEventListener("resize", () =>
-      setIsMobile(window.innerWidth < 700)
+      setIsMobile(window.innerWidth < 640)
     );
     return () => window.removeEventListener("resize");
   }, []);
@@ -188,23 +184,24 @@ function Passes() {
   return (
     <section
       className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center overflow-hidden"
-      style={{ backgroundImage: "url('/bg.png')" }}
+      // style={{ backgroundImage: "url('/bg.png')" }}
     >
+      {/* <div style={{ backgroundImage: "url('/bg.png')" }}></div> */}
       {/* sidebar */}
-      <Image
+      {/* <Image
         src="/sideborder.png"
         alt="sidebar"
         width={30}
         height={100}
         className={`${isMobile ? "hidden" : ""} absolute h-screen left-0 z-10`}
-      />
+      /> */}
 
       {/* top left text */}
       <div className="">
         <h1
-          className={`${inter.className} text-6xl font-bold z-20 relative ${
-            isMobile ? "mb-96" : "mb-56"
-          }`}
+          className={`${
+            fontspring.className
+          } text-6xl font-bold z-20 relative ${isMobile ? "mb-96" : "mb-56"}`}
         >
           PASSES
         </h1>
@@ -230,115 +227,98 @@ function Passes() {
         </div>
       ))}
 
-      {/* bottom bar  */}
-      <div className="w-screen h-[80px] bg-green-200 sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative overflow-x-hidden">
-        {/* <Image
-          src="/arrows2.svg"
-          alt="arrow"
-          width={10}
-          height={10}
-          className="rotate-180 absolute left-0 top-[20%] z-0 w-30 h-auto sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80"
-        /> */}
+      {/* bottom bar */}
+      <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
+        {/* LEFT SECTION */}
+        <div className="flex items-center ">
+          {/* LEFT ARROWS */}
+          <div
+            onClick={() => {
+              const prev = (centerCard + cards.length - 1) % cards.length;
+              moveToCenter(prev);
+            }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+            className="flex gap-0 cursor-pointer size-30 sm:size-40 md:size-50 lg:size-60 xl:size-80 2xl:size-90 items-center origin-left"
+          >
+            <Arrow
+              direction={"left"}
+              ref={(el) => (leftArrowRefs.current[0] = el)}
+            />
+            <Arrow
+              direction={"left"}
+              ref={(el) => (leftArrowRefs.current[1] = el)}
+            />
+            <Arrow
+              direction={"left"}
+              ref={(el) => (leftArrowRefs.current[2] = el)}
+            />
+          </div>
 
-        <div className="flex absolute bg-red-300 gap-3 right-[25%] sm:right-[75%] md:right-[75%] -top-[8%] sm:top-[10%] z-0 w-full h-fit scale-50 sm:scale-80 md:scale-90 sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80">
-          <Arrow
-            direction={"left"}
-            ref={(el) => (leftArrowRefs.current[0] = el)}
-          />
-          <Arrow
-            direction={"left"}
-            ref={(el) => (leftArrowRefs.current[1] = el)}
-          />
-          <Arrow
-            direction={"left"}
-            ref={(el) => (leftArrowRefs.current[2] = el)}
-          />
+          {/* PREV TEXT */}
+          <span
+            className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
+            onClick={() => {
+              const prev = (centerCard + cards.length - 1) % cards.length;
+              moveToCenter(prev);
+            }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+          >
+            PREV
+          </span>
         </div>
 
-        <div className="flex absolute bg-red-300 gap-3 left-[25%] sm:left-[75%] md:left-[75%] -top-[8%] sm:top-[10%] z-0 w-full h-fit scale-50 sm:scale-80 md:scale-90 sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80">
-          <Arrow
-            direction={"right"}
-            ref={(el) => (rightArrowRefs.current[0] = el)}
-          />
-          <Arrow
-            direction={"right"}
-            ref={(el) => (rightArrowRefs.current[1] = el)}
-          />
-          <Arrow
-            direction={"right"}
-            ref={(el) => (rightArrowRefs.current[2] = el)}
-          />
-        </div>
-
+        {/* CENTER - DAY NUMBER */}
         <span
-          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] left-[36%] md:left-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
-          onClick={() => {
-            const prev = (centerCard + cards.length - 1) % cards.length;
-            moveToCenter(prev);
-          }}
-          onTouchStart={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-          onTouchEnd={(e) => e.stopPropagation()}
-        >
-          PREV
-        </span>
-
-        {/* <Image
-          src="/bordersvg.svg"
-          alt="arrow"
-          width={10}
-          height={10}
-          className="rotate-180 absolute lg:w-6 left-[45%] bottom-[32%] lg:bottom-[16%]"
-        />
-        <Image
-          src="/bordersvg.svg"
-          alt="arrow"
-          width={10}
-          height={10}
-          className="rotate-90 absolute lg:w-6 right-[46.5%] bottom-[32%] lg:bottom-[16%]"
-        /> */}
-
-        <span
-          className={`${mi.className} cursor-pointer absolute top-[35%] sm:top-[32%] lg:top-[33%] xl:top-[38%] 2xl:top-[42%] right-[36%] md:right-[25%] hover:scale-110 transition text-[0.5rem] sm:text-lg md:text-xl lg:text-2xl`}
-          onClick={() => {
-            const next = (centerCard + 1) % cards.length;
-            moveToCenter(next);
-          }}
-          onTouchStart={(e) => e.stopPropagation()}
-          onTouchMove={(e) => e.stopPropagation()}
-          onTouchEnd={(e) => e.stopPropagation()}
-        >
-          NEXT
-        </span>
-
-        {/* <Image
-          src="/bordersvg.svg"
-          alt="arrow"
-          width={10}
-          height={10}
-          className="rotate-270 absolute  lg:w-6 left-[45%] top-[25%]"
-        />
-        <Image
-          src="/bordersvg.svg"
-          alt="arrow"
-          width={10}
-          height={10}
-          className="rotate-0 absolute  lg:w-6 right-[46.5%] top-[25%]"
-        /> */}
-
-        <span
-          className={`${osw.className} absolute top-[27%] lg:top-[29%] xl:top-[30%] 2xl:top-[33%] right-[48.5%] sm:right-[49%] lg:right-[48.5%] xl:right-[48.8%] 2xl:right-[48.7%] text-md sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl`}
+          className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl absolute left-1/2 -translate-x-1/2`}
         >
           {String(ticketData[centerCard].day).padStart(2, "0")}
         </span>
 
-        {/* <Image
-          src="/arrows2.svg"
-          alt="arrow"
-          width={10}
-          height={10}
-          className="absolute right-0 top-[20%] origin-right w-30 h-auto sm:w-42 md:w-48 lg:w-56 xl:w-72 2xl:w-80"
-        /> */}
+        {/* RIGHT SECTION */}
+        <div className="flex items-center ">
+          {/* NEXT TEXT */}
+          <span
+            className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
+            onClick={() => {
+              const next = (centerCard + 1) % cards.length;
+              moveToCenter(next);
+            }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+          >
+            NEXT
+          </span>
+
+          {/* RIGHT ARROWS */}
+          <div
+            onClick={() => {
+              const next = (centerCard + 1) % cards.length;
+              moveToCenter(next);
+            }}
+            onTouchStart={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+            className="flex gap-0 cursor-pointer size-30 sm:size-40 md:size-50 lg:size-60 xl:size-80 2xl:size-90 items-center justify-end"
+          >
+            <Arrow
+              direction={"right"}
+              ref={(el) => (rightArrowRefs.current[0] = el)}
+            />
+            <Arrow
+              direction={"right"}
+              ref={(el) => (rightArrowRefs.current[1] = el)}
+            />
+            <Arrow
+              direction={"right"}
+              ref={(el) => (rightArrowRefs.current[2] = el)}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );
