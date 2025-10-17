@@ -1,5 +1,5 @@
 import { useBarcode } from "next-barcode";
-
+import Image from "next/image";
 function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.slice(0, maxLength) + "...";
@@ -78,20 +78,18 @@ export default function Card({
           background: "#d9d9d9",
         }}
       >
-        <img
+        <Image
           src={imageUrl}
           alt={heading}
-          width={imageWidth}
-          height={461}
+          fill
+          sizes="(max-width: 768px) 100vw, 387px"
           style={{
-            display: "block",
-            width: imageWidth,
-            height: 461,
             objectFit: "cover",
-            margin: 0,
-            padding: 0,
+            userSelect: "none",
+            pointerEvents: "none",
           }}
           draggable={false}
+          priority
         />
         <svg width="0" height="0">
           <clipPath id="card-shape" clipPathUnits="userSpaceOnUse">
@@ -193,35 +191,42 @@ export default function Card({
             width: "35%",
             height: 93,
             overflow: "hidden",
+            position: "relative",
           }}
         >
           {sideImageUrl && (
-            <img
+            <Image
               src={sideImageUrl}
               alt=""
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              fill
+              sizes="140px"
+              style={{ objectFit: "cover", userSelect: "none" }}
               draggable={false}
+              priority={false}
             />
           )}
         </div>
       </div>
 
       {/* Card line image at bottom right, no background, empty alt */}
-      <img
-        src="/images/card_line.png"
-        alt=""
+      <div
         style={{
           position: "absolute",
           right: sideGap,
           bottom: 9,
-          maxWidth: "30%",
-          height: "auto",
-          pointerEvents: "none",
-          userSelect: "none",
-          background: "none",
+          width: "30%",
           zIndex: 3,
         }}
-      />
+      >
+        <Image
+          src="/images/card_line.png"
+          alt=""
+          width={600}
+          height={200}
+          style={{ width: "100%", height: "auto", background: "none" }}
+          priority={false}
+        />
+      </div>
     </div>
   );
 }

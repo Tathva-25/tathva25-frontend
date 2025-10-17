@@ -1,41 +1,45 @@
-'use client';
-import Link from 'next/link';
+"use client";
+
+import Link from "next/link";
 
 const EVENTS = [
   {
     id: 1,
-    name: 'TECHNICAL',
-    surname: 'WORKSHOPS',
-    image: '/workshops.png',
-    school: 'INNOVATE - BUILD - LEARN',
+    name: "TECHNICAL",
+    surname: "WORKSHOPS",
+    image: "/workshops.png",
+    school: "INNOVATE - BUILD - LEARN",
     subtitle:
-      'Hands-on sessions led by experts, where you craft, code, and create the future.',
+      "Hands-on sessions led by experts, where you craft, code, and create the future.",
+    link: "/workshops",
   },
   {
     id: 2,
-    name: 'THRILLING',
-    surname: 'COMPETITIONS',
-    image: '/competitions.png',
-    school: 'INNOVATE - COMPETE - CONQUER',
+    name: "THRILLING",
+    surname: "COMPETITIONS",
+    image: "/competitions.png",
+    school: "INNOVATE - COMPETE - CONQUER",
     subtitle:
-      'Battle through tech, design, and innovation challenges to prove your mettle.',
+      "Battle through tech, design, and innovation challenges to prove your mettle.",
+    link: "/competitions",
   },
   {
     id: 3,
-    name: 'INSIGHTFUL',
-    surname: 'LECTURES',
-    image: '/lecture.png',
-    school: 'THINK - INSPIRE - INNOVATE',
+    name: "INSIGHTFUL",
+    surname: "LECTURES",
+    image: "/lecture.png",
+    school: "THINK - INSPIRE - INNOVATE",
     subtitle:
-      'Engage with pioneers and visionaries who redefine the boundaries of possibility.',
+      "Engage with pioneers and visionaries who redefine the boundaries of possibility.",
+    link: "/lectures",
   },
 ];
 
-const ACCENT_COLOR = 'white';
+const ACCENT_COLOR = "white";
 
-const VerticalStripes = ({ count = 7, size = 'large' }) => {
-  const heightClass = size === 'large' ? 'h-16' : 'h-8';
-  const widthClass = size === 'large' ? 'w-2' : 'w-1.5';
+const VerticalStripes = ({ count = 7, size = "large" }) => {
+  const heightClass = size === "large" ? "h-16" : "h-8";
+  const widthClass = size === "large" ? "w-2" : "w-1.5";
 
   return (
     <div className="flex gap-1">
@@ -43,7 +47,7 @@ const VerticalStripes = ({ count = 7, size = 'large' }) => {
         <div
           key={i}
           className={`${widthClass} ${heightClass} -skew-x-12 ${
-            i % 2 === 0 ? 'bg-white/80' : 'bg-transparent'
+            i % 2 === 0 ? "bg-white/80" : "bg-transparent"
           }`}
         />
       ))}
@@ -60,7 +64,6 @@ const LargeSurname = ({ name, surname }) => (
       <div className="text-[40px] sm:text-[56px] md:text-[64px] lg:text-[72px] leading-[0.85] font-black italic tracking-tight break-words text-white [text-shadow:_0_0_2px_rgba(255,255,255,0.25)]">
         {surname}
       </div>
-      {/* Arrow Icon */}
       <div className="mt-1.5 transform transition duration-300 group-hover:rotate-45 flex-shrink-0">
         <svg
           width="24"
@@ -113,46 +116,58 @@ const EventCard = ({ event, index }) => {
   const isSecond = index === 1;
   const isThird = index === 2;
 
-  const hrefPath = `/${event.surname.toLowerCase().replace(/\s+/g, '')}`;
-
   return (
     <Link
-      href={hrefPath}
-      className="relative w-full h-[28vh] sm:h-[35vh] md:h-[40vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group block transition-all duration-300"
+      className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] shadow-lg group"
+      href={event.link}
     >
       {/* Background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-110"
+        className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-105"
         style={{ backgroundImage: `url('${event.image}')` }}
       ></div>
 
       {/* Overlay content */}
-      <div className="relative z-10 w-full h-full py-4 sm:py-6">
-        <div className="relative w-full h-full p-3 sm:p-4 flex flex-col justify-between border-2 border-white/25">
+      <div className="relative z-10 w-full h-full py-6">
+        <div className="relative w-full h-full p-4 flex flex-col justify-between border-2 border-white/25">
+          {/* Layout variations */}
           <div
-            className={`flex flex-col h-full ${
-              isSecond ? 'items-center justify-center' : 'justify-between'
+            className={`flex items-start ${
+              isSecond
+                ? "justify-center"
+                : isThird
+                ? "justify-between flex-row-reverse"
+                : "justify-between"
+            }`}
+          ></div>
+
+          <div
+            className={`flex items-end ${
+              isSecond ? "justify-center" : "justify-between"
             }`}
           >
-            {isSecond ? (
-              <div className="flex flex-col items-center michroma gap-4">
-                <LargeSurname name={event.name} surname={event.surname} />
-              </div>
+            {isFirst ? (
+              <>
+                <SchoolInfo school={event.school} />
+                <div className="text-right max-w-[45%]">
+                  <LargeSurname name={event.name} surname={event.surname} />
+                </div>
+              </>
             ) : (
               <div
                 className={`flex flex-col h-full justify-between gap-4 ${
-                  isThird ? 'sm:flex-row-reverse' : 'sm:flex-row'
+                  isThird ? "sm:flex-row-reverse" : "sm:flex-row"
                 }`}
               >
                 <div
                   className={`flex-shrink-0 ${
-                    isThird ? 'text-left' : 'text-right'
+                    isThird ? "text-left" : "text-right"
                   } max-w-full sm:max-w-[45%]`}
                 >
                   <LargeSurname name={event.name} surname={event.surname} />
                   <div
                     className={`flex gap-1 mt-2 ${
-                      isThird ? 'justify-start' : 'justify-end'
+                      isThird ? "justify-start" : "justify-end"
                     }`}
                   >
                     <VerticalStripes count={9} size="small" />
@@ -160,7 +175,7 @@ const EventCard = ({ event, index }) => {
                 </div>
                 <div
                   className={`flex-shrink-0 self-start ${
-                    isThird ? 'sm:self-end' : 'sm:self-start'
+                    isThird ? "sm:self-end" : "sm:self-start"
                   }`}
                 >
                   <SchoolInfo school={event.school} />
