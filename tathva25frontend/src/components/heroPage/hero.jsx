@@ -9,6 +9,7 @@ import heroAvatar from "../../../public/images/avatar-body.png";
 import wheel from "../../../public/images/wheel.png";
 import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
+import logo from "../../../public/images/tathvawhitelogo.png";
 import Marquee from "@/app/components/Marquee";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -132,6 +133,22 @@ export const Hero = () => {
       ref={sectionRef}
       className={`relative h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
+      {/* ✅ Top-right Logo */}
+  <Image
+    src={logo}
+    alt="Tathva Logo"
+    width={100}
+    height={100}
+    className="absolute top-6 right-6 md:top-6 md:right-4 w-16 md:w-14 h-auto z-30 transition-transform duration-300 hover:scale-105"
+    priority
+    quality={90}
+  />
+  {/* ✅ Login Button (left of logo) */}
+  <button
+    className={`${newfont.className} absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+  >
+    LOGIN
+  </button>
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>
@@ -147,14 +164,18 @@ export const Hero = () => {
         </div>
 
         {/* Grid Overlay */}
+        
     <div className="absolute inset-0 z-10">
       <div className="relative w-full h-full">
         {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
         <div className="absolute top-18 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
           <span className={`${newfont.className} text-sm font-semibold text-white`}>
-            /// SOUTH INDIA'S BIGGEST FEST
+            /// SOUTH INDIA'S BIGGEST TECH FEST
           </span>
         </div>
+        
+        
+        
 
         {/* Grid System */}
         <div className="flex flex-col h-full w-full">
