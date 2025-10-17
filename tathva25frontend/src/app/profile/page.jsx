@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import jwtRequired from "@/axios/jwtRequired";
-// import Link from "next/link"; // Import Link for navigation
+import { Plus_Jakarta_Sans } from "next/font/google";
 import ProfileClient from "@/components/Profile_Page_Components/ProfileClient";
 
 export default function ProfilePage() {

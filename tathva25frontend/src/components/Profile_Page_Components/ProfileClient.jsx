@@ -4,6 +4,10 @@ import {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaEdit, FaShare, FaCheck, FaUser, FaUsers, FaBed } from "react-icons/fa";
+import { Plus_Jakarta_Sans } from "next/font/google";
+
+const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], weight: "400" })
+
 import {
     MdEvent,
     MdDateRange,
@@ -222,12 +226,11 @@ export default function ProfileClient({ user }) {
             {/* ======================================================================================= */}
             {/* 1. DESKTOP LAYOUT (xl screens and up) */}
             {/* ======================================================================================= */}
-            <div className="min-h-screen bg-gray-100 p-8 hidden xl:flex flex-col gap-8 font-sans">
+            <div className={` ${jakarta.className} min-h-screen bg-gray-100 p-8 hidden xl:flex flex-col gap-8 font-sans   `}>
                 <div className="flex-1 flex gap-8">
                     <div className="w-84 flex flex-col gap-8 flex-shrink-0">
                         <aside className="bg-black text-white p-6 flex flex-col -2xl rounded-2xl">
                             <div>
-                                <div className="mb-10 text-3xl font-extrabold text-yellow-500 tracking-wider">TATHVA</div>
                                 <div className="flex flex-col items-center mb-10">
                                     <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-yellow-500 bg-gray-800 flex items-center justify-center mb-3"><Image src={currentUser.picture} alt="user_pfp" fill className="object-cover" /></div>
                                     <h3 className="text-xl font-semibold text-white mb-1">{currentUser.name}</h3>

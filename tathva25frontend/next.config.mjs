@@ -15,15 +15,7 @@ const nextConfig = {
     domains: ['lh3.googleusercontent.com'], // add other domains if needed
   },
   reactStrictMode: true,
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "tiqr-events.sgp1.cdn.digitaloceanspaces.com",
-        pathname: "/**",
-      },
-    ],
-  },
+  
   turbopack: {
     rules: {
       "*.svg": {
