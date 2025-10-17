@@ -72,9 +72,9 @@ const YourComponent = () => {
                             </div>
 
                             {/* Privacy & Terms Buttons */}
-                            <div className="flex gap-8 text-white absolute inset-1 translate-y-[10vw] translate-x-[26vw]">
-                                <button className="bg-black border-2 h-[2.3vw] text-[1.2vw] w-[12vw] -translate-x-[2vw] translate-y-[16vw]">Privacy Policy</button>
-                                <button className="bg-black border-2 hover:border-gray-900 h-[2.3vw] text-[1.2vw] w-[12vw] -translate-x-[3vw] translate-y-[16vw]">Terms of Service</button>
+                            <div className="flex gap-8 text-white absolute inset-1 translate-y-[10vw] translate-x-[24vw]">
+                                <button className={`bg-black ${michroma.className} border-2 h-[2.3vw] text-[1.2vw] w-[14vw] -translate-x-[2vw] translate-y-[16vw]`}>Privacy Policy</button>
+                                <button className={`bg-black ${michroma.className} border-2 hover:border-gray-900 h-[2.3vw] text-[1.2vw] w-[14vw] -translate-x-[3vw] translate-y-[16vw]`}>Terms of Service</button>
                             </div>
 
                             {/* Card 2 */}
@@ -176,10 +176,10 @@ const YourComponent = () => {
 
                     {/* Privacy & Terms Buttons */}
                     <div className="flex gap-4 text-white mt-[-7vw] translate-y-[3vw]">
-                        <button className="bg-transparent border border-2 px-4 py-1 text-xs rounded">
+                        <button className={`bg-transparent ${michroma.className} border border-2 px-4 py-1 text-xs rounded`}>
                             Privacy Policy
                         </button>
-                        <button className="bg-transparent border border-2 px-4 py-1 text-xs rounded">
+                        <button className={`bg-transparent ${michroma.className} border border-2 px-4 py-1 text-xs rounded"`}>
                             Terms of Service
                         </button>
                     </div>
