@@ -7,9 +7,9 @@ const michroma = Michroma({ subsets: ['latin'], weight: '400' });
 export default function WheelsEvent() {
   return (
     <div
-      className={michroma.className} // ✅ Apply Michroma font globally
+    
+      className={michroma.className} 
       style={{
-        width: "100vw",
         height: "100vh",
         backgroundColor: "#000",
         color: "#fff",
@@ -183,7 +183,7 @@ export default function WheelsEvent() {
           >
             <div
               style={{
-                fontSize: "clamp(1rem, 4vw, 4rem)",
+                fontSize: "clamp(1rem, 3.5vw, 4rem)",
                 fontWeight: 200,
                 textTransform: "uppercase",
                 letterSpacing: "0.1vw",
