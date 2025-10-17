@@ -104,7 +104,7 @@ const Proshow = () => {
       <div>
                 <Image
                   src='/images/grain-bg.png'
-                  className="absolute md:w-[100vw] md:h-auto  inset-0 object-cover md:rotate-0 overflow-x-hidden scale-110"
+                  className="absolute -mt-68 md:-mt-0 md:w-[100vw] md:h-auto  inset-0 object-cover md:rotate-0 overflow-x-hidden scale-110"
                   alt="Background-grain"
                   fill
                   priority
@@ -166,6 +166,13 @@ const Proshow = () => {
 
           {/* Carousel - All 3 images rendered, positions calculated */}
           <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+            <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse" 
+              style={{ 
+                background: 'radial-gradient(ellipse 150% 120%, rgba(255, 244, 199, 1) 0%, rgba(251, 190, 36, 0.89) 30%, transparent 70%)', 
+                transform: 'scale(1)',
+                animation: 'pulse 3s ease-in-out infinite'
+              }} 
+            />
             <div className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 ">
               {images.map((img, index) => (
                 <div 
