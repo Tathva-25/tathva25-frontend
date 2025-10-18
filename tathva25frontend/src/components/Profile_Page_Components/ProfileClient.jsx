@@ -44,6 +44,8 @@ export default function ProfileClient({ user }) {
     const [isSaving, setIsSaving] = useState(false);
     const [isMobileNavSticky, setIsMobileNavSticky] = useState(false);
     const [openMobileSection, setOpenMobileSection] = useState('info');
+    // --- MODIFICATION: Added state for mobile referral tabs ---
+    const [mobileReferralTab, setMobileReferralTab] = useState("confirmed");
     const navRef = useRef(null);
 
     useEffect(() => {
@@ -193,8 +195,6 @@ export default function ProfileClient({ user }) {
             case "personalInfo":
                 return (
                     <div className="flex flex-col gap-8">
-                        {/* --- MODIFICATION: Added `hidden md:block` --- */}
-                        {/* This now hides the Actions on mobile, shows them on tablet, and hides them again on desktop */}
                         <div className="hidden md:block xl:hidden">
                             <h2 className="text-2xl font-bold text-gray-900 mb-4">Actions</h2>
                             {renderActions()}
@@ -216,7 +216,6 @@ export default function ProfileClient({ user }) {
             case "referrals": return confirmedReferralsList.length;
             case "pendingReferrals": return pendingReferrals.length;
             case "accommodation": return accommodationBookings.length;
-            // --- MODIFICATION: Return null to hide the count ---
             case "personalInfo": return null;
             default: return 0;
         }
@@ -247,12 +246,9 @@ export default function ProfileClient({ user }) {
                         </div>
                     </div>
                     <main className="flex-1 flex flex-col bg-white rounded-2xl -lg overflow-hidden border border-gray-200 min-w-[450px]">
-                        <div className="p-8 pb-0 border-b border-gray-200"><h2 className="text-3xl font-extrabold text-gray-900 mb-2">{getTabTitle()}</h2>{/* --- MODIFICATION: Conditional rendering for subtitle --- */}
-                            {getTabCount() !== null && (
-                                <p className="text-gray-600 text-md">{getTabCount()} item(s) found</p>
-                            )}
-
-                            {/* ... rest of the main content header ... */}
+                        <div className="p-8 pb-0 border-b border-gray-200"><h2 className="text-3xl font-extrabold text-gray-900 mb-2">{getTabTitle()}</h2>{getTabCount() !== null && (
+                            <p className="text-gray-600 text-md">{getTabCount()} item(s) found</p>
+                        )}
                             {(activeTab === "referrals" || activeTab === "pendingReferrals") && <div className="flex mt-6 space-x-6"><button onClick={() => setActiveTab("referrals")} className={`py-3 px-1 text-sm font-semibold transition-all duration-200 ${activeTab === "referrals" ? "text-yellow-500 border-b-2 border-yellow-500" : "text-gray-500 hover:text-black"}`}>Confirmed</button><button onClick={() => setActiveTab("pendingReferrals")} className={`py-3 px-1 text-sm font-semibold transition-all duration-200 ${activeTab === "pendingReferrals" ? "text-yellow-500 border-b-2 border-yellow-500" : "text-gray-500 hover:text-black"}`}>Pending</button></div>}
                         </div>
                         <div className="flex-1 p-8 overflow-y-auto custom-scrollbar">{renderActiveContent()}</div>
@@ -290,7 +286,6 @@ export default function ProfileClient({ user }) {
                     <main className="flex-1 flex flex-col bg-white rounded-2xl -lg overflow-hidden border border-gray-200 min-w-[400px]">
                         <div className="p-8 pb-0 border-b border-gray-200">
                             <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{getTabTitle()}</h2>
-                            {/* --- MODIFICATION: Conditional rendering for subtitle --- */}
                             {getTabCount() !== null && (
                                 <p className="text-gray-600 text-md">{getTabCount()} item(s) found</p>
                             )}
@@ -311,69 +306,83 @@ export default function ProfileClient({ user }) {
                 </div>
                 <nav ref={navRef} className={`sticky top-0 z-20 bg-white -md ${isMobileNavSticky ? '-lg' : ''}`}>
                     <div className="flex justify-around border-b border-gray-200">
-                        {[{ key: "bookings", label: "Bookings", icon: MdEvent }, { key: "referrals", label: "Referrals", icon: FaUsers }, { key: "accommodation", label: "Stay", icon: FaBed }, { key: "info", label: "My Info", icon: MdInfoOutline }].map(item => <button key={item.key} onClick={() => setActiveTab(item.key)} className={`flex-1 flex flex-col items-center gap-1 py-3 text-xs font-semibold transition-colors ${activeTab === item.key ? 'text-yellow-600 border-b-2 border-yellow-600' : 'text-gray-500'}`}><item.icon size={20} /><span>{item.label}</span></button>)}
+                        {[{ key: "bookings", label: "Bookings", icon: MdEvent }, { key: "referrals", label: "Referrals", icon: FaUsers }, { key: "accommodation", label: "Stay", icon: FaBed }, { key: "info", label: "My Info", icon: MdInfoOutline }].map(item => <button key={item.key} onClick={() => setActiveTab(item.key)} className={`flex-1 flex flex-col items-center gap-1 py-3 text-xs font-semibold transition-colors ${(activeTab === item.key || (activeTab === 'pendingReferrals' && item.key === 'referrals')) ? 'text-yellow-600 border-b-2 border-yellow-600' : 'text-gray-500'}`}><item.icon size={20} /><span>{item.label}</span></button>)}
                     </div>
                 </nav>
                 <div className="p-4">
-                    {/* --- MODIFICATION: Conditional rendering for subtitle --- */}
-                    {activeTab !== 'info' && (
-                        <div className="mb-4">
-                            <h2 className="text-2xl font-bold text-gray-900">{getTabTitle()}</h2>
-                            {getTabCount() !== null && (
-                                <p className="text-sm text-gray-500">{getTabCount()} item(s) found</p>
+                    {/* --- MODIFICATION: Updated mobile rendering logic --- */}
+                    {isLoading && <div className="text-center py-20">Loading...</div>}
+                    {error && <div className="text-center py-20 text-red-600">Error: {error}</div>}
+
+                    {!isLoading && !error && (
+                        <>
+                            {activeTab === 'bookings' && (
+                                <>
+                                    <div className="mb-4"><h2 className="text-2xl font-bold text-gray-900">My Bookings</h2><p className="text-sm text-gray-500">{confirmedBookings.length} item(s) found</p></div>
+                                    {renderBookingList(confirmedBookings)}
+                                </>
                             )}
-                        </div>
+
+                            {activeTab === 'accommodation' && (
+                                <>
+                                    <div className="mb-4"><h2 className="text-2xl font-bold text-gray-900">My Accommodation</h2><p className="text-sm text-gray-500">{accommodationBookings.length} item(s) found</p></div>
+                                    {renderAccommodationList(accommodationBookings)}
+                                </>
+                            )}
+
+                            {activeTab === 'referrals' && (
+                                <>
+                                    <div className="mb-4"><h2 className="text-2xl font-bold text-gray-900">Referrals</h2><p className="text-sm text-gray-500">{confirmedReferralsList.length + pendingReferrals.length} total referrals</p></div>
+                                    <div className="flex mb-4 border-b border-gray-200">
+                                        <button onClick={() => setMobileReferralTab('confirmed')} className={`flex-1 py-2 text-sm font-semibold text-center ${mobileReferralTab === 'confirmed' ? 'text-yellow-600 border-b-2 border-yellow-600' : 'text-gray-500'}`}>
+                                            Confirmed ({confirmedReferralsList.length})
+                                        </button>
+                                        <button onClick={() => setMobileReferralTab('pending')} className={`flex-1 py-2 text-sm font-semibold text-center ${mobileReferralTab === 'pending' ? 'text-yellow-600 border-b-2 border-yellow-600' : 'text-gray-500'}`}>
+                                            Pending ({pendingReferrals.length})
+                                        </button>
+                                    </div>
+                                    {mobileReferralTab === 'confirmed' && renderReferralsList(confirmedReferralsList, 'confirmed')}
+                                    {mobileReferralTab === 'pending' && renderReferralsList(pendingReferrals, 'pending')}
+                                </>
+                            )}
+
+                            {activeTab === 'info' && (
+                                <div className="space-y-4">
+                                    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                                        <button onClick={() => setOpenMobileSection(openMobileSection === 'info' ? null : 'info')} className="w-full flex justify-between items-center p-4 text-left"><h2 className="font-bold text-gray-900">Personal Information</h2><MdExpandMore className={`transform transition-transform duration-300 ${openMobileSection === 'info' ? 'rotate-180' : ''}`} size={24} /></button>
+                                        {openMobileSection === 'info' && <div className="p-4 border-t border-gray-200">{renderPersonalInfo()}</div>}
+                                    </div>
+                                    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                                        <button onClick={() => setOpenMobileSection(openMobileSection === 'overview' ? null : 'overview')} className="w-full flex justify-between items-center p-4 text-left"><h2 className="font-bold text-gray-900">Quick Overview</h2><MdExpandMore className={`transform transition-transform duration-300 ${openMobileSection === 'overview' ? 'rotate-180' : ''}`} size={24} /></button>
+                                        {openMobileSection === 'overview' && <div className="p-4 border-t border-gray-200 space-y-4">
+                                            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-center gap-4"><FaUsers className="text-yellow-500" size={24}/><div><p className="text-2xl font-bold text-gray-900">{confirmReferrals}</p><p className="text-sm text-gray-500">Confirmed Referrals</p></div></div>
+                                            {confirmedBookings.length > 0 && <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-center gap-4"><MdEvent className="text-yellow-500" size={24}/><div><p className="text-2xl font-bold text-gray-900">{confirmedBookings.length}</p><p className="text-sm text-gray-500">Confirmed Bookings</p></div></div>}
+                                        </div>}
+                                    </div>
+                                </div>
+                            )}
+                        </>
                     )}
-                    {activeTab !== 'info' && renderActiveContent()}
-                    {activeTab === 'info' && <div className="space-y-4">
-                        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                            <button onClick={() => setOpenMobileSection(openMobileSection === 'info' ? null : 'info')} className="w-full flex justify-between items-center p-4 text-left"><h2 className="font-bold text-gray-900">Personal Information</h2><MdExpandMore className={`transform transition-transform duration-300 ${openMobileSection === 'info' ? 'rotate-180' : ''}`} size={24} /></button>
-                            {openMobileSection === 'info' && <div className="p-4 border-t border-gray-200">{renderPersonalInfo()}</div>}
-                        </div>
-                        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                            <button onClick={() => setOpenMobileSection(openMobileSection === 'overview' ? null : 'overview')} className="w-full flex justify-between items-center p-4 text-left"><h2 className="font-bold text-gray-900">Quick Overview</h2><MdExpandMore className={`transform transition-transform duration-300 ${openMobileSection === 'overview' ? 'rotate-180' : ''}`} size={24} /></button>
-                            {openMobileSection === 'overview' && <div className="p-4 border-t border-gray-200 space-y-4">
-                                <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-center gap-4"><FaUsers className="text-yellow-500" size={24}/><div><p className="text-2xl font-bold text-gray-900">{confirmReferrals}</p><p className="text-sm text-gray-500">Confirmed Referrals</p></div></div>
-                                {confirmedBookings.length > 0 && <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 flex items-center gap-4"><MdEvent className="text-yellow-500" size={24}/><div><p className="text-2xl font-bold text-gray-900">{confirmedBookings.length}</p><p className="text-sm text-gray-500">Confirmed Bookings</p></div></div>}
-                            </div>}
-                        </div>
-                    </div>}
                 </div>
             </div>
 
             <EditModal isOpen={modalOpen} onClose={() => setModalOpen(false)} field={editField} currentValue={currentUser[editField]} userId={currentUser.id} onSuccess={() => window.location.reload()} />
             <style jsx>{`
-
                 .custom-scrollbar::-webkit-scrollbar {
-
                     width: 8px;
-
                 }
-
                 .custom-scrollbar::-webkit-scrollbar-track {
-
                     background: #f1f1f1;
-
                     border-radius: 10px;
-
                 }
-
                 .custom-scrollbar::-webkit-scrollbar-thumb {
-
                     background: #888;
-
                     border-radius: 10px;
-
                 }
-
                 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-
                     background: #555;
-
                 }
-
             `}</style>
         </>
     );
 }
-
