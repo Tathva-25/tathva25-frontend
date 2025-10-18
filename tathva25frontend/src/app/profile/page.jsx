@@ -6,6 +6,7 @@ import jwtRequired from "@/axios/jwtRequired";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import ProfileClient from "@/components/Profile_Page_Components/ProfileClient";
 
+
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
