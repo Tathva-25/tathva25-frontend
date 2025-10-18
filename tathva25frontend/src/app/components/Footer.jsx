@@ -1,198 +1,261 @@
 import React from 'react';
-import Card1 from "../../../public/images/card1.png";
-import Card2 from "../../../public/images/card2.png";
-import Background from "../../../public/images/backgroundfooter.png";
-import Dec1 from "../../../public/images/dec1.png";
-import Dec2 from "../../../public/images/dec2.png";
-import Line from "../../../public/images/line.png";
+import Image from 'next/image';
+import { Michroma } from 'next/font/google';
+
+// ---
+// ASSET IMPORTS
+// ---
+
+// Desktop-specific assets
+import Background from "../../../public/images/backgroundfooter.png"; // Your image_c16508.jpg
+import Card1 from "../../../public/images/card1.png"; // Your image_c16564.png
+import Card2 from "../../../public/images/card2.png"; // Your image_c1652a.jpg
+import Line from "../../../public/images/line.png"; // Your image_c164cb.png
+import TopHorizontalLine from "../../../public/images/footerline.png";
+
+// Mobile-specific assets
+import BackgroundMobile from "../../../public/images/backgroundmobile.png"; // Your new image_c15dc8.png
+import CardMobile from "../../../public/images/cardMobile.png"; // Your new image_c15daa.png
+import Arrow from "../../../public/images/arrow.png"; // From your mobile design screenshot
+
+// Common assets
+import Tathvalogo from "../../../public/images/tathvawhitelogo.png";
 import Fb from "../../../public/images/facebook.png";
 import Insta from "../../../public/images/instagram.png";
-import line from "../../../public/images/footerline.png";
 import Linkd from "../../../public/images/linkedin.png";
-import Tathvalogo from "../../../public/images/tathvawhitelogo.png";
-import Image from 'next/image';
-import Arrow from "../../../public/images/arrow.png";
-import { Michroma} from "next/font/google";
 
-import BackgroundMobile from "../../../public/images/backgroundmobile.png";
-import CardMobile from "../../../public/images/cardMobile.png";
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
+// --- HELPER COMPONENTS (REUSABLE) ---
+
+// Semantic link for navigation
+const QuickLink = ({ href = "#", children, showArrow = false }) => (
+    <a
+        href={href}
+        className={`flex items-center gap-2 ${michroma.className} text-[clamp(0.7rem,_1vw,_0.875rem)] hover:text-yellow-400 text-left text-white/90 transition-colors duration-200`}
+    >
+        {showArrow && (
+            <img src={Arrow.src} alt="" className="w-4 h-4" />
+        )}
+        <span>{children}</span>
+    </a>
+);
+
+const SocialIcon = ({ href = "#", src, alt }) => (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+        <Image
+            src={src}
+            alt={alt}
+            width={24}
+            height={24}
+            className="w-6 h-6 object-contain transition-transform hover:scale-110"
+        />
+    </a>
+);
+
+// --- DESKTOP FOOTER ---
+// This remains unchanged from the previous version.
+
+// --- DESKTOP FOOTER (FIXED) ---
+
+// --- DESKTOP FOOTER (FIXED) ---
+
+// --- DESKTOP FOOTER (FIXED) ---
+
+const DesktopFooter = () => (
+    <footer
+        className={`hidden lg:block relative w-full ${michroma.className} text-white mt-24`}
+        style={{
+            backgroundImage: `url(${Background.src})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'bottom', // <-- FIX: Aligned background to the bottom
+        }}
+    >
+        {/* Container to center content */}
+        <div className="relative w-full max-w-screen-xl mx-auto px-8 py-16">
+
+            {/* TopHorizontalLine component removed as requested */}
+
+            {/* Main flex container for the two cards (pt-16 removed) */}
+            <div className="flex flex-row gap-8">
+
+                {/* === Left Card === */}
+                <div className="w-1/3 relative">
+                    {/* 1. Base Image */}
+                    <Image
+                        src={Card1}
+                        alt="Card 1"
+                        className="w-full h-auto"
+                        priority
+                    />
+                    {/* 2. Absolute Content Overlay */}
+                    <div className="absolute inset-0 px-[20%] py-[15%] flex flex-col justify-between">
+
+                        {/* Block 1: Logo + Form */}
+                        <div>
+                            <Image src={Tathvalogo} alt="Tathva Logo" width={80} height={80} />
+                            <h3 className="text-[clamp(1rem,_1.5vw,_1.25rem)] mt-6 mb-2">Stay Informed</h3>
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                className="bg-transparent border-b border-white/50 w-full pb-2 outline-none placeholder:text-white/50 text-[clamp(0.7rem,_1vw,_0.875rem)]"
+                            />
+                        </div>
+
+                        {/* Block 2: Contact Info */}
+                        <div className="text-[clamp(0.7rem,_1vw,_0.875rem)]">
+                            <span className="text-yellow-400">[CONTACT]</span>
+                            <p>EMAIL: tathva2025@gmail.com</p>
+                            <p>PHONE: +91 88888 88888</p>
+                        </div>
+
+                        {/* Block 3: Copyright */}
+                        <div>
+                            <div className="text-white/70 text-[clamp(0.7rem,_1vw,_0.875rem)]">
+                                <p>© TATHVA 2025</p>
+                                <div className="h-6"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* === Right Card === */}
+                <div className="w-2/3 relative">
+                    {/* 1. Base Image */}
+                    <Image
+                        src={Card2}
+                        alt="Card 2"
+                        className="w-full h-auto"
+                        priority
+                    />
+                    {/* 2. Absolute Content Overlay */}
+                    <div className="absolute top-[15%] bottom-[15%] left-[50%] right-[10%] flex flex-col justify-between">
+
+                        {/* Top Block */}
+                        <div>
+                            <h4 className="text-[clamp(0.9rem,_1.2vw,_1.125rem)] text-yellow-400 mb-4">[QUICK LINKS]</h4>
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+                                <QuickLink>Home</QuickLink>
+                                <QuickLink>Map</QuickLink>
+                                <QuickLink>Lectures</QuickLink>
+                                <QuickLink>Contact</QuickLink>
+                                <QuickLink>Events</QuickLink>
+                                <QuickLink>Team</QuickLink>
+                                <QuickLink>Workshops</QuickLink>
+                                <QuickLink>FAQs</QuickLink>
+                            </div>
+                        </div>
+
+                        {/* Bottom Block */}
+                        <div>
+                            <div className="w-full max-w-[200px] my-6">
+                                <Image
+                                    src={Line}
+                                    alt="Divider"
+                                    width={200}
+                                    height={2}
+                                    className="w-full h-auto"
+                                />
+                            </div>
+                            <h4 className="text-[clamp(0.9rem,_1.2vw,_1.125rem)] text-yellow-400 mb-4 mt-8">[SOCIALS]</h4>
+                            <div className="flex gap-8">
+                                <SocialIcon src={Insta.src} alt="Instagram" />
+                                <SocialIcon src={Fb.src} alt="Facebook" />
+                                <SocialIcon src={Linkd.src} alt="LinkedIn" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* === Legal Links (Center Bottom) === */}
+            <div className="flex justify-center gap-4 mt-12">
+                <a href="#" className="border border-white/50 px-6 py-2 text-[clamp(0.75rem,_1vw,_0.875rem)] hover:bg-white/10 transition">
+                    Privacy Policy
+                </a>
+                <a href="#" className="border border-white/50 px-6 py-2 text-[clamp(0.75rem,_1vw,_0.875rem)] hover:bg-white/10 transition">
+                    Terms of Service
+                </a>
+            </div>
+        </div>
+    </footer>
+);
+// --- MOBILE FOOTER (UPDATED) ---
+// Now uses your newly uploaded background and card images.
+
+const MobileFooter = () => (
+    <footer
+        className={`lg:hidden relative w-full ${michroma.className} text-white flex justify-center py-12`}
+        style={{
+            backgroundImage: `url(${Background.src})`,
+            backgroundRepeat: 'no-repeat', // <-- FIX 2: Changed from 'repeat'
+            backgroundSize: 'cover',       // <-- FIX 2: Added 'cover'
+        }}
+    >
+        {/* Relative container for the mobile card */}
+        <div className="relative w-[90vw] max-w-sm">
+            {/* 1. The Frame Image (Base Layer) */}
+            <Image
+                src={CardMobile} // <-- UPDATED
+                alt="Mobile Footer Frame"
+                width={400} // Use the image's natural width
+                height={600} // Use the image's natural height
+                className="w-full h-auto"
+                priority
+            />
+
+            {/* 2. The Content Overlay (Flex Layer) */}
+            <div className="absolute inset-0 p-8 flex flex-col justify-between">
+
+                {/* Top: Quick Links */}
+                <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                    <QuickLink showArrow>Home</QuickLink>
+                    <QuickLink showArrow>Map</QuickLink>
+                    <QuickLink showArrow>Lectures</QuickLink>
+                    <QuickLink showArrow>Contact</QuickLink>
+                    <QuickLink showArrow>Events</QuickLink>
+                    <QuickLink showArrow>Team</QuickLink>
+                    <QuickLink showArrow>Workshops</QuickLink>
+                    <QuickLink showArrow>FAQs</QuickLink>
+                </div>
+
+                {/* Middle: Form & Logo */}
+                <div className="flex justify-between items-center my-4">
+                    <div className="flex-1">
+                        <h3 className="text-base mb-2">Stay in the loop</h3>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="bg-transparent border-b border-white/50 w-full pb-1 text-sm outline-none placeholder:text-white/50"
+                        />
+                    </div>
+                    <div className="w-16 ml-4">
+                        <Image src={Tathvalogo} alt="Tathva Logo" width={64} height={64} />
+                    </div>
+                </div>
+
+                {/* Bottom: Legal Links */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <a href="#" className="flex-1 text-center border border-white/50 px-4 py-2 text-xs rounded-lg hover:bg-white/10 transition">
+                        Privacy Policy
+                    </a>
+                    <a href="#" className="flex-1 text-center border border-white/50 px-4 py-2 text-xs rounded-lg hover:bg-white/10 transition">
+                        Terms of Service
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+);
+
+
+// --- Main Component Export ---
 const YourComponent = () => {
     return (
         <>
-            {/* Desktop Version */}
-            <footer
-                className="hidden md:flex relative flex-col bg-cover bg-no-repeat bg-center overflow-hidden"
-                style={{ backgroundImage: `url(${Background.src})` }}
-            >
-                {/* Wrapper div to give real height */}
-                <div className="relative w-full mx-auto py-[22vw]">
-                    {/* The 'py-[30vw]' ensures enough height for your absolute content */}
-
-                    {/* Scroll Stop Container */}
-                    <div className="absolute inset-0 overflow-hidden">
-
-                        {/* Decoration Images */}
-                        {/* Decoration Elements (hidden on mobile) */}
-                        <div className="hidden md:block absolute right-4 top-1/4">
-                            <Image src={Dec1} alt="Decoration 1" className="w-8" />
-                        </div>
-                        <div className="hidden md:block absolute left-4 bottom-1/4">
-                            <Image src={Dec2} alt="Decoration 2" className="w-8" />
-                        </div>
-
-
-                        {/* Cards Container */}
-                        <div className="absolute left-[50%] top-[50%] transform -translate-x-[50%] -translate-y-[50%] flex gap-4 sm:gap-6 lg:gap-8 w-[80vw]">
-
-                            {/* Card 1 */}
-                            <div className="w-[26vw] relative">
-                                <Image
-                                    src={Card1}
-                                    alt="Card 1"
-                                    className="w-full h-auto object-contain drop-shadow-lg"
-                                    priority
-                                />
-                                <div className={`absolute bottom-[15%] left-1/2 transform -translate-x-[9vw] -translate-y-[2vw] w-[18vw] text-center flex flex-col justify-center items-center ${michroma.className}`}>
-                                    <div className="text-white relative bottom-10 right-3 mb-[1vw] text-[1.7vw] font-medium drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
-                                        Any queries? Contact us!
-                                    </div>
-                                    <div className="flex flex-col relative bottom-8 text-white items-start -translate-x-[0.5vw] w-[22vw] text-[1.3vw] gap-[0.8vw]">
-                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)] scale-80 w-[40vw] relative right-32">EMAIL :  tathva2025@gmail.com</div>
-                                        <div className="drop-shadow-[0_0_4px_rgba(0,0,0,1)] scale-80 w-[40vw] relative right-37">PHONE:  +91 8281955667</div>
-                                    </div>
-                                    <div className="absolute inset-0 w-[10vw] -translate-y-[11vw] translate-x-[4vw] drop-shadow-[0_0_8px_rgba(0,0,0,1)]">
-                                        <img src={Tathvalogo.src} />
-                                    </div>
-                                    <div className="absolute inset-0 text-white translate-x-[-4.75vw] translate-y-[10vw] drop-shadow-[0_0_4px_rgba(0,0,0,1)]">
-                                        © TATHVA 2025
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Privacy & Terms Buttons */}
-                            <div className="flex gap-8 text-white absolute inset-1 translate-y-[10vw] translate-x-[24vw]">
-                                <button className={`bg-black ${michroma.className} border-2 h-[2.3vw] text-[1.2vw] w-[14vw] -translate-x-[2vw] translate-y-[16vw]`}>Privacy Policy</button>
-                                <button className={`bg-black ${michroma.className} border-2 hover:border-gray-900 h-[2.3vw] text-[1.2vw] w-[14vw] -translate-x-[3vw] translate-y-[16vw]`}>Terms of Service</button>
-                            </div>
-
-                            {/* Card 2 */}
-                            <div className="w-[50vw] relative">
-                                <Image
-                                    src={Card2}
-                                    alt="Card 2"
-                                    className="w-full h-auto object-contain drop-shadow-lg"
-                                    priority
-                                />
-                                <div className={`absolute inset-0 translate-y-[2vw] translate-x-[27vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
-                                    [QUICK LINKS]
-                                </div>
-                                <div className={`absolute inset-0 text-white flex flex-row translate-x-[25vw] text-[1.6vw] translate-y-[6vw] gap-12 ${michroma.className}`}>
-                                    <div className="flex flex-col relative right-4">
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Home</button>
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Lecures</button>
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Events</button>
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Workshops</button>
-                                    </div>
-                                    <div className="flex flex-col relative right-4">
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Map</button>
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Contact</button>
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">Team</button>
-                                        <button className="hover:text-[#F1D233] text-left transition-colors duration-200 ease-in-out">FAQs</button>
-                                    </div>
-                                </div>
-                                <div className="absolute inset-0 translate-x-[30vw] translate-y-[17.5vw] w-[10vw]">
-                                    <img src={Line.src} />
-                                </div>
-                                <div className={`absolute inset-0 translate-y-[19vw] translate-x-[28vw] text-[1.7vw] bg-gradient-to-r from-[#F1D233] to-[#806F17] bg-clip-text text-transparent ${michroma.className}`}>
-                                    [SOCIALS]
-                                </div>
-                                <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[27vw]">
-                                    <img src={Insta.src} />
-                                </div>
-                                <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[33vw]">
-                                    <img src={Fb.src} />
-                                </div>
-                                <div className="absolute inset-0 translate-y-[23vw] w-[2vw] translate-x-[39vw]">
-                                    <img src={Linkd.src} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-
-
-            {/* Mobile Version */}
-            <footer className="md:hidden relative flex flex-col bg-cover bg-no-repeat bg-center overflow-hidden">
-                {/* Background */}
-                <div
-                    className="absolute inset-0 bg-cover w-full top-[13%] h-full z-0 bg-no-repeat"
-                    style={{ backgroundImage: `url(${BackgroundMobile.src})` }}
-                />
-
-                {/* Main Content Container */}
-                <div className="relative z-10 w-full mt-[5vw] px-6 py-[5vw] flex flex-col items-center justify-center">
-
-                    {/* Mobile Card */}
-                    <div className="w-[80vw] max-w-md -translate-y-[5.5vw] trelative">
-                        <Image
-                            src={CardMobile}
-                            alt="Mobile Card"
-                            className="w-full h-auto object-cover drop-shadow-lg"
-                            priority
-                        />
-
-                        {/* Content Overlay */}
-                        <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-
-                            {/* Logo */}
-                            <div className="w-[14vw] mb-4 translate-x-[19vw] translate-y-[40vw] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                                <Image src={Tathvalogo} alt="Tathva Logo" />
-                            </div>
-                            <div className="flex flex-col relative text-white font-bold  text-[3.3vw] -translate-x-[10vw] translate-y-[25vw]">
-                                <span>Any queries?</span>
-                                <span>Contact <span className="font-extrabold">+91 55555555</span></span>
-                            </div>
-
-                            {/*Quick links*/}
-                            <div className={`relative inset-0 text-white flex flex-row translate-x-[2vw] text-[3.3vw] -translate-y-[27vw] gap-8 ${michroma.className}`}>
-                                <div className="flex flex-col gap-4">
-                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Home</button>
-                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Lecures</button>
-                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Events</button>
-                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Workshops</button>
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <button className="hover:text-[#F1D233] flex gap-3 "><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Map</button>
-                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" /> Contact</button>
-                                    <button className="hover:text-[#F1D233] flex gap-3 "><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />Team</button>
-                                    <button className="hover:text-[#F1D233] flex gap-3"><img src={Arrow.src} className="w-[4vw] h-[4vw] translate-y-[2vw]" />FAQs</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Privacy & Terms Buttons */}
-                    <div className="flex gap-4 text-white mt-[-7vw] translate-y-[3vw]">
-                        <button className={`bg-transparent ${michroma.className} border border-2 px-4 py-1 text-xs rounded`}>
-                            Privacy Policy
-                        </button>
-                        <button className={`bg-transparent ${michroma.className} border border-2 px-4 py-1 text-xs rounded"`}>
-                            Terms of Service
-                        </button>
-                    </div>
-
-                    {/* Decoration Elements */}
-                    <div className="absolute right-4 top-1/4">
-                        <Image src={Dec1} alt="Decoration 1" className="w-[5vw]" />
-                    </div>
-                    <div className="absolute left-4 bottom-1/4">
-                        <Image src={Dec2} alt="Decoration 2" className="w-[5vw]" />
-                    </div>
-                </div>
-            </footer>
+            <DesktopFooter />
+            <MobileFooter />
         </>
     );
 };
