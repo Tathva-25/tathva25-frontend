@@ -277,7 +277,7 @@ const BottomSvgWithText = () => {
       xmlns="http://www.w3.org/2000/svg"
       style={{
         width: "100vw",
-        height: "83.8vw",
+        minHeight: "83.8vw",
         display: "block",
         position: "relative",
         zIndex: 2,
@@ -341,19 +341,6 @@ const BottomSvgWithText = () => {
             overflow: "visible",
           }}
         >
-          {/* <h1
-            style={{
-              color: "#000",
-              fontSize: isMobile ? "220px" : "176.804px", // increased font size for mobile
-              fontStyle: "normal",
-              lineHeight: "normal",
-              textAlign: "center",
-              width: "100%",
-              margin: 0,
-            }}
-          >
-            COMPETITIONS
-          </h1> */}
           <div
             style={{
               display: isMobile ? "grid" : "flex",
@@ -427,6 +414,12 @@ const Competitions = () => {
             zIndex: 1,
           }}
         />
+        <h1
+          style={{ WebkitTextStroke: "4px black" }}
+          className="fixed top-75 left-1/2 -translate-x-1/2 text-9xl text-white font-extrabold drop-shadow-lg  border-black px-6 py-2 z-10"
+        >
+          COMPETITIONS
+        </h1>
 
         {/* MODIFIED SECTION:
           This container for TopSvg now uses the 'topAbsolute' state 
@@ -448,7 +441,7 @@ const Competitions = () => {
       {/* Top SVG overlay (user's comment) */}
 
       {/* Bottom SVG overlay */}
-      <div className="mt-100">
+      <div className="mt-100 z-50 relative">
         {" "}
         {/* This margin-top: 400px is crucial */}
         <BottomSvgWithText />
