@@ -393,6 +393,7 @@ const Competitions = () => {
         width: "100vw",
         position: "relative",
         overflow: "hidden",
+        scrollBehavior: "smooth",
       }}
       className="ml-5"
     >
