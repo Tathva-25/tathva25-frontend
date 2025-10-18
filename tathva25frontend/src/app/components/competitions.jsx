@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Michroma } from "next/font/google";
-
+import Image from "next/image";
 // Michroma font configuration
 const michroma = Michroma({
   weight: "400",
@@ -53,7 +53,7 @@ const DecorativeImage = ({ src, x, y, width }) => (
 );
 
 // Top SVG header with branding and decorative elements
-const TopSvg = () => (
+const TopSvg = ({ isAbsolute = false }) => (
   <svg
     width="100vw"
     viewBox="0 0 1920 213"
@@ -61,12 +61,51 @@ const TopSvg = () => (
     xmlns="http://www.w3.org/2000/svg"
     style={{
       width: "100vw",
-      height: "11.09375vw",
+      height: "11.99375vw",
       display: "block",
-      position: "relative",
+      position: isAbsolute ? "absolute" : "relative",
+      top: isAbsolute ? 0 : undefined,
+      left: isAbsolute ? 0 : undefined,
       zIndex: 3,
     }}
+    className="-mt-2.5"
   >
+    <svg
+      width="1893"
+      height="219"
+      viewBox="0 0 1893 219"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M60.8283 112.332C23.9102 112.332 -1.59748 87.2419 2.41489 54.875V-43H1921V54.875C1915.5 82.6503 1905.27 112.332 1871.64 112.332C1838.02 112.332 1645 110 1645 110L1534 216H1443.5L1398.5 175.5H1286L1243.5 217H685L640 177H522.5L472 217H387.5L269.639 112.332H60.8283Z"
+        fill="#FFF"
+      />
+      <path
+        d="M60.8283 112.332C23.9102 112.332 -1.59748 87.2419 2.41489 54.875V-43H1921V54.875C1915.5 82.6503 1905.27 112.332 1871.64 112.332C1838.02 112.332 1645 110 1645 110L1534 216H1443.5L1398.5 175.5H1286L1243.5 217H685L640 177H522.5L472 217H387.5L269.639 112.332H60.8283Z"
+        stroke="url(#paint0_linear_2522_416)"
+        strokeWidth="3"
+      />
+      <path
+        d="M60.8283 112.332C23.9102 112.332 -1.59748 87.2419 2.41489 54.875V-43H1921V54.875C1915.5 82.6503 1905.27 112.332 1871.64 112.332C1838.02 112.332 1645 110 1645 110L1534 216H1443.5L1398.5 175.5H1286L1243.5 217H685L640 177H522.5L472 217H387.5L269.639 112.332H60.8283Z"
+        stroke="black"
+        strokeWidth="3"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_2522_416"
+          x1="962.208"
+          y1="54.875"
+          x2="962.208"
+          y2="218"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#EBAB4D" />
+          <stop offset="0.5" stop-color="white" />
+          <stop offset="1" stop-color="#EBAB4D" />
+        </linearGradient>
+      </defs>
+    </svg>
     {/* Branding layer */}
     <foreignObject x="0" y="0" width="1920" height="110">
       <div
@@ -80,52 +119,10 @@ const TopSvg = () => (
           padding: "18px 30px 0 30px",
           zIndex: 10,
         }}
-      >
-        <img
-          src="/images/barcode.png"
-          width={80}
-          height={40}
-          alt="barcode left"
-        />
-        <div style={{ margin: "0 32px", flex: "none" }}>
-          <CentralSVG />
-        </div>
-        <img
-          src="//images/barcode.png"
-          width={80}
-          height={40}
-          alt="barcode right"
-        />
-        <img
-          src="/svg/tathva_logo.svg"
-          alt="tathva logo"
-          width={70}
-          height={70}
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            zIndex: 12,
-          }}
-        />
-      </div>
+      ></div>
     </foreignObject>
 
     {/* Background paths */}
-    <path
-      d="M58.8283 105.332C21.9102 105.332 -3.59748 80.2419 0.41489 47.875V-50H1919V47.875C1913.5 75.6503 1903.27 105.332 1869.64 105.332H1644.72L1533.93 211H1456.05L1398.98 171.375H1284.84L1242.54 211H698.69L640.276 171.375H521.435L470.408 211H387.823L267.639 105.332H58.8283Z"
-      fill="#fff"
-    />
-    <path
-      d="M58.8283 105.332C21.9102 105.332 -3.59748 80.2419 0.41489 47.875V-50H1919V47.875C1913.5 75.6503 1903.27 105.332 1869.64 105.332H1644.72L1533.93 211H1456.05L1398.98 171.375H1284.84L1242.54 211H698.69L640.276 171.375H521.435L470.408 211H387.823L267.639 105.332H58.8283Z"
-      stroke="url(#paint0_linear_2522_416)"
-      strokeWidth="3"
-    />
-    <path
-      d="M58.8283 105.332C21.9102 105.332 -3.59748 80.2419 0.41489 47.875V-50H1919V47.875C1913.5 75.6503 1903.27 105.332 1869.64 105.332H1644.72L1533.93 211H1456.05L1398.98 171.375H1284.84L1242.54 211H698.69L640.276 171.375H521.435L470.408 211H387.823L267.639 105.332H58.8283Z"
-      stroke="black"
-      strokeWidth="3"
-    />
 
     {/* Decorative elements */}
     <DecorativeImage
@@ -287,54 +284,48 @@ const BottomSvgWithText = () => {
       }}
     >
       {/* Main background path - fill only, no stroke */}
-      <path
-        d="M1913.5 1428.5V41C1913.5 41 1922 1.99999 1879 2H1641.5L1533.5 110H1456L1398.5 68H1283.5L1243.5 110H697L638 68H523L470 110H386.5L264 3.49998H41.4998C-7.50001 0.500005 2.49979 46.5 2.49979 46.5V1428.5H1913.5Z"
-        fill="white"
-        stroke="none"
-      />
 
       {/* Two barcode images near the top */}
       <DecorativeImage src="/barcode.png" x="438" y={30} width="6rem" />
       <DecorativeImage src="/barcode.png" x="1200" y={30} width="6rem" />
 
       {/* Top wavy border - white */}
-      <path
-        d="M1913.5 41C1913.5 41 1922 1.99999 1879 2H1641.5L1533.5 110H1456L1398.5 68H1283.5L1243.5 110H697L638 68H523L470 110H386.5L264 3.49998H41.4998C-7.50001 0.500005 2.49979 46.5 2.49979 46.5"
-        stroke="white"
-        strokeWidth="3"
+      <svg
+        width="1896"
+        height="1431"
+        viewBox="0 0 1896 1431"
         fill="none"
-      />
-
-      {/* Left side border - black */}
-      <line
-        x1="2.49979"
-        y1="46.5"
-        x2="2.49979"
-        y2="1428.5"
-        stroke="black"
-        strokeWidth="3"
-      />
-
-      {/* Right side border - black */}
-      <line
-        x1="1913.5"
-        y1="41"
-        x2="1913.5"
-        y2="1428.5"
-        stroke="black"
-        strokeWidth="3"
-      />
-
-      {/* Bottom border - white */}
-      <line
-        x1="2.49979"
-        y1="1428.5"
-        x2="1913.5"
-        y2="1428.5"
-        stroke="white"
-        strokeWidth="3"
-      />
-
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M59.5183 3.50033C-18.0008 3.50108 5.27749 51.6445 5.27749 51.6445V423.77V1442.5H1921.79V423.77V44.2813C1921.79 44.2813 1935.76 3.50068 1868.88 3.50033C1802 3.49998 1648 2 1648 2L1537 108H1447L1402 67.5H1289L1246.5 108.5L688.5 109L643 69H525.5L474.5 109H390.5L271.5 3.50033C271.5 3.50033 137.037 3.49958 59.5183 3.50033Z"
+          fill="white"
+        />
+        <path
+          d="M59.5183 3.50033C-18.0008 3.50108 5.27749 51.6445 5.27749 51.6445V423.77V1442.5H1921.79V423.77V44.2813C1921.79 44.2813 1935.76 3.50068 1868.88 3.50033C1802 3.49998 1648 2 1648 2L1537 108H1447L1402 67.5H1289L1246.5 108.5L688.5 109L643 69H525.5L474.5 109H390.5L271.5 3.50033C271.5 3.50033 137.037 3.49958 59.5183 3.50033Z"
+          stroke="url(#paint0_linear_2522_417)"
+          strokeWidth="3"
+        />
+        <path
+          d="M59.5183 3.50033C-18.0008 3.50108 5.27749 51.6445 5.27749 51.6445V423.77V1442.5H1921.79V423.77V44.2813C1921.79 44.2813 1935.76 3.50068 1868.88 3.50033C1802 3.49998 1648 2 1648 2L1537 108H1447L1402 67.5H1289L1246.5 108.5L688.5 109L643 69H525.5L474.5 109H390.5L271.5 3.50033C271.5 3.50033 137.037 3.49958 59.5183 3.50033Z"
+          stroke="black"
+          strokeWidth="3"
+        />
+        <defs>
+          <linearGradient
+            id="paint0_linear_2522_417"
+            x1="963.531"
+            y1="3.5"
+            x2="963.531"
+            y2="94.1242"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#EBAB4D" />
+            <stop offset="0.5" stop-color="white" />
+            <stop offset="1" stop-color="#EBAB4D" />
+          </linearGradient>
+        </defs>
+      </svg>
       {/* Text and interactive shapes */}
       <foreignObject x="0" y="90" width="100%" height={foreignObjectHeight}>
         <div
@@ -350,7 +341,7 @@ const BottomSvgWithText = () => {
             overflow: "visible",
           }}
         >
-          <h1
+          {/* <h1
             style={{
               color: "#000",
               fontSize: isMobile ? "220px" : "176.804px", // increased font size for mobile
@@ -362,7 +353,7 @@ const BottomSvgWithText = () => {
             }}
           >
             COMPETITIONS
-          </h1>
+          </h1> */}
           <div
             style={{
               display: isMobile ? "grid" : "flex",
@@ -397,97 +388,69 @@ const BottomSvgWithText = () => {
 
 // Main Competitions component with scroll animation fix
 const Competitions = () => {
-  const topHeightVw = 11.09375; // number values for calculations
-  const bottomHeightVw = 83.8;
-  const gapVw = 16.875;
-  const scrollThresholdVw = 30; // threshold after which both move
-  const containerRef = useRef(null);
-
-  const [bottomTranslateY, setBottomTranslateY] = useState(0);
-  const [topTranslateY, setTopTranslateY] = useState(0);
+  const [topAbsolute, setTopAbsolute] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const rect = container.getBoundingClientRect();
-      const scrollProgressPx = Math.max(0, -rect.top);
-
-      const vwToPx = (vw) => (vw / 100) * window.innerWidth;
-      const thresholdPx = vwToPx(scrollThresholdVw);
-
-      if (scrollProgressPx < thresholdPx) {
-        // Bottom moves up only, top stays
-        setBottomTranslateY(-scrollProgressPx);
-        setTopTranslateY(0);
-      } else {
-        // Bottom fixed at max upward, top moves up
-        const extraScroll = scrollProgressPx - thresholdPx;
-        setBottomTranslateY(-thresholdPx);
-        setTopTranslateY(-extraScroll);
-      }
+    const onScroll = () => {
+      const y = window.scrollY || window.pageYOffset || 0;
+      setTopAbsolute(y >= 389);
     };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <div
-      ref={containerRef}
       style={{
         width: "100vw",
-        height: `calc(${topHeightVw}vw + ${gapVw}vw + ${bottomHeightVw}vw)`,
         position: "relative",
         overflow: "hidden",
       }}
+      className="ml-5"
     >
       {/* Background image */}
-      <img
-        src="/images/competitions_bg.png"
-        alt="background"
-        style={{
-          width: "100vw",
-          height: "auto",
-          objectFit: "cover",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          zIndex: 1,
-        }}
-      />
 
-      {/* Top SVG overlay */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          zIndex: 2,
-          pointerEvents: "none",
-          transform: `translateY(${topTranslateY}px)`,
-          transition: "transform 0.1s ease-out",
-        }}
-      >
-        <TopSvg />
+      <div className=" top-0 left-0 w-full h-auto z-0">
+        <Image
+          width={1920}
+          height={1080}
+          src="/images/competitions_bg.png"
+          alt="background"
+          style={{
+            width: "100vw",
+            height: "auto",
+            objectFit: "cover",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 1,
+          }}
+        />
+
+        {/* MODIFIED SECTION:
+          This container for TopSvg now uses the 'topAbsolute' state 
+          to toggle its positioning.
+        */}
+        <div // Removed 'fixed' and 'z-100' from className
+          style={{
+            position: topAbsolute ? "absolute" : "fixed",
+            top: topAbsolute ? "390px" : "0px",
+            left: 0, // Explicitly set left
+            zIndex: 100, // Apply z-index here
+          }}
+          className={`${topAbsolute ? "ml-1" : "ml-6"} `}
+        >
+          <TopSvg />
+        </div>
       </div>
 
+      {/* Top SVG overlay (user's comment) */}
+
       {/* Bottom SVG overlay */}
-      <div
-        style={{
-          position: "absolute",
-          top: `calc(${topHeightVw}vw + ${gapVw}vw)`,
-          left: 0,
-          width: "100vw",
-          zIndex: 2,
-          transform: `translateY(${bottomTranslateY}px)`,
-          transition: "transform 0.1s ease-out",
-        }}
-      >
+      <div className="mt-100">
+        {" "}
+        {/* This margin-top: 400px is crucial */}
         <BottomSvgWithText />
       </div>
     </div>
