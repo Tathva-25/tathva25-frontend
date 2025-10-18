@@ -394,7 +394,7 @@ export default function WheelsEvent() {
                 fontWeight: 200,
                 textTransform: "uppercase",
                 letterSpacing: "0.1vw",
-                transform: "translateX(8%)",
+                transform: "translateX(4%)",
                 lineHeight: "0.9",
                 whiteSpace: "nowrap",
               }}
