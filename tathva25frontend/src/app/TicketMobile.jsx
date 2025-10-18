@@ -12,77 +12,70 @@ const fontspring = localFont({
   src: "../../public/fonts/fontspring.otf",
 });
 
-export default function TicketMobile({ day, date, price }) {
-  // Dynamic event text
-  const eventText =
-    day === 1 ? "Wheels | Robowars | Conclave" : "Proshow | Events | Conclave";
-
+function TicketMobile({ day, date, price }) {
   return (
-    <div className="relative w-20 h-56 sm:w-20 sm:h-56">
-      {/* Background */}
+    <div className="relative w-20 h-56 sm:w-20 sm:h-56 ">
+      {/* Oversized Image */}
       <Image
         src="/newbg.png"
         alt="ticket"
-        fill
-        className="absolute rotate-90 object-cover rounded-md opacity-95"
+        width={800}
+        height={800}
+        className="scale-500 absolute rotate-90 right-0.5 top-25"
       />
 
-      {/* Inner content */}
-      <div className="relative z-10 flex flex-col justify-between items-center h-full py-2">
-        {/* Top section */}
-        <div className="flex flex-col items-center">
+      {/* Inner content box */}
+      <div className="scale-130 w-20 h-56 sm:w-20 sm:h-56 z-10 relative flex flex-col gap-2 sm:gap-2 items-center justify-center">
+        <div className="flex flex-col flex-1 p-2 items-center w-full">
           <p
-            className={`${mi.className} font-bold text-[#252527] text-[0.7rem]`}
+            className={`${mi.className} pt-1 sm:pt-1 font-bold text-[#252527] text-[0.7rem] sm:text-[0.7rem] `}
           >
             TATHVA
           </p>
           <p
-            className={`${mi.className} font-bold text-[#252527] text-[0.7rem] border-b border-[#C8AD73] w-full text-center leading-tight`}
+            className={`${mi.className} text-center pb-1 sm:pb-1 font-bold text-[#252527] text-[0.7rem] sm:text-[0.7rem] border-b-1 w-full border-[#C8AD73]`}
           >
             2025
           </p>
           <p
-            className={`${mi.className} text-[#D2B078] text-[0.45rem] mt-2`}
+            className={`${mi.className} text-[#D2B078] text-center text-[0.45rem] sm:text-[0.45rem] mt-2`}
           >
             ADMIT ONE
           </p>
-          <Image
-            src="/qr.png"
-            alt="QR"
-            width={40}
-            height={40}
-            className="mt-2"
-          />
+          <div className="w-full flex justify-center mt-2">
+            <Image
+              src="/qr.png"
+              alt="qr"
+              width={50}
+              height={50}
+              className="w-10 h-10 sm:w-10 sm:h-10 mx-auto"
+            />
+          </div>
         </div>
-
-        {/* Middle section */}
-        <div className="flex flex-col items-center">
-          <p
-            className={`${fontspring.className} text-lg font-bold text-[#3E3E3B]`}
-          >
-            {`DAY ${day}`}
-          </p>
-          <p
-            className={`${mi.className} text-xs font-bold text-[#3E3E3B]`}
-          >
-            {`OCT ${date} 2025`}
-          </p>
-          <p
-            className={`${mi.className} text-[0.3rem] text-center text-[#3E3E3B] mt-1`}
-          >
-            {eventText}
-          </p>
-        </div>
-
-        {/* Bottom section */}
-        <div className="flex flex-col items-center gap-1 mt-1">
+        {/* <Image src="/verticalline.svg" alt="line" width={2} height={2} /> */}
+        <p
+          className={`${fontspring.className} text-lg sm:text-lg font-bold text-[#3E3E3B] -mt-3`}
+        >
+          {`DAY ${day}`}
+        </p>
+        <p
+          className={`${mi.className} text-xs sm:text-xs text-center font-bold text-[#3E3E3B]`}
+        >
+          {`OCT ${date} 2025`}
+        </p>
+        <p
+          className={`${mi.className} text-[0.2rem] scale-140 sm:text-[0.3rem] text-center text-[#3E3E3B]`}
+        >
+          Proshow | Wheels | Conclave
+        </p>
+        <div className="flex flex-col items-center justify-around gap-1">
           <button
-            className={`${mi.className} bg-[#3E3E3B] rounded-sm text-white text-[0.35rem] w-14 h-4 flex items-center justify-center`}
+            className={`${mi.className} flex justify-center items-center rounded-sm px-2 py-1 bg-[#3E3E3B] text-[0.3rem] w-14 h-4 text-white`}
           >
             BUY NOW
           </button>
           <button
-            className={`${mi.className} bg-[#3E3E3B] rounded-sm text-white text-[0.35rem] w-14 h-4 flex items-center justify-center`}
+            className={`${mi.className} flex justify-center items-center rounded-sm px-2 py-1 bg-[#3E3E3B] text-[0.3rem] w-14 h-4 text-white`}
           >
             {`Rs ${price}/-`}
           </button>
@@ -91,3 +84,5 @@ export default function TicketMobile({ day, date, price }) {
     </div>
   );
 }
+
+export default TicketMobile;
