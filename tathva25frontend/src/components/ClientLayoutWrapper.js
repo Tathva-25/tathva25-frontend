@@ -3,22 +3,21 @@
 import { useState, useLayoutEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import LoadingBar from "@/components/LoadingBar";
+import Sidebar from "./heroPage/sidebarv2";
 
 export default function ClientLayoutWrapper({ children }) {
   const pathname = usePathname();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [softVisible, setSoftVisible] = useState(true); // for non-home subtle fade-in
+  const [softVisible, setSoftVisible] = useState(true);
   const isHome = pathname === "/";
 
   // Reset gating on route changes (and on first mount) before paint to avoid flashes
   useLayoutEffect(() => {
-    // Gate only on landing page; everywhere else show immediately
     if (isHome) {
       setIsLoaded(false);
       setSoftVisible(true);
     } else {
       setIsLoaded(true);
-      // trigger a tiny fade-in on route change for non-home
       setSoftVisible(false);
       requestAnimationFrame(() => setSoftVisible(true));
     }
@@ -33,7 +32,10 @@ export default function ClientLayoutWrapper({ children }) {
       {/* Heavy animated loader only on landing page */}
       {isHome && <LoadingBar onComplete={handleLoadingComplete} />}
 
-      {/* Gate content only on landing page; elsewhere show immediately */}
+      {/* Sidebar visible on all pages except home */}
+      {!isHome && <Sidebar />}
+
+      {/* Page content with fade and loader gating */}
       <div
         className={`transition-opacity ${
           isHome ? "duration-500" : "duration-300"
@@ -50,7 +52,7 @@ export default function ClientLayoutWrapper({ children }) {
           pointerEvents: isHome ? (isLoaded ? "auto" : "none") : "auto",
         }}
       >
-        {children}
+        <div className={`${!isHome ? "sm:translate-x-7" : ""}`}>{children}</div>
       </div>
     </>
   );
