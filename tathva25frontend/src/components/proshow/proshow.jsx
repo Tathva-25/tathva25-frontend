@@ -98,13 +98,26 @@ const Proshow = () => {
       }
     };
 
+    const isMobile = window.innerWidth < 768;
+
+    let intervalId;
+
+    if (isMobile) {
+      intervalId = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % artists.length);
+      }, 3000); // change every 3 seconds (adjust as needed)
+    }
+
     return () => {
+      // existing cleanup
       if (document.body.contains(script1)) document.body.removeChild(script1);
       if (document.body.contains(script2)) document.body.removeChild(script2);
       if (document.body.contains(script3)) document.body.removeChild(script3);
       if (window.ScrollTrigger) {
         window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
+      // 👇 cleanup interval
+      if (intervalId) clearInterval(intervalId);
     };
   }, []); // The dependency array is now empty
 
@@ -271,7 +284,8 @@ const Proshow = () => {
               ))}
             </div>
 
-            <div className="relative min-h-[200px] -mt-7 md:-mt-0 overflow-hidden">
+            {/* MODIFIED THIS LINE */}
+            <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
               {artists.map((item, index) => (
                   <div
                       key={index}
@@ -293,7 +307,7 @@ const Proshow = () => {
             </div>
 
             {/* Button - separately controlled for mobile */}
-            <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
+            <div className="flex justify-center md:ml-6 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
               <DotGridButton text="Book Your Pass" />
             </div>
           </div>
