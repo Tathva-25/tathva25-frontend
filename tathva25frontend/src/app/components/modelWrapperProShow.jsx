@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Modal from "./model";
+import Modal from "./modelProshow";
 import { Michroma } from "next/font/google";
 
 const mi = Michroma({
@@ -11,7 +11,7 @@ const mi = Michroma({
   display: "swap",
 });
 
-export default function ModalWrapper({ id, ticket_id, price }) {
+export default function ModalWrapper({ eventId, ticketId, price }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
@@ -33,17 +33,17 @@ export default function ModalWrapper({ id, ticket_id, price }) {
     <div className="flex items-center justify-center">
       <button
         onClick={handleClick}
-        className={`${mi.className} bg-[#3E3E3B] cursor-pointer rounded-xs text-[0.5rem] sm:text-[0.4rem] md:text-[0.5rem] lg:text-[0.65rem] w-20 h-6 sm:w-24 sm:h-6 md:w-28 md:h-7 lg:w-32 lg:h-8 text-white transition-transform hover:scale-105 duration-200`}
+        className={`${mi.className} bg-[#3E3E3B] cursor-pointer rounded-xs text-[0.5rem] sm:text-[0.4rem] md:text-[0.5rem] lg:text-[0.65rem] hover:bg-black w-12 h-3 sm:w-16 sm:h-4 md:w-18 md:h-4 lg:w-23 lg:h-5 text-white`}
       >
-        {isLoggedIn ? "REGISTER" : "LOGIN TO REGISTER"}
+        {isLoggedIn ? "BOOK" : "LOGIN TO REGISTER"}
       </button>
 
       {/* Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        id={id}
-        ticket_id={ticket_id}
+        eventId={eventId}
+        ticketId={ticketId}
         price={price}
       />
     </div>

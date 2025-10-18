@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Michroma } from "next/font/google";
 import localFont from "next/font/local";
-import ModalWrapper from "./components/modelWrapper";
+import ModalWrapper from "./components/modelWrapperProShow";
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -13,7 +13,7 @@ const fontspring = localFont({
   src: "../../public/fonts/fontspring.otf",
 });
 
-function Ticket({ day, date, price }) {
+function Ticket({ day, date, ticketId, eventId, price }) {
   // Dynamic event text based on day
   const eventText =
     day === 1
@@ -72,7 +72,8 @@ function Ticket({ day, date, price }) {
             {eventText}
           </p>
           <div className="flex items-center justify-between gap-2 md:pl-3">
-             <ModalWrapper id={1617} ticket_id={2315} price={799} />
+            {/* ModalWrapper receives ticketId, eventId, price */}
+            <ModalWrapper eventId={eventId} ticketId={ticketId} price={price} />
             <button
               className={`${mi.className} bg-[#3E3E3B] cursor-pointer rounded-xs text-[0.5rem] sm:text-[0.4rem] md:text-[0.5rem] lg:text-[0.65rem] w-12 h-3 sm:w-16 sm:h-4 md:w-18 md:h-4 lg:w-23 lg:h-5 text-white`}
             >

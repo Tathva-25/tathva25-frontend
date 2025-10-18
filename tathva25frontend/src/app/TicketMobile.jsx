@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Michroma } from "next/font/google";
 import localFont from "next/font/local";
+import ModalWrapper from "./components/modelWrapperProShow";
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -12,7 +13,7 @@ const fontspring = localFont({
   src: "../../public/fonts/fontspring.otf",
 });
 
-function TicketMobile({ day, date, price }) {
+function TicketMobile({ day, date, ticketId, eventId, price }) {
   return (
     <div className="relative w-20 h-56 sm:w-20 sm:h-56 ">
       {/* Oversized Image */}
@@ -69,11 +70,7 @@ function TicketMobile({ day, date, price }) {
           Proshow | Wheels | Conclave
         </p>
         <div className="flex flex-col items-center justify-around gap-1">
-          <button
-            className={`${mi.className} flex justify-center items-center rounded-sm px-2 py-1 bg-[#3E3E3B] text-[0.3rem] w-14 h-4 text-white`}
-          >
-            BUY NOW
-          </button>
+            <ModalWrapper eventId={eventId} ticketId={ticketId} price={price} />
           <button
             className={`${mi.className} flex justify-center items-center rounded-sm px-2 py-1 bg-[#3E3E3B] text-[0.3rem] w-14 h-4 text-white`}
           >

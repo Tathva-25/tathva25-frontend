@@ -5,7 +5,6 @@ import localFont from "next/font/local";
 import gsap from "gsap";
 import Ticket from "../Ticket";
 import TicketMobile from "../TicketMobile";
-import { Inter } from "next/font/google";
 import { Michroma } from "next/font/google";
 import { Arrow } from "../Arrow";
 
@@ -42,23 +41,30 @@ function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const ticketData = [
-    {
-      day: 1,
-      date: 24,
-      price: 199,
-    },
-    {
-      day: 2,
-      date: 25,
-      price: 249,
-    },
-    {
-      day: 3,
-      date: 26,
-      price: 149,
-    },
-  ];
+const ticketData = [
+  {
+    day: 1,
+    date: 24,
+    price: 799,
+    eventId: 1617,
+    ticketId: 2315,
+  },
+  {
+    day: 2,
+    date: 25,
+    price: 799,
+    eventId: 1620,
+    ticketId: 2316,
+  },
+  {
+    day: 3,
+    date: 26,
+    price: 1399,
+    eventId: 1621,
+    ticketId: 2317,
+  },
+];
+
 
   useEffect(() => {
     gsap.set([".card-0", ".card-1", ".card-2"], {
@@ -210,26 +216,35 @@ function Page() {
           PASSES
         </h1>
       </div>
-      {ticketData.map((ticket, i) => (
-        <div
-          key={i}
-          className={`card card-${i} absolute cursor-pointer`}
-          onClick={() => moveToCenter(i)}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {isMobile ? (
-            <TicketMobile
-              day={ticket.day}
-              date={ticket.date}
-              price={ticket.price}
-            />
-          ) : (
-            <Ticket day={ticket.day} date={ticket.date} price={ticket.price} />
-          )}
-        </div>
-      ))}
+{ticketData.map((ticket, i) => (
+  <div
+    key={i}
+    className={`card card-${i} absolute cursor-pointer`}
+    onClick={() => moveToCenter(i)}
+    onTouchStart={handleTouchStart}
+    onTouchMove={handleTouchMove}
+    onTouchEnd={handleTouchEnd}
+  >
+    {isMobile ? (
+      <TicketMobile
+        day={ticket.day}
+        date={ticket.date}
+        price={ticket.price}
+        eventId={ticket.eventId}
+        ticketId={ticket.ticketId}
+      />
+    ) : (
+      <Ticket
+        day={ticket.day}
+        date={ticket.date}
+        price={ticket.price}
+        eventId={ticket.eventId}
+        ticketId={ticket.ticketId}
+      />
+    )}
+  </div>
+))}
+
 
       {/* bottom bar */}
       <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
