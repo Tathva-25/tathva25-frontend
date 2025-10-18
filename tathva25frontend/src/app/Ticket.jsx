@@ -13,6 +13,12 @@ const fontspring = localFont({
 });
 
 function Ticket({ day, date, price }) {
+  // Dynamic event text based on day
+  const eventText =
+    day === 1
+      ? "Wheels | Robowars | Conclave"
+      : "Proshow | Events | Conclave";
+
   return (
     <div className="relative w-56 h-20 sm:w-96 sm:h-24 md:w-110 md:h-36 lg:w-130 lg:h-36">
       {/* Oversized Image */}
@@ -28,7 +34,7 @@ function Ticket({ day, date, price }) {
       <div className="w-56 h-20 sm:w-96 sm:h-34 md:w-110 md:h-40 lg:w-130 lg:h-45 z-10 relative flex gap-2 sm:gap-2 md:gap-3 lg:gap-10 items-center justify-center">
         <div className="flex flex-col flex-1 scale-120 p-2">
           <p
-            className={`${mi.className} pl-2 sm:pl-5 md:pl-6 lg:pl-8 pt-1 sm:pt-0 md:pt-1 lg:pt-2 font text-[#252527] text-xs sm:text-[0.8rem] md:text-[1rem] lg:text-lg underline underline-offset-2 sm:underline-offset-2 md:underline-offset-2 lg:underline-offset-4 decoration-[#C8AD73] decoration-1`}
+            className={`${mi.className} pl-2 sm:pl-5 md:pl-6 lg:pl-8 pt-1 sm:pt-0 md:pt-1 lg:pt-2 text-[#252527] text-xs sm:text-[0.8rem] md:text-[1rem] lg:text-lg underline underline-offset-2 sm:underline-offset-2 md:underline-offset-2 lg:underline-offset-4 decoration-[#C8AD73]`}
           >
             TATHVA 2025
           </p>
@@ -47,7 +53,7 @@ function Ticket({ day, date, price }) {
             />
           </div>
         </div>
-        {/* <Image src="/verticalline.svg" alt="line" width={2} height={2} /> */}
+
         <div className="flex flex-col flex-1 gap-1 items-start scale-120">
           <p
             className={`${fontspring.className} text-base sm:text-4xl md:text-4xl lg:text-5xl md:pl-3 font-bold text-[#3E3E3B]`}
@@ -62,7 +68,7 @@ function Ticket({ day, date, price }) {
           <p
             className={`${mi.className} text-[0.5rem] sm:text-[0.52rem] md:text-[0.6rem] md:pl-3 lg:text-[0.65rem] text-[#3E3E3B]`}
           >
-            Proshow | Wheels | Conclave
+            {eventText}
           </p>
           <div className="flex items-center justify-between gap-2 md:pl-3">
             <button

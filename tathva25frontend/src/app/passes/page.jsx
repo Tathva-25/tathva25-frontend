@@ -5,7 +5,6 @@ import localFont from "next/font/local";
 import gsap from "gsap";
 import Ticket from "../Ticket";
 import TicketMobile from "../TicketMobile";
-import { Inter } from "next/font/google";
 import { Michroma } from "next/font/google";
 import { Arrow } from "../Arrow";
 
@@ -35,9 +34,7 @@ function Page() {
       setIsMobile(window.innerWidth < 640);
     };
 
-    // set initial state
     handleResize();
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -46,24 +43,26 @@ function Page() {
     {
       day: 1,
       date: 24,
-      price: 199,
+      price: 799,
+      events: ["Wheels", "Robowars", "Conclave"],
     },
     {
       day: 2,
       date: 25,
-      price: 249,
+      price: 799,
+      events: ["Proshow","Robowars", "Conclave"],
     },
     {
       day: 3,
       date: 26,
-      price: 149,
+      price: 1399,
+      events: ["Proshow","Events", "Conclave"],
     },
   ];
 
+  // initial gsap setup
   useEffect(() => {
-    gsap.set([".card-0", ".card-1", ".card-2"], {
-      clearProps: "all",
-    });
+    gsap.set([".card-0", ".card-1", ".card-2"], { clearProps: "all" });
 
     gsap.set(".card-0", {
       x: `${isMobile ? "-170%" : "-35%"}`,
@@ -91,7 +90,6 @@ function Page() {
   const leftArrowRefs = useRef([]);
   const rightArrowRefs = useRef([]);
 
-  // Add this function to trigger the wave animation
   const triggerArrowWave = (direction) => {
     const refs =
       direction === "left" ? leftArrowRefs.current : rightArrowRefs.current;
@@ -102,7 +100,7 @@ function Page() {
       if (ref) {
         setTimeout(() => {
           ref.animate();
-        }, index * 150); // 150ms delay between each arrow
+        }, index * 150);
       }
     });
   };
@@ -113,16 +111,12 @@ function Page() {
     let direction;
 
     if (centerCard === 0 && clicked === 2) {
-      // Going from day 1 to day 3 = going backwards (left)
       direction = "left";
     } else if (centerCard === 2 && clicked === 0) {
-      // Going from day 3 to day 1 = going forward (right)
       direction = "right";
     } else if (clicked < centerCard) {
-      // Normal backward movement
       direction = "left";
     } else {
-      // Normal forward movement
       direction = "right";
     }
 
@@ -146,7 +140,6 @@ function Page() {
 
     let order = [...cards];
     while (order[1] !== clicked) {
-      //as long as the card in the center is not the clicked card, keep carousing
       order.push(order.shift());
     }
 
@@ -167,11 +160,9 @@ function Page() {
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
-
   const handleTouchMove = (e) => {
     touchEndX.current = e.touches[0].clientX;
   };
-
   const handleTouchEnd = () => {
     const deltaX = touchEndX.current - touchStartX.current;
     if (Math.abs(deltaX) < 30) return;
@@ -186,30 +177,19 @@ function Page() {
   };
 
   return (
-    <section
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center overflow-hidden"
-      // style={{ backgroundImage: "url('/bg.png')" }}
-    >
-      {/* <div style={{ backgroundImage: "url('/bg.png')" }}></div> */}
-      {/* sidebar */}
-      {/* <Image
-        src="/sideborder.png"
-        alt="sidebar"
-        width={30}
-        height={100}
-        className={`${isMobile ? "hidden" : ""} absolute h-screen left-0 z-10`}
-      /> */}
-
-      {/* top left text */}
-      <div className="">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* Heading */}
+      <div>
         <h1
-          className={`${
-            fontspring.className
-          } text-6xl font-bold z-20 relative ${isMobile ? "mb-96" : "mb-56"}`}
+          className={`${fontspring.className} text-6xl font-bold z-20 relative ${
+            isMobile ? "mb-96" : "mb-56"
+          }`}
         >
           PASSES
         </h1>
       </div>
+
+      {/* TICKETS */}
       {ticketData.map((ticket, i) => (
         <div
           key={i}
@@ -224,101 +204,95 @@ function Page() {
               day={ticket.day}
               date={ticket.date}
               price={ticket.price}
+              events={ticket.events}
             />
           ) : (
-            <Ticket day={ticket.day} date={ticket.date} price={ticket.price} />
+            <Ticket
+              day={ticket.day}
+              date={ticket.date}
+              price={ticket.price}
+              events={ticket.events}
+            />
           )}
         </div>
       ))}
 
-      {/* bottom bar */}
+      {/* Bottom navigation */}
       <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
-        {/* LEFT SECTION */}
+        {/* LEFT */}
         <div className="flex items-center ">
-          {/* LEFT ARROWS */}
           <div
             onClick={() => {
               const prev = (centerCard + cards.length - 1) % cards.length;
               moveToCenter(prev);
             }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
-            className="flex gap-0 cursor-pointer size-30 sm:size-40 md:size-50 lg:size-60 xl:size-80 2xl:size-90 items-center origin-left"
+            className="flex gap-0 cursor-pointer items-center"
           >
             <Arrow
-              direction={"left"}
+              direction="left"
               ref={(el) => (leftArrowRefs.current[0] = el)}
             />
             <Arrow
-              direction={"left"}
+              direction="left"
               ref={(el) => (leftArrowRefs.current[1] = el)}
             />
             <Arrow
-              direction={"left"}
+              direction="left"
               ref={(el) => (leftArrowRefs.current[2] = el)}
             />
           </div>
 
-          {/* PREV TEXT */}
-          {!isMobile && <span
-            className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
-            onClick={() => {
-              const prev = (centerCard + cards.length - 1) % cards.length;
-              moveToCenter(prev);
-            }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
-          >
-            PREV
-          </span>}
+          {!isMobile && (
+            <span
+              className={`${mi.className} cursor-pointer hover:scale-110 transition text-base md:text-lg lg:text-xl whitespace-nowrap`}
+              onClick={() => {
+                const prev = (centerCard + cards.length - 1) % cards.length;
+                moveToCenter(prev);
+              }}
+            >
+              PREV
+            </span>
+          )}
         </div>
 
-        {/* CENTER - DAY NUMBER */}
+        {/* CENTER NUMBER */}
         <span
-          className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl absolute left-1/2 -translate-x-1/2`}
+          className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl absolute left-1/2 -translate-x-1/2`}
         >
           {String(ticketData[centerCard].day).padStart(2, "0")}
         </span>
 
-        {/* RIGHT SECTION */}
-        <div className="flex items-center ">
-          {/* NEXT TEXT */}
-          {!isMobile && (<span
-            className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
-            onClick={() => {
-              const next = (centerCard + 1) % cards.length;
-              moveToCenter(next);
-            }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
-          >
-            NEXT
-          </span>)}
+        {/* RIGHT */}
+        <div className="flex items-center">
+          {!isMobile && (
+            <span
+              className={`${mi.className} cursor-pointer hover:scale-110 transition text-base md:text-lg lg:text-xl whitespace-nowrap`}
+              onClick={() => {
+                const next = (centerCard + 1) % cards.length;
+                moveToCenter(next);
+              }}
+            >
+              NEXT
+            </span>
+          )}
 
-          {/* RIGHT ARROWS */}
           <div
             onClick={() => {
               const next = (centerCard + 1) % cards.length;
               moveToCenter(next);
             }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
-            className="flex gap-0 cursor-pointer size-30 sm:size-40 md:size-50 lg:size-60 xl:size-80 2xl:size-90 items-center justify-end"
+            className="flex gap-0 cursor-pointer items-center justify-end"
           >
             <Arrow
-              direction={"right"}
+              direction="right"
               ref={(el) => (rightArrowRefs.current[0] = el)}
             />
             <Arrow
-              direction={"right"}
+              direction="right"
               ref={(el) => (rightArrowRefs.current[1] = el)}
             />
             <Arrow
-              direction={"right"}
+              direction="right"
               ref={(el) => (rightArrowRefs.current[2] = el)}
             />
           </div>
