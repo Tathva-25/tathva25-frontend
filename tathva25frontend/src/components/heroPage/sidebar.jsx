@@ -251,16 +251,10 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {menuOpen && (
-  <div className="z-[100] bg-black/90 flex items-center justify-center">
-    <MenuWrapper onClose={() => setMenuOpen(false)} />
-  </div>
-)}
-
 
       {/* Mobile Menu Bar */}
       <div
-        className={`md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-black ${someFont.className}`}
+        className={`md:hidden  top-0 left-0 right-0 fixed z-[500] bg-white border-black ${someFont.className}`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-black">
           {/* Logo - Smaller and positioned beside the menu */}
@@ -284,7 +278,7 @@ export default function Sidebar() {
               className="w-8 h-8 flex items-center justify-center"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? (
+              {menuOpen ? (
                 <svg
                   className="w-6 h-6"
                   viewBox="0 0 24 24"
@@ -318,6 +312,14 @@ export default function Sidebar() {
         </div>
 
       </div>
+
+
+         {menuOpen && (
+  <div className="absolute z-[100] bg-black/90 flex items-center justify-center">
+    <MenuWrapper onClose={() => setMenuOpen(false)} />
+  </div>
+)}
+
       <div className="md:ml-9">
         <section id="section-1">
           <Hero />
