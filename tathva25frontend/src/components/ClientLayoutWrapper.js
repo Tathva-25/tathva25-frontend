@@ -52,7 +52,7 @@ export default function ClientLayoutWrapper({ children }) {
           pointerEvents: isHome ? (isLoaded ? "auto" : "none") : "auto",
         }}
       >
-        <div className={`${!isHome ? "sm:translate-x-7" : ""}`}>{children}</div>
+        <div className={`${!isHome ? "translate-y-13 sm:translate-x-7" : ""}`}>{children}</div>
       </div>
     </>
   );

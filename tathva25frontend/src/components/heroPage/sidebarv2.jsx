@@ -104,7 +104,7 @@ export default function Sidebar() {
 
       {/* Mobile Menu Bar */}
       <div
-        className={`md:hidden  z-[500] bg-white border-black ${someFont.className}`}
+        className={`md:hidden  absolute  w-full z-[1000] bg-white border-black ${someFont.className}`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-black">
           {/* Logo - Smaller and positioned beside the menu */}

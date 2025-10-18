@@ -359,7 +359,7 @@ export default function Expo() {
                    userSelect: "none",
                }}
             >
-                Tathva&apos;22 Interface is all about technology, the trending, the
+                Tathva&apos;25 Interface is all about technology, the trending, the
                 innovations, the age-old, and many more.
             </p>
 

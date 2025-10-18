@@ -8,6 +8,7 @@ import DotGridButton from "@/components/DotGridButton"
 import { JetBrains_Mono } from 'next/font/google'
 import effectStyles from "./gaming_styles.module.css"
 import { Mic } from "lucide-react"
+import Link from "next/link"
 
 export const integralCF = localFont({
   // The files you're pointing to are relative to the project root
@@ -152,9 +153,12 @@ const GamePage = () => {
     </div>
 
     {/* Button */}
+    <Link href="/competitions">
     <div className="flex justify-center mt-">
       <DotGridButton text="Learn More" min_height={20} min_width={20}/>
-    </div>
+         </div>
+      </Link>
+ 
   </div>
 </div>
     </div>
