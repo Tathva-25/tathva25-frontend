@@ -26,17 +26,14 @@ const SCRAMBLE_INTERVAL_MS = 40;
 const SCRAMBLE_DURATION_MS = 5000;
 const REVEAL_INTERVAL_MS = 100;
 
+const handleGoogleSignIn = () => {
+  window.location.href =
+    "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
+};
 
-
-  const handleGoogleSignIn = () => {
-        window.location.href =
-            "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
-  };
-
-  const handleVisitDashboard = (router) => {
-        router.push("/profile");
-  };
-
+const handleVisitDashboard = (router) => {
+  router.push("/profile");
+};
 
 export const Hero = () => {
   const [displayText, setDisplayText] = useState("TATHVA");
@@ -46,7 +43,7 @@ export const Hero = () => {
   const wheelRef = useRef(null);
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
-  
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const router = useRouter();
@@ -106,36 +103,33 @@ export const Hero = () => {
     }, SCRAMBLE_INTERVAL_MS);
   };
 
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting && !hasAnimatedRef.current) {
+  //           triggerGlitchEffect();
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.1 }
+  //   );
+
+  //   if (sectionRef.current) {
+  //     observer.observe(sectionRef.current);
+  //   }
+
+  //   return () => {
+  //     if (sectionRef.current) {
+  //       observer.unobserve(sectionRef.current);
+  //     }
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimatedRef.current) {
-            triggerGlitchEffect();
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
+    setIsLoggedIn(!!jwt);
   }, []);
-
-  
-  useEffect(() => {
-        const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
-        setIsLoggedIn(!!jwt);
-  }, []);
-
 
   useEffect(() => {
     return () => {
@@ -161,31 +155,31 @@ export const Hero = () => {
       className={`relative h-[95vh] sm:h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
       {/* ✅ Top-right Logo */}
-  <Image
-    src={logo}
-    alt="Tathva Logo"
-    width={100}
-    height={100}
-    className="absolute top-6 right-6 md:top-6 md:right-4 w-16 md:w-14 h-auto z-30 transition-transform duration-300 hover:scale-105"
-    priority
-    quality={90}
-  />
+      <Image
+        src={logo}
+        alt="Tathva Logo"
+        width={100}
+        height={100}
+        className="absolute top-6 right-6 md:top-6 md:right-4 w-16 md:w-14 h-auto z-30 transition-transform duration-300 hover:scale-105"
+        priority
+        quality={90}
+      />
 
-        {isLoggedIn ? (
-            <button
-                onClick={() => handleVisitDashboard(router)}
-                className={`${newfont.className}  absolute top-6 right-24 md:top-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-            >
-                Profile
-            </button>
-        ) : (
-            <button
-                onClick={handleGoogleSignIn}
-                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-            >
-                LOGIN
-            </button>
-        )}
+      {isLoggedIn ? (
+        <button
+          onClick={() => handleVisitDashboard(router)}
+          className={`${newfont.className}  absolute top-6 right-24 md:top-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+        >
+          Profile
+        </button>
+      ) : (
+        <button
+          onClick={handleGoogleSignIn}
+          className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+        >
+          LOGIN
+        </button>
+      )}
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>
@@ -201,408 +195,404 @@ export const Hero = () => {
         </div>
 
         {/* Grid Overlay */}
-        
-    <div className="absolute inset-0 z-10">
-      <div className="relative w-full h-full">
-        {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
-        <div className="hidden md:absolute  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
-          <span className={`${newfont.className} text-xs md:text-sm font-semibold text-white`}>
-            /// SOUTH INDIA'S BIGGEST TECH FEST
-          </span>
-        </div>
-        
-        
-        
 
-        {/* Grid System */}
-        <div className="flex flex-col h-full w-full">
-          {/* Row 1 - Top row - 15% height */}
-          <div className="flex flex-nowrap" style={{ height: "15%" }}>
-            {/* Side columns - hidden on mobile */}
-            <div
-              className="hidden md:flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            {/* Main columns - always 6 visible */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            {/* Side columns - hidden on mobile */}
-            <div
-              className="hidden md:flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-          </div>
-
-          <div 
-            className="flex flex-nowrap md:hidden" 
-            style={{ height: "10%" }} /* Mobile: 25% height */
-          >
-            <div
-              className="hidden md:flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            {/* 6 columns - always visible */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            <div
-              className="hidden md:flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-          </div>
-
-          {/* Row 2 - Desktop version - 35% height */}
-          <div 
-            className="hidden md:flex flex-nowrap" 
-            style={{ height: "35%" }} /* Desktop: 35% height (original) */
-          >
-            <div
-              className="flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            {/* 6 columns - always visible */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            <div
-              className="flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-          </div>
-
-          {/* Row 3 - Bottom row with date - 60% on mobile, 50% on desktop */}
-          <div 
-            className="flex flex-nowrap md:hidden" 
-            style={{ height: "70%" }} /* Mobile: 60% height */
-          >
-            <div
-              className="hidden md:flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            {/* Date column */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            >
+        <div className="absolute inset-0 z-10">
+          <div className="relative w-full h-full">
+            {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
+            <div className="  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
+              <span
+                className={`${newfont.className} text-xs  md:text-sm font-semibold text-white`}
+              >
+                /// SOUTH INDIA'S BIGGEST TECH FEST
+              </span>
             </div>
-            
-            {/* Remaining 5 columns - always visible */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            <div
-              className="hidden md:flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-          </div>
 
-          {/* Row 3 - Desktop version - 50% height */}
-          <div 
-            className="hidden md:flex flex-nowrap" 
-            style={{ height: "50%" }} /* Desktop: 50% height (original) */
-          >
-            <div
-              className="flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            {/* Date column */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            >
+            {/* Grid System */}
+            <div className="flex flex-col h-full w-full">
+              {/* Row 1 - Top row - 15% height */}
+              <div className="flex flex-nowrap" style={{ height: "15%" }}>
+                {/* Side columns - hidden on mobile */}
+                <div
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* Main columns - always 6 visible */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* Side columns - hidden on mobile */}
+                <div
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+              </div>
+
+              <div
+                className="flex flex-nowrap md:hidden"
+                style={{ height: "10%" }} /* Mobile: 25% height */
+              >
+                <div
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* 6 columns - always visible */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                <div
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+              </div>
+
+              {/* Row 2 - Desktop version - 35% height */}
+              <div
+                className="hidden md:flex flex-nowrap"
+                style={{ height: "35%" }} /* Desktop: 35% height (original) */
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* 6 columns - always visible */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+              </div>
+
+              {/* Row 3 - Bottom row with date - 60% on mobile, 50% on desktop */}
+              <div
+                className="flex flex-nowrap md:hidden"
+                style={{ height: "70%" }} /* Mobile: 60% height */
+              >
+                <div
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* Date column */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* Remaining 5 columns - always visible */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                <div
+                  className="hidden md:flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+              </div>
+
+              {/* Row 3 - Desktop version - 50% height */}
+              <div
+                className="hidden md:flex flex-nowrap"
+                style={{ height: "50%" }} /* Desktop: 50% height (original) */
+              >
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* Date column */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                {/* Remaining 5 columns - always visible */}
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+                <div
+                  className="flex-1 flex items-center justify-center"
+                  style={{
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+
+                <div
+                  className="flex items-center justify-center"
+                  style={{
+                    flex: "0.35",
+                    border: "0.5px solid rgba(255, 255, 255, 0.3)",
+                    flexShrink: 0,
+                    minWidth: 0,
+                  }}
+                ></div>
+              </div>
             </div>
-            
-            {/* Remaining 5 columns - always visible */}
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            <div
-              className="flex-1 flex items-center justify-center"
-              style={{ 
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
-            
-            <div
-              className="flex items-center justify-center"
-              style={{
-                flex: "0.35",
-                border: "0.5px solid rgba(255, 255, 255, 0.3)",
-                flexShrink: 0,
-                minWidth: 0,
-              }}
-            ></div>
           </div>
         </div>
-      </div>
-    </div>
-
 
         {/* Original Content - TATHVA and Images */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-between h-full gap-4">
@@ -610,48 +600,44 @@ export const Hero = () => {
           <div className="flex-1 flex items-center justify-center w-full relative">
             {/* Date positioned to the left of TATHVA */}
             <div className="absolute top-28 transform translate-y-4 md:left-32 md:-translate-y-4">
-              <span className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}>
+              <span
+                className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}
+              >
                 OCTOBER 24, 25, 26
               </span>
             </div>
             {/* Year positioned to the right and below TATHVA */}
             <div className="absolute right md:right-30 top-1/2 transform translate-y-10 md:translate-y-59">
-              <span className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}>
+              <span
+                className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}
+              >
                 2025
               </span>
             </div>
           </div>
 
           {/* Mobile Text Block */}
-<div className="flex flex-col items-center justify-center  gap-5 text-center md:hidden w-full -translate-y-18 ">
+          <div className="flex flex-col items-center justify-center   gap-5 text-center md:hidden w-full -translate-y-20  ">
+            <div className="w-full px-6 ">
+              <span
+                className={`${newfont.className} text-white text-[12px] tracking-[0.3em] `}
+              >
+                SOUTH INDIA&apos;S LARGEST TECH  FEST
+              </span>
+            </div>
 
-   <div className="w-full px-6 ">
-    <span
-      className={`${newfont.className} text-white text-[12px] tracking-[0.3em] `}
-    >
-      SOUTH INDIA&apos;S LARGEST TECHFEST
-    </span>
-  </div>
+            <span
+              className={`${customFont.className} text-white text-7xl sm:text-9xl tracking-widest`}
+            >
+              TATHVA
+            </span>
+            <span
+              className={`${newfont.className} text-white text-[14px] tracking-[0.2em]`}
+            >
+              OCTOBER 24, 25, 26
+            </span>
 
-
-  <span
-    className={`${customFont.className} text-white text-7xl sm:text-9xl tracking-widest`}
-  >
-    TATHVA
-  </span>
-  <span
-    className={`${newfont.className} text-white text-[14px] tracking-[0.2em]`}
-  >
-    OCTOBER 24, 25, 26
-  </span>
-  <span
-    className={`${newfont.className} text-white text-[14px] tracking-[0.2em]`}
-  >
-    2025
-  </span>
- 
-</div>
-
+          </div>
 
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
