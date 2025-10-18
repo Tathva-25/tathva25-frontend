@@ -130,13 +130,13 @@ const Proshow = () => {
   return (
     <div
       ref={sectionRef}
-      className="h-screen relative overflow-hidden"
+      className="h-[110vh] relative overflow-hidden"
     >
       <div>
         {/* Background Image Placeholder */}
       </div>
 
-      <div className="flex flex-col md:flex-row h-full justify-center items-center relative px-6 pl-10">
+      <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 px-6 pl-10">
         {/* Coordinates text */}
         <div className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}>
           11.3210°N <br />
