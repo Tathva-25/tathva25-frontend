@@ -46,6 +46,7 @@ const Proshow = () => {
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const script1 = document.createElement("script");
@@ -104,8 +105,10 @@ const Proshow = () => {
 
     if (isMobile) {
       intervalId = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % artists.length);
-      }, 3000); // change every 3 seconds (adjust as needed)
+        if (!paused) {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % artists.length);
+        }
+      }, 3000);
     }
 
     return () => {
@@ -150,24 +153,32 @@ const Proshow = () => {
 
   // MODIFICATION 4: Add a click handler function
   const handleImageClick = (clickedIndex) => {
+    setPaused(true); // pause auto rotation
+
     // If the clicked image is already in the center, do nothing.
     if (clickedIndex === currentIndex) return;
 
     const totalSteps = artists.length - 1;
     const targetProgress = clickedIndex / totalSteps;
 
-    // Get the ScrollTrigger instance by its ID
-    const st = ScrollTrigger.getById("proshow-pin");
-    if (!st) return;
+    const st = window.ScrollTrigger?.getById("proshow-pin");
+    const gsap = window.gsap;
+    if (!st || !gsap) {
+      setCurrentIndex(clickedIndex);
+      return;
+    }
 
-    // Calculate the exact scroll position that corresponds to the clicked index
     const targetScroll = st.start + (st.end - st.start) * targetProgress;
 
-    // Use GSAP's ScrollToPlugin to animate the scroll smoothly
     gsap.to(window, {
       scrollTo: targetScroll,
-      duration: 0.75, // Adjust duration for desired speed
+      duration: 0.75,
       ease: "power2.inOut",
+      onComplete: () => {
+        setCurrentIndex(clickedIndex);
+        // Optional: resume auto rotation after a delay
+        setTimeout(() => setPaused(false), 8000); // 8s pause
+      },
     });
   };
 
