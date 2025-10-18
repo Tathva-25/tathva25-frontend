@@ -11,6 +11,7 @@ import wheel from "../../../public/images/wheel.png";
 import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
 import logo from "../../../public/images/tathvawhitelogo.png";
+
 import Marquee from "@/app/components/Marquee";
 import { useRouter } from "next/navigation";
 
