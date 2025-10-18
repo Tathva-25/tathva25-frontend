@@ -73,7 +73,7 @@ function Region() {
               <div
                   className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
                 >
-                  <span className="scale-70">30 x 30 FT. ARENA</span>
+                  <span className="scale-70">16 x 16 FT. ARENA</span>
                   
                 </div>
                 <div className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}>

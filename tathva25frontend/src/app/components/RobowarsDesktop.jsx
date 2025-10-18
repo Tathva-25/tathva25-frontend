@@ -292,7 +292,7 @@ function Region() {
                   className={`${michroma.className} text-lg md:text-xl lg:text-2xl xl:text-3xl text-black`}
                 >
                   <div className="flex flex-col">
-                    <span>30 x 30 FT. ARENA</span>
+                    <span>16 x 16 FT. ARENA</span>
                     <span>8KG \ 15KG</span>
                   </div>
                 </div>
