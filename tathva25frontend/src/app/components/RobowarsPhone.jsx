@@ -71,10 +71,13 @@ function Region() {
             </div>
             <div className={`text-black ${schabo.className} flex items-center justify-around`}>
               <div
-                  className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center`}
+                  className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
                 >
-                  <span>30 x 30 FT. ARENA</span>
-                  <span>8KG \ 15KG</span>
+                  <span className="scale-70">30 x 30 FT. ARENA</span>
+                  
+                </div>
+                <div className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}>
+                  <span className="scale-70">8KG \ 15KG</span>
                 </div>
               <div className="scale-60 relative left-4">
                 <DotGridButton text="Learn More"/>

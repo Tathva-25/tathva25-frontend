@@ -1,9 +1,17 @@
 "use client";
 import Link from "next/link";
 import { Michroma } from "next/font/google";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const ACCENT_COLOR = "white";
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
+
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const VerticalStripes = ({ count = 7, size = "large" }) => {
   const heightClass = size === "large" ? "h-16" : "h-8";
@@ -80,10 +88,11 @@ const SchoolInfo = ({ school }) => (
   </div>
 );
 
-const EventCard = ({ image, children, href }) => (
+const EventCard = ({ image, children, href, cardRef }) => (
   <Link
     href={href}
-    className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] group"
+    ref={cardRef}
+    className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] group z-0"
   >
     <div
       className="absolute inset-0 bg-cover scale-104 bg-center brightness-90 transition-transform duration-500 group-hover:scale-106"
@@ -99,12 +108,96 @@ const EventCard = ({ image, children, href }) => (
 );
 
 export default function Explore() {
+  const card1Ref = useRef(null);
+  const card2Ref = useRef(null);
+  const card3Ref = useRef(null);
+
+  useEffect(() => {
+    // Only run animations on desktop (768px and above)
+    const isDesktop = window.innerWidth >= 768;
+    
+    if (!isDesktop) return;
+
+    const ctx = gsap.context(() => {
+      // Card 1 - from left
+      gsap.fromTo(
+        card1Ref.current,
+        {
+          x: -150,
+          opacity: 0,
+          scale: 0.95,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card1Ref.current,
+            start: "top 85%",
+            end: "top 40%",
+            scrub: 1,
+          },
+        }
+      );
+
+      // Card 2 - from right
+      gsap.fromTo(
+        card2Ref.current,
+        {
+          x: 150,
+          opacity: 0,
+          scale: 0.95,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card2Ref.current,
+            start: "top 85%",
+            end: "top 40%",
+            scrub: 1,
+          },
+        }
+      );
+
+      // Card 3 - from left
+      gsap.fromTo(
+        card3Ref.current,
+        {
+          x: -150,
+          opacity: 0,
+          scale: 0.95,
+        },
+        {
+          x: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card3Ref.current,
+            start: "top 85%",
+            end: "top 40%",
+            scrub: 1,
+          },
+        }
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div
       className={`w-full  bg-white flex flex-col items-center justify-center gap-4 md:px-4 md:py-8 ${michroma.className}`}
     >
       {/* 1. TECHNICAL WORKSHOPS */}
-      <EventCard image="/workshops.png" href="/workshops">
+      <EventCard image="/workshops.png" href="/workshops" cardRef={card1Ref}>
         <div className="flex flex-col md:flex-row justify-between w-full items-end md:items-center text-center md:text-right">
           <SchoolInfo school="INNOVATE - BUILD - LEARN" />
           <div className="md:max-w-[60%] mx-auto md:mx-0">
@@ -117,7 +210,7 @@ export default function Explore() {
       </EventCard>
 
       {/* 2. COMPETITIONS */}
-      <EventCard image="/competitions.png" href="/competitions">
+      <EventCard image="/competitions.png" href="/competitions" cardRef={card2Ref}>
         <div className="flex flex-col md:flex-row justify-between w-full items-end md:items-center text-center md:text-left">
           <LargeSurname name="THRILLING" surname="COMPETITIONS" />
           <SchoolInfo school="INNOVATE - COMPETE - CONQUER" />
@@ -125,7 +218,7 @@ export default function Explore() {
       </EventCard>
 
       {/* 3. LECTURES */}
-      <EventCard image="/lecture.png" href="/lectures">
+      <EventCard image="/lecture.png" href="/lectures" cardRef={card3Ref}>
         <div className="flex flex-col md:flex-row justify-between w-full items-end md:items-center text-center md:text-right">
           <SchoolInfo school="THINK - INSPIRE - INNOVATE" />
           <div className="md:max-w-[45%] mx-auto md:mx-0">
