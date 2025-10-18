@@ -5,6 +5,7 @@ import Proshow from "@/components/proshow/proshow";
 import Image from "next/image";
 import Explore from "@/app/components/Explore";
 import Expo from "../Expo";
+import Marquee from "@/app/components/Marquee";
 import Robowars from "@/app/components/Robowars";
 import MenuWrapper from "../MenuWrapper";
 import GamePage from "@/app/gaming/page";
@@ -354,6 +355,7 @@ export default function Sidebar() {
       <div className="md:ml-9">
         <section id="section-1">
           <Hero />
+          <Marquee text={"///SCROLL TO CONTINUE"}/>
         </section>
 
         <section id="section-2">
