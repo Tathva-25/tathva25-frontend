@@ -32,7 +32,7 @@ const REVEAL_INTERVAL_MS = 100;
             "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
   };
 
-  const handleVisitDashboard = () => {
+  const handleVisitDashboard = (router) => {
         router.push("/profile");
   };
 
@@ -172,8 +172,8 @@ export const Hero = () => {
 
         {isLoggedIn ? (
             <button
-                onClick={handleVisitDashboard}
-                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+                onClick={() => handleVisitDashboard(router)}
+                className={`${newfont.className}  absolute top-6 right-24 md:top-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
             >
                 Profile
             </button>
