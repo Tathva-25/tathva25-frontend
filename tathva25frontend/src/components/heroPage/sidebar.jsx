@@ -9,6 +9,7 @@ import Robowars from "@/app/components/Robowars";
 import MenuWrapper from "../MenuWrapper";
 import GamePage from "@/app/gaming/page";
 import { Hero } from "./hero";
+import { useRouter } from "next/navigation";
 import localfont from "next/font/local";
 import YourComponent from "@/app/components/Footer";
 
@@ -36,11 +37,28 @@ export default function Sidebar() {
   const [overallProgress, setOverallProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check for JWT in localStorage
+    const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
+    setIsLoggedIn(!!jwt);
+  }, []);
+
+  const handleGoogleSignIn = () => {
+    window.location.href =
+      "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
+  };
+
+  const handleVisitDashboard = () => {
+    router.push("/profile");
+  };
 
   const handleMenuButtonClick = () => {
-  setMenuOpen((prev) => !prev);
-};
-
+    setMenuOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,7 +130,6 @@ export default function Sidebar() {
     }
   };
 
-
   return (
     <>
       {/* Desktop Sidebar */}
@@ -126,38 +143,37 @@ export default function Sidebar() {
 
         <div className="relative h-full flex flex-col justify-between items-center py-3">
           {/* Menu Button at Top */}
-<div className="mt-4">
-  <button
-    onClick={() => setMenuOpen((prev) => !prev)}
-    className="w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-black/5 rounded transition-colors duration-200"
-    aria-label="Toggle menu"
-  >
-    {menuOpen ? (
-      // Close Icon (X)
-      <svg
-        className="w-5 h-5"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      >
-        <path d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    ) : (
-      // Hamburger Icon (Menu)
-      <svg
-        className="w-5 h-5"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-      >
-        <path d="M3 12h18M3 6h18M3 18h18" />
-      </svg>
-    )}
-  </button>
-</div>
-
+          <div className="mt-4">
+            <button
+              onClick={() => setMenuOpen((prev) => !prev)}
+              className="w-8 h-8 flex items-center justify-center /5 rounded transition-colors duration-200"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? (
+                // Close Icon (X)
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                // Hamburger Icon (Menu)
+                <svg
+                  className="w-5 h-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M3 12h18M3 6h18M3 18h18" />
+                </svg>
+              )}
+            </button>
+          </div>
 
           <div className="">
             <div
@@ -185,7 +201,7 @@ export default function Sidebar() {
                   onMouseEnter={() => setHovered(item.num)}
                   onMouseLeave={() => setHovered(null)}
                   onClick={() => scrollToSection(item.num)}
-                  className={`group relative w-full border-t border-black/90 flex flex-col items-center justify-start overflow-hidden transition-all duration-300 ease-in-out cursor-pointer ${
+                  className={`group relative w-full border-t border-black/90 flex flex-col items-center justify-start overflow-hidden font-light ease-in-out cursor-pointer ${
                     i === items.length - 1 ? "border-b border-black/90" : ""
                   } ${isExpanded ? "bg-black/5" : ""}`}
                   style={{
@@ -202,7 +218,7 @@ export default function Sidebar() {
 
                   <div className="relative z-10 w-full flex flex-col items-center">
                     <span
-                      className={`text-[13px] inline-block mt-[10px] transition-all duration-300 ${
+                      className={`text-[13px] inline-block mt-[10px] font-light ${
                         isActive && progress > 30 ? "text-white" : "text-black"
                       }`}
                       style={{ transform: "rotate(90deg)" }}
@@ -212,7 +228,7 @@ export default function Sidebar() {
 
                     <div className="w-full flex justify-center mt-2 mb-5">
                       <div
-                        className={`text-[13px] whitespace-nowrap transition-all duration-300 ${
+                        className={`text-[13px] whitespace-nowrap font-light ${
                           isExpanded
                             ? "opacity-100 translate-y-0"
                             : "opacity-0 -translate-y-2"
@@ -251,16 +267,9 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {menuOpen && (
-  <div className="z-[100] bg-black/90 flex items-center justify-center">
-    <MenuWrapper onClose={() => setMenuOpen(false)} />
-  </div>
-)}
-
-
       {/* Mobile Menu Bar */}
       <div
-        className={`md:hidden fixed top-0 left-0 right-0 z-50 bg-white border-black ${someFont.className}`}
+        className={`md:hidden  top-0 left-0 right-0 fixed z-[500] bg-white border-black ${someFont.className}`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-black">
           {/* Logo - Smaller and positioned beside the menu */}
@@ -274,19 +283,36 @@ export default function Sidebar() {
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="text-sm tracking-wider">TATHVA 25</div>
           </div>
 
-          {/* Menu Button */}
+
+            <div className="flex gap-2 text-sm">
+          {isLoggedIn ? (
+            <button
+              onClick={handleVisitDashboard}
+              className={`${someFont.className} font-light z-30`}
+            >
+              Profile
+            </button>
+          ) : (
+            <button
+              onClick={handleGoogleSignIn}
+              className={`${someFont.className}  font-light z-30`}
+            >
+              LOGIN
+            </button>
+          )}
+
+          
           <div className="flex items-center gap-4">
             <button
-               onClick={() => setMenuOpen((prev) => !prev)}
-              className="w-8 h-8 flex items-center justify-center"
+              onClick={() => setMenuOpen((prev) => !prev)}
+              className="w-6 h-6 flex items-center justify-center"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? (
+              {menuOpen ? (
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -296,7 +322,7 @@ export default function Sidebar() {
                 </svg>
               ) : (
                 <svg
-                  className="w-6 h-6"
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -307,6 +333,7 @@ export default function Sidebar() {
               )}
             </button>
           </div>
+          </div>
         </div>
 
         {/* Scroll Progress Bar - Mobile Only */}
@@ -316,8 +343,14 @@ export default function Sidebar() {
             style={{ width: `${overallProgress}%` }}
           />
         </div>
-
       </div>
+
+      {menuOpen && (
+        <div className="absolute z-[100] bg-black/90 flex items-center justify-center">
+          <MenuWrapper onClose={() => setMenuOpen(false)} />
+        </div>
+      )}
+
       <div className="md:ml-9">
         <section id="section-1">
           <Hero />
@@ -342,16 +375,12 @@ export default function Sidebar() {
           <Expo />
         </section>
 
-
-
         <section id="section-7">
           <GamePage />
         </section>
 
-        <section
-          id={`section-footer`}
-        >
-<YourComponent/>
+        <section id={`section-footer`}>
+          <YourComponent />
         </section>
       </div>
     </>

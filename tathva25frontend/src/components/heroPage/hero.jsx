@@ -11,7 +11,6 @@ import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
 import logo from "../../../public/images/tathvawhitelogo.png";
 import Marquee from "@/app/components/Marquee";
-import {useRouter} from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 const customFont = localfont({
@@ -33,27 +32,7 @@ export const Hero = () => {
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const router = useRouter();
-
-  useEffect(() => {
-        // Check for JWT in localStorage
-        const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
-        setIsLoggedIn(!!jwt);
-  }, []);
-
-  const handleGoogleSignIn = () => {
-        window.location.href =
-            "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
-  };
-
-  const handleVisitDashboard = () => {
-        router.push("/profile");
-  };
-
-
-    const targetText = "TATHVA";
+  const targetText = "TATHVA";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const getRandomChar = () =>
@@ -165,21 +144,11 @@ export const Hero = () => {
     quality={90}
   />
   {/* ✅ Login Button (left of logo) */}
-        {isLoggedIn ? (
-            <button
-                onClick={handleVisitDashboard}
-                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-            >
-                Profile
-            </button>
-        ) : (
-            <button
-                onClick={handleGoogleSignIn}
-                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-            >
-                LOGIN
-            </button>
-        )}
+  <button
+    className={`${newfont.className} absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+  >
+    LOGIN
+  </button>
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>
@@ -199,8 +168,8 @@ export const Hero = () => {
     <div className="absolute inset-0 z-10">
       <div className="relative w-full h-full">
         {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
-        <div className="absolute top-18 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
-          <span className={`${newfont.className} text-sm font-semibold text-white`}>
+        <div className="absolute  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
+          <span className={`${newfont.className} text-xs md:text-sm font-semibold text-white`}>
             /// SOUTH INDIA'S BIGGEST TECH FEST
           </span>
         </div>
@@ -461,14 +430,6 @@ export const Hero = () => {
                 minWidth: 0,
               }}
             >
-              <div className="flex flex-col items-center justify-center h-full">
-                <span className="text-sm text-black drop-shadow-lg font-semibold hidden md:block">
-                  OCTOBER
-                </span>
-                <span className="text-sm text-black drop-shadow-lg font-semibold hidden md:block">
-                  23, 24, 25
-                </span>
-              </div>
             </div>
             
             {/* Remaining 5 columns - always visible */}
@@ -548,14 +509,6 @@ export const Hero = () => {
                 minWidth: 0,
               }}
             >
-              <div className="flex flex-col items-center justify-center h-full">
-                <span className={`${newfont.className} text-xl text-black drop-shadow-lg`}>
-                  OCTOBER
-                </span>
-                <span className={`${newfont.className} text-xl text-black drop-shadow-lg`}>
-                  23, 24, 25
-                </span>
-              </div>
             </div>
             
             {/* Remaining 5 columns - always visible */}
@@ -618,18 +571,31 @@ export const Hero = () => {
         {/* Original Content - TATHVA and Images */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-between h-full gap-4">
           {/* TATHVA Text - Centered */}
-          <div className="flex-1 flex items-center justify-center w-full "></div>
+          <div className="flex-1 flex items-center justify-center w-full relative">
+            {/* Date positioned to the left of TATHVA */}
+            <div className="absolute top-1/2 transform translate-y-4 md:left-32 md:-translate-y-4">
+              <span className={`${newfont.className}  text-lg md:text-2xl text-white drop-shadow-lg`}>
+                OCTOBER 23, 24, 25
+              </span>
+            </div>
+            {/* Year positioned to the right and below TATHVA */}
+            <div className="absolute right md:right-30 top-1/2 transform translate-y-10 md:translate-y-59">
+              <span className={`${newfont.className} text-lg md:text-2xl text-white drop-shadow-lg`}>
+                2025
+              </span>
+            </div>
+          </div>
 
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
             <div className="w-full scale-260 pb-110 md:pb-40 max-w-[90vw] md:max-w-7xl text-center ml-1  md:-ml-10">
               <span
                 className={`
-    ${customFont.className}
-    inline-block select-none transition-all duration-200 whitespace-nowrap 
-    text-[30px] md:text-[100px] tracking-widest
-    ${isAnimating ? "tracking-[0.001em]" : ""} text-white
-  `}
+              ${customFont.className}
+                inline-block select-none transition-all duration-200 whitespace-nowrap 
+                text-[34px] md:text-[100px] tracking-widest   mt-2 md:mt-0
+                ${isAnimating ? "tracking-[0.001em]" : ""} text-white
+                `}
               >
                 {displayText}
               </span>
@@ -643,7 +609,7 @@ export const Hero = () => {
                   src={wheel}
                   alt="wheel"
                   fill
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain mt-34 md:mt-0"
                   sizes="(max-width: 768px) 90vw, 500px"
                   priority
                 />
@@ -663,14 +629,13 @@ export const Hero = () => {
               <div className="absolute inset-0 block sm:hidden flex items-center justify-center">
                 <Image 
                   src='/images/avatar-2.png'
-                  className="w-full scale-115 -mt-50"
+                  className="w-full scale-115 mt-40"
                   width={100}
                   height={100}
                   alt="Avatar Mobile"
                   priority
                   
                 />
-
               </div>
             </div>
           </div>
