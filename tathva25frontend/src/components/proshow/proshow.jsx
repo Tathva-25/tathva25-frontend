@@ -115,9 +115,9 @@ const Proshow = () => {
     const rotationProgress = currentIndex;
 
     const positions = {
-      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 }, // Left
+      0: { x: -320, scale: 0.75, opacity: 0.9, z: 10 }, // Left
       1: { x: 0, scale: 1.1, opacity: 1, z: 30 }, // Center
-      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 }, // Right
+      2: { x: 320, scale: 0.75, opacity: 0.9, z: 20 }, // Right
       3: { x: 0, scale: 0.5, opacity: 0, z: 0 }, // Hidden
     };
 
@@ -167,7 +167,7 @@ const Proshow = () => {
           {/* Background Image Placeholder */}
         </div>
 
-        <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 px-6 pl-10">
+        <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
           {/* Coordinates text */}
           <div className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}>
             11.3210°N <br />
