@@ -11,7 +11,7 @@ export default function Card({
   heading,
   description,
   barcodeValue,
-  sideImageUrl, // right side image next to description
+  sideImageUrl,
 }) {
   const cardWidth = 411;
   const imageWidth = 387;

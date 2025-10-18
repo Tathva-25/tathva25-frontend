@@ -3,6 +3,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Michroma } from "next/font/google";
 import Image from "next/image";
+import Card from "../../components/Card";
+import axios from "axios";
+import Link from "next/link";
+
 // Michroma font configuration
 const michroma = Michroma({
   weight: "400",
@@ -101,8 +105,8 @@ const TopSvg = ({ isAbsolute = false }) => (
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#EBAB4D" />
-          <stop offset="0.5" stop-color="white" />
-          <stop offset="1" stop-color="#EBAB4D" />
+          <stop offset="0.5" stopColor="white" />
+          <stop offset="1" stopColor="#EBAB4D" />
         </linearGradient>
       </defs>
     </svg>
@@ -217,26 +221,18 @@ const InteractiveShape = ({
   );
 };
 
-// Bottom SVG component with new shape, interactivity, and added barcodes
-const BottomSvgWithText = () => {
+// Bottom SVG component with new shape, interactivity, and added barcodes (original state)
+const BottomSvgWithText = ({ isMobile }) => {
   const [filledIndex, setFilledIndex] = useState(-1);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+  // isMobile state and useEffect have been removed from here and "lifted"
+  // to the Competitions component.
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const scale = isMobile ? 1.4 : 0.9; // increased scale for mobile
-  const foreignObjectHeight = isMobile ? 450 : 300;
-  const shapesDivMaxWidth = isMobile ? "80vw" : "1200px";
-  const shapesDivMarginTop = isMobile ? "30px" : "20px";
+  const scale = isMobile ? 1.2 : 0.9; // adjusted scale for better mobile responsiveness
+  const foreignObjectHeight = isMobile ? 400 : 450; // responsive height
+  const shapesDivMaxWidth = isMobile ? "90vw" : "1200px"; // increased mobile width
+  const shapesDivMarginTop = isMobile ? "20px" : "20px"; // consistent margin
 
   const shapes = [
     {
@@ -277,10 +273,11 @@ const BottomSvgWithText = () => {
       xmlns="http://www.w3.org/2000/svg"
       style={{
         width: "100vw",
-        minHeight: "83.8vw",
+        height: isMobile ? "100vh" : "auto", // responsive height
         display: "block",
         position: "relative",
         zIndex: 2,
+        minHeight: isMobile ? "600px" : "800px", // ensure minimum height
       }}
     >
       {/* Main background path - fill only, no stroke */}
@@ -320,9 +317,9 @@ const BottomSvgWithText = () => {
             y2="94.1242"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#EBAB4D" />
-            <stop offset="0.5" stop-color="white" />
-            <stop offset="1" stop-color="#EBAB4D" />
+            <stop stopColor="#EBAB4D" />
+            <stop offset="0.5" stopColor="white" />
+            <stop offset="1" stopColor="#EBAB4D" />
           </linearGradient>
         </defs>
       </svg>
@@ -348,10 +345,11 @@ const BottomSvgWithText = () => {
               justifyItems: isMobile ? "center" : "flex-start",
               justifyContent: "center",
               alignItems: "center",
-              gap: "10px",
+              gap: isMobile ? "8px" : "10px",
               marginTop: shapesDivMarginTop,
               width: "100%",
               maxWidth: shapesDivMaxWidth,
+              padding: isMobile ? "0 10px" : "0", // add padding for mobile
             }}
           >
             {shapes.map((shape, index) => (
@@ -376,30 +374,84 @@ const BottomSvgWithText = () => {
 // Main Competitions component with scroll animation fix
 const Competitions = () => {
   const [topAbsolute, setTopAbsolute] = useState(false);
+  const [competitions, setCompetitions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filter, setFilter] = useState("ALL"); // This filter is from your original code
+  const [svgHeight, setSvgHeight] = useState(0); // Track SVG height
+
+  // State "lifted" from BottomSvgWithText
+  const [isMobile, setIsMobile] = useState(false);
+  const bottomSvgRef = useRef(null); // Ref for measuring SVG
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is md breakpoint
+
+      // Measure SVG height for absolute positioning
+      if (bottomSvgRef.current) {
+        const rect = bottomSvgRef.current.getBoundingClientRect();
+        setSvgHeight(rect.height);
+      }
+    };
+
+    // Initial check
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY || window.pageYOffset || 0;
-      setTopAbsolute(y >= 389);
+      setTopAbsolute(y >= 375);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Updated useEffect to match your axios example pattern
+  useEffect(() => {
+    const getCompetitions = async () => {
+      try {
+        setLoading(true);
+        const url = `${process.env.NEXT_PUBLIC_API}/api/events/all?type=competitions`;
+        const response = await axios.get(url);
+
+        // Make sure events exist and filter based on `isFull`
+        const events = response.data?.events || [];
+        const filteredEvents = events.filter((e) => e.isFull !== true);
+        // or: events.filter(e => e.isFull) if you want only true
+
+        setCompetitions(filteredEvents);
+        console.log("Fetched competitions:", filteredEvents);
+
+        setError(null);
+      } catch (err) {
+        console.error("Failed to fetch competitions:", err);
+        setError(err.message || "Failed to load competitions");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getCompetitions();
+  }, []);
+
+  // Your original filter logic
+
   return (
     <div
       style={{
         width: "100vw",
         position: "relative",
-        overflow: "hidden",
         scrollBehavior: "smooth",
       }}
       className="ml-5"
     >
       {/* Background image */}
-
-      <div className=" top-0 left-0 w-full h-auto z-0">
+      <div className="top-0 left-0 w-full h-auto z-0">
         <Image
           width={1920}
           height={1080}
@@ -417,35 +469,128 @@ const Competitions = () => {
         />
         <h1
           style={{ WebkitTextStroke: "4px black" }}
-          className="fixed top-75 left-1/2 -translate-x-1/2 text-9xl text-white font-extrabold drop-shadow-lg  border-black px-6 py-2 z-10"
+          className="fixed top-75 left-1/2 -translate-x-1/2 text-9xl text-white font-extrabold drop-shadow-lg border-black px-6 py-2 z-10"
         >
           COMPETITIONS
         </h1>
 
-        {/* MODIFIED SECTION:
-          This container for TopSvg now uses the 'topAbsolute' state 
-          to toggle its positioning.
-        */}
-        <div // Removed 'fixed' and 'z-100' from className
+        {/* Top header SVG */}
+        <div
           style={{
             position: topAbsolute ? "absolute" : "fixed",
-            top: topAbsolute ? "390px" : "0px",
-            left: 0, // Explicitly set left
-            zIndex: 100, // Apply z-index here
+            top: topAbsolute ? "-100px" : "0px",
+            left: 0,
+            zIndex: 100,
           }}
-          className={`${topAbsolute ? "ml-1" : "ml-6"} `}
+          className={`${topAbsolute ? "ml-1" : "ml-5"} `}
         >
           <TopSvg />
         </div>
       </div>
 
-      {/* Top SVG overlay (user's comment) */}
-
-      {/* Bottom SVG overlay */}
-      <div className="mt-100 z-50 relative">
+      {/* Bottom SVG + Competitions wrapper */}
+      <div className="relative" style={{ minHeight: "200vh" }}>
         {" "}
-        {/* This margin-top: 400px is crucial */}
-        <BottomSvgWithText />
+        {/* Ensure enough space for absolutely positioned cards */}
+        {/* Bottom SVG */}
+        <div
+          className={`relative z-10 ${isMobile ? "mt-100" : "mt-120"}`}
+          id="bottom-svg-container"
+          ref={bottomSvgRef}
+        >
+          <BottomSvgWithText isMobile={isMobile} />
+        </div>
+        {/* Competitions grid - ABSOLUTELY POSITIONED BELOW BottomSvg */}
+        <section
+          style={{
+            position: "absolute",
+            top: isMobile ? "50vh" : "55vh", // Moved cards higher - reduced by 10vh
+            left: "0",
+            right: "0",
+            zIndex: 20,
+            padding: "0 16px",
+            paddingTop: "2rem",
+            width: "100%",
+          }}
+          className="bg-white"
+        >
+          {loading && (
+            <div
+              style={{ color: "#000", textAlign: "center", margin: "24px 0" }}
+            >
+              Loading competitions...
+            </div>
+          )}
+          {error && (
+            <div
+              style={{
+                color: "#b91c1c",
+                textAlign: "center",
+                margin: "24px 0",
+              }}
+            >
+              {error}
+            </div>
+          )}
+          {!loading && !error && (
+            <div
+              className={`gapx-20 justify-evenly flex flex-wrap ${
+                isMobile ? "px-2 py-4" : "px-4 py-6"
+              }`}
+            >
+              {competitions.map((item, idx) => {
+                const {
+                  id,
+                  heading,
+                  description,
+                  price,
+                  datetime,
+                  time,
+                  venue,
+                  picture,
+                } = item;
+
+                // Generate barcode value based on workshop ID
+                const barcodeValue = String(id).padStart(7, "0");
+
+                // Format description with additional info
+                const fullDescription = `${
+                  description ?? "No description available"
+                } `;
+
+                return (
+                  <Link
+                    href={`/competitions/${id}`}
+                    key={id}
+                    className="block transform hover:scale-102 transition-transform duration-500"
+                  >
+                    <div className="mb-10">
+                      <Card
+                        number={String(idx + 1).padStart(2, "0")}
+                        imageUrl={picture || "/images/card_01.png"}
+                        heading={heading ?? "Untitled Workshop"}
+                        description={fullDescription}
+                        barcodeValue={barcodeValue}
+                        sideImageUrl="/images/misc.png"
+                      />
+                    </div>
+                  </Link>
+                );
+              })}
+              {competitions.length === 0 && (
+                <div
+                  style={{
+                    color: "#000",
+                    textAlign: "center",
+                    margin: "32px 0",
+                  }}
+                >
+                  No competitions found for this filter.
+                </div>
+              )}
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
