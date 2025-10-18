@@ -185,7 +185,7 @@ export default function Sidebar() {
                 letterSpacing: "0.45em",
               }}
             >
-              TATHVA 25;
+              TATHVA 25
             </div>
           </div>
 
