@@ -95,7 +95,7 @@ const EventCard = ({ image, children, href, cardRef }) => (
     className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] group z-0"
   >
     <div
-      className="absolute inset-0 bg-cover scale-104 bg-center brightness-90 transition-transform duration-500 group-hover:scale-106"
+      className="absolute inset-0 bg-cover scale-104 bg-center brightness-70 transition-transform duration-500 group-hover:scale-106 "
       style={{ backgroundImage: `url('${image}')` }}
     ></div>
 

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import localFont from "next/font/local";
 import gsap from "gsap";
-import Ticket from "../Ticket";
-import TicketMobile from "../TicketMobile";
+import Ticket from "@/components/Ticket";
+import TicketMobile from "@/components/TicketMobile";
 import { Michroma } from "next/font/google";
-import { Arrow } from "../Arrow";
+import localFont from "next/font/local";
+import { Arrow } from "@/components/Arrow";
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -39,30 +39,29 @@ function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-const ticketData = [
-  {
-    day: 1,
-    date: 24,
-    price: 799,
-    eventId: 1617,
-    ticketId: 2315,
-  },
-  {
-    day: 2,
-    date: 25,
-    price: 799,
-    eventId: 1620,
-    ticketId: 2316,
-  },
-  {
-    day: 3,
-    date: 26,
-    price: 1399,
-    eventId: 1621,
-    ticketId: 2317,
-  },
-];
-
+  const ticketData = [
+    {
+      day: 1,
+      date: 24,
+      price: 399,
+      eventId: 1617,
+      ticketId: 2315,
+    },
+    {
+      day: 2,
+      date: 25,
+      price: 799,
+      eventId: 1620,
+      ticketId: 2316,
+    },
+    {
+      day: 3,
+      date: 26,
+      price: 1399,
+      eventId: 1621,
+      ticketId: 2317,
+    },
+  ];
 
   // initial gsap setup
   useEffect(() => {
@@ -185,45 +184,48 @@ const ticketData = [
       {/* Heading */}
       <div>
         <h1
-          className={`${fontspring.className} text-6xl font-bold z-20 relative lg:bottom-10 ${
+          className={`${
+            fontspring.className
+          } text-6xl font-bold z-20 relative lg:bottom-10 ${
             isMobile ? "mb-96" : "mb-56"
           }`}
         >
           PASSES
         </h1>
       </div>
-{ticketData.map((ticket, i) => (
-  <div
-    key={i}
-    className={`card card-${i} absolute cursor-pointer`}
-    onClick={() => moveToCenter(i)}
-    onTouchStart={handleTouchStart}
-    onTouchMove={handleTouchMove}
-    onTouchEnd={handleTouchEnd}
-  >
-    {isMobile ? (
-      <TicketMobile
-        day={ticket.day}
-        date={ticket.date}
-        price={ticket.price}
-        eventId={ticket.eventId}
-        ticketId={ticket.ticketId}
-      />
-    ) : (
-      <Ticket
-        day={ticket.day}
-        date={ticket.date}
-        price={ticket.price}
-        eventId={ticket.eventId}
-        ticketId={ticket.ticketId}
-      />
-    )}
-  </div>
-))}
+      {ticketData.map((ticket, i) => (
+        <div
+          key={i}
+          className={`card card-${i} absolute cursor-pointer`}
+          onClick={() => moveToCenter(i)}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {isMobile ? (
+            <TicketMobile
+              day={ticket.day}
+              date={ticket.date}
+              price={ticket.price}
+              eventId={ticket.eventId}
+              ticketId={ticket.ticketId}
+            />
+          ) : (
+            <Ticket
+              day={ticket.day}
+              date={ticket.date}
+              price={ticket.price}
+              eventId={ticket.eventId}
+              ticketId={ticket.ticketId}
+            />
+          )}
+        </div>
+      ))}
 
-
-      <div className="relative z-20 top-16 ">
-        <div className={`${mi.className} flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-4 text-xs sm:text-sm tracking-wider`}>
+      <div className="relative z-0 top-16 ">
+        <div
+          className={`${mi.className} flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-4 text-xs sm:text-sm tracking-wider`}
+        >
           {centerCard === 0 && (
             <>
               <span className="flex items-center gap-2">
@@ -236,11 +238,15 @@ const ticketData = [
               </span>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
-                <span>CONCLAVE</span>
+                <span>TECH CONCLAVE</span>
+              </span>
+                <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>INFORMALS</span>
               </span>
             </>
           )}
-          
+
           {centerCard === 1 && (
             <>
               <span className="flex items-center gap-2">
@@ -249,7 +255,7 @@ const ticketData = [
               </span>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
-                <span>SA + MHR</span>
+                <span>SA & MHR</span>
               </span>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
@@ -265,13 +271,17 @@ const ticketData = [
               </span>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
-                <span>CONCLAVE</span>
+                <span>INFORMALS</span>
               </span>
             </>
           )}
-          
+
           {centerCard === 2 && (
             <>
+                          <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>INFORMALS</span>
+              </span>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
                 <span>ARIVU</span>
@@ -284,13 +294,10 @@ const ticketData = [
                 <span className="text-white/60">•</span>
                 <span>DJ PERFORMANCE</span>
               </span>
-              <span className="flex items-center gap-2">
+
+                            <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
-                <span>EVENTS</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="text-white/60">•</span>
-                <span>CONCLAVE</span>
+                <span>OTHER EVENTS</span>
               </span>
             </>
           )}

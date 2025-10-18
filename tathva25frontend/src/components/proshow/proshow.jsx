@@ -22,7 +22,7 @@ const Proshow = () => {
     "/images/mithoon.png",
     "/images/arivu.png",
     "/images/sa.png",
-    "/images/mhr.png", // Fourth image for the fourth artist
+    "/images/mhr.png",
   ];
   const artists = [
     [
@@ -46,78 +46,105 @@ const Proshow = () => {
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const script1 = document.createElement("script");
-    script1.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
-    script1.async = true;
+    const isMobile = window.innerWidth < 768;
+    let intervalId;
 
-    const script2 = document.createElement("script");
-    script2.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
-    script2.async = true;
+    // keep a ref for paused state to avoid dependency issues
+    const pausedRef = { current: paused };
 
-    document.body.appendChild(script1);
-    document.body.appendChild(script2);
+    // small watcher to update the ref
+    const pauseWatcher = setInterval(() => {
+      pausedRef.current = paused;
+    }, 100);
 
-    script2.onload = () => {
-      const gsap = window.gsap;
-      const ScrollTrigger = window.ScrollTrigger;
+    if (!isMobile) {
+      const script1 = document.createElement("script");
+      script1.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
+      script1.async = true;
 
-      gsap.registerPlugin(ScrollTrigger);
+      const script2 = document.createElement("script");
+      script2.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
+      script2.async = true;
 
-      const section = sectionRef.current;
+      const script3 = document.createElement("script");
+      script3.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js";
+      script3.async = true;
 
-      if (section) {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top top",
-          end: () => `+=${window.innerHeight * 1.15}`,
-          pin: true,
-          scrub: 1,
-          onUpdate: (self) => {
-            setScrollProgress(self.progress);
-            // MODIFICATION 1: Changed multiplier to 3 for 4 items (indices 0-3)
-            const rawIndex = self.progress * 3;
-            const snappedIndex = Math.round(rawIndex);
-            // MODIFICATION 2: Set index directly to allow values 0, 1, 2, 3
-            setCurrentIndex(snappedIndex);
-          },
-        });
-      }
-    };
+      document.body.appendChild(script1);
+      document.body.appendChild(script2);
+      document.body.appendChild(script3);
+
+      script3.onload = () => {
+        const gsap = window.gsap;
+        const ScrollTrigger = window.ScrollTrigger;
+        const ScrollToPlugin = window.ScrollToPlugin;
+
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        const section = sectionRef.current;
+
+        if (section) {
+          ScrollTrigger.create({
+            id: "proshow-pin",
+            trigger: section,
+            start: "top top",
+            end: () => `+=${window.innerHeight * 1.15}`,
+            pin: true,
+            scrub: 1,
+            onUpdate: (self) => {
+              setScrollProgress(self.progress);
+              const totalSteps = artists.length - 1;
+              const rawIndex = self.progress * totalSteps;
+              const snappedIndex = Math.round(rawIndex);
+              setCurrentIndex(snappedIndex);
+            },
+          });
+        }
+      };
+    }
+
+    if (isMobile) {
+      intervalId = setInterval(() => {
+        if (!pausedRef.current) {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % artists.length);
+        }
+      }, 3000);
+    }
 
     return () => {
-      if (document.body.contains(script1)) document.body.removeChild(script1);
-      if (document.body.contains(script2)) document.body.removeChild(script2);
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      clearInterval(pauseWatcher);
+      if (!isMobile) {
+        document.body.removeChild(document.querySelector('script[src*="gsap.min.js"]'));
+        document.body.removeChild(document.querySelector('script[src*="ScrollTrigger.min.js"]'));
+        document.body.removeChild(document.querySelector('script[src*="ScrollToPlugin.min.js"]'));
+        if (window.ScrollTrigger) {
+          window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        }
       }
+      if (intervalId) clearInterval(intervalId);
     };
-  }, []);
-
+  }, []); // ✅ constant dependency array
+  // MODIFICATION 3: This function now uses `currentIndex` directly
   const getImageTransform = (imageIndex) => {
-    // MODIFICATION 3: Changed multiplier to 3 to match onUpdate logic
-    const rotationProgress = Math.round(scrollProgress * 3);
+    // The visual state is now driven by `currentIndex`, not calculated from scrollProgress.
+    // This makes both scrolling and clicking update the visuals consistently.
+    const rotationProgress = currentIndex;
 
-    // MODIFICATION 4: Added a 4th "hidden" position for the item not in view
     const positions = {
-      0: { x: -320, scale: 0.75, opacity: 0.6, z: 10 }, // Left
+      0: { x: -320, scale: 0.75, opacity: 0.9, z: 10 }, // Left
       1: { x: 0, scale: 1.1, opacity: 1, z: 30 }, // Center
-      2: { x: 320, scale: 0.75, opacity: 0.6, z: 20 }, // Right
+      2: { x: 320, scale: 0.75, opacity: 0.9, z: 20 }, // Right
       3: { x: 0, scale: 0.5, opacity: 0, z: 0 }, // Hidden
     };
 
-    // MODIFICATION 5: Updated formula to cycle through 4 items using modulo 4
-    // This keeps the left-center-right visual while rotating all four items
     let position = (imageIndex - rotationProgress + 1 + 4) % 4;
-
     const pos = positions[position];
 
-    // Handle case where pos might be undefined during quick scrolls
     if (!pos) {
-        return { transform: 'translateX(0px) scale(0.5)', opacity: 0, zIndex: 0 };
+      return { transform: 'translateX(0px) scale(0.5)', opacity: 0, zIndex: 0 };
     }
 
     return {
@@ -127,52 +154,88 @@ const Proshow = () => {
     };
   };
 
+  // MODIFICATION 4: Add a click handler function
+  const handleImageClick = (clickedIndex) => {
+    setPaused(true); // pause auto rotation
+
+    // If the clicked image is already in the center, do nothing.
+    if (clickedIndex === currentIndex) return;
+
+    const totalSteps = artists.length - 1;
+    const targetProgress = clickedIndex / totalSteps;
+
+// Get the ScrollTrigger instance by its ID
+    const st = window.ScrollTrigger?.getById("proshow-pin");
+    const gsap = window.gsap;
+    if (!st || !gsap) {
+      setCurrentIndex(clickedIndex);
+      return;
+    }
+
+// ✅ Clamp between 1% and 99% to avoid hitting exact start/end
+    const safeProgress = Math.min(Math.max(targetProgress, 0.01), 0.99);
+
+// ✅ Compute target scroll safely
+    const targetScroll = st.start + (st.end - st.start) * safeProgress;
+
+// ✅ Smooth scroll to it
+    gsap.to(window, {
+      scrollTo: targetScroll,
+      duration: 0.75,
+      ease: "power2.inOut",
+      onComplete: () => {
+        setCurrentIndex(clickedIndex);
+        setTimeout(() => setPaused(false), 8000); // optional
+      },
+    });
+  };
+
   return (
-    <div
-      ref={sectionRef}
-      className="h-[110vh] relative overflow-hidden"
-    >
-      <div>
-        {/* Background Image Placeholder */}
-      </div>
-
-      <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 px-6 pl-10">
-        {/* Coordinates text */}
-        <div className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}>
-          11.3210°N <br />
-          75.9320°E
-        </div>
-        <div className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}>
-          Be there <br />
-          Feel it <br />
-          Live it
+      <div
+          ref={sectionRef}
+          className="h-[110vh] relative overflow-hidden"
+      >
+        <div>
+          {/* Background Image Placeholder */}
         </div>
 
-        {/* Image section */}
-        <div className="md:w-[60%] flex justify-center relative z-30  ">
-          {/* Main Image */}
-          <Image
-            src="/images/proshow-main.png"
-            alt="Proshow main"
-            width={600}
-            height={400}
-            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-2 md:translate-y-0"
-            priority
-          />
-
-          {/* Text Image (overlayed and moves with main image) */}
-          <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-2 md:translate-y-0">
-            <Image
-              src="/images/proshowText.png"
-              alt="Proshow main text"
-              width={400}
-              height={400}
-              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
-            />
+        <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
+          {/* Coordinates text */}
+          <div className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}>
+            11.3210°N <br />
+            75.9320°E
+          </div>
+          <div className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}>
+            Be there <br />
+            Feel it <br />
+            Live it
           </div>
 
-          <style>
-            {` 
+          {/* Image section */}
+          <div className="md:w-[60%] flex justify-center relative z-30  ">
+            {/* Main Image */}
+            <Image
+                src="/images/proshow-main.png"
+                alt="Proshow main"
+                width={600}
+                height={400}
+                className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-2 md:translate-y-0"
+                priority
+            />
+
+            {/* Text Image (overlayed and moves with main image) */}
+            <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-2 md:translate-y-0">
+              <Image
+                  src="/images/proshowText.png"
+                  alt="Proshow main text"
+                  width={400}
+                  height={400}
+                  className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
+              />
+            </div>
+
+            <style>
+              {` 
               .animateSpin {
                 animation: slowspin 15s linear infinite;
               }
@@ -186,86 +249,89 @@ const Proshow = () => {
                 }
               }
             `}
-          </style>
+            </style>
 
-          {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
-            <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse" 
-              style={{ 
-                background: 'radial-gradient(ellipse 150% 120%, rgba(255, 244, 199, 1) 0%, rgba(251, 190, 36, 0.89) 30%, transparent 70%)', 
-                transform: 'scale(1)',
-                animation: 'pulse 3s ease-in-out infinite'
-              }} 
-            />
-            <div className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 ">
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className="absolute transition-all duration-500 ease-out"
-                  style={getImageTransform(index)}
-                >
-                  <Image
-                    src={img}
-                    alt={`Carousel image ${index + 1}`}
-                    width={280}
-                    height={170}
-                    className="rounded-xl object-cover"
-                  />
-                </div>
+            {/* Carousel */}
+            <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+              <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
+                   style={{
+                     background: 'radial-gradient(ellipse 150% 120%, rgba(255, 244, 199, 1) 0%, rgba(251, 190, 36, 0.89) 30%, transparent 70%)',
+                     transform: 'scale(1)',
+                     animation: 'pulse 3s ease-in-out infinite'
+                   }}
+              />
+              <div className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 ">
+                {images.map((img, index) => (
+                    // MODIFICATION 5: Add onClick handler and cursor style
+                    <div
+                        key={index}
+                        className="absolute transition-all duration-500 ease-out cursor-pointer"
+                        style={getImageTransform(index)}
+                        onClick={() => handleImageClick(index)}
+                    >
+                      <Image
+                          src={img}
+                          alt={`Carousel image ${index + 1}`}
+                          width={280}
+                          height={170}
+                          className="rounded-xl object-cover"
+                      />
+                    </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Text content */}
+          <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+            <div className="relative h-10 overflow-hidden">
+              {artists.map((item, index) => (
+                  <div
+                      key={index}
+                      className="absolute w-full transition-all duration-500 ease-out"
+                      style={{
+                        transform: currentIndex === index
+                            ? 'translateY(0)'
+                            : currentIndex > index
+                                ? 'translateY(-100%)'
+                                : 'translateY(100%)',
+                        opacity: currentIndex === index ? 1 : 0,
+                      }}
+                  >
+                    <div className={`md:px-6 text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
+                  </div>
               ))}
+            </div>
+
+            {/* MODIFIED THIS LINE */}
+            <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
+              {artists.map((item, index) => (
+                  <div
+                      key={index}
+                      className={`${michroma.className} absolute w-full transition-all duration-500 ease-out`}
+                      style={{
+                        transform: currentIndex === index
+                            ? 'translateY(0)'
+                            : currentIndex > index
+                                ? 'translateY(-100%)'
+                                : 'translateY(100%)',
+                        opacity: currentIndex === index ? 1 : 0,
+                      }}
+                  >
+                    <div className="leading-relaxed text-sm md:px-6 ">
+                      {item[1]}
+                    </div>
+                  </div>
+              ))}
+            </div>
+
+            {/* Button - separately controlled for mobile */}
+            <div className="flex justify-center md:ml-6 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
+              <DotGridButton text="Book Your Pass" />
             </div>
           </div>
         </div>
-
-      {/* Text content */}
-      <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
-        <div className="relative h-10 overflow-hidden">
-          {artists.map((item, index) => (
-            <div
-              key={index}
-              className="absolute w-full transition-all duration-500 ease-out"
-              style={{
-                transform: currentIndex === index 
-                  ? 'translateY(0)' 
-                  : currentIndex > index 
-                    ? 'translateY(-100%)' 
-                    : 'translateY(100%)',
-                opacity: currentIndex === index ? 1 : 0,
-              }}
-            >
-              <div className={`md:px-6 text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
-            </div>
-          ))}
-        </div>
-        
-        <div className="relative min-h-[200px] -mt-7 md:-mt-0 overflow-hidden">
-          {artists.map((item, index) => (
-            <div
-              key={index}
-              className={`${michroma.className} absolute w-full transition-all duration-500 ease-out`}
-              style={{
-                transform: currentIndex === index 
-                  ? 'translateY(0)' 
-                  : currentIndex > index 
-                    ? 'translateY(-100%)' 
-                    : 'translateY(100%)',
-                opacity: currentIndex === index ? 1 : 0,
-              }}
-            >
-              <div className="leading-relaxed text-sm md:px-6 ">
-                {item[1]}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Button - separately controlled for mobile */}
-        <div className="flex justify-center  md:ml-0 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
-          <DotGridButton text="Book Your Pass" />
-        </div>
       </div>
-      </div>
-    </div>
   );
 };
 
