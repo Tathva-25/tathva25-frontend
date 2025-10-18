@@ -64,7 +64,7 @@ const SocialIcon = ({ href = "#", src, alt }) => (
 
 const DesktopFooter = () => (
     <footer
-        className={`hidden lg:block relative w-full ${michroma.className} text-white mt-24`}
+        className={`hidden lg:block relative w-full ${michroma.className} text-white `}
         style={{
             backgroundImage: `url(${Background.src})`,
             backgroundRepeat: 'no-repeat',
@@ -95,19 +95,13 @@ const DesktopFooter = () => (
                         {/* Block 1: Logo + Form */}
                         <div>
                             <Image src={Tathvalogo} alt="Tathva Logo" width={80} height={80} />
-                            <h3 className="text-[clamp(1rem,_1.5vw,_1.25rem)] mt-6 mb-2">Stay Informed</h3>
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="bg-transparent border-b border-white/50 w-full pb-2 outline-none placeholder:text-white/50 text-[clamp(0.7rem,_1vw,_0.875rem)]"
-                            />
+                            <h3 className="text-[clamp(1rem,_1.5vw,_1.25rem)] mt-1">Stay Informed</h3>
                         </div>
 
                         {/* Block 2: Contact Info */}
                         <div className="text-[clamp(0.7rem,_1vw,_0.875rem)]">
                             <span className="text-yellow-400">[CONTACT]</span>
-                            <p>EMAIL: tathva2025@gmail.com</p>
-                            <p>PHONE: +91 88888 88888</p>
+                            <p>EMAIL: support@tathva.org</p>
                         </div>
 
                         {/* Block 3: Copyright */}

@@ -5,12 +5,14 @@ import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
-import heroAvatar from "../../../public/images/avatar-body.png";
+import heroAvatar from "../../../public/images/heroImage.png";
+
 import wheel from "../../../public/images/wheel.png";
 import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
 import logo from "../../../public/images/tathvawhitelogo.png";
 import Marquee from "@/app/components/Marquee";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 const customFont = localfont({
@@ -23,6 +25,18 @@ const SCRAMBLE_INTERVAL_MS = 40;
 const SCRAMBLE_DURATION_MS = 5000;
 const REVEAL_INTERVAL_MS = 100;
 
+
+
+  const handleGoogleSignIn = () => {
+        window.location.href =
+            "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
+  };
+
+  const handleVisitDashboard = (router) => {
+        router.push("/profile");
+  };
+
+
 export const Hero = () => {
   const [displayText, setDisplayText] = useState("TATHVA");
   const [isAnimating, setIsAnimating] = useState(false);
@@ -31,6 +45,10 @@ export const Hero = () => {
   const wheelRef = useRef(null);
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const router = useRouter();
 
   const targetText = "TATHVA";
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -99,6 +117,7 @@ export const Hero = () => {
       { threshold: 0.1 }
     );
 
+
     if (sectionRef.current) {
       observer.observe(sectionRef.current);
     }
@@ -109,6 +128,13 @@ export const Hero = () => {
       }
     };
   }, []);
+
+  
+  useEffect(() => {
+        const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
+        setIsLoggedIn(!!jwt);
+  }, []);
+
 
   useEffect(() => {
     return () => {
@@ -131,7 +157,7 @@ export const Hero = () => {
   return (
     <section
       ref={sectionRef}
-      className={`relative h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
+      className={`relative h-[95vh] sm:h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
       {/* ✅ Top-right Logo */}
   <Image
@@ -143,22 +169,32 @@ export const Hero = () => {
     priority
     quality={90}
   />
-  {/* ✅ Login Button (left of logo) */}
-  <button
-    className={`${newfont.className} absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-  >
-    LOGIN
-  </button>
+
+        {isLoggedIn ? (
+            <button
+                onClick={() => handleVisitDashboard(router)}
+                className={`${newfont.className}  absolute top-6 right-24 md:top-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+            >
+                Profile
+            </button>
+        ) : (
+            <button
+                onClick={handleGoogleSignIn}
+                className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
+            >
+                LOGIN
+            </button>
+        )}
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>
           <Image
             src={Background}
-            className="absolute md:w-[100vw] md:h-auto h-screen inset-0 object-cover md:rotate-0 overflow-x-hidden scale-110"
+            className="absolute mt-10  md:w-[100vw] h-[80vh] md:h-screen inset-0 object-cover md:rotate-0 overflow-x-hidden scale-120"
             alt="Background"
             fill
             priority
-            quality={90}
+            quality={100}
             sizes="100vw"
           />
         </div>
@@ -168,7 +204,7 @@ export const Hero = () => {
     <div className="absolute inset-0 z-10">
       <div className="relative w-full h-full">
         {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
-        <div className="absolute  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
+        <div className="hidden md:absolute  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
           <span className={`${newfont.className} text-xs md:text-sm font-semibold text-white`}>
             /// SOUTH INDIA'S BIGGEST TECH FEST
           </span>
@@ -254,7 +290,6 @@ export const Hero = () => {
             ></div>
           </div>
 
-          {/* Row 2 - Middle row - 25% on mobile, 35% on desktop */}
           <div 
             className="flex flex-nowrap md:hidden" 
             style={{ height: "10%" }} /* Mobile: 25% height */
@@ -573,27 +608,59 @@ export const Hero = () => {
           {/* TATHVA Text - Centered */}
           <div className="flex-1 flex items-center justify-center w-full relative">
             {/* Date positioned to the left of TATHVA */}
-            <div className="absolute top-1/2 transform translate-y-4 md:left-32 md:-translate-y-4">
-              <span className={`${newfont.className}  text-lg md:text-2xl text-white drop-shadow-lg`}>
-                OCTOBER 23, 24, 25
+            <div className="absolute top-28 transform translate-y-4 md:left-32 md:-translate-y-4">
+              <span className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}>
+                OCTOBER 24, 25, 26
               </span>
             </div>
             {/* Year positioned to the right and below TATHVA */}
             <div className="absolute right md:right-30 top-1/2 transform translate-y-10 md:translate-y-59">
-              <span className={`${newfont.className} text-lg md:text-2xl text-white drop-shadow-lg`}>
+              <span className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}>
                 2025
               </span>
             </div>
           </div>
 
+          {/* Mobile Text Block */}
+<div className="flex flex-col items-center justify-center  gap-5 text-center md:hidden w-full -translate-y-18 ">
+
+   <div className="w-full px-6 ">
+    <span
+      className={`${newfont.className} text-white text-[12px] tracking-[0.3em] `}
+    >
+      SOUTH INDIA&apos;S LARGEST TECHFEST
+    </span>
+  </div>
+
+
+  <span
+    className={`${customFont.className} text-white text-7xl sm:text-9xl tracking-widest`}
+  >
+    TATHVA
+  </span>
+  <span
+    className={`${newfont.className} text-white text-[14px] tracking-[0.2em]`}
+  >
+    OCTOBER 24, 25, 26
+  </span>
+  <span
+    className={`${newfont.className} text-white text-[14px] tracking-[0.2em]`}
+  >
+    2025
+  </span>
+ 
+</div>
+
+
           {/* Hero Images Container - Positioned at bottom */}
           <div className="relative w-[90%] max-w-[100vw] md:max-w-md aspect-square ">
-            <div className="w-full scale-260 pb-110 md:pb-40 max-w-[90vw] md:max-w-7xl text-center ml-1  md:-ml-10">
+            <div className="w-full hidden md:block scale-260 pb-110 md:pb-40 max-w-[90vw] md:max-w-7xl text-center ml-1  md:-ml-10">
               <span
                 className={`
               ${customFont.className}
-                inline-block select-none transition-all duration-200 whitespace-nowrap 
-                text-[34px] md:text-[100px] tracking-widest   mt-2 md:mt-0
+                sm:inline-block select-none transition-all duration-200 whitespace-nowrap 
+                hidden 
+                text-[34px] md:text-[60px] lg:text-[100px] tracking-widest   mt-2 md:mt-0
                 ${isAnimating ? "tracking-[0.001em]" : ""} text-white
                 `}
               >
@@ -601,9 +668,9 @@ export const Hero = () => {
               </span>
             </div>
 
-            <div>
+            <div className="">
               {/* Wheel - Bottom Layer */}
-              <div className="absolute inset-0 -translate-y-5 flex items-center justify-center sm:-mt-30 scale-120 -mt-110 ml-1 md:ml-0 ">
+              <div className="absolute inset-0 -translate-y-5 flex items-center -mt-80 justify-center sm:-mt-30 scale-120  ml-1 ">
                 <Image
                   ref={wheelRef}
                   src={wheel}
@@ -615,26 +682,14 @@ export const Hero = () => {
                 />
               </div>
 
-              {/* Avatar - Middle Layer */}
-              <div className="absolute inset-0 flex items-center justify-center hidden md:block">
+              <div className="absolute inset-0 flex items-center justify-center md:block">
                 <Image
                   src={heroAvatar}
                   alt="Avatar"
-                  className="w-full h-full object-contain scale-150 -mt-5"
+                  className="w-full h-full object-contain scale-120 mt-10 md:scale-150 md:mt-9"
                   fill
-                  sizes="(max-width: 768px) 90vw, 500px"
+                  sizes=""
                   priority
-                />
-              </div>
-              <div className="absolute inset-0 block sm:hidden flex items-center justify-center">
-                <Image 
-                  src='/images/avatar-2.png'
-                  className="w-full scale-115 mt-40"
-                  width={100}
-                  height={100}
-                  alt="Avatar Mobile"
-                  priority
-                  
                 />
               </div>
             </div>

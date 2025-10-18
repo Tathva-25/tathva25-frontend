@@ -95,7 +95,7 @@ const EventCard = ({ image, children, href, cardRef }) => (
     className="relative w-full h-[30vh] overflow-hidden cursor-pointer bg-[#1a1a1a] group z-0"
   >
     <div
-      className="absolute inset-0 bg-cover bg-center brightness-90 transition-transform duration-500 group-hover:scale-102"
+      className="absolute inset-0 bg-cover scale-104 bg-center brightness-90 transition-transform duration-500 group-hover:scale-106"
       style={{ backgroundImage: `url('${image}')` }}
     ></div>
 
@@ -194,7 +194,7 @@ export default function Explore() {
 
   return (
     <div
-      className={`w-full min-h-screen bg-white flex flex-col items-center justify-center gap-4 md:px-4 py-8 ${michroma.className}`}
+      className={`w-full  bg-white flex flex-col items-center justify-center gap-4 md:px-4 md:py-8 ${michroma.className}`}
     >
       {/* 1. TECHNICAL WORKSHOPS */}
       <EventCard image="/workshops.png" href="/workshops" cardRef={card1Ref}>
