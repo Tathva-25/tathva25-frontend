@@ -113,6 +113,11 @@ export default function Explore() {
   const card3Ref = useRef(null);
 
   useEffect(() => {
+    // Only run animations on desktop (768px and above)
+    const isDesktop = window.innerWidth >= 768;
+    
+    if (!isDesktop) return;
+
     const ctx = gsap.context(() => {
       // Card 1 - from left
       gsap.fromTo(
