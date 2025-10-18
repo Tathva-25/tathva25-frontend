@@ -49,81 +49,84 @@ const Proshow = () => {
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const script1 = document.createElement("script");
-    script1.src =
-        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
-    script1.async = true;
-
-    const script2 = document.createElement("script");
-    script2.src =
-        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
-    script2.async = true;
-
-    const script3 = document.createElement("script");
-    script3.src =
-        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js";
-    script3.async = true;
-
-    document.body.appendChild(script1);
-    document.body.appendChild(script2);
-    document.body.appendChild(script3);
-
-    script3.onload = () => {
-      const gsap = window.gsap;
-      const ScrollTrigger = window.ScrollTrigger;
-      const ScrollToPlugin = window.ScrollToPlugin;
-
-      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-      const section = sectionRef.current;
-
-      if (section) {
-        ScrollTrigger.create({
-          id: "proshow-pin",
-          trigger: section,
-          start: "top top",
-          end: () => `+=${window.innerHeight * 1.15}`,
-          pin: true,
-          scrub: 1,
-          onUpdate: (self) => {
-            setScrollProgress(self.progress);
-            const totalSteps = artists.length - 1;
-            const rawIndex = self.progress * totalSteps;
-            const snappedIndex = Math.round(rawIndex);
-
-            // Use a functional update to avoid stale state issues if needed,
-            // though direct set should be fine here as GSAP runs outside React's cycle.
-            setCurrentIndex(snappedIndex);
-          },
-        });
-      }
-    };
-
     const isMobile = window.innerWidth < 768;
-
     let intervalId;
+
+    // keep a ref for paused state to avoid dependency issues
+    const pausedRef = { current: paused };
+
+    // small watcher to update the ref
+    const pauseWatcher = setInterval(() => {
+      pausedRef.current = paused;
+    }, 100);
+
+    if (!isMobile) {
+      const script1 = document.createElement("script");
+      script1.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
+      script1.async = true;
+
+      const script2 = document.createElement("script");
+      script2.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
+      script2.async = true;
+
+      const script3 = document.createElement("script");
+      script3.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js";
+      script3.async = true;
+
+      document.body.appendChild(script1);
+      document.body.appendChild(script2);
+      document.body.appendChild(script3);
+
+      script3.onload = () => {
+        const gsap = window.gsap;
+        const ScrollTrigger = window.ScrollTrigger;
+        const ScrollToPlugin = window.ScrollToPlugin;
+
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        const section = sectionRef.current;
+
+        if (section) {
+          ScrollTrigger.create({
+            id: "proshow-pin",
+            trigger: section,
+            start: "top top",
+            end: () => `+=${window.innerHeight * 1.15}`,
+            pin: true,
+            scrub: 1,
+            onUpdate: (self) => {
+              setScrollProgress(self.progress);
+              const totalSteps = artists.length - 1;
+              const rawIndex = self.progress * totalSteps;
+              const snappedIndex = Math.round(rawIndex);
+              setCurrentIndex(snappedIndex);
+            },
+          });
+        }
+      };
+    }
 
     if (isMobile) {
       intervalId = setInterval(() => {
-        if (!paused) {
+        if (!pausedRef.current) {
           setCurrentIndex((prevIndex) => (prevIndex + 1) % artists.length);
         }
       }, 3000);
     }
 
     return () => {
-      // existing cleanup
-      if (document.body.contains(script1)) document.body.removeChild(script1);
-      if (document.body.contains(script2)) document.body.removeChild(script2);
-      if (document.body.contains(script3)) document.body.removeChild(script3);
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      clearInterval(pauseWatcher);
+      if (!isMobile) {
+        document.body.removeChild(document.querySelector('script[src*="gsap.min.js"]'));
+        document.body.removeChild(document.querySelector('script[src*="ScrollTrigger.min.js"]'));
+        document.body.removeChild(document.querySelector('script[src*="ScrollToPlugin.min.js"]'));
+        if (window.ScrollTrigger) {
+          window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        }
       }
-      // 👇 cleanup interval
       if (intervalId) clearInterval(intervalId);
     };
-  }, []); // The dependency array is now empty
-
+  }, []); // ✅ constant dependency array
   // MODIFICATION 3: This function now uses `currentIndex` directly
   const getImageTransform = (imageIndex) => {
     // The visual state is now driven by `currentIndex`, not calculated from scrollProgress.
@@ -161,6 +164,7 @@ const Proshow = () => {
     const totalSteps = artists.length - 1;
     const targetProgress = clickedIndex / totalSteps;
 
+// Get the ScrollTrigger instance by its ID
     const st = window.ScrollTrigger?.getById("proshow-pin");
     const gsap = window.gsap;
     if (!st || !gsap) {
@@ -168,16 +172,20 @@ const Proshow = () => {
       return;
     }
 
-    const targetScroll = st.start + (st.end - st.start) * targetProgress;
+// ✅ Clamp between 1% and 99% to avoid hitting exact start/end
+    const safeProgress = Math.min(Math.max(targetProgress, 0.01), 0.99);
 
+// ✅ Compute target scroll safely
+    const targetScroll = st.start + (st.end - st.start) * safeProgress;
+
+// ✅ Smooth scroll to it
     gsap.to(window, {
       scrollTo: targetScroll,
       duration: 0.75,
       ease: "power2.inOut",
       onComplete: () => {
         setCurrentIndex(clickedIndex);
-        // Optional: resume auto rotation after a delay
-        setTimeout(() => setPaused(false), 8000); // 8s pause
+        setTimeout(() => setPaused(false), 8000); // optional
       },
     });
   };
