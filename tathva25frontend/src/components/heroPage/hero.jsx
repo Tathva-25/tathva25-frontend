@@ -168,7 +168,7 @@ export const Hero = () => {
     <div className="absolute inset-0 z-10">
       <div className="relative w-full h-full">
         {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
-        <div className="absolute  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
+        <div className="absolute  top-95 right-10 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
           <span className={`${newfont.className} text-xs md:text-sm font-semibold text-white`}>
             /// SOUTH INDIA'S BIGGEST TECH FEST
           </span>
@@ -573,13 +573,13 @@ export const Hero = () => {
           {/* TATHVA Text - Centered */}
           <div className="flex-1 flex items-center justify-center w-full relative">
             {/* Date positioned to the left of TATHVA */}
-            <div className="absolute top-1/2 transform translate-y-4 md:left-32 md:-translate-y-4">
+            <div className="absolute top-1/2 transform translate-y-4 md:left-32 md:-translate-y-9">
               <span className={`${newfont.className}  text-lg md:text-2xl text-white drop-shadow-lg`}>
-                OCTOBER 23, 24, 25
+                OCTOBER 24, 25, 26
               </span>
             </div>
             {/* Year positioned to the right and below TATHVA */}
-            <div className="absolute right md:right-30 top-1/2 transform translate-y-10 md:translate-y-59">
+            <div className="absolute right md:right-30 top-1/2 transform translate-y-10 md:translate-y-62">
               <span className={`${newfont.className} text-lg md:text-2xl text-white drop-shadow-lg`}>
                 2025
               </span>
