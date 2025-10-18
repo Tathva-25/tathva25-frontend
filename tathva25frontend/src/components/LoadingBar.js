@@ -215,25 +215,7 @@ export default function LoadingBar({ onComplete }) {
           </div>
         </div>
 
-        <div className="text-center">
-          <h3 className="text-amber-900 text-lg font-light tracking-[0.3em] uppercase">
-            {"LOADING".split("").map((char, i) => (
-              <span
-                key={i}
-                className="loading-char inline-block"
-                style={{ opacity: 0, transform: "translateY(20px)" }}
-              >
-                {char}
-              </span>
-            ))}
-          </h3>
-          <p
-            className="subtitle text-amber-700 text-xs font-light tracking-widest mt-1"
-            style={{ opacity: 0 }}
-          >
-            CHRONOGENESIS
-          </p>
-        </div>
+
       </div>
 
       <style jsx>{`

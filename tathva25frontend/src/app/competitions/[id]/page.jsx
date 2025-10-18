@@ -59,6 +59,7 @@ export default async function Page({ params }) {
   return (
     <div className="flex justify-center min-h-screen items-center p-4">
       <CardDetails
+        id = {id}
         src={src}
         alt={alt}
         title={title}
