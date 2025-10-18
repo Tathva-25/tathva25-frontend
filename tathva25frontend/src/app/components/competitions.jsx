@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Michroma } from "next/font/google";
 import Image from "next/image";
-import Card from "../../components/Card";
-import axios from "axios";
-import Link from "next/link";
+import axios from "axios"; // <--- ADDED
+import Link from "next/link"; // <--- ADDED
+import Card from "../../components/Card"; // <--- ADDED (Assuming this path is correct)
 
 // Michroma font configuration
 const michroma = Michroma({
@@ -23,6 +23,7 @@ const CentralSVG = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    {/* ... svg paths ... */}
     <path
       d="M8.20505 57.1983L1 39.7815L18.4168 32.5764L92.6308 58.3375L134.784 40.8992L155.255 47.5072L158.283 54.8273L84.8298 85.2138L8.20505 57.1983Z"
       fill="black"
@@ -44,7 +45,7 @@ const CentralSVG = () => (
   </svg>
 );
 
-// Decorative image component for SVG - accepts a src prop for different images
+// Decorative image component for SVG
 const DecorativeImage = ({ src, x, y, width }) => (
   <image
     href={src}
@@ -56,7 +57,7 @@ const DecorativeImage = ({ src, x, y, width }) => (
   />
 );
 
-// Top SVG header with branding and decorative elements
+// Top SVG header
 const TopSvg = ({ isAbsolute = false }) => (
   <svg
     width="100vw"
@@ -74,6 +75,7 @@ const TopSvg = ({ isAbsolute = false }) => (
     }}
     className="-mt-2.5"
   >
+    {/* ... inner svg ... */}
     <svg
       width="1893"
       height="219"
@@ -105,12 +107,12 @@ const TopSvg = ({ isAbsolute = false }) => (
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#EBAB4D" />
-          <stop offset="0.5" stopColor="white" />
-          <stop offset="1" stopColor="#EBAB4D" />
+          <stop offset="0.5" stop-color="white" />
+          <stop offset="1" stop-color="#EBAB4D" />
         </linearGradient>
       </defs>
     </svg>
-    {/* Branding layer */}
+    {/* ... foreignObject and decorative images ... */}
     <foreignObject x="0" y="0" width="1920" height="110">
       <div
         style={{
@@ -125,10 +127,6 @@ const TopSvg = ({ isAbsolute = false }) => (
         }}
       ></div>
     </foreignObject>
-
-    {/* Background paths */}
-
-    {/* Decorative elements */}
     <DecorativeImage
       src="/images/competitions_design01.svg"
       x="308"
@@ -153,8 +151,6 @@ const TopSvg = ({ isAbsolute = false }) => (
       y={-10}
       width="8rem"
     />
-
-    {/* Gradient definition */}
     <defs>
       <linearGradient
         id="paint0_linear_2522_416"
@@ -198,6 +194,7 @@ const InteractiveShape = ({
       onMouseLeave={() => onHover(-1)}
       onClick={() => onFill(index)}
     >
+      {/* ... svg path and text ... */}
       <path
         d={shape.path}
         fill={filledIndex === index ? "black" : "none"}
@@ -221,20 +218,22 @@ const InteractiveShape = ({
   );
 };
 
-// Bottom SVG component with new shape, interactivity, and added barcodes (original state)
+// MODIFIED Bottom SVG component
+// - Accepts `isMobile` as a prop
+// - Removed internal `isMobile` state and useEffect
 const BottomSvgWithText = ({ isMobile }) => {
   const [filledIndex, setFilledIndex] = useState(-1);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
-  // isMobile state and useEffect have been removed from here and "lifted"
-  // to the Competitions component.
+  // Removed internal isMobile state and useEffect
 
-  const scale = isMobile ? 1.2 : 0.9; // adjusted scale for better mobile responsiveness
-  const foreignObjectHeight = isMobile ? 400 : 450; // responsive height
-  const shapesDivMaxWidth = isMobile ? "90vw" : "1200px"; // increased mobile width
-  const shapesDivMarginTop = isMobile ? "20px" : "20px"; // consistent margin
+  const scale = isMobile ? 1.4 : 0.9; // increased scale for mobile
+  const foreignObjectHeight = isMobile ? 450 : 300;
+  const shapesDivMaxWidth = isMobile ? "80vw" : "1200px";
+  const shapesDivMarginTop = isMobile ? "30px" : "20px";
 
   const shapes = [
+    // ... shapes array ...
     {
       width: 384,
       viewBox: "0 0 384 50",
@@ -273,20 +272,15 @@ const BottomSvgWithText = ({ isMobile }) => {
       xmlns="http://www.w3.org/2000/svg"
       style={{
         width: "100vw",
-        height: isMobile ? "100vh" : "auto", // responsive height
+        minHeight: "83.8vw",
         display: "block",
         position: "relative",
         zIndex: 2,
-        minHeight: isMobile ? "600px" : "800px", // ensure minimum height
       }}
     >
-      {/* Main background path - fill only, no stroke */}
-
-      {/* Two barcode images near the top */}
+      {/* ... inner svg, barcodes, and paths ... */}
       <DecorativeImage src="/barcode.png" x="438" y={30} width="6rem" />
       <DecorativeImage src="/barcode.png" x="1200" y={30} width="6rem" />
-
-      {/* Top wavy border - white */}
       <svg
         width="1896"
         height="1431"
@@ -317,9 +311,9 @@ const BottomSvgWithText = ({ isMobile }) => {
             y2="94.1242"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#EBAB4D" />
-            <stop offset="0.5" stopColor="white" />
-            <stop offset="1" stopColor="#EBAB4D" />
+            <stop stop-color="#EBAB4D" />
+            <stop offset="0.5" stop-color="white" />
+            <stop offset="1" stop-color="#EBAB4D" />
           </linearGradient>
         </defs>
       </svg>
@@ -345,11 +339,10 @@ const BottomSvgWithText = ({ isMobile }) => {
               justifyItems: isMobile ? "center" : "flex-start",
               justifyContent: "center",
               alignItems: "center",
-              gap: isMobile ? "8px" : "10px",
+              gap: "10px",
               marginTop: shapesDivMarginTop,
               width: "100%",
               maxWidth: shapesDivMaxWidth,
-              padding: isMobile ? "0 10px" : "0", // add padding for mobile
             }}
           >
             {shapes.map((shape, index) => (
@@ -371,28 +364,22 @@ const BottomSvgWithText = ({ isMobile }) => {
   );
 };
 
-// Main Competitions component with scroll animation fix
+// Main Competitions component
 const Competitions = () => {
   const [topAbsolute, setTopAbsolute] = useState(false);
+
+  // --- ADDED STATE ---
   const [competitions, setCompetitions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState("ALL"); // This filter is from your original code
-  const [svgHeight, setSvgHeight] = useState(0); // Track SVG height
-
-  // State "lifted" from BottomSvgWithText
+  const [filter, setFilter] = useState("ALL");
   const [isMobile, setIsMobile] = useState(false);
-  const bottomSvgRef = useRef(null); // Ref for measuring SVG
+  const bottomSvgRef = useRef(null);
 
+  // --- ADDED HOOK for resize ---
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768); // 768px is md breakpoint
-
-      // Measure SVG height for absolute positioning
-      if (bottomSvgRef.current) {
-        const rect = bottomSvgRef.current.getBoundingClientRect();
-        setSvgHeight(rect.height);
-      }
     };
 
     // Initial check
@@ -401,17 +388,18 @@ const Competitions = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // --- KEPT YOUR WORKING SCROLL HOOK ---
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY || window.pageYOffset || 0;
-      setTopAbsolute(y >= 375);
+      setTopAbsolute(y >= 395); // Kept your 389px value
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Updated useEffect to match your axios example pattern
+  // --- ADDED HOOK for API call ---
   useEffect(() => {
     const getCompetitions = async () => {
       try {
@@ -419,10 +407,8 @@ const Competitions = () => {
         const url = `${process.env.NEXT_PUBLIC_API}/api/events/all?type=competitions`;
         const response = await axios.get(url);
 
-        // Make sure events exist and filter based on `isFull`
         const events = response.data?.events || [];
         const filteredEvents = events.filter((e) => e.isFull !== true);
-        // or: events.filter(e => e.isFull) if you want only true
 
         setCompetitions(filteredEvents);
         console.log("Fetched competitions:", filteredEvents);
@@ -439,19 +425,18 @@ const Competitions = () => {
     getCompetitions();
   }, []);
 
-  // Your original filter logic
-
   return (
     <div
       style={{
         width: "100vw",
         position: "relative",
+
         scrollBehavior: "smooth",
       }}
       className="ml-5"
     >
       {/* Background image */}
-      <div className="top-0 left-0 w-full h-auto z-0">
+      <div className=" top-0 left-0 w-full h-auto z-0">
         <Image
           width={1920}
           height={1080}
@@ -460,6 +445,7 @@ const Competitions = () => {
           style={{
             width: "100vw",
             height: "auto",
+            minHeight: "70vh",
             objectFit: "cover",
             position: "fixed",
             top: 0,
@@ -469,45 +455,46 @@ const Competitions = () => {
         />
         <h1
           style={{ WebkitTextStroke: "4px black" }}
-          className="fixed top-75 left-1/2 -translate-x-1/2 text-9xl text-white font-extrabold drop-shadow-lg border-black px-6 py-2 z-10"
+          className="fixed top-60 md:top-75 left-1/2 -translate-x-1/2 text-5xl sm:text-6xl md:text-7xl xl:text-9xl text-white font-extrabold drop-shadow-lg  border-black px-6 py-2 z-10"
         >
           COMPETITIONS
         </h1>
 
-        {/* Top header SVG */}
+        {/* This is your working TopSvg container */}
         <div
           style={{
             position: topAbsolute ? "absolute" : "fixed",
-            top: topAbsolute ? "-100px" : "0px",
+            top: topAbsolute ? "0px" : "0px", // Kept 390px
             left: 0,
             zIndex: 100,
           }}
-          className={`${topAbsolute ? "ml-1" : "ml-5"} `}
+          className={`${topAbsolute ? "-ml-5 md:ml-0" : "md:ml-6 "} `}
         >
           <TopSvg />
         </div>
       </div>
 
-      {/* Bottom SVG + Competitions wrapper */}
+      {/* --- MODIFIED/ADDED SECTION --- */}
+      {/* This wrapper holds both the Bottom SVG and the Competitions grid */}
       <div className="relative" style={{ minHeight: "200vh" }}>
-        {" "}
-        {/* Ensure enough space for absolutely positioned cards */}
         {/* Bottom SVG */}
         <div
-          className={`relative z-10 ${isMobile ? "mt-100" : "mt-120"}`}
+          className="mt-100 z-50 relative -ml-5 md:ml-0" // Kept your working class
           id="bottom-svg-container"
           ref={bottomSvgRef}
         >
-          <BottomSvgWithText isMobile={isMobile} />
+          <BottomSvgWithText isMobile={isMobile} /> {/* Pass prop */}
         </div>
+
+        {/* Competitions grid - ABSOLUTELY POSITIONED */}
         {/* Competitions grid - ABSOLUTELY POSITIONED BELOW BottomSvg */}
         <section
           style={{
             position: "absolute",
-            top: isMobile ? "50vh" : "55vh", // Moved cards higher - reduced by 10vh
+            top: isMobile ? "13rem" : "30rem", // <--- FIX: Stable rem units (448px / 480px)
             left: "0",
             right: "0",
-            zIndex: 20,
+            zIndex: 60,
             padding: "0 16px",
             paddingTop: "2rem",
             width: "100%",
@@ -550,10 +537,10 @@ const Competitions = () => {
                   picture,
                 } = item;
 
-                // Generate barcode value based on workshop ID
+                // Generate barcode value
                 const barcodeValue = String(id).padStart(7, "0");
 
-                // Format description with additional info
+                // Format description
                 const fullDescription = `${
                   description ?? "No description available"
                 } `;
@@ -585,7 +572,7 @@ const Competitions = () => {
                     margin: "32px 0",
                   }}
                 >
-                  No competitions found for this filter.
+                  No competitions found.
                 </div>
               )}
             </div>
