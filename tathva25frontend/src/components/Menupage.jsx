@@ -13,13 +13,13 @@ const menuItems = [
   },
   {
     name: "CREDITS",
-    link: "/credits",
+    link: "/",
     img1: "/menu_icon2.png",
     img2: "/menu2.png",
   },
   {
     name: "ROBOWARS",
-    link: "/test",
+    link: "/",
     img1: "/menu_icon3.png",
     img2: "/menu3.png",
   },
@@ -37,13 +37,13 @@ const menuItems = [
   },
   {
     name: "SPONSORS",
-    link: "/sponsors",
+    link: "/",
     img1: "/menu_icon6.png",
     img2: "/menu6.png",
   },
   {
     name: "CONTACT",
-    link: "/contact",
+    link: "/",
     img1: "/menu_icon7.png",
     img2: "/menu7.png",
   },
