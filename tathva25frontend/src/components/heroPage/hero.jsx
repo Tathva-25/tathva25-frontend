@@ -199,9 +199,9 @@ export const Hero = () => {
         <div className="absolute inset-0 z-10">
           <div className="relative w-full h-full">
             {/* SOUTH INDIA'S BIGGEST FEST - Absolute positioned at top */}
-            <div className="  top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
+            <div className=" absolute top-90 right-14 md:top-8 md:left-0 md:right-0 md:text-center z-20 px-4">
               <span
-                className={`${newfont.className} text-xs  md:text-sm font-semibold text-white`}
+                className={`${newfont.className} hidden md:block text-xs  md:text-sm font-semibold text-white`}
               >
                 /// SOUTH INDIA'S BIGGEST TECH FEST
               </span>
