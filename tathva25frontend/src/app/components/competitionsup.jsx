@@ -256,7 +256,20 @@ const BottomSvgWithText = () => {
       textX: 192,
       text: "GPC",
     },
-    
+    {
+      width: 341,
+      viewBox: "0 0 341 50",
+      path: "M337.08 1.32422L295.297 48.1201H3.94727L45.7285 1.32422H337.08Z",
+      textX: 170.5,
+      text: "SINGING",
+    },
+    {
+      width: 384,
+      viewBox: "0 0 384 50",
+      path: "M339.26 1.32422L381.042 48.1201H3.7627L45.5439 1.32422H339.26Z",
+      textX: 192,
+      text: "DANCING",
+    },
   ];
 
   return (
