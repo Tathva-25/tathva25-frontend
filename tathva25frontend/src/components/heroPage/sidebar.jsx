@@ -25,8 +25,8 @@ export default function Sidebar() {
     { num: 3, label: "RoboWars" },
     { num: 4, label: "Proshow" },
     { num: 5, label: "Wheels" },
-    { num: 6, label: "Expo" },
-    { num: 7, label: "GPC" },
+    { num: 6, label: "GPC" },
+    { num: 7, label: "Expo" },
   ];
 
   const [hovered, setHovered] = useState(null);
@@ -371,14 +371,14 @@ export default function Sidebar() {
         <section id="section-5">
           <ResponsiveLayout />
         </section>
-        <section id="section-6">
-          <Expo />
-        </section>
 
-        <section id="section-7">
+        <section id="section-6">
           <GamePage />
         </section>
 
+        <section id="section-7">
+          <Expo />
+        </section>
         <section id={`section-footer`}>
           <YourComponent />
         </section>
