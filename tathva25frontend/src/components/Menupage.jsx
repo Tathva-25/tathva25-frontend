@@ -48,7 +48,7 @@ const menuItems = [
     img2: "/menu7.png",
   },
   {
-    name: "WORKSHOP",
+    name: "WORKSHOPS",
     link: "/workshops",
     img1: "/menu_icon8.png",
     img2: "/menu8.png",
@@ -72,7 +72,7 @@ const menuItems = [
     img2: "/menu11.png",
   },
   {
-    name: "ACCOMODATION",
+    name: "ACCOMMODATIONS",
     link: "/accomodation",
     img1: "/menu_icon12.png",
     img2: "/menu12.png",
