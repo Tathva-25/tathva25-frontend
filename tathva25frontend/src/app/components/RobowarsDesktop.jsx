@@ -307,9 +307,9 @@ function Region() {
           </div>
           <div className="md:col-span-1 flex justify-center md:justify-end">
             <div className="flex flex-row items-center space-y-2 mt-8 md:mt-12 lg:mt-16 md:mr-20">
-              <div className="scale-90 relative right-32 top-1 ">
+              {/* <div className="scale-90 relative right-32 top-1 ">
                 <DotGridButton text="Learn More"/>
-              </div>
+              </div> */}
               <BarcodeImage src="/barcode.png" alt="event-code" />
             </div>
           </div>

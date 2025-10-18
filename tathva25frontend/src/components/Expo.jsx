@@ -2,6 +2,7 @@
 import { useState, useEffect, useMemo } from "react";
 import DotGridButton from "@/components/DotGridButton";
 import localfont from 'next/font/local';
+import Link from "next/link";
 
 
 const someFont = localfont({
@@ -363,12 +364,12 @@ export default function Expo() {
             </p>
 
             {/* Button */}
-            <div style={getButtonStyle()}>
+            <Link href="/competitions" style={getButtonStyle()}>
                 <DotGridButton
                     text="Learn More"
                     min_width={isMobile ? colWidth * 0.5 : colWidth * 1.5}
                 />
-            </div>
+            </Link>
 
             {/* Actual grid tiles */}
             <div className="absolute top-0 left-0 w-full h-full" style={{ zIndex: 15 }}>
