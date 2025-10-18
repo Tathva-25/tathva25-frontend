@@ -21,7 +21,7 @@ function Ticket({ day, date, ticketId, eventId, price }) {
       : "Proshow | Events | Conclave";
 
   return (
-    <div className="relative w-56 h-20 sm:w-96 sm:h-24 md:w-110 md:h-36 lg:w-130 lg:h-36">
+    <div className="relative bottom-10 w-56 h-20 sm:w-96 sm:h-24 md:w-110 md:h-36 lg:w-130 lg:h-36">
       {/* Oversized Image */}
       <Image
         src="/newbg.png"

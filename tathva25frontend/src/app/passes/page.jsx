@@ -34,9 +34,7 @@ function Page() {
       setIsMobile(window.innerWidth < 640);
     };
 
-    // set initial state
     handleResize();
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -66,10 +64,9 @@ const ticketData = [
 ];
 
 
+  // initial gsap setup
   useEffect(() => {
-    gsap.set([".card-0", ".card-1", ".card-2"], {
-      clearProps: "all",
-    });
+    gsap.set([".card-0", ".card-1", ".card-2"], { clearProps: "all" });
 
     gsap.set(".card-0", {
       x: `${isMobile ? "-170%" : "-35%"}`,
@@ -97,7 +94,6 @@ const ticketData = [
   const leftArrowRefs = useRef([]);
   const rightArrowRefs = useRef([]);
 
-  // Add this function to trigger the wave animation
   const triggerArrowWave = (direction) => {
     const refs =
       direction === "left" ? leftArrowRefs.current : rightArrowRefs.current;
@@ -108,7 +104,7 @@ const ticketData = [
       if (ref) {
         setTimeout(() => {
           ref.animate();
-        }, index * 150); // 150ms delay between each arrow
+        }, index * 150);
       }
     });
   };
@@ -119,16 +115,12 @@ const ticketData = [
     let direction;
 
     if (centerCard === 0 && clicked === 2) {
-      // Going from day 1 to day 3 = going backwards (left)
       direction = "left";
     } else if (centerCard === 2 && clicked === 0) {
-      // Going from day 3 to day 1 = going forward (right)
       direction = "right";
     } else if (clicked < centerCard) {
-      // Normal backward movement
       direction = "left";
     } else {
-      // Normal forward movement
       direction = "right";
     }
 
@@ -152,7 +144,6 @@ const ticketData = [
 
     let order = [...cards];
     while (order[1] !== clicked) {
-      //as long as the card in the center is not the clicked card, keep carousing
       order.push(order.shift());
     }
 
@@ -173,11 +164,9 @@ const ticketData = [
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
-
   const handleTouchMove = (e) => {
     touchEndX.current = e.touches[0].clientX;
   };
-
   const handleTouchEnd = () => {
     const deltaX = touchEndX.current - touchStartX.current;
     if (Math.abs(deltaX) < 30) return;
@@ -192,26 +181,13 @@ const ticketData = [
   };
 
   return (
-    <section
-      className="w-full min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center overflow-hidden"
-      // style={{ backgroundImage: "url('/bg.png')" }}
-    >
-      {/* <div style={{ backgroundImage: "url('/bg.png')" }}></div> */}
-      {/* sidebar */}
-      {/* <Image
-        src="/sideborder.png"
-        alt="sidebar"
-        width={30}
-        height={100}
-        className={`${isMobile ? "hidden" : ""} absolute h-screen left-0 z-10`}
-      /> */}
-
-      {/* top left text */}
-      <div className="">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      {/* Heading */}
+      <div>
         <h1
-          className={`${
-            fontspring.className
-          } text-6xl font-bold z-20 relative ${isMobile ? "mb-96" : "mb-56"}`}
+          className={`${fontspring.className} text-6xl font-bold z-20 relative lg:bottom-10 ${
+            isMobile ? "mb-96" : "mb-56"
+          }`}
         >
           PASSES
         </h1>
@@ -246,94 +222,158 @@ const ticketData = [
 ))}
 
 
-      {/* bottom bar */}
+      {/* Event Details - Horizontal bullets */}
+      <div className="relative z-20 top-16 ">
+        <div className={`${mi.className} flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-4 text-xs sm:text-sm tracking-wider`}>
+          {centerCard === 0 && (
+            <>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>WHEELS</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>ROBOWARS</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>CONCLAVE</span>
+              </span>
+            </>
+          )}
+          
+          {centerCard === 1 && (
+            <>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>MUSIC CLUB</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>SA + MHR</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>SAVAARI THE BAND</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>DJ VIOLA</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>ROBOWARS</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>CONCLAVE</span>
+              </span>
+            </>
+          )}
+          
+          {centerCard === 2 && (
+            <>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>ARIVU</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>MITHOON</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>DJ PERFORMANCE</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>EVENTS</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>CONCLAVE</span>
+              </span>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Bottom navigation */}
       <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
-        {/* LEFT SECTION */}
+        {/* LEFT */}
         <div className="flex items-center ">
-          {/* LEFT ARROWS */}
           <div
             onClick={() => {
               const prev = (centerCard + cards.length - 1) % cards.length;
               moveToCenter(prev);
             }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
             className="flex gap-0 cursor-pointer size-30 sm:size-40 md:size-50 lg:size-60 xl:size-80 2xl:size-90 items-center origin-left"
           >
             <Arrow
-              direction={"left"}
+              direction="left"
               ref={(el) => (leftArrowRefs.current[0] = el)}
             />
             <Arrow
-              direction={"left"}
+              direction="left"
               ref={(el) => (leftArrowRefs.current[1] = el)}
             />
             <Arrow
-              direction={"left"}
+              direction="left"
               ref={(el) => (leftArrowRefs.current[2] = el)}
             />
           </div>
 
-          {/* PREV TEXT */}
-          {!isMobile && <span
-            className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
-            onClick={() => {
-              const prev = (centerCard + cards.length - 1) % cards.length;
-              moveToCenter(prev);
-            }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
-          >
-            PREV
-          </span>}
+          {!isMobile && (
+            <span
+              className={`${mi.className} cursor-pointer hover:scale-110 transition text-base md:text-lg lg:text-xl whitespace-nowrap`}
+              onClick={() => {
+                const prev = (centerCard + cards.length - 1) % cards.length;
+                moveToCenter(prev);
+              }}
+            >
+              PREV
+            </span>
+          )}
         </div>
 
-        {/* CENTER - DAY NUMBER */}
+        {/* CENTER NUMBER */}
         <span
-          className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl absolute left-1/2 -translate-x-1/2`}
+          className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl absolute left-1/2 -translate-x-1/2`}
         >
           {String(ticketData[centerCard].day).padStart(2, "0")}
         </span>
 
-        {/* RIGHT SECTION */}
-        <div className="flex items-center ">
-          {/* NEXT TEXT */}
-          {!isMobile && (<span
-            className={`${mi.className} cursor-pointer hover:scale-110 transition text-[0.55rem] sm:text-base md:text-lg lg:text-xl xl:text-2xl whitespace-nowrap`}
-            onClick={() => {
-              const next = (centerCard + 1) % cards.length;
-              moveToCenter(next);
-            }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
-          >
-            NEXT
-          </span>)}
+        {/* RIGHT */}
+        <div className="flex items-center">
+          {!isMobile && (
+            <span
+              className={`${mi.className} cursor-pointer hover:scale-110 transition text-base md:text-lg lg:text-xl whitespace-nowrap`}
+              onClick={() => {
+                const next = (centerCard + 1) % cards.length;
+                moveToCenter(next);
+              }}
+            >
+              NEXT
+            </span>
+          )}
 
-          {/* RIGHT ARROWS */}
           <div
             onClick={() => {
               const next = (centerCard + 1) % cards.length;
               moveToCenter(next);
             }}
-            onTouchStart={(e) => e.stopPropagation()}
-            onTouchMove={(e) => e.stopPropagation()}
-            onTouchEnd={(e) => e.stopPropagation()}
             className="flex gap-0 cursor-pointer size-30 sm:size-40 md:size-50 lg:size-60 xl:size-80 2xl:size-90 items-center justify-end"
           >
             <Arrow
-              direction={"right"}
+              direction="right"
               ref={(el) => (rightArrowRefs.current[0] = el)}
             />
             <Arrow
-              direction={"right"}
+              direction="right"
               ref={(el) => (rightArrowRefs.current[1] = el)}
             />
             <Arrow
-              direction={"right"}
+              direction="right"
               ref={(el) => (rightArrowRefs.current[2] = el)}
             />
           </div>
