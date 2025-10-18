@@ -571,7 +571,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
               <span
                 key={`${fadedtext}-${i}`}
                 ref={(el) => (bgTextRefs.current[i] = el)}
-                className={`${michroma.className} font-[800] flex-shrink-0`}
+                className={`${michroma.className} font-[800] flex-shrink-0 scale-60`}
                 style={{ opacity: 1 }}
               >
                 {fadedtext}
@@ -666,7 +666,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
       {fadedtext && (
         <div
           ref={bottomTextRef}
-          className={`mt-4 ${michroma.className} font-[800] absolute text-6xl bottom-[50%]`}
+          className={`mt-4 ${michroma.className} font-[800] absolute text-3xl bottom-[50%]`}
           style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
         >
           {fadedtext}
