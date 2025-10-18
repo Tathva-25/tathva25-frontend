@@ -149,7 +149,7 @@ const Proshow = () => {
         </div>
 
         {/* Image section */}
-        <div className="md:w-[60%] flex justify-center relative z-30 ">
+        <div className="md:w-[60%] flex justify-center relative z-30  ">
           {/* Main Image */}
           <Image
             src="/images/proshow-main.png"
@@ -189,7 +189,7 @@ const Proshow = () => {
           </style>
 
           {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse" 
               style={{ 
                 background: 'radial-gradient(ellipse 150% 120%, rgba(255, 244, 199, 1) 0%, rgba(251, 190, 36, 0.89) 30%, transparent 70%)', 
