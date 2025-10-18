@@ -222,8 +222,7 @@ const ticketData = [
 ))}
 
 
-      {/* Event Details - Horizontal bullets */}
-      <div className="relative z-20 top-16 ">
+      <div className="relative z-0 top-16 ">
         <div className={`${mi.className} flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-4 text-xs sm:text-sm tracking-wider`}>
           {centerCard === 0 && (
             <>

@@ -34,7 +34,7 @@ export default function Modal({
     }).format(num);
 
   return (
-    <div className={`${mi.className} absolute scale-60 sm:scale-100 flex items-center justify-center z-50`}>
+    <div className={`${mi.className} absolute scale-60 sm:scale-100 flex items-center justify-center z-[1000]`}>
       <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl relative">
         {/* Close Button */}
         <button
