@@ -128,9 +128,9 @@ const DesktopFooter = () => (
                             </div>
                             <h4 className="text-[clamp(0.9rem,_1.2vw,_1.125rem)] text-yellow-400 mb-4 mt-8">[SOCIALS]</h4>
                             <div className="flex gap-8">
-                                <SocialIcon src={Insta.src} alt="Instagram" />
-                                <SocialIcon src={Fb.src} alt="Facebook" />
-                                <SocialIcon src={Linkd.src} alt="LinkedIn" />
+                                <SocialIcon href="https://www.instagram.com/tathva_nitcalicut/" src={Insta.src} alt="Instagram" />
+                                <SocialIcon href="https://www.facebook.com/tathvanitc/" src={Fb.src} alt="Facebook" />
+                                <SocialIcon href="https://www.linkedin.com/company/tathva-nit-calicut/" src={Linkd.src} alt="LinkedIn" />
                             </div>
                         </div>
                     </div>
