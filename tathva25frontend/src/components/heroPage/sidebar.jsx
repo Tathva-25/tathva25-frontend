@@ -291,7 +291,7 @@ export default function Sidebar() {
                   alt="Franklin Logo"
                   width={100}
                   height={100}
-                  className=" h-auto relative bottom-7 transition-transform duration-300 hover:scale-105"
+                  className=" h-auto relative bottom-2 transition-transform duration-300 hover:scale-105"
                   priority
                   quality={90}
                 />
