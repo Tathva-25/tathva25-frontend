@@ -158,7 +158,7 @@ export const Hero = () => {
       {/* ✅ Top-right Logo */}
       {/* ✅ Top-right items container */}
 {/* ✅ Top-right items container */}
-<div className="absolute top-6 right-6 md:top-2 md:right-4 z-30 flex items-center gap-2 md:gap-4">
+<div className="hidden md:block absolute top-6 right-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
   
   {/* 1. Profile / Login Button */}
   {isLoggedIn ? (
@@ -194,7 +194,7 @@ export const Hero = () => {
     alt="Franklin Logo"
     width={100}
     height={100}
-    className="w-20 md:w-24 h-auto transition-transform duration-300 hover:scale-105"
+    className="w-20 md:w-32 h-auto transition-transform duration-300 hover:scale-105"
     priority
     quality={90}
   />
