@@ -12,6 +12,7 @@ const isTokenExpired = (token) => {
     }
 };
 
+
 const jwtRequired = axios.create({
     baseURL: "https://api.tathva.org",
 });
@@ -24,12 +25,10 @@ jwtRequired.interceptors.request.use(
             localStorage.removeItem("jwt");
             toast.error("Session expired. Please login again.");
 
-            // 2. USE window.location to redirect.
-            // This forces a full page reload to the homepage.
             if (typeof window !== "undefined") {
                 setTimeout(() => {
-                    window.location.href = "/";
-                }, 2000);
+                    window.location.href =  "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
+                }, 1000);
             }
 
             return Promise.reject(new Error("Session expired"));

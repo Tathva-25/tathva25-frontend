@@ -585,17 +585,17 @@ export default function MenuPhone({ menuItems, currentPath }) {
       <div className="absolute z-10 flex items-center justify-center bottom-0 translate-y-1/2 w-96 h-96 left-1/2 transform -translate-x-1/2 scale-75">
         <div className="absolute">
           <img
-            src="ring1.png"
+            src="/ring1.png"
             className="rotate scale-230"
             alt="Rotating ring"
           />
         </div>
         <div ref={ring2Ref} className="absolute">
-          <img src="ring2.png" className="scale-170" alt="Rotating ring" />
+          <img src="/ring2.png" className="scale-170" alt="Rotating ring" />
         </div>
         <div ref={ring3Ref} className="absolute">
           <img
-            src="ring3.png"
+            src="/ring3.png"
             className="scale-170 rotate-22"
             alt="Rotating ring"
           />
@@ -603,7 +603,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
       </div>
 
       {/* Circle with menu items */}
-      <div className="absolute z-20 w-96 h-96 flex items-center justify-center bottom-0 translate-y-1/2">
+      <div className="absolute z-[50] w-96 h-96 flex items-center justify-center bottom-0 translate-y-1/2">
         <div
           ref={circleContainerRef}
           className="relative rounded-full w-full h-full"
@@ -652,7 +652,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
       </div>
 
       {/* Mobile swipe indicator with current selection info */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm opacity-70 flex flex-col items-center gap-1">
+      <div className="absolute z-[100] bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm opacity-70 flex flex-col items-center gap-1">
         <div className="flex items-center gap-2">
           <span>←</span>
           <span>Swipe to navigate</span>

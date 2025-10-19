@@ -37,7 +37,7 @@ const menuItems = [
   },
   {
     name: "SPONSORS",
-    link: "/",
+    link: "/sponsors",
     img1: "/menu_icon6.png",
     img2: "/menu6.png",
   },
