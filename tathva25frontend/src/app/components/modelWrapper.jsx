@@ -40,6 +40,8 @@ export default function ModalWrapper({ workshopData }) {
                     window.location.href =  "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
                 }, 1000);
             }
+
+            return;
     }
     setIsModalOpen(true);
   };
