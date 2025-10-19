@@ -190,7 +190,7 @@ export default function WheelsEvent() {
                 marginBottom: "0.4vh",
               }}
             >
-              OCTOBER 26
+              OCTOBER 24
             </div>
 
             <div
