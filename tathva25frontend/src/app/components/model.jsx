@@ -9,17 +9,17 @@ export default function Modal({
 }) {
   if (!isOpen) return null;
 
-console.log(workshopData.price)
-const basePrice = Number(workshopData.price/100) || 0;
+  console.log(workshopData.price);
+  const basePrice = Number(workshopData.price) || 0;
 
-  const platformFeePercent = 2.0; 
-  const gstPercent = 18; 
+  const platformFeePercent = 2.0;
+  const gstPercent = 18;
 
   const platformFee = (platformFeePercent / 100) * basePrice;
-  const gst = (gstPercent / 100) * (platformFee);
+  const gst = (gstPercent / 100) * platformFee;
   const total = basePrice + platformFee + gst;
 
-  console.log(basePrice ,platformFee )
+  console.log(basePrice, platformFee);
 
   // 💰 Proper INR formatter
   const formatINR = (num) =>
@@ -45,11 +45,10 @@ const basePrice = Number(workshopData.price/100) || 0;
 
         {/* Billing Breakdown */}
         <div className="space-y-4">
-
-            <div className="flex justify-between">
-              <span>Workshop </span>
-              <span>{workshopData.name}</span>
-            </div>
+          <div className="flex justify-between">
+            <span>Workshop </span>
+            <span>{workshopData.name}</span>
+          </div>
 
           <div className="border-b pb-2 text-sm text-gray-700">
             <div className="flex justify-between">
@@ -79,7 +78,10 @@ const basePrice = Number(workshopData.price/100) || 0;
             >
               Cancel
             </button>
-            <RegisterButton id={workshopData.id} ticketId={workshopData.ticketId} />
+            <RegisterButton
+              id={workshopData.id}
+              ticketId={workshopData.ticketId}
+            />
           </div>
         </div>
       </div>

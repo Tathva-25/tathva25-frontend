@@ -421,7 +421,7 @@ function Page() {
           )}
         </div>
 
-        {/* CENTER NUMBER */}
+        {/* CENTERBER */}
         <span
           className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl absolute left-1/2 -translate-x-1/2`}
         >
