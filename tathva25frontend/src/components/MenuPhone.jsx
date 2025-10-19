@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Michroma } from "next/font/google";
 
-const michroma = Michroma({ subsets: ["latin"], weight: "400" })
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function MenuPhone({ menuItems, currentPath }) {
   // TEXT COLOR CONFIGURATION - Change these to modify the text colors
@@ -666,7 +666,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
       {fadedtext && (
         <div
           ref={bottomTextRef}
-          className={`mt-4 ${michroma.className} font-[800] absolute text-3xl bottom-[50%]`}
+          className={`mt-4 ${michroma.className} font-[800] absolute text-2xl bottom-[50%]`}
           style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
         >
           {fadedtext}
