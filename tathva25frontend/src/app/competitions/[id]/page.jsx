@@ -49,7 +49,7 @@ export default async function Page({ params }) {
   const tagline = comp.tagline || comp.subheading || "";
   const date = formatDate(comp.datetime);
   const time = formatTime(comp.datetime);
-  const desc = comp.description || "";
+  const desc = comp.catchyPara || comp.description || "";
   const venue = comp?.venue?.name ? `${comp.venue.name}` : "TBA";
   const price =
     typeof comp.price === "number"
