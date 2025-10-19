@@ -97,9 +97,11 @@ const GamePage = () => {
               <div className={`${integralCF.className} text-5xl  -mt-3 font-bold w-[20vw] text-center`}>
                 GPC NEXUS
               </div>
+              <Link href="/competitions">
               <div className="text-right  mt-6 mr-10">
                 <DotGridButton text="Learn More"  min_width={40} height={30} width={200}/>
               </div>
+              </Link>
             </div>  
             <div className={`${michroma.className} text-center text-xl mt-8 mb-6 mr-15  w-[400px]`}>
               Show off your skills and
