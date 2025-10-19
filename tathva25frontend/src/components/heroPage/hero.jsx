@@ -11,6 +11,7 @@ import wheel from "../../../public/images/wheel.png";
 import Background from "../../../public/images/Background-new.png";
 import localfont from "next/font/local";
 import logo from "../../../public/images/tathvawhitelogo.png";
+import frank from "../../../public/images/franklin.png";
 
 import Marquee from "@/app/components/Marquee";
 import { useRouter } from "next/navigation";
@@ -155,31 +156,49 @@ export const Hero = () => {
       className={`relative h-[95vh] sm:h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
       {/* ✅ Top-right Logo */}
-      <Image
-        src={logo}
-        alt="Tathva Logo"
-        width={100}
-        height={100}
-        className="absolute top-6 right-6 md:top-6 md:right-4 w-16 md:w-14 h-auto z-30 transition-transform duration-300 hover:scale-105"
-        priority
-        quality={90}
-      />
+      {/* ✅ Top-right items container */}
+{/* ✅ Top-right items container */}
+<div className="absolute top-6 right-6 md:top-2 md:right-4 z-30 flex items-center gap-2 md:gap-4">
+  
+  {/* 1. Profile / Login Button */}
+  {isLoggedIn ? (
+    <button
+      onClick={() => handleVisitDashboard(router)}
+      className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+    >
+      Profile
+    </button>
+  ) : (
+    <button
+      onClick={handleGoogleSignIn}
+      className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+    >
+      LOGIN
+    </button>
+  )}
 
-      {isLoggedIn ? (
-        <button
-          onClick={() => handleVisitDashboard(router)}
-          className={`${newfont.className}  absolute top-6 right-24 md:top-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-        >
-          Profile
-        </button>
-      ) : (
-        <button
-          onClick={handleGoogleSignIn}
-          className={`${newfont.className}  absolute top-6 right-24 md:t op-8 md:right-20  text-white  px-4 py-2 rounded-full hover:bg-black transition-all duration-300 z-30`}
-        >
-          LOGIN
-        </button>
-      )}
+  {/* 2. Tathva Logo */}
+  <Image
+    src={logo}
+    alt="Tathva Logo"
+    width={100}
+    height={100}
+    className="w-16 md:w-14 h-auto transition-transform duration-300 hover:scale-105"
+    priority
+    quality={90}
+  />
+
+  {/* 3. Franklin Logo (Increased Size) */}
+  <Image
+    src={frank}
+    alt="Franklin Logo"
+    width={100}
+    height={100}
+    className="w-20 md:w-24 h-auto transition-transform duration-300 hover:scale-105"
+    priority
+    quality={90}
+  />
+</div>
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>
