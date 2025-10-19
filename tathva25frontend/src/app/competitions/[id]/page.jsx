@@ -49,7 +49,8 @@ export default async function Page({ params }) {
   const tagline = comp.tagline || comp.subheading || "";
   const date = formatDate(comp.datetime);
   const time = formatTime(comp.datetime);
-  const desc = comp.catchyPara || comp.description || "";
+  const bigDesc = comp.catchyPara ||  "";
+  const desc = comp.description || "";
   const venue = comp?.venue?.name ? `${comp.venue.name}` : "TBA";
   const price =
     typeof comp.price === "number"
@@ -57,7 +58,7 @@ export default async function Page({ params }) {
       : comp.price || 0;
 
   return (
-    <div className="flex justify-center min-h-screen items-center p-4">
+    <div className="flex justify-center min-h-screen items-center p-4 sm:p-0">
       <CardDetails
         id = {id}
         src={src}
@@ -69,6 +70,7 @@ export default async function Page({ params }) {
         desc={desc}
         venue={venue}
         price={price}
+        bigDesc={bigDesc}
       />
     </div>
   );

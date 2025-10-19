@@ -47,48 +47,13 @@ export default function ModalWrapper({ workshopData }) {
   };
 
   return (
-    <div className="flex">
-      {/* Fancy glowing DotGrid button */}
-      <div
-        className="relative inline-block group"
-        style={{ minWidth: "220px", minHeight: "50px" }}
-      >
-        {/* Glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/20 via-yellow-400/20 to-yellow-500/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-        {/* DotGrid background */}
-        <div className="absolute inset-0 bg-black overflow-hidden">
-          <DotGrid
-            dotSize={2.3}
-            gap={5}
-            baseColor="#524d06"
-            activeColor="#ffee00"
-            proximity={50}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
-        </div>
-
-        {/* Button Foreground */}
+    <div>
         <button
           onClick={handleClick}
           className={`
-            relative
-            w-full
-            h-full
-            px-10
-            py-3
-            text-white
-            font-semibold
-            bg-transparent
+         
             ${michroma.className}
-            z-10
-            pointer-events-auto
-            text-center
-            tracking-wider
-            uppercase
-            text-sm
-            transition-all
-            duration-300
+          bg-black rounded-xs text-white p-4 px- text-xs md:text-lg
           `}
         >
           <span className="relative z-10">
@@ -98,22 +63,7 @@ export default function ModalWrapper({ workshopData }) {
           {/* Shiny scan line */}
           <div className="" />
         </button>
-
-        <style jsx>{`
-          @keyframes scan-line {
-            0% {
-              transform: translateY(-100%);
-            }
-            100% {
-              transform: translateY(300%);
-            }
-          }
-
-          .animate-scan-line {
-            animation: scan-line 2s ease-in-out infinite;
-          }
-        `}</style>
-      </div>
+      
 
       {/* Modal */}
       <Modal

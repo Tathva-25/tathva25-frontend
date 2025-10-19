@@ -13,6 +13,7 @@ import { Hero } from "./hero";
 import { useRouter } from "next/navigation";
 import localfont from "next/font/local";
 import YourComponent from "@/app/components/Footer";
+import frank from "../../../public/images/franklin.png";
 
 const someFont = localfont({
   src: "../../../public/fonts/michroma.ttf",
@@ -283,6 +284,17 @@ export default function Sidebar() {
                 height={32}
                 className="w-full h-full object-contain"
               />
+            </div>
+            <div className="md:hidden w-32 h-10 flex-shrink-0">
+              <Image
+                  src={frank}
+                  alt="Franklin Logo"
+                  width={100}
+                  height={100}
+                  className=" h-auto relative bottom-7 transition-transform duration-300 hover:scale-105"
+                  priority
+                  quality={90}
+                />
             </div>
           </div>
 

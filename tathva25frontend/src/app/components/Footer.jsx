@@ -113,6 +113,7 @@ const DesktopFooter = () => (
                                 <QuickLink>Team</QuickLink>
                                 <QuickLink href="/workshops">Workshops</QuickLink>
                                 <QuickLink href="/profile">Profile</QuickLink>
+                                <QuickLink href="/accomodation">Accomodation</QuickLink>
                             </div>
                         </div>
                         <div>
@@ -179,6 +180,7 @@ const MobileFooter = () => (
                     <QuickLink showArrow>Team</QuickLink>
                     <QuickLink href="/workshops" showArrow>Workshops</QuickLink>
                     <QuickLink href="/profile" showArrow>Profile</QuickLink>
+                    <QuickLink href="/accomodation" showArrow>Accomodation</QuickLink>
                 </div>
 
                 {/* Middle: Contact & Logo */}
