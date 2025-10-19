@@ -47,6 +47,9 @@ const Proshow = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const touchStartXRef = useRef(null);
+  const touchDeltaXRef = useRef(0);
+  const touchTimeoutRef = useRef(null);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -62,15 +65,18 @@ const Proshow = () => {
 
     if (!isMobile) {
       const script1 = document.createElement("script");
-      script1.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
+      script1.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js";
       script1.async = true;
 
       const script2 = document.createElement("script");
-      script2.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
+      script2.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js";
       script2.async = true;
 
       const script3 = document.createElement("script");
-      script3.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js";
+      script3.src =
+        "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js";
       script3.async = true;
 
       document.body.appendChild(script1);
@@ -117,14 +123,21 @@ const Proshow = () => {
     return () => {
       clearInterval(pauseWatcher);
       if (!isMobile) {
-        document.body.removeChild(document.querySelector('script[src*="gsap.min.js"]'));
-        document.body.removeChild(document.querySelector('script[src*="ScrollTrigger.min.js"]'));
-        document.body.removeChild(document.querySelector('script[src*="ScrollToPlugin.min.js"]'));
+        document.body.removeChild(
+          document.querySelector('script[src*="gsap.min.js"]')
+        );
+        document.body.removeChild(
+          document.querySelector('script[src*="ScrollTrigger.min.js"]')
+        );
+        document.body.removeChild(
+          document.querySelector('script[src*="ScrollToPlugin.min.js"]')
+        );
         if (window.ScrollTrigger) {
           window.ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
         }
       }
       if (intervalId) clearInterval(intervalId);
+      if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
     };
   }, []); // ✅ constant dependency array
   // MODIFICATION 3: This function now uses `currentIndex` directly
@@ -144,7 +157,7 @@ const Proshow = () => {
     const pos = positions[position];
 
     if (!pos) {
-      return { transform: 'translateX(0px) scale(0.5)', opacity: 0, zIndex: 0 };
+      return { transform: "translateX(0px) scale(0.5)", opacity: 0, zIndex: 0 };
     }
 
     return {
@@ -164,7 +177,7 @@ const Proshow = () => {
     const totalSteps = artists.length - 1;
     const targetProgress = clickedIndex / totalSteps;
 
-// Get the ScrollTrigger instance by its ID
+    // Get the ScrollTrigger instance by its ID
     const st = window.ScrollTrigger?.getById("proshow-pin");
     const gsap = window.gsap;
     if (!st || !gsap) {
@@ -172,13 +185,13 @@ const Proshow = () => {
       return;
     }
 
-// ✅ Clamp between 1% and 99% to avoid hitting exact start/end
+    // ✅ Clamp between 1% and 99% to avoid hitting exact start/end
     const safeProgress = Math.min(Math.max(targetProgress, 0.01), 0.99);
 
-// ✅ Compute target scroll safely
+    // ✅ Compute target scroll safely
     const targetScroll = st.start + (st.end - st.start) * safeProgress;
 
-// ✅ Smooth scroll to it
+    // ✅ Smooth scroll to it
     gsap.to(window, {
       scrollTo: targetScroll,
       duration: 0.75,
@@ -190,52 +203,84 @@ const Proshow = () => {
     });
   };
 
+  // Touch / swipe handlers for mobile
+  const handleTouchStart = (e) => {
+    const touch = e.touches ? e.touches[0] : e;
+    touchStartXRef.current = touch.clientX;
+    touchDeltaXRef.current = 0;
+    setPaused(true);
+    if (touchTimeoutRef.current) clearTimeout(touchTimeoutRef.current);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!touchStartXRef.current) return;
+    const touch = e.touches ? e.touches[0] : e;
+    touchDeltaXRef.current = touch.clientX - touchStartXRef.current;
+  };
+
+  const handleTouchEnd = () => {
+    const delta = touchDeltaXRef.current;
+    const threshold = 50; // px
+    if (Math.abs(delta) > threshold) {
+      if (delta < 0) {
+        // swipe left -> next
+        setCurrentIndex((p) => (p + 1) % artists.length);
+      } else {
+        // swipe right -> previous
+        setCurrentIndex((p) => (p - 1 + artists.length) % artists.length);
+      }
+    }
+    touchStartXRef.current = null;
+    touchDeltaXRef.current = 0;
+    // resume auto-rotation after a short delay
+    touchTimeoutRef.current = setTimeout(() => setPaused(false), 3000);
+  };
+
   return (
-      <div
-          ref={sectionRef}
-          className="h-[110vh] relative overflow-hidden"
-      >
-        <div>
-          {/* Background Image Placeholder */}
+    <div ref={sectionRef} className="h-[110vh] relative overflow-hidden">
+      <div>{/* Background Image Placeholder */}</div>
+
+      <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
+        {/* Coordinates text */}
+        <div
+          className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}
+        >
+          11.3210°N <br />
+          75.9320°E
+        </div>
+        <div
+          className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}
+        >
+          Be there <br />
+          Feel it <br />
+          Live it
         </div>
 
-        <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
-          {/* Coordinates text */}
-          <div className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}>
-            11.3210°N <br />
-            75.9320°E
-          </div>
-          <div className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}>
-            Be there <br />
-            Feel it <br />
-            Live it
-          </div>
+        {/* Image section */}
+        <div className="md:w-[60%] flex justify-center relative z-30  ">
+          {/* Main Image */}
+          <Image
+            src="/images/proshow-main.png"
+            alt="Proshow main"
+            width={600}
+            height={400}
+            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-2 md:translate-y-0"
+            priority
+          />
 
-          {/* Image section */}
-          <div className="md:w-[60%] flex justify-center relative z-30  ">
-            {/* Main Image */}
+          {/* Text Image (overlayed and moves with main image) */}
+          <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-2 md:translate-y-0">
             <Image
-                src="/images/proshow-main.png"
-                alt="Proshow main"
-                width={600}
-                height={400}
-                className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-2 md:translate-y-0"
-                priority
+              src="/images/proshowText.png"
+              alt="Proshow main text"
+              width={400}
+              height={400}
+              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
             />
+          </div>
 
-            {/* Text Image (overlayed and moves with main image) */}
-            <div className="absolute inset-0 flex justify-center items-center pointer-events-none scale-135 md:scale-100 -translate-y-2 md:translate-y-0">
-              <Image
-                  src="/images/proshowText.png"
-                  alt="Proshow main text"
-                  width={400}
-                  height={400}
-                  className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
-              />
-            </div>
-
-            <style>
-              {` 
+          <style>
+            {` 
               .animateSpin {
                 animation: slowspin 15s linear infinite;
               }
@@ -249,89 +294,112 @@ const Proshow = () => {
                 }
               }
             `}
-            </style>
+          </style>
 
-            {/* Carousel */}
-            <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
-              <div className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
-                   style={{
-                     background: 'radial-gradient(ellipse 150% 120%, rgba(255, 244, 199, 1) 0%, rgba(251, 190, 36, 0.89) 30%, transparent 70%)',
-                     transform: 'scale(1)',
-                     animation: 'pulse 3s ease-in-out infinite'
-                   }}
-              />
-              <div className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 ">
-                {images.map((img, index) => (
-                    // MODIFICATION 5: Add onClick handler and cursor style
-                    <div
-                        key={index}
-                        className="absolute transition-all duration-500 ease-out cursor-pointer"
-                        style={getImageTransform(index)}
-                        onClick={() => handleImageClick(index)}
-                    >
-                      <Image
-                          src={img}
-                          alt={`Carousel image ${index + 1}`}
-                          width={280}
-                          height={170}
-                          className="rounded-xl object-cover"
-                      />
-                    </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Text content */}
-          <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
-            <div className="relative h-10 overflow-hidden">
-              {artists.map((item, index) => (
-                  <div
-                      key={index}
-                      className="absolute w-full transition-all duration-500 ease-out"
-                      style={{
-                        transform: currentIndex === index
-                            ? 'translateY(0)'
-                            : currentIndex > index
-                                ? 'translateY(-100%)'
-                                : 'translateY(100%)',
-                        opacity: currentIndex === index ? 1 : 0,
-                      }}
-                  >
-                    <div className={`md:px-6 text-3xl ${akiraExpanded.className}`}>{item[0]}</div>
-                  </div>
+          {/* Carousel */}
+          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+            <div
+              className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
+              style={{
+                background:
+                  "radial-gradient(ellipse 150% 120%, rgba(255, 244, 199, 1) 0%, rgba(251, 190, 36, 0.89) 30%, transparent 70%)",
+                transform: "scale(1)",
+                animation: "pulse 3s ease-in-out infinite",
+              }}
+            />
+            <div
+              className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 "
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onPointerDown={(e) => {
+                if (e.pointerType === "touch") handleTouchStart(e);
+              }}
+              onPointerMove={(e) => {
+                if (e.pointerType === "touch") handleTouchMove(e);
+              }}
+              onPointerUp={(e) => {
+                if (e.pointerType === "touch") handleTouchEnd(e);
+              }}
+            >
+              {images.map((img, index) => (
+                // MODIFICATION 5: Add onClick handler and cursor style
+                <div
+                  key={index}
+                  className="absolute transition-all duration-500 ease-out cursor-pointer"
+                  style={getImageTransform(index)}
+                  onClick={() => handleImageClick(index)}
+                >
+                  <Image
+                    src={img}
+                    alt={`Carousel image ${index + 1}`}
+                    width={280}
+                    height={170}
+                    className="rounded-xl object-cover"
+                  />
+                </div>
               ))}
-            </div>
-
-            {/* MODIFIED THIS LINE */}
-            <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
-              {artists.map((item, index) => (
-                  <div
-                      key={index}
-                      className={`${michroma.className} absolute w-full transition-all duration-500 ease-out`}
-                      style={{
-                        transform: currentIndex === index
-                            ? 'translateY(0)'
-                            : currentIndex > index
-                                ? 'translateY(-100%)'
-                                : 'translateY(100%)',
-                        opacity: currentIndex === index ? 1 : 0,
-                      }}
-                  >
-                    <div className="leading-relaxed text-sm md:px-6 ">
-                      {item[1]}
-                    </div>
-                  </div>
-              ))}
-            </div>
-
-            {/* Button - separately controlled for mobile */}
-            <div className="flex justify-center md:ml-6 md:justify-start md:mt-8" onClick={()=>router.push('/passes')}>
-              <DotGridButton text="Book Your Pass" />
             </div>
           </div>
         </div>
+
+        {/* Text content */}
+        <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+          <div className="relative h-10 overflow-hidden">
+            {artists.map((item, index) => (
+              <div
+                key={index}
+                className="absolute w-full transition-all duration-500 ease-out"
+                style={{
+                  transform:
+                    currentIndex === index
+                      ? "translateY(0)"
+                      : currentIndex > index
+                      ? "translateY(-100%)"
+                      : "translateY(100%)",
+                  opacity: currentIndex === index ? 1 : 0,
+                }}
+              >
+                <div className={`md:px-6 text-3xl ${akiraExpanded.className}`}>
+                  {item[0]}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* MODIFIED THIS LINE */}
+          <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
+            {artists.map((item, index) => (
+              <div
+                key={index}
+                className={`${michroma.className} absolute w-full transition-all duration-500 ease-out`}
+                style={{
+                  transform:
+                    currentIndex === index
+                      ? "translateY(0)"
+                      : currentIndex > index
+                      ? "translateY(-100%)"
+                      : "translateY(100%)",
+                  opacity: currentIndex === index ? 1 : 0,
+                }}
+              >
+                <div className="leading-relaxed text-sm md:px-6 ">
+                  {item[1]}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Button - separately controlled for mobile */}
+          <div
+            className="flex justify-center md:ml-6 md:justify-start md:mt-8"
+            onClick={() => router.push("/passes")}
+          >
+            <DotGridButton text="Book Your Pass" />
+          </div>
+        </div>
       </div>
+    </div>
   );
 };
 
