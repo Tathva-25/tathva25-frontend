@@ -35,6 +35,7 @@ export default function ModalWrapper({ workshopData }) {
   const handleClick = () => {
     // 1. Get the token from localStorage on every click
     const token = localStorage.getItem("jwt");
+    console.log(token)
 
     // 2. Determine if user is logged in AND if the token is expired
     const isLoggedIn = !!token;

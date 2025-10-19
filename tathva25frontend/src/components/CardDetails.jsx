@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Michroma } from "next/font/google";
 import DotGridButton from "./DotGridButton";
 import ModalWrapper from "@/app/components/modelWrapper";
-
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 /* ---------- Fetch Functions ---------- */
@@ -36,6 +35,8 @@ export default async function CardDetails({ id }) {
   const brochures = await getBrochure(id);
   const event = await fetchEvent(id);
 
+  console.log(event)
+
   if (!event) {
     return (
       <div className="text-center text-gray-600 py-20">
@@ -50,6 +51,7 @@ export default async function CardDetails({ id }) {
     catchyPara,
     startTime,
     endTime,
+    datetime,
     price,
     venue,
     picture,
@@ -60,14 +62,19 @@ export default async function CardDetails({ id }) {
   const desc = description;
   const title = heading;
   const tagline = event.type?.toUpperCase() || "";
-  const date = new Date(startTime).toLocaleDateString();
-  const time = new Date(startTime).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  const workshopData = event; // passed to ModalWrapper
+  const date = new Date(datetime).toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+const time = new Date(datetime).toLocaleTimeString("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+});
 
-  /* ---------- UI ---------- */
+  const workshopData = event; 
+
   return (
     <div className="w-full sm:px-4">
       <div
@@ -84,9 +91,8 @@ export default async function CardDetails({ id }) {
           />
         </div>
 
-        {/* Content Section */}
         <div className="flex flex-col items-center w-full lg:w-[55%]">
-          {/* Title Section */}
+
           <div className="px-2 md:px-6 sm:px-8 lg:px-10 pt-6 md:pb-6 border-b border-gray-200 w-full">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-normal tracking-wide">
               {title}
@@ -97,14 +103,13 @@ export default async function CardDetails({ id }) {
           </div>
 
 
-          {/* Info Grid */}
           <div className="grid grid-cols-2 gap-x-4 gap-y-6 px-2 md:px-6 sm:px-8 lg:px-10 py-6 lg:py-8 w-full">
             <InfoItem icon="/images/calendar.svg" label="Date" value={date} />
             <InfoItem icon="/images/clock.svg" label="Time" value={time} />
             <InfoItem
               icon="/images/pin.svg"
               label="Venue"
-              value={venue || "To be announced"}
+              value={venue?.name || "To be announced"}
             />
             <InfoItem
               icon="/images/tag.svg"
@@ -113,28 +118,6 @@ export default async function CardDetails({ id }) {
             />
           </div>
 
-                              {/* Button Container */}
-          <div className="px-2 md:px-6 pt-4 pb-8 w-full flex justify-center gap-5">
-            <div className="flex justify-center">
-              <ModalWrapper workshopData={workshopData} />
-            </div>
-
-            {brochures.length > 0 && (
-              <Link
-                href={brochures[0].gallery}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="flex justify-center">
-                  <button className="bg-black rounded-xs text-white p-4 px-8 text-xs md:text-lg">
-                    View Brochure
-                  </button>
-                </div>
-              </Link>
-            )}
-          </div>
-
-          {/* Description */}
           <div className="px-2 md:px-6 sm:px-8 lg:px-10 py-6 border-t border-gray-200 w-full">
             <div className="flex items-center gap-2 mb-3">
               <h2 className="font-bold text-xl lg:text-2xl">Description</h2>
@@ -153,7 +136,6 @@ export default async function CardDetails({ id }) {
             )}
           </div>
 
-          {/* Policies */}
           <div className="px-2 md:px-6 sm:px-8 lg:px-10 py-4 space-y-3 w-full">
             <Policy
               title="Note"
@@ -164,8 +146,31 @@ export default async function CardDetails({ id }) {
               text="All tickets are non-refundable and non-transferable except in case of event cancellation or technical issues."
             />
           </div>
+
+                  <div className="px-2 md:px-6 pt-4 pb-8 w-full flex justify-center gap-5">
+            <div className="flex justify-center">
+              <ModalWrapper workshopData={workshopData} />
+            </div>
+
+            {brochures.length > 0 && (
+              <Link
+                href={brochures[0].gallery}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="flex justify-center">
+                  <button className="bg-black rounded-xs text-white p-4 px-8 text-xs md:text-lg">
+                    View Brochure
+                  </button>
+                </div>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
+
+        
+
 
       {/* Full Description Section */}
       {hasBigDesc && (
