@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "@/components/Card";
+import Card2 from "@/components/Card2";
 import Link from "next/link";
 
 export default function WorkshopsPage() {
@@ -20,8 +20,7 @@ export default function WorkshopsPage() {
         })
       : "TBA";
 
-      
-  console.log(process.env.NEXT_PUBLIC_API)
+  console.log(process.env.NEXT_PUBLIC_API);
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
@@ -128,10 +127,10 @@ export default function WorkshopsPage() {
                 <Link
                   href={`/lectures/${id}`}
                   key={id}
-                  className="block transform hover:scale-105 transition-transform duration-300"
+                  className="block transform -mt-25 -mb-25 sm:mt-0 sm:mb-0 sm:scale:100 hover:scale-105 transition-transform duration-300"
                 >
                   <div className="workshop-card-container">
-                    <Card
+                    <Card2
                       number={String(index + 1).padStart(2, "0")}
                       imageUrl={picture || "/images/card_01.png"}
                       heading={heading ?? "Untitled Workshop"}
