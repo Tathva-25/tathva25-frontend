@@ -23,7 +23,7 @@ export default function CompetitionTabs({ tathvaEvents, preTathvaEvents }) {
           <Link
             href={`/competitions/${comp.id}`}
             key={comp.id}
-            className="block transform hover:scale-105 transition-transform duration-300"
+            className="block -mt-20 -mb-20 scale-75 hover:scale-80 sm:mt-0 sm:mb-0 transform sm:scale-100 sm:hover:scale-105 transition-transform duration-300"
           >
             {/* You can reuse your existing Card component or create a specific one */}
             <Card
