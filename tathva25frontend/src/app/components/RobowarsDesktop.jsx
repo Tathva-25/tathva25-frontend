@@ -277,8 +277,10 @@ function Region() {
                 <div
                   className={`bg-black px-3 md:pr-20 py-2  ${schabo.className}`}
                 >
-                  <span className={`text-white text-xl md:text-2xl ${michroma.className} lg:text-3xl xl:text-4xl tracking-wider`}>
-                    OCT 26,27
+                  <span
+                    className={`text-white text-xl md:text-2xl ${michroma.className} lg:text-3xl xl:text-4xl tracking-wider`}
+                  >
+                    OCT 24, 25
                   </span>
                 </div>
 
@@ -299,7 +301,9 @@ function Region() {
               </div>
 
               <div className={`text-black ${schabo.className}`}>
-                <span className={`text-2xl md:text-3xl lg:text-4xl  ${michroma.className} tracking-wider`}>
+                <span
+                  className={`text-2xl md:text-3xl lg:text-4xl  ${michroma.className} tracking-wider`}
+                >
                   PRIZES WORTH INR 8 LAKH
                 </span>
               </div>

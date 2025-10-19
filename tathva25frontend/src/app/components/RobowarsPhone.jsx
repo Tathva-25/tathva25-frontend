@@ -17,7 +17,6 @@ const michroma = localFont({
   src: "../../../public/fonts/michroma.ttf",
 });
 
-
 function Line() {
   return (
     <>
@@ -56,36 +55,42 @@ function Region() {
                 <div
                   className={`bg-black m-2 mt-8 px-2 pr-6 sm:pr-8 md:pr-12 lg:pr-24 py-1 ${schabo.className} w-[80vw] text-left`}
                 >
-                  <span className={`text-white ${michroma.className} robopagetitle tracking-widest`}>
+                  <span
+                    className={`text-white ${michroma.className} robopagetitle tracking-widest`}
+                  >
                     OCT 24, 25
                   </span>
                 </div>
-                <div className={`bg-black py-1 ${schabo.className} relative top-3 `}>
+                <div
+                  className={`bg-black py-1 ${schabo.className} relative top-3 `}
+                >
                   <span className="robopagetitle">l</span>
                 </div>
                 <span className={`${michroma.className} relative left-2.5`}>
                   PRIZES WORTH INR 8 LAKH
                 </span>
-                
               </div>
             </div>
-            <div className={`text-black ${schabo.className} flex items-center justify-around`}>
+            <div
+              className={`text-black ${schabo.className} flex items-center justify-around`}
+            >
               <div
-                  className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
-                >
-                  <span className="scale-70">16 x 16 FT. ARENA</span>
-                  
-                </div>
-                <div className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}>
-                  <span className="scale-70">8KG \ 15KG</span>
-                </div>
+                className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
+              >
+                <span className="scale-70">16 x 16 FT. ARENA</span>
+              </div>
+              <div
+                className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
+              >
+                <span className="scale-70">8KG \ 15KG</span>
+              </div>
               {/* <div className="scale-60 relative left-4">
                 <DotGridButton text="Learn More"/>
               </div> */}
             </div>
           </div>
         </div>
-        
+
         <div className="w-full h-full">
           <ImgtoImage src="/barcode.png" alt="barcode" />
         </div>
