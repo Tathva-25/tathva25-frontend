@@ -24,8 +24,11 @@ const neoform = localFont({
 
 function Page() {
   const [isMobile, setIsMobile] = useState(false);
-  const [centerCard, setCenterCard] = useState(1);
-  const cards = [0, 1, 2];
+  // ---
+  // FIX: Set initial card to 0
+  // ---
+  const [centerCard, setCenterCard] = useState(0);
+  const cards = [0, 1, 2, 3];
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
@@ -39,7 +42,17 @@ function Page() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // ---
+  // FIX: Re-ordered ticketData to put "ALL DAY" first (index 0)
+  // ---
   const ticketData = [
+    {
+      day: "ALL",
+      date: "ALL",
+      price: 1999,
+      eventId: 1624,
+      ticketId: 2320,
+    },
     {
       day: 1,
       date: 24,
@@ -63,31 +76,59 @@ function Page() {
     },
   ];
 
-  // initial gsap setup
-  useEffect(() => {
-    gsap.set([".card-0", ".card-1", ".card-2"], { clearProps: "all" });
-
-    gsap.set(".card-0", {
+  const getPositions = (isMobile) => [
+    {
+      // 0: left
       x: `${isMobile ? "-170%" : "-35%"}`,
       scale: 0.8,
       opacity: 0.6,
       zIndex: 5,
-    });
-
-    gsap.set(".card-1", {
+    },
+    {
+      // 1: center
+      x: "0%",
       scale: 1,
       opacity: 1,
       zIndex: 10,
-    });
-
-    gsap.set(".card-2", {
+    },
+    {
+      // 2: right
       x: `${isMobile ? "170%" : "35%"}`,
       scale: 0.8,
       opacity: 0.6,
       zIndex: 5,
+    },
+    {
+      // 3: hidden/behind
+      x: "0%",
+      scale: 0.5,
+      opacity: 0,
+      zIndex: 2,
+    },
+  ];
+
+  // initial gsap setup
+  useEffect(() => {
+    gsap.set([".card-0", ".card-1", ".card-2", ".card-3"], {
+      clearProps: "all",
     });
 
-    setCenterCard(1);
+    const positions = getPositions(isMobile);
+
+    // ---
+    // FIX: Set initial state with card-0 in the center (positions[1]).
+    // Initial order [3, 0, 1, 2]
+    // card-3 -> positions[0] (left)
+    // card-0 -> positions[1] (center)
+    // card-1 -> positions[2] (right)
+    // card-2 -> positions[3] (hidden)
+    // ---
+    gsap.set(".card-3", positions[0]);
+    gsap.set(".card-0", positions[1]);
+    gsap.set(".card-1", positions[2]);
+    gsap.set(".card-2", positions[3]);
+
+    setCenterCard(0); // Set state to match
   }, [isMobile]);
 
   const leftArrowRefs = useRef([]);
@@ -100,7 +141,7 @@ function Page() {
     const orderedRefs = direction === "left" ? [...refs].reverse() : refs;
 
     orderedRefs.forEach((ref, index) => {
-      if (ref) {
+      if (ref && typeof ref.animate === "function") {
         setTimeout(() => {
           ref.animate();
         }, index * 150);
@@ -112,36 +153,22 @@ function Page() {
     if (clicked === centerCard) return;
 
     let direction;
+    const numCards = cards.length;
+    const rightDist = (clicked - centerCard + numCards) % numCards;
+    const leftDist = (centerCard - clicked + numCards) % numCards;
 
-    if (centerCard === 0 && clicked === 2) {
-      direction = "left";
-    } else if (centerCard === 2 && clicked === 0) {
+    if (rightDist <= leftDist && rightDist !== 0) {
       direction = "right";
-    } else if (clicked < centerCard) {
-      direction = "left";
     } else {
-      direction = "right";
+      direction = "left";
     }
 
     triggerArrowWave(direction);
 
-    const positions = [
-      {
-        x: `${isMobile ? "-170%" : "-35%"}`,
-        scale: 0.8,
-        opacity: 0.6,
-        zIndex: 5,
-      },
-      { x: "0%", scale: 1, opacity: 1, zIndex: 10 },
-      {
-        x: `${isMobile ? "170%" : "35%"}`,
-        scale: 0.8,
-        opacity: 0.6,
-        zIndex: 5,
-      },
-    ];
+    const positions = getPositions(isMobile);
 
     let order = [...cards];
+    // Set clicked card to be at index 1 (center)
     while (order[1] !== clicked) {
       order.push(order.shift());
     }
@@ -162,6 +189,7 @@ function Page() {
 
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
   };
   const handleTouchMove = (e) => {
     touchEndX.current = e.touches[0].clientX;
@@ -171,9 +199,11 @@ function Page() {
     if (Math.abs(deltaX) < 30) return;
 
     if (deltaX > 0) {
+      // Swiped right
       const prev = (centerCard + cards.length - 1) % cards.length;
       moveToCenter(prev);
     } else {
+      // Swiped left
       const next = (centerCard + 1) % cards.length;
       moveToCenter(next);
     }
@@ -226,7 +256,54 @@ function Page() {
         <div
           className={`${mi.className} flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-4 text-xs sm:text-sm tracking-wider`}
         >
+          {/* ---
+            FIX: Re-mapped content to match new card order
+            --- */}
+
+          {/* Was card 3, now card 0 (ALL DAY) */}
           {centerCard === 0 && (
+            <>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>INFORMALS</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>ARIVU</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>MITHOON</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>WHEELS</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>MUSIC CLUB</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>SA & MHR</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>SAVAARI THE BAND</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>DJ VIOLA</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-white/60">•</span>
+                <span>ROBOWARS</span>
+              </span>
+            </>
+          )}
+
+          {/* Was card 0, now card 1 (Day 1) */}
+          {centerCard === 1 && (
             <>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
@@ -240,14 +317,15 @@ function Page() {
                 <span className="text-white/60">•</span>
                 <span>TECH CONCLAVE</span>
               </span>
-                <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
                 <span>INFORMALS</span>
               </span>
             </>
           )}
 
-          {centerCard === 1 && (
+          {/* Was card 1, now card 2 (Day 2) */}
+          {centerCard === 2 && (
             <>
               <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
@@ -276,9 +354,10 @@ function Page() {
             </>
           )}
 
-          {centerCard === 2 && (
+          {/* Was card 2, now card 3 (Day 3) */}
+          {centerCard === 3 && (
             <>
-                          <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
                 <span>INFORMALS</span>
               </span>
@@ -295,7 +374,7 @@ function Page() {
                 <span>DJ PERFORMANCE</span>
               </span>
 
-                            <span className="flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 <span className="text-white/60">•</span>
                 <span>OTHER EVENTS</span>
               </span>
@@ -346,7 +425,10 @@ function Page() {
         <span
           className={`${neoform.className} text-xl sm:text-3xl md:text-4xl lg:text-5xl absolute left-1/2 -translate-x-1/2`}
         >
-          {String(ticketData[centerCard].day).padStart(2, "0")}
+          {/* This logic works fine as `day` is "ALL" for card 0 */}
+          {ticketData[centerCard].day === "ALL"
+            ? "ALL"
+            : String(ticketData[centerCard].day).padStart(2, "0")}
         </span>
 
         {/* RIGHT */}

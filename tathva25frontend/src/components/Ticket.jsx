@@ -57,12 +57,12 @@ function Ticket({ day, date, ticketId, eventId, price }) {
           <p
             className={`${fontspring.className} text-base sm:text-4xl md:text-4xl lg:text-5xl md:pl-3 font-bold text-[#3E3E3B]`}
           >
-            {`DAY ${day}`}
+            {day != "ALL" ? `DAY ${day}` : "ALL DAYS"}
           </p>
           <p
             className={`${mi.className} text-xs sm:text-md md:text-lg lg:text-xl font-bold md:pl-3 text-[#3E3E3B]`}
           >
-            {`OCT ${date} 2025`}
+            {day != "ALL" ? `OCT ${date} 2025` : ""}
           </p>
           <p
             className={`${mi.className} text-[0.5rem] sm:text-[0.52rem] md:text-[0.6rem] md:pl-3 lg:text-[0.65rem] text-[#3E3E3B]`}

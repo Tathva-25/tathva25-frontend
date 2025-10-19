@@ -55,19 +55,21 @@ function TicketMobile({ day, date, ticketId, eventId, price }) {
         </div>
         {/* <Image src="/verticalline.svg" alt="line" width={2} height={2} /> */}
         <p
-          className={`${fontspring.className} text-lg sm:text-lg font-bold text-[#3E3E3B] -mt-3`}
+          className={`${fontspring.className} text-lg sm:text-lg font-bold text-[#3E3E3B] -mt-3 text-center`}
         >
-          {`DAY ${day}`}
+          {day === "ALL" ? "ALL DAYS" : `DAY ${day}`}
         </p>
         <p
           className={`${mi.className} text-xs sm:text-xs text-center font-bold text-[#3E3E3B]`}
         >
-          {`OCT ${date} 2025`}
+          {day === "ALL" ? "" : `OCT ${date} 2025`}
         </p>
         <p
           className={`${mi.className} text-[0.2rem] scale-140 sm:text-[0.3rem] text-center text-[#3E3E3B]`}
         >
-            {day === 1 ? `Robowars | Wheels | Informals` : `Prowshow | Events | Informals`}
+          {day === 1
+            ? `Robowars | Wheels | Informals`
+            : `Prowshow | Events | Informals`}
         </p>
         <div className="flex flex-col items-center justify-around gap-1">
           {day != 4 ? (
