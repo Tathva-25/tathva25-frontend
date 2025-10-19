@@ -155,12 +155,9 @@ export const Hero = () => {
       ref={sectionRef}
       className={`relative h-[95vh] sm:h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
-      {/* ✅ Top-right Logo */}
-      {/* ✅ Top-right items container */}
-{/* ✅ Top-right items container */}
-<div className="absolute top-6 right-6 md:top-2 md:right-4 z-30 flex items-center gap-2 md:gap-4">
+
+<div className="hidden absolute top-6 right-6 md:top-2 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
   
-  {/* 1. Profile / Login Button */}
   {isLoggedIn ? (
     <button
       onClick={() => handleVisitDashboard(router)}
@@ -199,6 +196,8 @@ export const Hero = () => {
     quality={90}
   />
 </div>
+
+
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
         <div>

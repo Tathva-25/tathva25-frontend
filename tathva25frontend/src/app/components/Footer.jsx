@@ -26,17 +26,20 @@ const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 // --- HELPER COMPONENTS (REUSABLE) ---
 
+import { HiArrowNarrowRight } from "react-icons/hi"; 
+
 const QuickLink = ({ href = "#", children, showArrow = false }) => (
-    <a
-        href={href}
-        className={`flex items-center gap-2 ${michroma.className} text-[clamp(0.7rem,_1vw,_0.875rem)] hover:text-yellow-400 text-left text-white/90 transition-colors duration-200`}
-    >
-        {showArrow && (
-            <img src={Arrow.src} alt="" className="w-4 h-4" />
-        )}
-        <span>{children}</span>
-    </a>
+  <a
+    href={href}
+    className={`flex items-center gap-2 ${michroma.className} text-[clamp(0.7rem,_1vw,_0.875rem)] hover:text-yellow-400 text-left text-white/90 transition-colors duration-200`}
+  >
+    {showArrow && (
+      <HiArrowNarrowRight className="w-4 h-4   -rotate-45 transition-transform duration-200 group-hover:translate-x-1" />
+    )}
+    <span>{children}</span>
+  </a>
 );
+
 
 const SocialIcon = ({ href = "#", src, alt }) => (
     <a href={href} target="_blank" rel="noopener noreferrer">
@@ -173,7 +176,6 @@ const MobileFooter = () => (
                     <QuickLink showArrow>Map</QuickLink>
                     <QuickLink href="/lectures" showArrow>Lectures</QuickLink>
                     <QuickLink href="/passes" showArrow>Passes</QuickLink>
-                    <QuickLink href="/announcements" showArrow>Announcements</QuickLink>
                     <QuickLink showArrow>Team</QuickLink>
                     <QuickLink href="/workshops" showArrow>Workshops</QuickLink>
                     <QuickLink href="/profile" showArrow>Profile</QuickLink>

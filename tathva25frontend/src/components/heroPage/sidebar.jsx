@@ -353,7 +353,7 @@ export default function Sidebar() {
       )}
 
       <div className="md:ml-9">
-        <section id="section-1">
+        <section id="section-1" className="h-full ">
           <Hero />
           <div className="md:hidden"><Marquee text={"///SCROLL TO CONTINUE"}/></div>
         </section>
