@@ -59,18 +59,20 @@ export default async function CardDetails({ id }) {
 
   const hasBigDesc = !!catchyPara;
   const bigDesc = catchyPara;
-  const desc = description;
+  const desc = description; 
   const title = heading;
   const tagline = event.type?.toUpperCase() || "";
   const date = new Date(datetime).toLocaleDateString("en-GB", {
   day: "2-digit",
   month: "short",
   year: "numeric",
+  timeZone: "Asia/Kolkata",
 });
 const time = new Date(datetime).toLocaleTimeString("en-GB", {
   hour: "2-digit",
   minute: "2-digit",
   hour12: true,
+  timeZone: "Asia/Kolkata",
 });
 
   const workshopData = event; 
