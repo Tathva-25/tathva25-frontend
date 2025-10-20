@@ -76,7 +76,7 @@ const time = new Date(datetime).toLocaleTimeString("en-IN", {
 });
 
   const workshopData = event; 
-
+ 
   return (
     <div className="w-full sm:px-4">
       <div
