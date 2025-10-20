@@ -8,6 +8,7 @@ import style from "./proshow.module.css";
 import { Michroma } from "next/font/google";
 import { keyframes } from "motion";
 import { useRouter } from "next/navigation";
+import Marquee from "@/app/components/Marquee";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
@@ -15,6 +16,23 @@ const akiraExpanded = localFont({
   src: "../../../public/fonts/Akira-Expanded.otf",
   variable: "--font-akira",
 });
+
+function ImgtoImage({ src, alt }) {
+  return (
+    <Image
+      src={`${src}`}
+      alt={`${alt}`}
+      width={0}
+      height={0}
+      sizes="100vw"
+      className="w-full h-auto object-cover"
+      style={{
+        width: "100%",
+        height: "auto",
+      }}
+    />
+  );
+}
 
 const Proshow = () => {
   const router = useRouter();
@@ -238,15 +256,33 @@ const Proshow = () => {
 
   return (
     <div ref={sectionRef} className="h-[110vh] relative overflow-hidden">
-      <div>{/* Background Image Placeholder */}</div>
+      {/* Background Image - Fixed positioning and responsiveness */}
+
+      <div className="absolute inset-0 w-full h-full object-contain overflow-x-hidden -top-50 sm:top-auto">
+        <Image
+          src="/proshowbg.png"
+          alt="proshowbg"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+          priority
+          quality={100}
+          unoptimized={false}
+        />
+      </div>
 
       <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
         {/* Coordinates text */}
         <div
-          className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}
+          className={`${michroma.className} absolute font-black l hidden md:block top-10 right-20 text-sm z-40`}
         >
           11.3210°N <br />
           75.9320°E
+        </div>
+        <div
+          className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}
+        >
+          <ImgtoImage src="/proshow-grid-1.png" alt="grid1" />
         </div>
         <div
           className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}
@@ -254,6 +290,11 @@ const Proshow = () => {
           Be there <br />
           Feel it <br />
           Live it
+        </div>
+        <div
+          className={`${michroma.className} absolute font-bold hidden md:block bottom-8 right-20 md:scale-80 lg:scale-100 text-sm z-40`}
+        >
+          <ImgtoImage src="/proshow-grid-2.png" alt="grid2" />
         </div>
 
         {/* Image section */}
@@ -307,6 +348,7 @@ const Proshow = () => {
                 animation: "pulse 3s ease-in-out infinite",
               }}
             />
+
             <div
               className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 "
               onTouchStart={handleTouchStart}
@@ -344,7 +386,7 @@ const Proshow = () => {
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+        <div className="flex flex-col -mr-14 mt-6 md:-mt-30 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
           <div className="relative h-10 overflow-hidden">
             {artists.map((item, index) => (
               <div
@@ -383,7 +425,13 @@ const Proshow = () => {
                   opacity: currentIndex === index ? 1 : 0,
                 }}
               >
-                <div className="leading-relaxed text-sm md:px-6 ">
+                <div
+                  className="leading-relaxed md:text-sm lg:text-md  md:px-6 "
+                  style={{
+                    textShadow:
+                      "1px 1px 2px rgba(0, 0, 0, 0.7), -0.5px -0.5px 1px rgba(0, 0, 0, 0.5)",
+                  }}
+                >
                   {item[1]}
                 </div>
               </div>
