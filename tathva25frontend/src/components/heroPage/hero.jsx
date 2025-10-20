@@ -63,7 +63,7 @@ export const Hero = () => {
 
     setIsAnimating(true);
     hasAnimatedRef.current = true;
-    const textLength = targetText.length + 2;
+    const textLength = targetText.length;
 
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (timeoutRef.current) clearInterval(timeoutRef.current);
@@ -104,28 +104,28 @@ export const Hero = () => {
     }, SCRAMBLE_INTERVAL_MS);
   };
 
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       entries.forEach((entry) => {
-  //         if (entry.isIntersecting && !hasAnimatedRef.current) {
-  //           triggerGlitchEffect();
-  //         }
-  //       });
-  //     },
-  //     { threshold: 0.1 }
-  //   );
+   useEffect(() => {
+     const observer = new IntersectionObserver(
+       (entries) => {
+         entries.forEach((entry) => {
+           if (entry.isIntersecting && !hasAnimatedRef.current) {
+             triggerGlitchEffect();
+           }
+         });
+       },
+       { threshold: 0.1 }
+     );
 
-  //   if (sectionRef.current) {
-  //     observer.observe(sectionRef.current);
-  //   }
+     if (sectionRef.current) {
+       observer.observe(sectionRef.current);
+     }
 
-  //   return () => {
-  //     if (sectionRef.current) {
-  //       observer.unobserve(sectionRef.current);
-  //     }
-  //   };
-  // }, []);
+     return () => {
+       if (sectionRef.current) {
+         observer.unobserve(sectionRef.current);
+       }
+     };
+   }, []);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
@@ -619,7 +619,7 @@ export const Hero = () => {
             {/* Date positioned to the left of TATHVA */}
             <div className="absolute top-28 transform translate-y-4 md:left-32 md:-translate-y-4">
               <span
-                className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg`}
+                className={`${newfont.className} hidden md:block text-lg md:text-2xl text-white drop-shadow-lg -mt-6`}
               >
                 OCTOBER 24, 25, 26
               </span>

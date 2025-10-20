@@ -297,7 +297,7 @@ const Proshow = () => {
           </style>
 
           {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block  md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div
               className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
               style={{
