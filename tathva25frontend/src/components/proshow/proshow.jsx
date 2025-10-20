@@ -386,7 +386,7 @@ const Proshow = () => {
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col -mr-14 mt-6 md:-mt-30 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+        <div className="flex flex-col mt-15 md:-mr-14 md:-mt-30 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
           <div className="relative h-10 overflow-hidden">
             {artists.map((item, index) => (
               <div
@@ -426,7 +426,7 @@ const Proshow = () => {
                 }}
               >
                 <div
-                  className="leading-relaxed md:text-sm lg:text-md  md:px-6 "
+                  className="leading-relaxed text-[12px] md:text-sm lg:text-md  md:px-6 "
                   style={{
                     textShadow:
                       "1px 1px 2px rgba(0, 0, 0, 0.7), -0.5px -0.5px 1px rgba(0, 0, 0, 0.5)",
