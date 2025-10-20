@@ -258,7 +258,7 @@ const Proshow = () => {
     <div ref={sectionRef} className="h-[110vh] relative overflow-hidden">
       {/* Background Image - Fixed positioning and responsiveness */}
 
-      <div className="absolute inset-0 w-full h-full object-contain overflow-x-hidden -top-50 sm:top-auto">
+      <div className="absolute inset-0 w-full h-full object-contain opacity-50 overflow-x-hidden -top-50 sm:top-auto">
         <Image
           src="/proshowbg.png"
           alt="proshowbg"
@@ -316,7 +316,7 @@ const Proshow = () => {
               alt="Proshow main text"
               width={400}
               height={400}
-              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
+              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.6] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
             />
           </div>
 
@@ -338,7 +338,7 @@ const Proshow = () => {
           </style>
 
           {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block z-120 mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div
               className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
               style={{
@@ -368,7 +368,7 @@ const Proshow = () => {
                 // MODIFICATION 5: Add onClick handler and cursor style
                 <div
                   key={index}
-                  className="absolute transition-all duration-500 ease-out cursor-pointer"
+                  className="absolute transition-all scale-95 duration-500 ease-out cursor-pointer"
                   style={getImageTransform(index)}
                   onClick={() => handleImageClick(index)}
                 >
@@ -386,7 +386,7 @@ const Proshow = () => {
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col -mr-14 mt-6 md:-mt-30 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+        <div className="flex flex-col -mr-12 mt-16 md:mt-0 text-center md:text-left gap-6 md:w-[40%] lg:translate-y-20 p-3  md:p-0 z-30 overflow-hidden">
           <div className="relative h-10 overflow-hidden">
             {artists.map((item, index) => (
               <div
@@ -410,7 +410,7 @@ const Proshow = () => {
           </div>
 
           {/* MODIFIED THIS LINE */}
-          <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
+          <div className="relative min-h-[240px] mt-4 md:-mt-0 overflow-hidden">
             {artists.map((item, index) => (
               <div
                 key={index}
@@ -425,13 +425,7 @@ const Proshow = () => {
                   opacity: currentIndex === index ? 1 : 0,
                 }}
               >
-                <div
-                  className="leading-relaxed md:text-sm lg:text-md  md:px-6 "
-                  style={{
-                    textShadow:
-                      "1px 1px 2px rgba(0, 0, 0, 0.7), -0.5px -0.5px 1px rgba(0, 0, 0, 0.5)",
-                  }}
-                >
+                <div className="leading-relaxed text-[12px] md:text-sm lg:text-md md:px-6">
                   {item[1]}
                 </div>
               </div>
@@ -440,7 +434,7 @@ const Proshow = () => {
 
           {/* Button - separately controlled for mobile */}
           <div
-            className="flex justify-center md:ml-6 md:justify-start md:mt-8"
+            className="flex justify-center md:ml-6 md:justify-start md:mt-50 lg:mt-0"
             onClick={() => router.push("/passes")}
           >
             <DotGridButton text="Book Your Pass" />
