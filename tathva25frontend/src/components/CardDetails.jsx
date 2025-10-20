@@ -62,13 +62,13 @@ export default async function CardDetails({ id }) {
   const desc = description; 
   const title = heading;
   const tagline = event.type?.toUpperCase() || "";
-  const date = new Date(datetime).toLocaleDateString("en-GB", {
+  const date = new Date(datetime).toLocaleDateString("en-IN", {
   day: "2-digit",
   month: "short",
   year: "numeric",
   timeZone: "Asia/Kolkata",
 });
-const time = new Date(datetime).toLocaleTimeString("en-GB", {
+const time = new Date(datetime).toLocaleTimeString("en-IN", {
   hour: "2-digit",
   minute: "2-digit",
   hour12: true,
