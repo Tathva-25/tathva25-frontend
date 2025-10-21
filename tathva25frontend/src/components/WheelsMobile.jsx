@@ -49,16 +49,16 @@ export default function WheelsEventMobile() {
         {/* NOTE: Tailwind CSS doesn't have a default utility for `text-stroke`.
           Arbitrary properties are used here for cross-browser compatibility.
         */}
-        <div className="w-full text-[clamp(3rem,14vw,8rem)] uppercase text-transparent -translate-y-[150%] -translate-x-[5%] [text-stroke:2px_#fff] [-webkit-text-stroke:2px_#fff] leading-none text-left pl-2 mb-2">
+        <div className="w-full text-[clamp(3rem,14vw,8rem)] uppercase text-transparent -translate-y-[150%] -translate-x-[2%] [text-stroke:2px_#fff] [-webkit-text-stroke:2px_#fff] leading-none text-left pl-2 mb-2">
           2025
         </div>
 
         {/* === DATE SECTION === */}
-        <div className="w-full text-center mt-[0.2rem] mb-[0.6rem]">
-          <div className="text-[clamp(2rem,9vw,4rem)] mb-3 font-thin -translate-y-[400%] -translate-x-[9%] uppercase tracking-normal leading-[1.1]">
+        <div className="w-full text-center px-4">
+          <div className="text-[clamp(2rem,9vw,4rem)] mb-3 font-thin -translate-y-[400%] -translate-x-[6%] uppercase tracking-normal leading-[1.1]">
             October 24
           </div>
-          <div className="text-[clamp(0.9rem,3.5vw,1.3rem)] font-light -translate-y-[700%] -translate-x-[18%] tracking-[0.1em] uppercase mt-[0.3rem]">
+          <div className="text-[clamp(0.9rem,3.5vw,1.3rem)] font-light -translate-y-[700%] -translate-x-[15%] tracking-[0.1em] uppercase mt-[0.3rem]">
             Back to the Future
           </div>
         </div>
