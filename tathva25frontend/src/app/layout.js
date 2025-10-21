@@ -2,7 +2,7 @@ import "./globals.css";
 // Import the new wrapper component
 import ClientLayoutWrapper from "@/components/ClientLayoutWrapper";
 import { Toaster } from "react-hot-toast";
-
+import { Analytics } from "@vercel/analytics/next";
 export const metadata = {
   // === Basic Metadata ===
   title: {
@@ -72,6 +72,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="relative overflow-x-hidden">
         <Toaster />
+        <Analytics />
         {/* Use the wrapper to manage loading state and content visibility */}
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
