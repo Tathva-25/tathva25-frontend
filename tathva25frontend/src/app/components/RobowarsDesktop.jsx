@@ -386,7 +386,7 @@ export default function RobowarsDesktop({ link }) {
 
     ScrollTrigger.create({
       trigger: regionRef.current,
-      start: "top 100%",
+      start: "top 95%",
       once: true, //THIS IS HOW YOU RUN A GSAP ANIMATION ONLY ONCE ON SCROLL TRIGGER
       onEnter: () => {
         const tl = gsap.timeline({ repeat: 0 });
@@ -402,7 +402,7 @@ export default function RobowarsDesktop({ link }) {
             scale: 1,
             duration: 0.8,
             ease: "power3.out",
-            delay: 0.8,
+            delay: 0.2,
           }
         );
       },
