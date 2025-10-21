@@ -75,7 +75,7 @@ export default function WorkshopsPage() {
       <div className="mb-12">
         <Link
             href="/"
-            className="font-['Open_Sans',sans-serif] text-sm font-medium text-gray-500 hover:text-black transition-colors"
+            className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
         >
           ← Home
         </Link>
