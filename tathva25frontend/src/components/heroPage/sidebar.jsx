@@ -397,7 +397,7 @@ export default function Sidebar() {
            <GamePage /> 
         </section>
 
-        <section id="section-8">
+        <section id="section-8" className={"mt-6 sm:mt-10"}>
        <Expo />
         </section>
 
