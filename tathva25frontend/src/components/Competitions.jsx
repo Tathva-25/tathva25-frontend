@@ -88,7 +88,7 @@ export default function Competitions() {
               href="/"
               className="font-['Open_Sans',sans-serif] text-sm font-medium text-gray-500 hover:text-black transition-colors"
           >
-            ← Back to Home
+            ← Home
           </Link>
           <div className="border-b border-gray-300 pb-4 mt-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">

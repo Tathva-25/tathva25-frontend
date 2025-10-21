@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card2 from "@/components/Card2";
 import Link from "next/link";
+import { Michroma } from "next/font/google";
+
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 export default function WorkshopsPage() {
   const [workshops, setWorkshops] = useState([]);
@@ -67,30 +70,27 @@ export default function WorkshopsPage() {
   ];
 
   return (
-    <div className="bg-white min-h-screen py-4 sm:py-10 px-4 sm:px-8">
+    <div className="bg-white min-h-screen py-8 sm:py-0 px-4 sm:px-8">
       {/* Heading and home */}
       <div className="mb-12">
         <Link
-          href="/"
-          className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
+            href="/"
+            className="font-['Open_Sans',sans-serif] text-sm font-medium text-gray-500 hover:text-black transition-colors"
         >
           ← Home
         </Link>
 
-        <div className="mb-12 border-b border-gray-300 pb-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            {/* Title */}
-            <h1 className="pp-fragment text-4xl sm:text-5xl md:text-6xl text-center md:text-left tracking-wide text-gray-900 uppercase md:mt-3">
+        <div className="border-b border-gray-300 pb-4 mt-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <h1 className={`${michroma.className} pp-fragment text-3xl sm:text-5xl md:text-6xl text-center lg:text-left tracking-wide text-gray-900 uppercase`}>
               LECTURES
             </h1>
-
-            {/* Search Bar */}
             <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search For Lectures"
-              className="w-full md:max-w-lg p-4 border border-gray-300 rounded-full shadow-sm focus:ring-gray-500 focus:border-gray-500"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search For Lectures"
+                className="font-['Open_Sans',sans-serif] font-normal w-full rounded-full lg:max-w-lg p-4 border border-gray-300 shadow-sm focus:ring-gray-500 focus:border-gray-500"
             />
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function WorkshopsPage() {
             No lectures found matching your search.
           </p>
         ) : (
-          <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
+          <div className="flex flex-wrap justify-center gap-8 lg:gap-12 mt-8">
             {sortedWorkshops.map((workshop, index) => {
               const {
                 id,
@@ -127,50 +127,24 @@ export default function WorkshopsPage() {
                 <Link
                   href={`/lectures/${id}`}
                   key={id}
-                  className="block transform -mt-25 -mb-25 sm:mt-0 sm:mb-0 sm:scale:100 hover:scale-105 transition-transform duration-300"
+                  className="block -mt-20 -mb-20 scale-75 hover:scale-80 sm:mt-0 sm:mb-0 transform sm:scale-100 sm:hover:scale-105 transition-transform duration-300"
                 >
-                  <div className="workshop-card-container">
-                    <Card2
-                      number={String(index + 1).padStart(2, "0")}
-                      imageUrl={picture || "/images/card_01.png"}
-                      heading={heading ?? "Untitled Workshop"}
-                      description={fullDescription}
-                      barcodeValue={barcodeValue}
-                      sideImageUrl="/images/misc.png"
-                    />
-                  </div>
+
+                <Card2
+                  number={String(index + 1).padStart(2, "0")}
+                  imageUrl={picture || "/images/card_01.png"}
+                  heading={heading ?? "Untitled Workshop"}
+                  description={fullDescription}
+                  barcodeValue={barcodeValue}
+                  sideImageUrl="/images/misc.png"
+                />
+
                 </Link>
               );
             })}
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        .workshop-card-container {
-          margin-bottom: 2rem;
-          transition: all 0.3s ease;
-        }
-
-        .workshop-card-container:hover {
-          filter: brightness(1.05);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-          .workshop-card-container {
-            transform: scale(0.85);
-            margin-bottom: 1rem;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .workshop-card-container {
-            transform: scale(0.7);
-            margin-bottom: 0.5rem;
-          }
-        }
-      `}</style>
     </div>
   );
 }
