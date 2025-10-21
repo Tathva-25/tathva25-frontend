@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Space_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import DotGridButton from "@/components/DotGridButton";
+import Marquee from "./Marquee";
 
 /*FONTS*/
 const spacemono = Space_Mono({
@@ -47,6 +48,7 @@ function ImgtoImage({ src, alt }) {
 function Region() {
   return (
     <>
+   
       <div className="flex flex-col items-center justify-center gap-5">
         <div className="flex w-full h-full justify-between items-center px-4 sm:px-8 md:px-12 lg:px-20">
           <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
@@ -72,17 +74,17 @@ function Region() {
               </div>
             </div>
             <div
-              className={`text-black ${schabo.className} flex items-center justify-around`}
+              className={`text-black ${schabo.className} flex items-center justify-between px-2`}
             >
               <div
                 className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
               >
-                <span className="scale-70">16 x 16 FT. ARENA</span>
+                <span className="scale-90">16 x 16 FT. ARENA</span>
               </div>
               <div
                 className={`${spacemono.className} text-[15px] sm:text-sm md:text-xl lg:text-2xl text-[400] flex flex-col items-center justify-center`}
               >
-                <span className="scale-70">8KG \ 15KG</span>
+                <span className="scale-90">8KG \ 15KG</span>
               </div>
               {/* <div className="scale-60 relative left-4">
                 <DotGridButton text="Learn More"/>
@@ -102,7 +104,7 @@ function Region() {
 function Picture() {
   return (
     <div className="w-full">
-      <div className="w-full">
+      <div className="w-full -mt-10">
         <ImgtoImage src="/robomob2.png" alt="robowars" />
       </div>
     </div>

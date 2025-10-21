@@ -7,6 +7,7 @@ import { Michroma } from "next/font/google"
 import DotGridButton from "@/components/DotGridButton"
 import { JetBrains_Mono } from 'next/font/google'
 import effectStyles from "./gaming_styles.module.css"
+import Marquee from "../components/Marquee"
 import { Mic } from "lucide-react"
 import Link from "next/link"
 
@@ -59,6 +60,8 @@ const GamePage = () => {
   return (
     
     <div>
+
+      <Marquee text={"///GAMING CONCLAVE"}/>
       <div className="hidden overflow-hidden lg:flex bg-white flex-row items-center justify-center relative overflow-x-hidden min-h-screen">
         {/* <Sidebar/> */}
         {/* <Sidebar /> */}

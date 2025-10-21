@@ -12,7 +12,7 @@ export default function Marquee({ text }) {
         {[...Array(10)].map((_, i) => (
           <span
             key={i}
-            className="text-black text-xl mx-6"
+            className="text-black text mx-6"
           >
             {text}
           </span>

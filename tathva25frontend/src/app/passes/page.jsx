@@ -217,7 +217,7 @@ function Page() {
         <h1
           className={`${
             neoform.className
-          } text-xl md:text-8xl text-center  z-20 relative lg:bottom-10 
+          } text-5xl md:text-8xl text-center px-3 z-20 relative lg:bottom-10 
           }`}
         >
           TATHVA PASS
@@ -226,7 +226,7 @@ function Page() {
         <h1
           className={`${
           mi.className
-          }  z-20 relative text-center mt-5  lg:bottom-10 ${
+          }  z-20 relative text-center mt-5  px-4 lg:bottom-10 ${
             isMobile ? "mb-104" : "mb-56"
           }`}
         >

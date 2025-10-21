@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import RobowarsDesktop from "./RobowarsDesktop";
 import RobowarsPhone from "./RobowarsPhone";
 import RB1 from "./RobowarsDesktop";
+import Marquee from "./Marquee";
 
 export default function Robowars({ link }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -25,6 +26,7 @@ export default function Robowars({ link }) {
 
   return (
     <>
+     <Marquee text={"///ROBOWARS"}/>
       {isMobile ? (
         <RobowarsPhone link={link} />
       ) : (
