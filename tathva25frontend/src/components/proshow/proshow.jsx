@@ -338,7 +338,7 @@ const Proshow = () => {
           </style>
 
           {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block z-120 mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div
               className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
               style={{
@@ -368,7 +368,7 @@ const Proshow = () => {
                 // MODIFICATION 5: Add onClick handler and cursor style
                 <div
                   key={index}
-                  className="absolute transition-all duration-500 ease-out cursor-pointer"
+                  className="absolute transition-all scale-95 duration-500 ease-out cursor-pointer"
                   style={getImageTransform(index)}
                   onClick={() => handleImageClick(index)}
                 >
@@ -410,7 +410,7 @@ const Proshow = () => {
           </div>
 
           {/* MODIFIED THIS LINE */}
-          <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
+          <div className="relative min-h-[240px] mt-4 md:-mt-0 overflow-hidden">
             {artists.map((item, index) => (
               <div
                 key={index}
@@ -440,7 +440,7 @@ const Proshow = () => {
 
           {/* Button - separately controlled for mobile */}
           <div
-            className="flex justify-center md:ml-6 md:justify-start md:mt-8"
+            className="flex justify-center md:ml-6 md:justify-start md:mt-50 lg:mt-0"
             onClick={() => router.push("/passes")}
           >
             <DotGridButton text="Book Your Pass" />
