@@ -195,13 +195,12 @@ const MobileFooter = () => (
                 </div>
 
                 {/* Bottom: Legal Links */}
-                <div className="flex flex-col sm:flex-row gap-3">
-                    <a href="#" className="flex-1 text-center border border-white/50 px-4 py-2 text-xs rounded-lg hover:bg-white/10 transition">
-                        Privacy Policy
-                    </a>
-                    <a href="#" className="flex-1 text-center border border-white/50 px-4 py-2 text-xs rounded-lg hover:bg-white/10 transition">
-                        Terms of Service
-                    </a>
+                <div className="mb-4 flex justify-center">
+                    <div className="flex gap-8">
+                        <SocialIcon href="https://www.instagram.com/tathva_nitcalicut/" src={Insta.src} alt="Instagram" />
+                        <SocialIcon href="https://www.facebook.com/tathvanitc/" src={Fb.src} alt="Facebook" />
+                        <SocialIcon href="https://www.linkedin.com/company/tathva-nit-calicut/" src={Linkd.src} alt="LinkedIn" />
+                    </div>
                 </div>
             </div>
         </div>
