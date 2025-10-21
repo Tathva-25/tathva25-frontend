@@ -344,7 +344,7 @@ const Proshow = () => {
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col mt-12 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
+        <div className="flex flex-col mt-30 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
           <div className="relative h-10 overflow-hidden">
             {artists.map((item, index) => (
               <div
@@ -366,8 +366,6 @@ const Proshow = () => {
               </div>
             ))}
           </div>
-
-          {/* MODIFIED THIS LINE */}
           <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
             {artists.map((item, index) => (
               <div
@@ -395,7 +393,7 @@ const Proshow = () => {
             className="flex justify-center md:ml-6 md:justify-start md:mt-8"
             onClick={() => router.push("/passes")}
           >
-            <DotGridButton text="Book Your Pass" />
+            <DotGridButton text="See more" />
           </div>
         </div>
       </div>

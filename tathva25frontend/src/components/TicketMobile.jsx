@@ -69,7 +69,7 @@ function TicketMobile({ day, date, ticketId, eventId, price }) {
         >
           {day === 1
             ? `Robowars | Wheels | Informals`
-            : `Prowshow | Events | Informals`}
+            : `Competitions | Events | Informals`}
         </p>
         <div className="flex flex-col items-center justify-around gap-1">
 

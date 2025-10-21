@@ -8,6 +8,7 @@ import { Michroma } from "next/font/google";
 import localFont from "next/font/local";
 import { Arrow } from "@/components/Arrow";
 
+
 const mi = Michroma({
   subsets: ["latin"],
   weight: ["400"],
@@ -210,19 +211,29 @@ function Page() {
   };
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center justify-center overflow-hidden">
+    <section className="w-full h-[100vh] flex flex-col items-center justify-center overflow--x-hidden">
       {/* Heading */}
       <div>
         <h1
           className={`${
-            fontspring.className
-          } text-6xl font-bold z-20 relative lg:bottom-10 ${
-            isMobile ? "mb-96" : "mb-56"
+            neoform.className
+          } text-5xl md:text-8xl text-center  z-20 relative lg:bottom-10 
           }`}
         >
-          PASSES
+          TATHVA PASS
         </h1>
-      </div>
+
+        <h1
+          className={`${
+          mi.className
+          }  z-20 relative text-center mt-5  lg:bottom-10 ${
+            isMobile ? "mb-104" : "mb-56"
+          }`}
+        >
+          One pass. Every moment of Tathva.
+        </h1>
+        
+    </div>
       {ticketData.map((ticket, i) => (
         <div
           key={i}
