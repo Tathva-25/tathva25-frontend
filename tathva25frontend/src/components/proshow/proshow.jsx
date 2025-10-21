@@ -258,7 +258,7 @@ const Proshow = () => {
     <div ref={sectionRef} className="h-[110vh] relative overflow-hidden">
       {/* Background Image - Fixed positioning and responsiveness */}
 
-      <div className="absolute  inset-0 w-full h-full object-contain overflow-x-hidden -top-50 sm:top-auto">
+      {/* <div className="absolute  inset-0 w-full h-full object-contain overflow-x-hidden -top-50 sm:top-auto">
         <Image
           src="/proshowbg.png"
           alt="proshowbg"
@@ -269,7 +269,7 @@ const Proshow = () => {
           quality={100}
           unoptimized={false}
         />
-      </div>
+      </div> */}
 
       <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
         {/* Coordinates text */}
@@ -316,7 +316,7 @@ const Proshow = () => {
               alt="Proshow main text"
               width={400}
               height={400}
-              className={`rounded-2xl md:scale-[1.5] lg:scale-[1.2] sm:scale-[1.5] scale-[1.6] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
+              className={`rounded-2xl md:scale-[1.5] lg:scale-[1.2] sm:scale-[1.5] scale-[1.6] -mt-4 md:-mt-10 object-contain w-[45%]  animateSpin`}
             />
           </div>
 
@@ -339,7 +339,7 @@ const Proshow = () => {
 
           {/* Carousel */}
           <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block z-120 mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
-            <div
+            {/* <div
               className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
               style={{
                 background:
@@ -347,7 +347,7 @@ const Proshow = () => {
                 transform: "scale(1)",
                 animation: "pulse 3s ease-in-out infinite",
               }}
-            />
+            /> */}
 
             <div
               className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 "
@@ -425,10 +425,7 @@ const Proshow = () => {
               >
                 <div
                   className="leading-relaxed text-[12px] md:text-sm lg:text-md  md:px-6 "
-                  style={{
-                    textShadow:
-                      "1px 1px 2px rgba(0, 0, 0, 0.7), -0.5px -0.5px 1px rgba(0, 0, 0, 0.5)",
-                  }}
+
                 >
                   {item[1]}
                 </div>

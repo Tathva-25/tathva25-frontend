@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Michroma } from "next/font/google";
 import localFont from "next/font/local";
-import ModalWrapper from "./modelWrapperProShow";
+import ModalWrapper from "@/app/components/modelWrapperProShow";
 
 const mi = Michroma({
   subsets: ["latin"],

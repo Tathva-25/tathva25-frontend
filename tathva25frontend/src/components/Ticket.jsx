@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Michroma } from "next/font/google";
 import localFont from "next/font/local";
-import ModalWrapper from "./modelWrapperProShow";
+import ModalWrapper from "@/app/components/modelWrapperProShow";
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -16,7 +16,7 @@ const fontspring = localFont({
 function Ticket({ day, date, ticketId, eventId, price }) {
   // Dynamic event text based on day
   const eventText =
-    day === 1 ? "Wheels | Robowars | Conclave" : "Competitions | Events ";
+    day === 1 ? "Wheels | Robowars | Conclave" : "Competitions | Events | Conclave";
 
   return (
     <div className="relative bottom-10 w-56 h-20 sm:w-96 sm:h-24 md:w-110 md:h-36 lg:w-130 lg:h-36">
