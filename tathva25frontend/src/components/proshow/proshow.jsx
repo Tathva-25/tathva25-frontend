@@ -8,6 +8,7 @@ import style from "./proshow.module.css";
 import { Michroma } from "next/font/google";
 import { keyframes } from "motion";
 import { useRouter } from "next/navigation";
+import Marquee from "@/app/components/Marquee";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
@@ -15,6 +16,23 @@ const akiraExpanded = localFont({
   src: "../../../public/fonts/Akira-Expanded.otf",
   variable: "--font-akira",
 });
+
+function ImgtoImage({ src, alt }) {
+  return (
+    <Image
+      src={`${src}`}
+      alt={`${alt}`}
+      width={0}
+      height={0}
+      sizes="100vw"
+      className="w-full h-auto object-cover"
+      style={{
+        width: "100%",
+        height: "auto",
+      }}
+    />
+  );
+}
 
 const Proshow = () => {
   const router = useRouter();
@@ -238,15 +256,33 @@ const Proshow = () => {
 
   return (
     <div ref={sectionRef} className="h-[110vh] relative overflow-hidden">
-      <div>{/* Background Image Placeholder */}</div>
+      {/* Background Image - Fixed positioning and responsiveness */}
+
+      <div className="absolute  inset-0 w-full h-full object-contain overflow-x-hidden -top-50 sm:top-auto">
+        <Image
+          src="/proshowbg.png"
+          alt="proshowbg"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+          priority
+          quality={100}
+          unoptimized={false}
+        />
+      </div>
 
       <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
         {/* Coordinates text */}
         <div
-          className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}
+          className={`${michroma.className} absolute font-black l hidden md:block top-10 right-20 text-sm z-40`}
         >
           11.3210°N <br />
           75.9320°E
+        </div>
+        <div
+          className={`${michroma.className} absolute font-black l hidden md:block top-10 left-20 text-sm z-40`}
+        >
+          <ImgtoImage src="/proshow-grid-1.png" alt="grid1" />
         </div>
         <div
           className={`${michroma.className} absolute font-bold hidden md:block bottom-8 left-20 text-sm z-40`}
@@ -255,16 +291,21 @@ const Proshow = () => {
           Feel it <br />
           Live it
         </div>
+        <div
+          className={`${michroma.className} absolute font-bold hidden md:block bottom-8 right-20 md:scale-80 lg:scale-100 text-sm z-40`}
+        >
+          <ImgtoImage src="/proshow-grid-2.png" alt="grid2" />
+        </div>
 
         {/* Image section */}
-        <div className="md:w-[60%] flex justify-center relative z-30  ">
+        <div className="md:w-[60%] scale-80 sm:scale-80 md:scale-80 flex justify-center relative z-30  ">
           {/* Main Image */}
           <Image
             src="/images/proshow-main.png"
             alt="Proshow main"
             width={600}
             height={400}
-            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-135 md:scale-100 -translate-y-2 md:translate-y-0"
+            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-125 md:scale-100 -translate-y-2 md:translate-y-0"
             priority
           />
 
@@ -275,7 +316,7 @@ const Proshow = () => {
               alt="Proshow main text"
               width={400}
               height={400}
-              className={`rounded-2xl md:scale-[1.05] lg:scale-[0.8] sm:scale-[1.1] scale-[1.1] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
+              className={`rounded-2xl md:scale-[1.5] lg:scale-[1.2] sm:scale-[1.5] scale-[1.6] -mt-4 md:-mt-10 object-contain w-[60%] md:w-[70%] animateSpin`}
             />
           </div>
 
@@ -297,7 +338,7 @@ const Proshow = () => {
           </style>
 
           {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block z-120 mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             <div
               className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
               style={{
@@ -307,6 +348,7 @@ const Proshow = () => {
                 animation: "pulse 3s ease-in-out infinite",
               }}
             />
+
             <div
               className="relative w-full h-full flex justify-center items-center scale-90 md:scale-100 "
               onTouchStart={handleTouchStart}
@@ -326,7 +368,7 @@ const Proshow = () => {
                 // MODIFICATION 5: Add onClick handler and cursor style
                 <div
                   key={index}
-                  className="absolute transition-all duration-500 ease-out cursor-pointer"
+                  className="absolute transition-all scale-95 duration-500 ease-out cursor-pointer"
                   style={getImageTransform(index)}
                   onClick={() => handleImageClick(index)}
                 >
@@ -381,7 +423,13 @@ const Proshow = () => {
                   opacity: currentIndex === index ? 1 : 0,
                 }}
               >
-                <div className="leading-relaxed text-sm md:px-6 ">
+                <div
+                  className="leading-relaxed text-[12px] md:text-sm lg:text-md  md:px-6 "
+                  style={{
+                    textShadow:
+                      "1px 1px 2px rgba(0, 0, 0, 0.7), -0.5px -0.5px 1px rgba(0, 0, 0, 0.5)",
+                  }}
+                >
                   {item[1]}
                 </div>
               </div>
@@ -390,7 +438,7 @@ const Proshow = () => {
 
           {/* Button - separately controlled for mobile */}
           <div
-            className="flex justify-center md:ml-6 md:justify-start md:mt-8"
+            className="flex justify-center md:ml-6 md:justify-start md:mt-50 lg:mt-0"
             onClick={() => router.push("/passes")}
           >
             <DotGridButton text="See more" />
