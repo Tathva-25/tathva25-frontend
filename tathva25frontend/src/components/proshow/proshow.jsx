@@ -255,7 +255,7 @@ const Proshow = () => {
   };
 
   return (
-    <div ref={sectionRef} className="h-[110vh] relative overflow-hidden">
+    <div ref={sectionRef} className=" relative overflow-hidden">
       {/* Background Image - Fixed positioning and responsiveness */}
 
       {/* <div className="absolute  inset-0 w-full h-full object-contain overflow-x-hidden -top-50 sm:top-auto">
@@ -271,7 +271,7 @@ const Proshow = () => {
         />
       </div> */}
 
-      <div className="flex flex-col md:flex-row h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
+      <div className="flex flex-col md:flex-row md:h-[100vh] justify-center items-center relative top-16 md:top-2 px-6 pl-10">
         {/* Coordinates text */}
         <div
           className={`${michroma.className} absolute font-black l hidden md:block top-10 right-20 text-sm z-40`}
@@ -298,14 +298,16 @@ const Proshow = () => {
         </div>
 
         {/* Image section */}
-        <div className="md:w-[60%] scale-80 sm:scale-80 md:scale-80 flex justify-center relative z-30  ">
+        <div className="md:w-[60%] scale-80 sm:scale-80  md:scale-80 flex justify-center relative z-30  ">
           {/* Main Image */}
+
+
           <Image
             src="/images/proshow-main.png"
             alt="Proshow main"
             width={600}
             height={400}
-            className="rounded-2xl object-contain max-w-[80%] md:max-w-[90%] h-auto scale-125 md:scale-100 -translate-y-2 md:translate-y-0"
+            className="rounded-2xl object-contain max-w-[85%] md:max-w-[90%] h-auto scale-125 md:scale-100 -translate-y-2 md:translate-y-0"
             priority
           />
 
@@ -316,7 +318,7 @@ const Proshow = () => {
               alt="Proshow main text"
               width={400}
               height={400}
-              className={`rounded-2xl md:scale-[1.5] lg:scale-[1.2] sm:scale-[1.5] scale-[1.6] -mt-4 md:-mt-10 object-contain w-[45%]  animateSpin`}
+              className={`rounded-2xl md:scale-[1.5] lg:scale-[1.2] sm:scale-[1.5] scale-[1.75] -mt-4 md:-mt-10 object-contain w-[35%] md:w-[45%]  animateSpin`}
             />
           </div>
 
@@ -337,8 +339,7 @@ const Proshow = () => {
             `}
           </style>
 
-          {/* Carousel */}
-          <div className="absolute scale-[0.6] md:scale-100 top-3 md:bottom-57 bottom-15 sm:block z-120 mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
+                      <div className="absolute scale-[0.6]   md:scale-100 top-3 md:bottom-57 bottom-15 sm:block z-120 mt-5 md:mt-[12rem] w-full max-w-[700px] h-[200px]">
             {/* <div
               className="absolute inset-0 rounded-2xl blur-2xl animate-pulse"
               style={{
@@ -383,64 +384,68 @@ const Proshow = () => {
               ))}
             </div>
           </div>
+
         </div>
 
         {/* Text content */}
-        <div className="flex flex-col mt-30 md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
-          <div className="relative h-10 overflow-hidden">
-            {artists.map((item, index) => (
-              <div
-                key={index}
-                className="absolute w-full transition-all duration-500 ease-out"
-                style={{
-                  transform:
-                    currentIndex === index
-                      ? "translateY(0)"
-                      : currentIndex > index
-                      ? "translateY(-100%)"
-                      : "translateY(100%)",
-                  opacity: currentIndex === index ? 1 : 0,
-                }}
-              >
-                <div className={`md:px-6 text-3xl ${akiraExpanded.className}`}>
-                  {item[0]}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="relative min-h-[200px] mt-4 md:-mt-0 overflow-hidden">
-            {artists.map((item, index) => (
-              <div
-                key={index}
-                className={`${michroma.className} absolute w-full transition-all duration-500 ease-out`}
-                style={{
-                  transform:
-                    currentIndex === index
-                      ? "translateY(0)"
-                      : currentIndex > index
-                      ? "translateY(-100%)"
-                      : "translateY(100%)",
-                  opacity: currentIndex === index ? 1 : 0,
-                }}
-              >
-                <div
-                  className="leading-relaxed text-[12px] md:text-sm lg:text-md  md:px-6 "
+<div className="flex flex-col  md:mt-0 text-center md:text-left gap-6 md:w-[40%] p-3 md:p-0 z-30 overflow-hidden">
 
-                >
-                  {item[1]}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Button - separately controlled for mobile */}
-          <div
-            className="flex justify-center md:ml-6 md:justify-start md:mt-50 lg:mt-0"
-            onClick={() => router.push("/passes")}
-          >
-            <DotGridButton text="See more" />
-          </div>
+  {/* Artist Name */}
+  <div className="relative h-10 md:h-12 overflow-hidden">
+    {artists.map((item, index) => (
+      <div
+        key={index}
+        className={`absolute w-full transition-transform transition-opacity duration-700 ease-out ${akiraExpanded.className}`}
+        style={{
+          transform:
+            currentIndex === index
+              ? "translateY(0)"
+              : currentIndex > index
+              ? "translateY(-100%)"
+              : "translateY(100%)",
+          opacity: currentIndex === index ? 1 : 0,
+        }}
+      >
+        <div className="md:px-6 text-2xl sm:text-3xl lg:text-4xl">
+          {item[0]}
         </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Artist Description */}
+  <div className="relative min-h-[180px] md:min-h-[220px] overflow-hidden">
+    {artists.map((item, index) => (
+      <div
+        key={index}
+        className={`absolute w-full transition-transform transition-opacity duration-700 ease-out ${michroma.className}`}
+        style={{
+          transform:
+            currentIndex === index
+              ? "translateY(0)"
+              : currentIndex > index
+              ? "translateY(-100%)"
+              : "translateY(100%)",
+          opacity: currentIndex === index ? 1 : 0,
+        }}
+      >
+        <div className="text-[12px] sm:text-sm md:text-base lg:text-md leading-relaxed md:px-6">
+          {item[1]}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  {/* Button */}
+  <div
+    className="flex justify-center md:justify-start md:ml-6 mt-6 md:mt-8"
+    onClick={() => router.push("/passes")}
+  >
+    <DotGridButton text="See more" />
+  </div>
+
+</div>
+
       </div>
     </div>
   );
