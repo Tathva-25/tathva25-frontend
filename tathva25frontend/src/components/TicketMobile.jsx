@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Michroma } from "next/font/google";
 import localFont from "next/font/local";
-import ModalWrapper from "./modelWrapperProShow";
+import ModalWrapper from "@/app/components/modelWrapperProShow";
 
 const mi = Michroma({
   subsets: ["latin"],
@@ -69,7 +69,7 @@ function TicketMobile({ day, date, ticketId, eventId, price }) {
         >
           {day === 1
             ? `Robowars | Wheels | Informals`
-            : `Prowshow | Events | Informals`}
+            : `Competitions | Events | Informals`}
         </p>
         <div className="flex flex-col items-center justify-around gap-1">
 

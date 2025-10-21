@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import localfont from "next/font/local";
 import YourComponent from "@/app/components/Footer";
 import frank from "../../../public/images/franklin.png";
+import Passes from "@/app/passes/page";
 
 const someFont = localfont({
   src: "../../../public/fonts/michroma.ttf",
@@ -25,10 +26,11 @@ export default function Sidebar() {
     { num: 1, label: "Home" },
     { num: 2, label: "Explore" },
     { num: 3, label: "RoboWars" },
-    { num: 4, label: "Proshow" },
-    { num: 5, label: "Wheels" },
-    { num: 6, label: "Expo" },
+    { num: 4, label: "Passes" },
+    { num: 5, label: "Pronite" },
+    { num: 6, label: "Wheels" },
     { num: 7, label: "GPC" },
+    { num: 8, label: "Expo" },
   ];
 
   const [hovered, setHovered] = useState(null);
@@ -379,18 +381,24 @@ export default function Sidebar() {
         </section>
 
         <section id="section-4">
+               <Passes/>
+       
+        </section>
+
+        <section id = "section-5">
           <Proshow />
         </section>
 
-        <section id="section-5">
+        <section id="section-6">
           <ResponsiveLayout />
         </section>
 
-        <section id="section-6">
-          <Expo />
-        </section>
         <section id="section-7">
-          <GamePage />
+           <GamePage /> 
+        </section>
+
+        <section id="section-8">
+       <Expo />
         </section>
 
         <section id={`section-footer`}>

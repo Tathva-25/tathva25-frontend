@@ -32,33 +32,30 @@ export default function ModalWrapper({ workshopData }) {
     }
   };
 
-  const handleClick = () => {
-    // 1. Get the token from localStorage on every click
-    const token = localStorage.getItem("jwt");
-    console.log(token)
+const handleClick = () => {
+  const token = localStorage.getItem("jwt");
+  console.log(token);
 
-    // 2. Determine if user is logged in AND if the token is expired
-    const isLoggedIn = !!token;
-    let tokenIsExpired = true; // Assume expired if no token
+  const isLoggedIn = !!token;
+  let tokenIsExpired = true; 
 
-    if (token) {
-      tokenIsExpired = isTokenExpired(token); // Call the function
+  if (token) {
+    tokenIsExpired = isTokenExpired(token);
+  }
+
+  if (!isLoggedIn || tokenIsExpired) {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("jwt");
+
+      setTimeout(() => {
+        window.location.href =
+          "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
+      }, 1000);
     }
-
-    // 3. Check the corrected condition
-    if (!isLoggedIn || tokenIsExpired) {
-      if (typeof window !== "undefined") {
-        setTimeout(() => {
-          window.location.href =
-            "https://accounts.google.com/o/oauth2/auth?client_id=783776933631-jdor6jdgf8qvmmbbj4hrtt9con1no8ue.apps.googleusercontent.com&redirect_uri=https://api.tathva.org/api/auth/callback&response_type=code&scope=openid%20email%20profile&prompt=consent";
-        }, 1000);
-      }
-      return; // Stop execution
-    }
-
-    // 4. If the code reaches here, the user is logged in AND the token is valid
-    setIsModalOpen(true);
-  };
+    return; 
+  }
+  setIsModalOpen(true);
+};
 
   return (
     <div>
