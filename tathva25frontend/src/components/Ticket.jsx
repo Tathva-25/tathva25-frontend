@@ -76,6 +76,7 @@ function Ticket({ day, date, ticketId, eventId, price }) {
                 eventId={eventId}
                 ticketId={ticketId}
                 price={price}
+                eventName={`Day ${day} Pass`}
               />
             ) : null}
             <button
