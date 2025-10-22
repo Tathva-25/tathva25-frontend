@@ -73,7 +73,7 @@ function Ticket({ day, date, ticketId, eventId, price }) {
           </p>
           <div className="flex items-center justify-between gap-2 md:pl-3">
             {/* ModalWrapper receives ticketId, eventId, price */}
-            <ModalWrapper eventId={eventId} ticketId={ticketId} price={price} />
+            <ModalWrapper eventId={eventId} ticketId={ticketId} price={price} eventName={`Day ${day} Pass`}/>
             <button
               className={`${mi.className} bg-[#3E3E3B] cursor-pointer rounded-xs text-[0.5rem] sm:text-[0.4rem] md:text-[0.5rem] lg:text-[0.65rem] w-12 h-3 sm:w-16 sm:h-4 md:w-18 md:h-4 lg:w-23 lg:h-5 text-white`}
             >

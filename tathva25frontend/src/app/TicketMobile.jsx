@@ -70,7 +70,7 @@ function TicketMobile({ day, date, ticketId, eventId, price }) {
           Proshow | Wheels | Conclave
         </p>
         <div className="flex flex-col items-center justify-around gap-1">
-            <ModalWrapper eventId={eventId} ticketId={ticketId} price={price} />
+            <ModalWrapper eventId={eventId} ticketId={ticketId} price={price} eventName={`Day ${day} Pass`}/>
           <button
             className={`${mi.className} flex justify-center items-center rounded-sm px-2 py-1 bg-[#3E3E3B] text-[0.3rem] w-14 h-4 text-white`}
           >

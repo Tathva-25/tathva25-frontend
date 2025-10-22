@@ -210,7 +210,7 @@ function Page() {
   };
 
   return (
-    <section className="relative  w-full h-[125vh] sm:h-[100vh] flex flex-col items-center justify-center overflow-hidden sm:overflow-visible ">
+    <section className="relative w-full h-[125vh] sm:h-[100vh] flex flex-col items-center justify-center overflow-hidden">
       {/* Heading */}
       <div>
         <h1

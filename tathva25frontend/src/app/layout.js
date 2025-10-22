@@ -74,7 +74,11 @@ export default function RootLayout({ children }) {
         <Toaster />
         <Analytics />
         {/* Use the wrapper to manage loading state and content visibility */}
-        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
+        <ClientLayoutWrapper>
+          {children}
+          <div id="modal-root"></div>
+        </ClientLayoutWrapper>
+
       </body>
     </html>
   );
