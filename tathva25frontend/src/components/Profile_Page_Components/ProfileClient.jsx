@@ -1,6 +1,6 @@
 "use client";
 
-import {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaEdit, FaShare, FaCheck, FaUser, FaUsers, FaBed } from "react-icons/fa";
@@ -222,7 +222,15 @@ export default function ProfileClient({ user }) {
     };
     return (
         <>
-            <div className={` ${jakarta.className} min-h-screen bg-gray-100 p-8 hidden xl:flex flex-col gap-8 font-sans   `}>
+            <div className="py-4 md:py-0 px-4 sm:px-8">
+            <Link
+                href="/"
+                className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
+            >
+                ← Home
+            </Link>
+            </div>
+            <div className={`font-['Open_Sans',sans-serif] min-h-screen py-2 px-8 hidden xl:flex flex-col gap-8`}>
                 <div className="flex-1 flex gap-8">
                     <div className="w-84 flex flex-col gap-8 flex-shrink-0">
                         <aside className="bg-black text-white p-6 flex flex-col -2xl rounded-2xl">
@@ -263,7 +271,7 @@ export default function ProfileClient({ user }) {
             {/* ======================================================================================= */}
             {/* 2. TABLET LAYOUT (md to xl screens) */}
             {/* ======================================================================================= */}
-            <div className="min-h-screen bg-gray-100 p-8 hidden md:flex xl:hidden flex-col gap-8 font-sans">
+            <div className="min-h-screen py-2 px-8 hidden md:flex xl:hidden flex-col gap-8 font-sans">
                 <div className="flex-1 flex gap-8">
                     <div className="w-72 flex flex-col gap-8 flex-shrink-0">
                         <aside className="bg-black text-white p-6 flex flex-col -2xl rounded-2xl">
