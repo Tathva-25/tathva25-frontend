@@ -704,7 +704,7 @@ export default function AccommodationRegistration() {
     <div className="w-full max-w-xl px-5 mx-auto my-10 flex justify-center">
       <button
         onClick={() => router.push("/")}
-        className="fixed top-5 right-5 z-50 p-3 bg-white border-2 border-gray-200 rounded-full shadow-lg hover:bg-gray-100 hover:scale-110 transition-all duration-300"
+        className="fixed top-5 right-5 z-50 p-3 bg-white border-2 border-gray-200 rounded-md hover:bg-gray-100 hover:scale-110 transition-all duration-300 sm:mr-6"
         aria-label="Go to Home"
       >
         <Home className="w-6 h-6 text-gray-800" />
