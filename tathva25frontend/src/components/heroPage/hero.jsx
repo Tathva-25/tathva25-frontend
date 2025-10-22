@@ -36,7 +36,7 @@ const handleVisitDashboard = (router) => {
   router.push("/profile");
 };
 
-export const Hero = () => {
+export const Hero = ({ menuOpen, setMenuOpen }) => {
   const [displayText, setDisplayText] = useState("TATHVA");
   const [isAnimating, setIsAnimating] = useState(false);
   const intervalRef = useRef(null);
@@ -158,6 +158,15 @@ export const Hero = () => {
 
 <div className="hidden  absolute top-6 right-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
   
+  {/* Menu Button */}
+  <button
+    onClick={() => setMenuOpen((prev) => !prev)}
+    className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+    aria-label="Toggle menu"
+  >
+    {menuOpen ? "CLOSE" : "Menu"}
+  </button>
+
   {isLoggedIn ? (
     <button
       onClick={() => handleVisitDashboard(router)}
@@ -701,6 +710,7 @@ export const Hero = () => {
           </div>
         </div>
       </div>
+
     </section>
   );
 };
