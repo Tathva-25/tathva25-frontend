@@ -106,14 +106,13 @@ export default function Modal({
 
           {/* Billing Breakdown */}
           <div className="space-y-4">
-            <div className="flex justify-between">
-              <span>Workshop </span>
-              <span className="font-medium">{workshopData.name}</span>
+            <div>
+              <span className="font-medium break-words text-left">{workshopData.heading}</span>
             </div>
 
             <div className="border-b pb-2 text-sm text-gray-700">
               <div className="flex justify-between">
-                <span>Workshop Price</span>
+                <span>Price</span>
                 <span>{formatINR(basePrice)}</span>
               </div>
               <div className="flex justify-between">
