@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { regHandler } from "@/functions/regHandler";
 
-export default function RegisterButton({ id, ticketId }) {
+export default function RegisterButton({ id, ticketId, hasDiscount }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = () => {
@@ -12,7 +12,7 @@ setTimeout(() => {
   setIsLoading(false);
 }, 2500);
 
-    regHandler(id, ticketId);
+    regHandler(id, ticketId, hasDiscount);
   };
 
   return (

@@ -43,14 +43,13 @@ export default function Modal({
   console.log("price: " , workshopData)
 
   console.log(workshopData.price);
-  let basePrice = Number(workshopData.price/100) || 0;
+  // let basePrice = Number(workshopData.price/100) || 0;
 
   const isNITCStudent = user?.email?.endsWith("@nitc.ac.in");
   const isLecture = workshopData.type === "lectures";
-  const discountPercent = isNITCStudent && isLecture ? 20 : 0;
+  const discount = isNITCStudent && isLecture;
 
-  const discount = (discountPercent / 100) * basePrice;
-  basePrice = basePrice - discount;
+  const basePrice =  discount ? 200 : Number(workshopData.price/100) ;
 
   const platformFeePercent = 2.0;
   const gstPercent = 18;
@@ -121,20 +120,20 @@ export default function Modal({
               <div className="flex justify-between">
                 <span>Price</span>
                 <div className="flex flex-col items-end">
-                  {discountPercent > 0 && (
+                  {discount && (
                       <span className="text-gray-400 line-through text-xs">
                       {formatINR(Number(workshopData.price/100) || 0)}
                     </span>
                   )}
-                  <span className={discountPercent > 0 ? "text-green-600 font-medium" : ""}>
+                  <span className={discount ? "text-green-600 font-medium" : ""}>
                     {formatINR(basePrice)}
                   </span>
                 </div>
               </div>
-              {discountPercent > 0 && (
+              {discount && (
                   <div className="flex items-center justify-end gap-2 mt-1">
                   <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
-                    NITC Student Discount: {discountPercent}% OFF
+                    NITC Student Discount
                   </span>
                   </div>
               )}
@@ -164,6 +163,7 @@ export default function Modal({
               <RegisterButton
                   id={workshopData.id}
                   ticketId={workshopData.ticketId}
+                  hasDiscount={discount}
               />
             </div>
           </div>

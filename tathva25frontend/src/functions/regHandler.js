@@ -2,14 +2,14 @@ import jwtRequired from "@/axios/jwtRequired";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
-export const regHandler = async (eventId ,ticketId) => {
+export const regHandler = async (eventId ,ticketId, hasDiscount = false) => {
     const url = `${process.env.NEXT_PUBLIC_API}/api/booking/create`;
     console.log(eventId);
     
     let bookingRes = undefined;
     
     try{
-        bookingRes = await jwtRequired.post(url, { eventId, ticketId });
+        bookingRes = await jwtRequired.post(url, { eventId, ticketId, hasDiscount });
     }
     catch(error) {
         //console.error("Error during booking:", error.response.data.error);
