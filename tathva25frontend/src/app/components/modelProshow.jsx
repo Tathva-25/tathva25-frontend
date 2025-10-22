@@ -106,8 +106,7 @@ export default function Modal({
           </div>
 
           <div className="space-y-4">
-            <div className="flex justify-between">
-              <span>Ticket</span>
+            <div>
               <span className="font-medium">{eventName}</span>
             </div>
 
