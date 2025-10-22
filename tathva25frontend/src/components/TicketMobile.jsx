@@ -15,7 +15,7 @@ const fontspring = localFont({
 
 function TicketMobile({ day, date, ticketId, eventId, price }) {
   return (
-    <div className="relative w-20 h-56 sm:w-20 sm:h-56 ">
+    <div className="relative w-20 h-56 sm:w-20 sm:h-56 -translate-y-10 ">
       {/* Oversized Image */}
       <Image
         src="/newbg.png"

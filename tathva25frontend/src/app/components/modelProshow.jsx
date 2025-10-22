@@ -3,6 +3,7 @@ import RegisterButton from "./RegisterButton";
 import { useEffect, useState } from "react";
 import jwtRequired from "@/axios/jwtRequired";
 import { Michroma } from "next/font/google";
+import Link from "next/link";
 
 const michroma = Michroma({
   weight: "400",
@@ -61,7 +62,7 @@ export default function Modal({
       }).format(num);
 
   return (
-      <div className={`${michroma.className} fixed inset-0 bg-black/50 flex items-center justify-center z-50`}>
+      <div className={`${michroma.className} fixed inset-0 bg-black/50 sm:scale-110 -translate-y-8  flex items-center justify-center z-50`}>
         <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl relative max-h-[90vh] overflow-y-auto">
           <button
               onClick={onClose}
@@ -95,7 +96,7 @@ export default function Modal({
                     <span className="font-medium break-words">{user.email}</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-200">
-                    Name and phone can be edited in your profile page
+                    Name and phone can be edited in your <span><Link href="/profile" className="underline">profile page</Link></span>
                   </p>
                 </div>
             ) : (

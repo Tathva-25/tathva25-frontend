@@ -19,7 +19,7 @@ function Ticket({ day, date, ticketId, eventId, price }) {
     day === 1 ? "Wheels | Robowars | Conclave" : "Competitions | Events | Conclave";
 
   return (
-    <div className="relative bottom-10 w-56 h-20 sm:w-96 sm:h-24 md:w-110 md:h-36 lg:w-130 lg:h-36">
+    <div className="relative bottom-10 w-56 h-20 sm:w-96 sm:h-24 md:w-110 md:h-36 lg:w-130 lg:h-36 -translate-y-10">
       {/* Oversized Image */}
       <Image
         src="/newbg.png"

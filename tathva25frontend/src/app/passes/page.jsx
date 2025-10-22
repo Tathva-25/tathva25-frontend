@@ -210,7 +210,7 @@ function Page() {
   };
 
   return (
-    <section className="relative w-full h-[125vh] sm:h-[100vh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative w-full pt-15 h-fit flex flex-col items-center justify-center overflow-hidden">
       {/* Heading */}
       <div>
         <h1
@@ -224,7 +224,7 @@ function Page() {
           className={`${
             mi.className
           }  z-20 relative text-center mt-5  px-4 lg:bottom-10 ${
-            isMobile ? "mb-104" : "mb-56"
+            isMobile ? "mb-94" : "mb-56"
           }`}
         >
           One pass. Every moment of Tathva.
@@ -391,7 +391,7 @@ function Page() {
       </div>
 
       {/* Bottom navigation */}
-      <div className="w-screen h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
+      <div className="w-screen mb-20 h-[80px] sm:h-[110px] md:h-[130px] lg:h-[160px] top-20 relative flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
         {/* LEFT */}
         <div className="flex items-center ">
           <div
