@@ -1,7 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { Michroma } from "next/font/google";
+
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
 // const specificAnnouncements = [
 //   {
@@ -79,17 +82,17 @@ export default function AnnouncementsPage() {
   }
 
   return (
-    <div className="bg-[#faf9f6] min-h-screen py-8 px-4 sm:px-8">
+    <div className="py-4 md:py-0 px-4 sm:px-8">
       {/* Heading */}
-      <Link
-        href="/"
-        className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
-      >
-        ← Home
-      </Link>
+        <Link
+            href="/"
+            className="text-sm font-medium text-gray-500 hover:text-black transition-colors"
+        >
+            ← Home
+        </Link>
 
       <div className="mb-12 mt-5">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl border-b pb-3 text-center border-gray-300 md:text-left tracking-wide pp-fragment text-gray-900 uppercase">
+        <h1 className={`${michroma.className} pp-fragment text-2xl sm:text-4xl md:text-5xl text-center lg:text-left tracking-wide text-gray-900 uppercase`}>
           ANNOUNCEMENTS
         </h1>
       </div>
