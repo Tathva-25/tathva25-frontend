@@ -18,5 +18,5 @@ export default function ResponsiveLayout({ DesktopComponent, MobileComponent }) 
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  return isMobile ? <WheelsEventMobile/> : <WheelsEvent/>;
+  return isMobile ? <></> : <WheelsEvent/>;
 }
