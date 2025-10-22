@@ -43,7 +43,14 @@ export default function Modal({
   console.log("price: " , workshopData)
 
   console.log(workshopData.price);
-  const basePrice = Number(workshopData.price/100) || 0;
+  let basePrice = Number(workshopData.price/100) || 0;
+
+  const isNITCStudent = user?.email?.endsWith("@nitc.ac.in");
+  const isLecture = workshopData.type === "lectures";
+  const discountPercent = isNITCStudent && isLecture ? 20 : 0;
+
+  const discount = (discountPercent / 100) * basePrice;
+  basePrice = basePrice - discount;
 
   const platformFeePercent = 2.0;
   const gstPercent = 18;
@@ -113,9 +120,25 @@ export default function Modal({
             <div className="border-b pb-2 text-sm text-gray-700">
               <div className="flex justify-between">
                 <span>Price</span>
-                <span>{formatINR(basePrice)}</span>
+                <div className="flex flex-col items-end">
+                  {discountPercent > 0 && (
+                      <span className="text-gray-400 line-through text-xs">
+                      {formatINR(Number(workshopData.price/100) || 0)}
+                    </span>
+                  )}
+                  <span className={discountPercent > 0 ? "text-green-600 font-medium" : ""}>
+                    {formatINR(basePrice)}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between">
+              {discountPercent > 0 && (
+                  <div className="flex items-center justify-end gap-2 mt-1">
+                  <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
+                    NITC Student Discount: {discountPercent}% OFF
+                  </span>
+                  </div>
+              )}
+              <div className="flex justify-between mt-2">
                 <span>Platform Fee ({platformFeePercent}%)</span>
                 <span>{formatINR(platformFee)}</span>
               </div>
