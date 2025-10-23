@@ -33,7 +33,7 @@ export default function BuildingCard({ buildingName, visible, onAction }) {
             hover:bg-blue-500/30 hover:border-blue-500/50 hover:text-blue-200
           "
         >
-          What's Happening
+          See What's Happening
         </button>
       </div>
     </div>

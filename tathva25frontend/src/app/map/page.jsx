@@ -9,7 +9,7 @@ import { EventPanel } from "./EventPanel"; // Make sure this is the version from
 import { createRoot } from "react-dom/client";
 import BuildingMarker from "./BuildingMarker"; // Assuming this is in './BuildingMarker.jsx'
 import BuildingCard from "./BuildingCard"; // Assuming this is in './BuildingCard.jsx'
-import LoadingBar from "@/components/LoadingBar";
+
 // --- CONFIGURATION ---
 
 const CONFIG = {
@@ -50,26 +50,127 @@ const CONFIG = {
 
 const GEOSPATIAL_CONFIG = {
   // Primary reference point - NLHC (New Lecture Hall Complex)
-  REFERENCE_POINT_GPS: { lat: 11.321636, lon: 75.933101 },
-  REFERENCE_POINT_MODEL: new THREE.Vector3(201.73, 52.24, -445.55),
+  REFERENCE_POINT_GPS: { lat: 11.321779, lon: 75.933029},
+  REFERENCE_POINT_MODEL: new THREE.Vector3(-226.99, 27.80, -57.81),
 
   // Secondary reference points for verification
   SECONDARY_POINTS: [
     {
       name: "OAT (Open Air Theatre)",
-      gps: { lat: 11.322136, lon: 75.933371 },
-      model: new THREE.Vector3(233.37, 53.9, -503.22),
+      gps: { lat: 11.322217, lon: 75.933403 },
+      model: new THREE.Vector3(-186.67, 17.59, -95.55),
     },
     {
       name: "ELHC Pits",
-      gps: { lat: 11.322564, lon: 75.933865 },
-      model: new THREE.Vector3(279.25, 53.93, -549.8),
+      gps: { lat: 11.322614, lon: 75.933830 },
+      model: new THREE.Vector3(-127.98, 21.13, -133.26),
     },
     {
       name: "Aryabhatta/Chanakya/Bhaskara Hostels",
-      gps: { lat: 11.320844, lon: 75.933944 },
-      model: new THREE.Vector3(275.31, 57.48, -354.41),
+      gps: { lat: 11.320881, lon: 75.934079 },
+      model: new THREE.Vector3(-91.75, 14.57, 49.07)
     },
+    {
+      name: "Main Building",
+      gps: { lat: 11.321675, lon: 75.934221},
+      model: new THREE.Vector3(-87.70, 26.57, -29.69)
+    },
+    {
+      name: "CCC",
+      gps: { lat: 11.321632, lon: 75.933689},
+      model: new THREE.Vector3(-139.62, 22.95, -22.56)
+    },
+    {
+      name: "NSL/SSL",
+      gps: { lat: 11.32288, lon: 75.93425},
+      model: new THREE.Vector3(-76.46, 23.70, -155.65)
+    },
+    {
+      name: "DB",
+      gps: { lat: 11.32232, lon: 75.93491},
+      model: new THREE.Vector3(11.57, 29.36, -98.66)
+    },
+    {
+      name: "Archi",
+      gps: { lat: 11.32262, lon: 75.93682},
+      model: new THREE.Vector3(181.91, 5.32, -145.47)
+    },
+    {
+      name: "Chemical",
+      gps: { lat: 11.32330, lon: 75.93739},
+      model: new THREE.Vector3(272.35, 24.54, -220.31)
+    },
+    {
+      name: "ECLC",
+      gps: { lat: 11.32259, lon: 75.93790},
+      model: new THREE.Vector3(370.16, 14.53, -258.99)
+    },
+    {
+      name: "G Host",
+      gps: { lat: 11.32137, lon: 75.93694},
+      model: new THREE.Vector3(239.39, 24.17, -19.28)
+    },
+    {
+      name: "D Host",
+      gps: { lat: 11.32008, lon: 75.93783},
+      model: new THREE.Vector3(306.02, 23.10, 135.59)
+    },
+    {
+      name: "E Host",
+      gps: { lat: 11.31961, lon: 75.93847},
+      model: new THREE.Vector3(406.70, 21.97, 186.57)
+    },
+    {
+      name: "F Host",
+      gps: { lat: 11.32072, lon: 75.93741},
+      model: new THREE.Vector3(317.54, 20.83, 76.24)
+    },
+    {
+      name: "C Host",
+      gps: { lat: 11.32025, lon: 75.93666},
+      model: new THREE.Vector3(205.05, 25.81, 129.75)
+    },
+    {
+      name: "B Host",
+      gps: { lat: 11.32051, lon: 75.93603},
+      model: new THREE.Vector3(103.46, 31.24, 129.23)
+    },
+    {
+      name: "A Host",
+      gps: { lat: 11.32073, lon: 75.93524},
+      model: new THREE.Vector3(13.19, 26.99, 80.71)
+    },
+    {
+      name: "Milma",
+      gps: { lat: 11.32070, lon: 75.93662},
+      model: new THREE.Vector3(189.29, 22.96, 56.09)
+    },
+    {
+      name: "Audi",
+      gps: { lat: 11.32242, lon: 75.93582},
+      model: new THREE.Vector3(106.15, 18.41, -119.15)
+    },
+    {
+      name: "Proshow",
+      gps: { lat: 11.32127, lon: 75.93243},
+      model: new THREE.Vector3(-279.07, 12.88, -5.02)
+    },
+    {
+      name: "Hockey ground",
+      gps: { lat: 11.32066, lon: 75.93151},
+      model:  new THREE.Vector3(-348.23, 59.43, 50.16)
+    },
+    {
+      name: "Canteen",
+      gps: { lat: 11.31998, lon: 75.93200},
+      model: new THREE.Vector3(-308.08, 13.70, 159.34)
+    },
+    {
+      name: "Tennis",
+      gps: { lat: 11.32032, lon: 75.93380},
+      model: new THREE.Vector3(-133.91, 6.69, 116.23)
+    },
+
   ],
 
   MODEL_SCALE: 1.0, // Will be auto-calculated
@@ -98,48 +199,37 @@ const LOCATION_DATA = [
 ];
 
 // Note: locationId now matches the building names from your model
-const EVENT_DATA = [
-  {
-    id: "evt1",
-    name: "Inaugural Tech Talk",
-    committee: "IEEE",
-    time: "10:00 AM",
-    locationId: "Building 121", // Was 'mb'
-    type: "lecture",
-  },
-  {
-    id: "evt2",
-    name: "Tathva Quiz Finale",
-    committee: "Enquire",
-    time: "2:00 PM",
-    locationId: "Building 121", // Was 'mb'
-    type: "workshop",
-  },
-  {
-    id: "evt3",
-    name: "Workshop: Intro to React",
-    committee: "FOSSC",
-    time: "11:00 AM",
-    locationId: "Building 118", // Was 'elhc'
-    type: "competition",
-  },
-  {
-    id: "evt4",
-    name: "Code-Kombat Hackathon",
-    committee: "CSEA",
-    time: "9:00 AM - 5:00 PM",
-    locationId: "Building 028", // Was 'cse'
-    type: "lecture",
-  },
-  {
-    id: "evt5",
-    name: "Robo-Wars",
-    committee: "Robotics Club",
-    time: "1:00 PM",
-    locationId: "Building 028", // Was 'cse'
-    type: "lecture",
-  },
-];
+// let EVENT_DATA = [];
+//
+// async function loadEvents() {
+//   try {
+//     const today = new Date().getDate();
+//     // const response = await fetch(`https://api.tathva.org/api/events/today/?date=${today}`);
+//     const response = await fetch(`https://api.tathva.org/api/events/all`);
+//
+//     const data = await response.json();
+//
+//     // Transform the API data to match your required format
+//     EVENT_DATA = data.events.map(event => ({
+//       id: event.id,
+//       name: event.heading,
+//       committee: event.committee,
+//       type: event.type,
+//       startTime: event.startTime,
+//       endTime: event.endTime,
+//       venue: event.venue
+//     }));
+//
+//     console.log('Events loaded:', EVENT_DATA);
+//     return EVENT_DATA;
+//   } catch (error) {
+//     console.error('Error loading events:', error);
+//     return [];
+//   }
+// }
+//
+// // Call this function when your app initializes
+// loadEvents();
 
 // --- GEOSPATIAL FUNCTIONS ---
 
@@ -337,6 +427,38 @@ export default function NITCMapPage() {
   // Use a simple loaded flag for the overlay
   const [isModelLoaded, setIsModelLoaded] = useState(false);
 
+  // +++ ADD: State for dynamic location and event data +++
+  const [locationData, setLocationData] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
+
+  // +++ ADD: New function to fetch venues from your API +++
+  async function loadVenuesAndEvents() {
+    try {
+      // Using a placeholder URL, replace with your actual venues endpoint
+      const response = await fetch(`https://api.tathva.org/api/venue`);
+      const data = await response.json();
+
+      if (!data || !Array.isArray(data.venues)) {
+        console.error("Venue data is not in the expected format:", data);
+        return { venues: [], allEvents: [] };
+      }
+
+      console.log('Venues loaded:', data.venues);
+
+      // Extract all events from all venues into a flat list
+      const extractedEvents = data.venues.flatMap(venue =>
+          venue.events.map(event => ({ ...event, venueName: venue.name.trim() }))
+      );
+
+      // setAllEvents(extractedEvents);
+      // return { venues: data.venues, allEvents: extractedEvents };
+      return { venues: data.venues }
+      } catch (error) {
+      console.error('Error loading venues:', error);
+      return { venues: [], allEvents: [] };
+    }
+  }
+
   useEffect(() => {
     const currentMount = mountRef.current;
     if (!currentMount) return;
@@ -352,7 +474,8 @@ export default function NITCMapPage() {
     scene.add(groundPlane);
     groundPlaneRef.current = groundPlane;
 
-    loadModel(scene, controls, groundPlane, camera);
+    // +++ MODIFIED: Pass the data loading function to loadModel +++
+    loadModel(scene, controls, groundPlane, camera, loadVenuesAndEvents);
 
     const handlers = setupEventHandlers(renderer, camera, controls);
     const animationFrameId = startAnimationLoop(
@@ -399,19 +522,50 @@ export default function NITCMapPage() {
 
         setIsOnCampus(isWithinBounds);
 
-        if (isWithinBounds) {
-          // User is on campus - fly to their location
-          console.log("Initial GPS load: Flying to user location");
-          flyToLocation(new THREE.Vector3(scenePos.x, scenePos.y, scenePos.z));
-        } else {
-          // User is outside campus - fly to Main Building instead
-          console.log("User is outside campus bounds, flying to Main Building");
-          if (LOCATION_DATA.length > 0 && LOCATION_DATA[0].modelCoords) {
-            flyToLocation(LOCATION_DATA[0].modelCoords);
-          } else {
-            console.warn("Could not fly to main building, coords not ready.");
-          }
-        }
+       if (isWithinBounds) {
+  // User is on campus - show their location marker and fly to it
+  console.log("Initial GPS load: Flying to user location (on campus)");
+  flyToLocation(new THREE.Vector3(scenePos.x, scenePos.y, scenePos.z));
+} else {
+  // User is outside campus - DON'T show location marker, just pan to view
+  console.log(
+    "User is outside campus bounds, positioning view of Main Building area (no location marker)"
+  );
+  
+  // Get key landmark positions
+  const mainBuildingPos = GEOSPATIAL_CONFIG.SECONDARY_POINTS.find(
+    p => p.name === "Main Building"
+  ).model;
+  
+  const aryabhattaPos = GEOSPATIAL_CONFIG.SECONDARY_POINTS.find(
+    p => p.name === "Aryabhatta/Chanakya/Bhaskara Hostels"
+  ).model;
+
+  const cccPos = GEOSPATIAL_CONFIG.SECONDARY_POINTS.find(
+    p => p.name === "CCC"
+  ).model;
+  
+  const tennisPos = GEOSPATIAL_CONFIG.SECONDARY_POINTS.find(
+    p => p.name === "Tennis"
+  ).model;
+  
+  // Target point: slightly in front of Main Building
+  const targetPoint = new THREE.Vector3(
+    mainBuildingPos.x - 20,  // Slightly west of Main Building
+    mainBuildingPos.y,
+    mainBuildingPos.z + 30   // Slightly south of Main Building
+  );
+  
+  // Camera position: South-West of Main Building
+  // This positions camera so CCC is left, Aryabhatta right-front, Tennis right-back
+  targetPositionRef.current = new THREE.Vector3(
+    targetPoint.x - 120,  // Move WEST (to see buildings on the right)
+    targetPoint.y + 50,   // Elevated for good view
+    targetPoint.z + 80    // Move SOUTH (to look north toward buildings)
+  );
+  targetLookAtRef.current = targetPoint;
+  isAnimatingRef.current = true;
+}
 
         hasInitialGPSFlownRef.current = true;
         setIsInitializing(false);
@@ -454,8 +608,8 @@ export default function NITCMapPage() {
   const initializeScene = (mount) => {
     // ... (This function is unchanged from File 1)
     const scene = sceneRef.current;
-    scene.background = new THREE.Color(0xabcdef);
-    scene.fog = new THREE.Fog(0xabcdef, 100, 500);
+    scene.background = new THREE.Color(0xddf7ff); // Reverted to light sky blue for daylight
+    scene.fog = new THREE.Fog(0xddf7ff, 100, 500);
     const camera = new THREE.PerspectiveCamera(
       CONFIG.CAMERA.FOV,
       mount.clientWidth / mount.clientHeight,
@@ -479,43 +633,47 @@ export default function NITCMapPage() {
     return { scene, camera, renderer, controls };
   };
 
-  const setupLighting = (scene) => {
-    // ... (This function is unchanged from File 1)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-    scene.add(ambientLight);
-    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.0);
-    hemisphereLight.position.set(0, 100, 0);
-    scene.add(hemisphereLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
-    directionalLight.position.set(50, 100, 75);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 4096;
-    directionalLight.shadow.mapSize.height = 4096;
-    directionalLight.shadow.camera.near = 0.5;
-    directionalLight.shadow.camera.far = 500;
-    directionalLight.shadow.camera.left = -200;
-    directionalLight.shadow.camera.right = 200;
-    directionalLight.shadow.camera.top = 200;
-    directionalLight.shadow.camera.bottom = -200;
-    scene.add(directionalLight);
-  };
+const setupLighting = (scene) => {
+    // Reverted to original ambient and hemisphere lights for daylight
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+    scene.add(ambientLight);
 
-  const createGroundPlane = () => {
-    // ... (This function is unchanged from File 1)
-    const groundPlane = new THREE.Mesh(
-      new THREE.PlaneGeometry(1000, 1000),
-      new THREE.MeshStandardMaterial({
-        color: 0x888888,
-        depthWrite: false,
-      })
-    );
+    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.0); // Reverted ground color for daylight
+    hemisphereLight.position.set(0, 100, 0);
+    scene.add(hemisphereLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5); // Can adjust intensity for brighter sun
+    directionalLight.position.set(50, 100, 75); // Position can be adjusted for sun angle
+    directionalLight.castShadow = true;
+    directionalLight.shadow.mapSize.width = 4096;
+    directionalLight.shadow.mapSize.height = 4096;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 500;
+    directionalLight.shadow.camera.left = -200;
+    directionalLight.shadow.camera.right = 200;
+    directionalLight.shadow.camera.top = 200;
+    directionalLight.shadow.camera.bottom = -200;
+    scene.add(directionalLight);
+  };
+
+
+ const createGroundPlane = () => {
+    // ... (This function is unchanged from File 1)
+    const groundPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(1000, 1000),
+      new THREE.MeshStandardMaterial({
+        color: 0x888888, // Light grey for the ground
+        depthWrite: false,
+        visible: true, // Reverted to visible for daylight effect
+      })
+    );
     groundPlane.rotation.x = -Math.PI / 2;
     groundPlane.receiveShadow = true;
     return groundPlane;
   };
 
-  const highlightBuildings = (model, scene, camera) => {
-    // ... (This entire complex function is unchanged from File 1)
+  const highlightBuildings = (model, scene, camera, dynamicLocationData) => {
+    // ... (This entire complex function is unchanged from your code)
     const buildingGroups = {};
     const buildingMeshMap = new Map();
 
@@ -524,14 +682,15 @@ export default function NITCMapPage() {
       if (child.isMesh) {
         let baseName = null;
 
-        if (child.name.includes("maposm_buildings")) {
-          const match = child.name.match(/maposm_buildings(\d+)/);
-          if (match) baseName = `Building ${match[1]}`;
-        } else if (child.name) {
-          baseName = child.name.replace(/_\d+$/, "");
+        // Use the full name if it's one of our mapped IDs
+        if (dynamicLocationData.some(loc => loc.id === child.name)) {
+          baseName = child.name;
         }
 
-        if (LOCATION_DATA.some((loc) => loc.id === baseName)) {
+        // Your old logic can be a fallback if needed, but the above is more direct
+        // if (child.name.includes("maposm_buildings")) { ... }
+
+        if (baseName) {
           if (!buildingGroups[baseName]) buildingGroups[baseName] = [];
           buildingGroups[baseName].push(child);
           buildingMeshMap.set(child, baseName);
@@ -541,7 +700,7 @@ export default function NITCMapPage() {
       }
     });
 
-    console.log("🏢 Tracking buildings:", Object.keys(buildingGroups));
+    // console.log("🏢 Tracking buildings:", Object.keys(buildingGroups));
 
     // === STEP 2: Setup container ===
     let container = document.getElementById("building-labels");
@@ -573,8 +732,8 @@ export default function NITCMapPage() {
             meshes.forEach((m) => box.expandByObject(m));
             const worldCenter = box.getCenter(new THREE.Vector3());
 
-            const locationEntry = LOCATION_DATA.find(
-              (loc) => loc.id === buildingName
+            const locationEntry = dynamicLocationData.find( // <-- Use parameter
+                (loc) => loc.id === buildingName
             );
             if (locationEntry && !locationEntry.modelCoords) {
               console.log(`Populating modelCoords for ${buildingName}`);
@@ -606,11 +765,11 @@ export default function NITCMapPage() {
               >
                 <BuildingMarker
                   buildingName={buildingName}
-                  isActive={active === buildingName}
+                  isActive={active === buildingName.substring(5)}
                   onClick={() => onMarkerClick(buildingName)}
                 />
                 <BuildingCard
-                  buildingName={buildingName}
+                  buildingName={buildingName.substring(5)}
                   visible={active === buildingName}
                   onAction={() => onCardAction(buildingName)}
                 />
@@ -634,15 +793,15 @@ export default function NITCMapPage() {
               setActiveLocation(null);
             }
           }}
-          onCardAction={(buildingName) => {
-            const locationData = LOCATION_DATA.find(
+          const onCardAction={(buildingName) => {
+          const locationDataEntry = dynamicLocationData.find( // <-- Use parameter
               (loc) => loc.id === buildingName
-            );
-            if (locationData) {
-              setActiveLocation(locationData);
-              setPanelView("location");
-            }
-          }}
+          );
+          if (locationDataEntry) {
+            setActiveLocation(locationDataEntry);
+            setPanelView("location");
+          }
+        }}
         />
       );
     };
@@ -706,90 +865,121 @@ export default function NITCMapPage() {
     return updateAllLabels;
   };
 
-  const loadModel = (scene, controls, groundPlane, camera) => {
-    // ... (This function is unchanged from File 1, except for map bounds)
+  const loadModel = (scene, controls, groundPlane, camera, dataFetcher) => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
 
     loader.load(
-      "/models/nitc.glb",
-      (gltf) => {
-        const model = gltf.scene;
-        modelRef.current = model;
+        "/models/final1compressed.glb",
+        async (gltf) => {
+          const model = gltf.scene;
+          modelRef.current = model;
 
-        calculateModelScale();
+          calculateModelScale();
 
-        // Enable shadows
-        model.traverse((child) => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+
+          // --- 1. FETCH API DATA ---
+          const { venues } = await dataFetcher();
+
+          // --- 2. GET MODEL BUILDING NAMES ---
+          const modelBuildingNames = [];
+          model.traverse((child) => {
+            // prefix
+            if (child.isMesh && child.name && child.name.toLowerCase().startsWith("nitc_")) {
+              if (!modelBuildingNames.includes(child.name)) {
+                modelBuildingNames.push(child.name);
+              }
+            }
+          });
+          console.log("🏫 Mappable Buildings Found in Model:", modelBuildingNames);
+
+          // --- 3. PERFORM THE MAPPING & CREATE FINAL DATA ---
+          const mappedLocations = [];
+          const finalAllEvents = []; // Create a new temporary array for events
+
+          if (venues && venues.length > 0) {
+            venues.forEach(venue => {
+              const normalizedVenueName = venue.name.trim().toLowerCase().replace(/\s+/g, '');
+              if (!normalizedVenueName) return;
+
+              const modelNameMatch = modelBuildingNames.find(modelName => {
+                const modelSuffix = modelName.substring(5).toLowerCase();
+                return modelSuffix === normalizedVenueName;
+              });
+
+              if (modelNameMatch) {
+                console.log(`✅ Mapped API Venue [${venue.name.trim()}] to Model [${modelNameMatch}]`);
+
+                // Add the mapped location
+                mappedLocations.push({
+                  id: modelNameMatch,
+                  name: venue.name.trim(),
+                  events: venue.events,
+                  modelCoords: null,
+                });
+
+                // For each event in this venue, add it to our final list
+                // with the correct locationId (the model name)
+                venue.events.forEach(event => {
+                  finalAllEvents.push({
+                    ...event,
+                    locationId: modelNameMatch, // <-- THIS IS THE FIX!
+                  });
+                });
+
+              } else {
+                console.warn(`⚠️ No matching model found for API Venue: "${venue.name.trim()}"`);
+              }
+            });
           }
-        });
 
-        // === Log all named buildings ===
-        const buildingNames = [];
-        model.traverse((child) => {
-          if (child.name && child.name.trim() !== "") {
-            buildingNames.push(child.name);
+          // --- 4. UPDATE REACT STATE WITH CORRECTLY LINKED DATA ---
+          setLocationData(mappedLocations);
+          setAllEvents(finalAllEvents); // Set the final, corrected events list
+          console.log("📍 Final Mapped Location Data:", mappedLocations);
+          console.log("🎉 Final Events Data with locationId:", finalAllEvents);
+
+          // === Setup model bounds and position (Unchanged) ===
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          mapBoundsRef.current = {
+            MIN_X: box.min.x + (CONFIG.MAP_BOUNDS.PADDING+600),
+            MAX_X: box.max.x - (CONFIG.MAP_BOUNDS.PADDING+600),
+            MIN_Z: box.min.z + (CONFIG.MAP_BOUNDS.PADDING+600),
+            MAX_Z: box.max.z - (CONFIG.MAP_BOUNDS.PADDING+600),
+            PADDING: CONFIG.MAP_BOUNDS.PADDING,
+          };
+          controls.target.copy(center);
+          groundPlane.position.y = box.min.y;
+          scene.add(model);
+
+          // --- 5. PASS MAPPED DATA TO THE HIGHLIGHTER (Unchanged) ---
+          const updateLabels = highlightBuildings(model, scene, camera, mappedLocations);
+          if (updateLabels) {
+            window.updateBuildingLabels = updateLabels;
           }
-        });
-        console.log("🏫 All Building Names in GLB Model:");
-        console.table(buildingNames);
 
-        // === Log hierarchy for debugging ===
-        const printHierarchy = (object, depth = 0) => {
-          const indent = "  ".repeat(depth);
-          console.log(
-            `${indent}${object.name || "(unnamed)"} — ${object.type}`
-          );
-          object.children.forEach((child) => printHierarchy(child, depth + 1));
-        };
-        console.log("📦 Model Hierarchy:");
-        printHierarchy(model);
-
-        // === Setup model bounds and position ===
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-
-        // --- MERGED: Use stricter bounds from File 2 ---
-        mapBoundsRef.current = {
-          MIN_X: box.min.x + (CONFIG.MAP_BOUNDS.PADDING + 200),
-          MAX_X: box.max.x - (CONFIG.MAP_BOUNDS.PADDING + 200),
-          MIN_Z: box.min.z + (CONFIG.MAP_BOUNDS.PADDING + 200),
-          MAX_Z: box.max.z - (CONFIG.MAP_BOUNDS.PADDING + 200),
-          PADDING: CONFIG.MAP_BOUNDS.PADDING,
-        };
-
-        controls.target.copy(center);
-        groundPlane.position.y = box.min.y;
-        scene.add(model);
-
-        // === Highlight + Label Setup ===
-        const updateLabels = highlightBuildings(model, scene, camera);
-        if (updateLabels) {
-          window.updateBuildingLabels = updateLabels;
-        }
-
-        // Note: handleGeolocation() is NO LONGER called from here.
-        // It is handled by the useEffect hook that waits for userGps and modelRef.
-        // Mark model as loaded so overlay disappears
-        setIsModelLoaded(true);
-      },
-      (xhr) => {
-        console.log(
-          `Model ${((xhr.loaded / xhr.total) * 100).toFixed(2)}% loaded`
-        );
-      },
-      (error) => {
-        console.error("❌ Error loading model:", error);
-        // Avoid blocking UI if model fails
-        setIsModelLoaded(true);
-      }
-    );
-  };
+      // === Start geolocation handling ===
+      handleGeolocation();
+      setIsModelLoaded(true);
+    },
+    (xhr) => {
+      console.log(`Model ${(xhr.loaded / xhr.total * 100).toFixed(2)}% loaded`);
+    },
+    (error) => {
+      console.error("❌ Error loading model:", error);
+      setIsModelLoaded(true);
+    }
+  );
+};
 
   // --- (UTILITY FUNCTIONS: UNCHANGED from File 1) ---
 
@@ -1027,51 +1217,80 @@ export default function NITCMapPage() {
       animationFrameId = requestAnimationFrame(animate);
 
       // --- MERGED: ENHANCED USER LOCATION MARKER (from File 2) ---
-      if (userGps && sceneRef.current) {
+      if (userGps && sceneRef.current && isOnCampus) {
         const scenePos = gpsToScene(userGps);
 
         // Create marker if it doesn't exist
-        if (!window.userLocationMarker) {
-          console.log("Creating user location marker...");
-          const group = new THREE.Group();
+if (!window.userLocationMarker) {
+  console.log("Creating user location marker...");
+  const group = new THREE.Group();
 
-          const sphereGeom = new THREE.SphereGeometry(8, 32, 32); // Larger
-          const sphereMat = new THREE.MeshStandardMaterial({
-            color: 0x0099ff,
-            emissive: 0x0099ff,
-            emissiveIntensity: 2,
-            transparent: true,
-            opacity: 0.9,
-          });
-          const sphere = new THREE.Mesh(sphereGeom, sphereMat);
-          sphere.position.y = 15; // Higher
-          group.add(sphere);
+  // ===== GPS PIN SHAPE =====
+  // Top sphere (the "head" of the pin)
+  const pinHeadGeom = new THREE.SphereGeometry(3.5, 32, 32);
+  const pinHeadMat = new THREE.MeshStandardMaterial({
+    color: 0xff4444,
+    emissive: 0xff4444,
+    emissiveIntensity: 1.5,
+    transparent: true,
+    opacity: 1.0,
+  });
+  const pinHead = new THREE.Mesh(pinHeadGeom, pinHeadMat);
+  pinHead.position.y = 15; // Top of the pin
+  group.add(pinHead);
 
-          const beamGeom = new THREE.CylinderGeometry(1.5, 1.5, 15); // Taller
-          const beamMat = new THREE.MeshStandardMaterial({
-            color: 0x0099ff,
-            transparent: true,
-            opacity: 0.6,
-          });
-          const beam = new THREE.Mesh(beamGeom, beamMat);
-          beam.position.y = 7.5; // Half-height
-          group.add(beam);
+  // Pin body (teardrop shape using cone)
+  const pinBodyGeom = new THREE.ConeGeometry(4, 12, 32);
+  const pinBodyMat = new THREE.MeshStandardMaterial({
+    color: 0xff4444,
+    emissive: 0xff4444,
+    emissiveIntensity: 1.2,
+    transparent: true,
+    opacity: 0.95,
+  });
+  const pinBody = new THREE.Mesh(pinBodyGeom, pinBodyMat);
+  pinBody.position.y = 7; // Middle section
+  group.add(pinBody);
 
-          const ringGeom = new THREE.RingGeometry(6, 10, 32); // Ground ring
-          const ringMat = new THREE.MeshStandardMaterial({
-            color: 0x0099ff,
-            transparent: true,
-            opacity: 0.5,
-            side: THREE.DoubleSide,
-          });
-          const ring = new THREE.Mesh(ringGeom, ringMat);
-          ring.rotation.x = -Math.PI / 2;
-          ring.position.y = 0.1;
-          group.add(ring);
+  // White dot in the center (like Google Maps pin)
+  const dotGeom = new THREE.SphereGeometry(1.5, 16, 16);
+  const dotMat = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    transparent: false,
+  });
+  const dot = new THREE.Mesh(dotGeom, dotMat);
+  dot.position.y = 15; // Same as pin head
+  group.add(dot);
 
-          sceneRef.current.add(group);
-          window.userLocationMarker = group;
-        }
+  // Pulsing accuracy circle (ground level)
+  const accuracyRingGeom = new THREE.RingGeometry(5, 7, 32);
+  const accuracyRingMat = new THREE.MeshBasicMaterial({
+    color: 0xff4444,
+    transparent: true,
+    opacity: 0.3,
+    side: THREE.DoubleSide,
+  });
+  const accuracyRing = new THREE.Mesh(accuracyRingGeom, accuracyRingMat);
+  accuracyRing.rotation.x = -Math.PI / 2;
+  accuracyRing.position.y = 0.5;
+  group.add(accuracyRing);
+
+  // Shadow/ground circle
+  const shadowGeom = new THREE.CircleGeometry(3, 32);
+  const shadowMat = new THREE.MeshBasicMaterial({
+    color: 0x000000,
+    transparent: true,
+    opacity: 0.3,
+    side: THREE.DoubleSide,
+  });
+  const shadow = new THREE.Mesh(shadowGeom, shadowMat);
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.y = 0.1;
+  group.add(shadow);
+
+  sceneRef.current.add(group);
+  window.userLocationMarker = group;
+}
 
         // Update color based on campus status
         const onCampusColor = 0x0099ff; // Blue
@@ -1088,17 +1307,38 @@ export default function NITCMapPage() {
         ring.material.color.setHex(targetColor);
 
         // Animate pulsing effect
-        const scale = 1 + Math.sin(Date.now() * 0.003) * 0.2;
-        sphere.scale.set(scale, scale, scale);
+        // Get references to marker parts
+const pinHead = window.userLocationMarker.children[0];
+const pinBody = window.userLocationMarker.children[1];
+const dot = window.userLocationMarker.children[2];
+const accuracyRing = window.userLocationMarker.children[3];
 
-        // Find ground height for the marker
-        const markerGroundY = findGroundHeight(scenePos.x, scenePos.z);
-        window.userLocationMarker.position.set(
-          scenePos.x,
-          markerGroundY,
-          scenePos.z
-        );
-      } else if (window.userLocationMarker && !userGps) {
+// Animate pulsing effect on pin head
+const time = Date.now() * 0.003;
+const headScale = 1 + Math.sin(time * 2) * 0.1;
+pinHead.scale.set(headScale, headScale, headScale);
+dot.scale.set(headScale, headScale, headScale);
+
+// Pulsing accuracy ring
+const ringScale = 1 + Math.sin(time * 1.5) * 0.4;
+accuracyRing.scale.set(ringScale, ringScale, 1);
+accuracyRing.material.opacity = 0.3 - Math.sin(time * 1.5) * 0.15;
+
+// Gentle bobbing animation
+// Gentle bobbing animation - reduced amount
+const bobOffset = Math.sin(time * 1.2) * 1.2; // Reduced from 2 to 1.2
+pinHead.position.y = 15 + bobOffset; // Adjusted base height
+pinBody.position.y = 7 + bobOffset * 0.5; // Adjusted base height
+dot.position.y = 15 + bobOffset; // Adjusted base height
+
+// Find ground height for the marker
+const markerGroundY = findGroundHeight(scenePos.x, scenePos.z);
+window.userLocationMarker.position.set(
+  scenePos.x,
+  markerGroundY,
+  scenePos.z
+);
+      } else if (window.userLocationMarker && (!userGps || isOnCampus === false)) {
         // Only remove marker if GPS signal is lost
         console.log("Removing user location marker (GPS lost)...");
         sceneRef.current.remove(window.userLocationMarker);
@@ -1110,7 +1350,8 @@ export default function NITCMapPage() {
         window.userLocationMarker = null;
       }
       // --- (End user location logic) ---
-
+      // --- TEMPORARY TEST AVATAR (REMOVE LATER) ---
+// This creates a test avatar at Main Building for testing
       // --- (Camera animation logic: UNCHANGED from File 1) ---
       if (
         isAnimatingRef.current &&
@@ -1254,8 +1495,9 @@ export default function NITCMapPage() {
   };
 
   const handleNavigation = (locationId) => {
-    // ... (This function is unchanged from File 1)
-    const location = LOCATION_DATA.find((l) => l.id === locationId);
+    // ... (This function is unchanged, but its behavior is now correct
+    // because it triggers pulsation that will persist)
+    const location = locationData.find((l) => l.id === locationId);
 
     if (location && location.modelCoords) {
       flyToLocation(location.modelCoords);
@@ -1271,6 +1513,9 @@ export default function NITCMapPage() {
       console.warn(`Cannot navigate to ${locationId}, modelCoords not ready.`);
       setActiveLocation(location);
       setPanelView("location");
+    } else {
+      // Add this else block for better debugging
+      console.error(`Navigation failed: Could not find location with id "${locationId}"`);
     }
   };
 
@@ -1372,10 +1617,19 @@ export default function NITCMapPage() {
     <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-white/80 font-sans">
       {/* Minimal full-screen loading overlay */}
       {!isModelLoaded && (
-        <div>
-          <LoadingBar />
-          <div className="absolute z-[999999999] top-[65%] left-[45%] text-2xl">
-            LOADING MAP
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-white text-black transition-opacity duration-300">
+          <div className="text-center space-y-3">
+            <img
+              src="/favicon.ico"
+              alt="Tathva"
+              className="mx-auto h-16 w-16 md:h-20 md:w-20"
+            />
+            <div className="text-xl md:text-2xl font-semibold tracking-wide animate-pulse">
+              Loading NITC map...
+            </div>
+            <p className="text-sm text-gray-400">
+              Preparing buildings and events
+            </p>
           </div>
         </div>
       )}
@@ -1425,13 +1679,16 @@ export default function NITCMapPage() {
           )}
         </div>
       </div>
+
       {/* Three.js Canvas */}
       <div
         ref={mountRef}
         className="h-full w-full bg-gray-700"
         aria-label="Map container"
       ></div>
+
       {/* --- UI Buttons (Unchanged from File 1) --- */}
+
       {/* Toggle GPS Info Button */}
       <button
         onClick={toggleGpsInfo}
@@ -1440,14 +1697,22 @@ export default function NITCMapPage() {
       >
         <CompassIcon />
       </button>
+
+      {/* Geolocation Button */}
       {/* Geolocation Button */}
       <button
         onClick={handleGeolocation}
-        className={`${uiButtonClasses} right-[4.5rem] md:right-[7rem]`}
-        title="Recenter to my location"
+        disabled={isOnCampus === false}
+        className={`${uiButtonClasses} right-[4.5rem] md:right-[7rem] ${
+          isOnCampus === false 
+            ? 'opacity-50 cursor-not-allowed hover:scale-100 hover:bg-gray-800/90' 
+            : ''
+        }`}
+        title={isOnCampus === false ? "Location unavailable (outside campus)" : "Recenter to my location"}
       >
         <GeolocationIcon />
       </button>
+
       {/* All Events Button */}
       <button
         onClick={() => setPanelView("events")}
@@ -1456,12 +1721,13 @@ export default function NITCMapPage() {
       >
         <CalendarIcon />
       </button>
+
       {/* Event Panel (Unchanged from File 1) */}
       <EventPanel
         panelView={panelView}
         activeLocation={activeLocation}
-        allEvents={EVENT_DATA}
-        allLocations={LOCATION_DATA}
+        allEvents={allEvents}
+        allLocations={locationData}
         onClose={handleClosePanel}
         onNavigate={handleNavigation}
         onViewChange={setPanelView}

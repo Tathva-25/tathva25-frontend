@@ -1,6 +1,6 @@
 import React from 'react';
 
-const filterCategories = ['All', 'Competition', 'Workshop', 'Lecture'];
+const filterCategories = ['All', 'Competitions', 'Workshops', 'Lectures'];
 
 export function EventPanel({
   panelView,
@@ -310,13 +310,13 @@ function EventCard({
       <div className="relative p-4 flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <h3 className="text-white text-base font-semibold truncate mb-1">
-            {event.name}
+            {event.heading}
           </h3>
 
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
-            <span className="truncate">{event.committee}</span>
+            <span className="truncate">{event.type}</span>
             <span className="text-white/20">•</span>
-            <span className="flex-shrink-0">{event.time}</span>
+            {/*<span className="flex-shrink-0">{event.datetime}</span>*/}
           </div>
 
           {showLocationName && (
