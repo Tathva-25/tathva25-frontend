@@ -24,7 +24,7 @@ const newfont = localfont({
   src: "../../../public/fonts/Michroma.ttf",
 });
 const SCRAMBLE_INTERVAL_MS = 40;
-const SCRAMBLE_DURATION_MS = 5000;
+const SCRAMBLE_DURATION_MS = 4000;
 const REVEAL_INTERVAL_MS = 100;
 
 const handleGoogleSignIn = () => {
@@ -42,6 +42,7 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
   const intervalRef = useRef(null);
   const timeoutRef = useRef(null);
   const wheelRef = useRef(null);
+  const avatarRef = useRef(null); // <-- 1. Add a ref for the avatar
   const sectionRef = useRef(null);
   const hasAnimatedRef = useRef(false);
 
@@ -104,28 +105,28 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
     }, SCRAMBLE_INTERVAL_MS);
   };
 
-   useEffect(() => {
-     const observer = new IntersectionObserver(
-       (entries) => {
-         entries.forEach((entry) => {
-           if (entry.isIntersecting && !hasAnimatedRef.current) {
-             triggerGlitchEffect();
-           }
-         });
-       },
-       { threshold: 0.1 }
-     );
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimatedRef.current) {
+            triggerGlitchEffect();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-     if (sectionRef.current) {
-       observer.observe(sectionRef.current);
-     }
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-     return () => {
-       if (sectionRef.current) {
-         observer.unobserve(sectionRef.current);
-       }
-     };
-   }, []);
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const jwt = localStorage.getItem("jwt") || localStorage.getItem("token");
@@ -139,73 +140,100 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
     };
   }, []);
 
+  // <-- 3. Add a new useEffect for load-in animations
+  // ... (other useEffects)
+
+  // 3. Add a new useEffect for load-in animations
   useEffect(() => {
+    const baseDelay = 3.5; // <-- 2-second delay after component mounts
+
+    // Avatar: "appears into the screen as soon as the page loads"
+    if (avatarRef.current) {
+      gsap.from(avatarRef.current, {
+        opacity: 0,
+        scale: 0.8, // Start slightly smaller
+        y: 50, // Start slightly lower
+        duration: 1.2,
+        ease: "power3.out",
+        delay: baseDelay, // <-- Apply the 2-second delay
+      });
+    }
+
+    // Wheel: "slowly appears into screen"
     if (wheelRef.current) {
+      // "Slowly appears" animation
+      gsap.from(wheelRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 2, // Slower duration
+        ease: "power2.out",
+        delay: baseDelay + 0.3, // <-- Apply delay + offset
+      });
+
+      // Existing rotation animation (added delay to match)
       gsap.to(wheelRef.current, {
         rotation: 360,
         duration: 20,
         ease: "linear",
         repeat: -1,
+        delay: baseDelay + 0.3, // <-- Apply delay + offset
       });
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount // Empty dependency array ensures this runs once on mount
 
   return (
     <section
       ref={sectionRef}
       className={`relative h-[95vh] sm:h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
+      <div className="hidden  absolute top-6 right-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
+        {/* Menu Button */}
+        <button
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? "CLOSE" : "Menu"}
+        </button>
 
-<div className="hidden  absolute top-6 right-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
-  
-  {/* Menu Button */}
-  <button
-    onClick={() => setMenuOpen((prev) => !prev)}
-    className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
-    aria-label="Toggle menu"
-  >
-    {menuOpen ? "CLOSE" : "Menu"}
-  </button>
+        {isLoggedIn ? (
+          <button
+            onClick={() => handleVisitDashboard(router)}
+            className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+          >
+            Profile
+          </button>
+        ) : (
+          <button
+            onClick={handleGoogleSignIn}
+            className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+          >
+            LOGIN
+          </button>
+        )}
 
-  {isLoggedIn ? (
-    <button
-      onClick={() => handleVisitDashboard(router)}
-      className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
-    >
-      Profile
-    </button>
-  ) : (
-    <button
-      onClick={handleGoogleSignIn}
-      className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
-    >
-      LOGIN
-    </button>
-  )}
+        {/* 2. Tathva Logo */}
+        <Image
+          src={logo}
+          alt="Tathva Logo"
+          width={100}
+          height={100}
+          className="w-16 md:w-14 h-auto transition-transform duration-300 hover:scale-105"
+          priority
+          quality={90}
+        />
 
-  {/* 2. Tathva Logo */}
-  <Image
-    src={logo}
-    alt="Tathva Logo"
-    width={100}
-    height={100}
-    className="w-16 md:w-14 h-auto transition-transform duration-300 hover:scale-105"
-    priority
-    quality={90}
-  />
-
-  {/* 3. Franklin Logo (Increased Size) */}
-  <Image
-    src={frank}
-    alt="Franklin Logo"
-    width={100}
-    height={100}
-    className="w-20 md:w-32 h-auto transition-transform duration-300 hover:scale-105"
-    priority
-    quality={90}
-  />
-</div>
-
+        {/* 3. Franklin Logo (Increased Size) */}
+        <Image
+          src={frank}
+          alt="Franklin Logo"
+          width={100}
+          height={100}
+          className="w-20 md:w-32 h-auto transition-transform duration-300 hover:scale-105"
+          priority
+          quality={90}
+        />
+      </div>
 
       <div className="mx-auto w-full h-full">
         {/* Background Image */}
@@ -649,12 +677,12 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
               <span
                 className={`${newfont.className} text-white text-[12px] tracking-[0.3em] `}
               >
-                SOUTH INDIA&apos;S LARGEST TECH  FEST
+                SOUTH INDIA&apos;S LARGEST TECH FEST
               </span>
             </div>
 
             <span
-              className={`${customFont.className} text-white text-7xl sm:text-9xl tracking-widest`}
+              className={`${customFont.className} text-white text-7xl sm:text-9xl tracking-widest `}
             >
               TATHVA
             </span>
@@ -663,7 +691,6 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
             >
               OCTOBER 24, 25, 26
             </span>
-
           </div>
 
           {/* Hero Images Container - Positioned at bottom */}
@@ -698,6 +725,7 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
 
               <div className="absolute inset-0 flex items-center justify-center md:block">
                 <Image
+                  ref={avatarRef} // <-- 2. Attach the ref to the Image
                   src={heroAvatar}
                   alt="Avatar"
                   className="w-full h-full object-contain scale-120 mt-10 md:scale-150 md:mt-9"
@@ -710,7 +738,6 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
           </div>
         </div>
       </div>
-
     </section>
   );
 };
