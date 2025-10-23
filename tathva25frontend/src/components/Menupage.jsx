@@ -102,11 +102,16 @@ export default function Menupage({ setMenuOpen }) {
       className="relative z-20  w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg"
       onClick={() => setMenuOpen(false)}
     >
-      {isMobile ? (
-        <MenuPhone menuItems={menuItems} currentPath={pathname} />
-      ) : (
-        <MenuDesktop menuItems={menuItems} currentPath={pathname} />
-      )}
+      <div
+        className=" flex flex-col items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {isMobile ? (
+          <MenuPhone menuItems={menuItems} currentPath={pathname} />
+        ) : (
+          <MenuDesktop menuItems={menuItems} currentPath={pathname} />
+        )}
+      </div>
     </div>
   );
 }
