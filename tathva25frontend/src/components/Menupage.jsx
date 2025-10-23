@@ -107,9 +107,17 @@ export default function Menupage({ setMenuOpen }) {
         onClick={(e) => e.stopPropagation()}
       >
         {isMobile ? (
-          <MenuPhone menuItems={menuItems} currentPath={pathname} />
+          <MenuPhone
+            menuItems={menuItems}
+            currentPath={pathname}
+            setMenuOpen={setMenuOpen}
+          />
         ) : (
-          <MenuDesktop menuItems={menuItems} currentPath={pathname} />
+          <MenuDesktop
+            menuItems={menuItems}
+            currentPath={pathname}
+            setMenuOpen={setMenuOpen}
+          />
         )}
       </div>
     </div>
