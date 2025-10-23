@@ -682,7 +682,7 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
           </div>
 
           {/* Mobile Text Block */}
-          <div className="flex flex-col items-center justify-center   gap-5 text-center md:hidden w-full -translate-y-20  ">
+          <div className="flex flex-col items-center justify-center   gap-5 text-center md:hidden w-full -mt-40  ">
             <div className="w-full px-6 flex items-center justify-center ">
               <Image
                 src={frank}
