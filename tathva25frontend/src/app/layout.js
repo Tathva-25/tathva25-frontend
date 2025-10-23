@@ -78,7 +78,6 @@ export default function RootLayout({ children }) {
           {children}
           <div id="modal-root"></div>
         </ClientLayoutWrapper>
-
       </body>
     </html>
   );
