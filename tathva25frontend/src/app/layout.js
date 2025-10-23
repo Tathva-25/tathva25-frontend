@@ -71,14 +71,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="relative overflow-x-hidden">
-        <Toaster />
+        <Toaster position="top-right" containerStyle={{ zIndex: 11000 }} />
         <Analytics />
         {/* Use the wrapper to manage loading state and content visibility */}
         <ClientLayoutWrapper>
           {children}
           <div id="modal-root"></div>
         </ClientLayoutWrapper>
-
       </body>
     </html>
   );
