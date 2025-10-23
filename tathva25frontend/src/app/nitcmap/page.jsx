@@ -9,7 +9,7 @@ import { EventPanel } from "./EventPanel"; // Make sure this is the version from
 import { createRoot } from "react-dom/client";
 import BuildingMarker from "./BuildingMarker"; // Assuming this is in './BuildingMarker.jsx'
 import BuildingCard from "./BuildingCard"; // Assuming this is in './BuildingCard.jsx'
-
+import LoadingBar from "@/components/LoadingBar";
 // --- CONFIGURATION ---
 
 const CONFIG = {
@@ -1372,19 +1372,10 @@ export default function NITCMapPage() {
     <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-white/80 font-sans">
       {/* Minimal full-screen loading overlay */}
       {!isModelLoaded && (
-        <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-white text-black transition-opacity duration-300">
-          <div className="text-center space-y-3">
-            <img
-              src="/favicon.ico"
-              alt="Tathva"
-              className="mx-auto h-16 w-16 md:h-20 md:w-20"
-            />
-            <div className="text-xl md:text-2xl font-semibold tracking-wide animate-pulse">
-              Loading NITC map...
-            </div>
-            <p className="text-sm text-gray-400">
-              Preparing buildings and events
-            </p>
+        <div>
+          <LoadingBar />
+          <div className="absolute z-[999999999] top-[65%] left-[45%] text-2xl">
+            LOADING MAP
           </div>
         </div>
       )}
@@ -1434,16 +1425,13 @@ export default function NITCMapPage() {
           )}
         </div>
       </div>
-
       {/* Three.js Canvas */}
       <div
         ref={mountRef}
         className="h-full w-full bg-gray-700"
         aria-label="Map container"
       ></div>
-
       {/* --- UI Buttons (Unchanged from File 1) --- */}
-
       {/* Toggle GPS Info Button */}
       <button
         onClick={toggleGpsInfo}
@@ -1452,7 +1440,6 @@ export default function NITCMapPage() {
       >
         <CompassIcon />
       </button>
-
       {/* Geolocation Button */}
       <button
         onClick={handleGeolocation}
@@ -1461,7 +1448,6 @@ export default function NITCMapPage() {
       >
         <GeolocationIcon />
       </button>
-
       {/* All Events Button */}
       <button
         onClick={() => setPanelView("events")}
@@ -1470,7 +1456,6 @@ export default function NITCMapPage() {
       >
         <CalendarIcon />
       </button>
-
       {/* Event Panel (Unchanged from File 1) */}
       <EventPanel
         panelView={panelView}

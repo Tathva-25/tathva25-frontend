@@ -214,8 +214,6 @@ export default function LoadingBar({ onComplete }) {
             />
           </div>
         </div>
-
-
       </div>
 
       <style jsx>{`

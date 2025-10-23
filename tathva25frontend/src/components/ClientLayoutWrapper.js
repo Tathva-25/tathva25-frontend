@@ -10,6 +10,7 @@ export default function ClientLayoutWrapper({ children }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [softVisible, setSoftVisible] = useState(true);
   const isHome = pathname === "/";
+  const ismap = pathname === "/nitcmap";
 
   // Reset gating on route changes (and on first mount) before paint to avoid flashes
   useLayoutEffect(() => {
@@ -27,7 +28,9 @@ export default function ClientLayoutWrapper({ children }) {
     setIsLoaded(true);
   }, []);
 
-  return (
+  return ismap ? (
+    <div>{children}</div>
+  ) : (
     <>
       {/* Heavy animated loader only on landing page */}
       {isHome && <LoadingBar onComplete={handleLoadingComplete} />}
@@ -52,7 +55,9 @@ export default function ClientLayoutWrapper({ children }) {
           pointerEvents: isHome ? (isLoaded ? "auto" : "none") : "auto",
         }}
       >
-        <div className={`${!isHome ? "translate-y-13 sm:translate-x-7" : ""}`}>{children}</div>
+        <div className={`${!isHome ? "translate-y-13 sm:translate-x-7" : ""}`}>
+          {children}
+        </div>
       </div>
     </>
   );
