@@ -15,6 +15,7 @@ import frank from "../../../public/images/franklin.png";
 
 import Marquee from "@/app/components/Marquee";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 const customFont = localfont({
@@ -186,7 +187,7 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
       ref={sectionRef}
       className={`relative h-[95vh] sm:h-screen flex items-center justify-center px-5 py-8 pt-20 overflow-hidden`}
     >
-      <div className="hidden  absolute top-6 right-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
+      <div className="hidden  absolute top-8 left-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
         {/* Menu Button */}
         <button
           onClick={() => setMenuOpen((prev) => !prev)}
@@ -211,7 +212,16 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
             LOGIN
           </button>
         )}
+        <Link href="/map">
+          <span
+            className={`${newfont.className} text-white px-4 py-2 rounded-full hover:bg-black transition-all duration-300`}
+          >
+            Map
+          </span>
+        </Link>
+      </div>
 
+      <div className="hidden  absolute top-6 right-6 md:top-0 md:right-4 z-30 md:flex items-center gap-2 md:gap-4">
         {/* 2. Tathva Logo */}
         <Image
           src={logo}
@@ -229,7 +239,7 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
           alt="Franklin Logo"
           width={100}
           height={100}
-          className="w-20 md:w-32 h-auto transition-transform duration-300 hover:scale-105"
+          className="w-20 md:w-32 h-auto transition-transform duration-300 hover:scale-105 "
           priority
           quality={90}
         />
@@ -673,6 +683,17 @@ export const Hero = ({ menuOpen, setMenuOpen }) => {
 
           {/* Mobile Text Block */}
           <div className="flex flex-col items-center justify-center   gap-5 text-center md:hidden w-full -translate-y-20  ">
+            <div className="w-full px-6 flex items-center justify-center ">
+              <Image
+                src={frank}
+                alt="Franklin Logo"
+                width={100}
+                height={100}
+                className="w-20 md:w-32 h-auto transition-transform duration-300 hover:scale-105 "
+                priority
+                quality={90}
+              />
+            </div>
             <div className="w-full px-6 ">
               <span
                 className={`${newfont.className} text-white text-[12px] tracking-[0.3em] `}
