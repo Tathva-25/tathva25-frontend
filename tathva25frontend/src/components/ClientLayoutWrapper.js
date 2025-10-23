@@ -10,7 +10,7 @@ export default function ClientLayoutWrapper({ children }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [softVisible, setSoftVisible] = useState(true);
   const isHome = pathname === "/";
-  const ismap = pathname === "/nitcmap";
+  const ismap = pathname === "/map";
 
   // Reset gating on route changes (and on first mount) before paint to avoid flashes
   useLayoutEffect(() => {
