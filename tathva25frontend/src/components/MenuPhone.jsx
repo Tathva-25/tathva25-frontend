@@ -585,6 +585,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
       <div className="absolute z-10 flex items-center justify-center bottom-0 translate-y-1/2 w-96 h-96 left-1/2 transform -translate-x-1/2 scale-75">
         <div className="absolute">
           <img
+            id="menuBoximg"
             src="/ring1.png"
             className="rotate scale-230"
             alt="Rotating ring"

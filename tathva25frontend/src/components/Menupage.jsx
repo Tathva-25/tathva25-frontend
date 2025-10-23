@@ -79,7 +79,7 @@ const menuItems = [
   },
 ];
 
-export default function Menupage() {
+export default function Menupage({ setMenuOpen }) {
   const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname(); // This gets the current path
 
@@ -98,8 +98,10 @@ export default function Menupage() {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg">
-
+    <div
+      className="relative z-20  w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg"
+      onClick={() => setMenuOpen(false)}
+    >
       {isMobile ? (
         <MenuPhone menuItems={menuItems} currentPath={pathname} />
       ) : (

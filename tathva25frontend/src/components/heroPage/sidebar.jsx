@@ -141,6 +141,23 @@ export default function Sidebar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  // move document-based click handling into a client-only effect
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const menuBox = document.getElementById("menuBoximg");
+    if (!menuBox) return;
+
+    function onDocClick(event) {
+      if (!menuBox.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, []);
+
   const scrollToSection = (num) => {
     const section = document.getElementById(`section-${num}`);
     if (section) {
@@ -375,7 +392,10 @@ export default function Sidebar() {
 
       {menuOpen && (
         <div className="absolute z-[100] bg-black/90 flex items-center justify-center">
-          <MenuWrapper onClose={() => setMenuOpen(false)} />
+          <MenuWrapper
+            onClose={() => setMenuOpen(false)}
+            setMenuOpen={setMenuOpen}
+          />
         </div>
       )}
 
