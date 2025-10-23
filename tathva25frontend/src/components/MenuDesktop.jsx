@@ -17,9 +17,9 @@ const akiraExpanded = localFont({
   variable: "--font-akira",
 });
 
-const michroma = Michroma({ subsets: ["latin"], weight: "400" })
+const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
-export default function MenuDesktop({ menuItems, currentPath }) {
+export default function MenuDesktop({ menuItems, currentPath, setMenuOpen }) {
   // TEXT COLOR CONFIGURATION - Change these to modify the text colors
   const BG_TEXT_COLOR = "#ffffff44"; // Background scrolling text color
   const BOTTOM_TEXT_COLOR = "#ffffff"; // Bottom text color
@@ -231,7 +231,8 @@ export default function MenuDesktop({ menuItems, currentPath }) {
     <>
       <div
         id="bg-text"
-        className= {`${michroma.className} absolute overflow-hidden whitespace-nowrap font-extrabold w-full top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%] sm:text-[80px] md:text-[100px] mt-[30vh] lg:text-[150px]`}
+        className={`${michroma.className} absolute overflow-hidden whitespace-nowrap font-extrabold w-full top-[22%] sm:top-[12%] md:top-[4%] lg:top-[0%] sm:text-[80px] md:text-[100px] mt-[30vh] lg:text-[150px]`}
+        oncClick={() => setMenuOpen(false)}
         style={{ color: BG_TEXT_COLOR }}
       >
         {fadedtext && (
@@ -329,6 +330,7 @@ export default function MenuDesktop({ menuItems, currentPath }) {
         <div
           ref={bottomTextRef}
           className={`mt-4 ${michroma.className} font-[700] absolute text-5xl bottom-[5%]`}
+          onClick={() => setMenuOpen(false)}
           style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
         >
           {fadedtext}

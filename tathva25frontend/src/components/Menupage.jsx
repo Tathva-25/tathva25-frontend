@@ -79,7 +79,7 @@ const menuItems = [
   },
 ];
 
-export default function Menupage() {
+export default function Menupage({ setMenuOpen }) {
   const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname(); // This gets the current path
 
@@ -98,13 +98,28 @@ export default function Menupage() {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg">
-
-      {isMobile ? (
-        <MenuPhone menuItems={menuItems} currentPath={pathname} />
-      ) : (
-        <MenuDesktop menuItems={menuItems} currentPath={pathname} />
-      )}
+    <div
+      className="relative z-20  w-screen h-screen flex flex-col items-center justify-center overflow-hidden backdrop-blur-lg"
+      onClick={() => setMenuOpen(false)}
+    >
+      <div
+        className=" flex flex-col items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {isMobile ? (
+          <MenuPhone
+            menuItems={menuItems}
+            currentPath={pathname}
+            setMenuOpen={setMenuOpen}
+          />
+        ) : (
+          <MenuDesktop
+            menuItems={menuItems}
+            currentPath={pathname}
+            setMenuOpen={setMenuOpen}
+          />
+        )}
+      </div>
     </div>
   );
 }

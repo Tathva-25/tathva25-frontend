@@ -5,7 +5,7 @@ import { Michroma } from "next/font/google";
 
 const michroma = Michroma({ subsets: ["latin"], weight: "400" });
 
-export default function MenuPhone({ menuItems, currentPath }) {
+export default function MenuPhone({ menuItems, currentPath, setMenuOpen }) {
   // TEXT COLOR CONFIGURATION - Change these to modify the text colors
   const BG_TEXT_COLOR = "#00000044"; // Background scrolling text color
   const BOTTOM_TEXT_COLOR = "#ffffff"; // Bottom text color
@@ -560,6 +560,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
         id="bg-text-mobile"
         className="absolute overflow-hidden whitespace-nowrap w-full top-[15%] text-[120px]"
         style={{ color: BG_TEXT_COLOR }}
+        onClick={() => setMenuOpen(false)}
       >
         {fadedtext && (
           <div
@@ -585,6 +586,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
       <div className="absolute z-10 flex items-center justify-center bottom-0 translate-y-1/2 w-96 h-96 left-1/2 transform -translate-x-1/2 scale-75">
         <div className="absolute">
           <img
+            id="menuBoximg"
             src="/ring1.png"
             className="rotate scale-230"
             alt="Rotating ring"
@@ -668,6 +670,7 @@ export default function MenuPhone({ menuItems, currentPath }) {
           ref={bottomTextRef}
           className={`mt-4 ${michroma.className} font-[800] absolute text-2xl bottom-[50%]`}
           style={{ opacity: 0, color: BOTTOM_TEXT_COLOR }}
+          onClick={() => setMenuOpen(false)}
         >
           {fadedtext}
         </div>

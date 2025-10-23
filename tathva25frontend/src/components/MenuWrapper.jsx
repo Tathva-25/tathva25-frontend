@@ -4,13 +4,10 @@ import { useState } from "react";
 import Menupage from "./Menupage";
 import { Menu, X } from "lucide-react";
 
-export default function MenuWrapper({ children }) {
-
+export default function MenuWrapper({ children, setMenuOpen }) {
   return (
-  
-        <div className="fixed  bg-black/40 inset-0 z-[2000]  ">
-          <Menupage />
-        </div>
-   
+    <div className="fixed  bg-black/40 inset-0 z-[200]  ">
+      <Menupage setMenuOpen={setMenuOpen} />
+    </div>
   );
 }

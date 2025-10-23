@@ -126,6 +126,38 @@ export default function Sidebar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ESCAPE KEY HERE..THIS IS DA FIX..
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === "Escape" || e.key === "Esc") {
+        setMenuOpen(false);
+      }
+    }
+
+    if (menuOpen) {
+      window.addEventListener("keydown", onKey);
+    }
+
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  // move document-based click handling into a client-only effect
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const menuBox = document.getElementById("menuBoximg");
+    if (!menuBox) return;
+
+    function onDocClick(event) {
+      if (!menuBox.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, []);
+
   const scrollToSection = (num) => {
     const section = document.getElementById(`section-${num}`);
     if (section) {
@@ -289,65 +321,63 @@ export default function Sidebar() {
             </div>
             <div className="md:hidden w-32 h-10 flex-shrink-0">
               <Image
-                  src={frank}
-                  alt="Franklin Logo"
-                  width={100}
-                  height={100}
-                  className=" h-auto relative bottom-2 transition-transform duration-300 hover:scale-105"
-                  priority
-                  quality={90}
-                />
+                src={frank}
+                alt="Franklin Logo"
+                width={100}
+                height={100}
+                className=" h-auto relative bottom-2 transition-transform duration-300 hover:scale-105"
+                priority
+                quality={90}
+              />
             </div>
           </div>
 
+          <div className="flex gap-2 text-sm">
+            {isLoggedIn ? (
+              <button
+                onClick={handleVisitDashboard}
+                className={`${someFont.className} font-light z-30`}
+              >
+                Profile
+              </button>
+            ) : (
+              <button
+                onClick={handleGoogleSignIn}
+                className={`${someFont.className}  font-light z-30`}
+              >
+                LOGIN
+              </button>
+            )}
 
-            <div className="flex gap-2 text-sm">
-          {isLoggedIn ? (
-            <button
-              onClick={handleVisitDashboard}
-              className={`${someFont.className} font-light z-30`}
-            >
-              Profile
-            </button>
-          ) : (
-            <button
-              onClick={handleGoogleSignIn}
-              className={`${someFont.className}  font-light z-30`}
-            >
-              LOGIN
-            </button>
-          )}
-
-          
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setMenuOpen((prev) => !prev)}
-              className="w-6 h-6 flex items-center justify-center"
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? (
-                <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg
-                  className="w-5 h-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M3 12h18M3 6h18M3 18h18" />
-                </svg>
-              )}
-            </button>
-          </div>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setMenuOpen((prev) => !prev)}
+                className="w-6 h-6 flex items-center justify-center"
+                aria-label="Toggle menu"
+              >
+                {menuOpen ? (
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M3 12h18M3 6h18M3 18h18" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -362,14 +392,19 @@ export default function Sidebar() {
 
       {menuOpen && (
         <div className="absolute z-[100] bg-black/90 flex items-center justify-center">
-          <MenuWrapper onClose={() => setMenuOpen(false)} />
+          <MenuWrapper
+            onClose={() => setMenuOpen(false)}
+            setMenuOpen={setMenuOpen}
+          />
         </div>
       )}
 
       <div className="md:ml-9">
         <section id="section-1" className="h-full ">
           <Hero menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-          <div className="md:hidden"><Marquee text={"///SCROLL TO CONTINUE"}/></div>
+          <div className="md:hidden">
+            <Marquee text={"///SCROLL TO CONTINUE"} />
+          </div>
         </section>
 
         <section id="section-2">
@@ -381,11 +416,10 @@ export default function Sidebar() {
         </section>
 
         <section id="section-4">
-               <Passes/>
-       
+          <Passes />
         </section>
 
-        <section id = "section-5">
+        <section id="section-5">
           <Proshow />
         </section>
 
@@ -394,11 +428,11 @@ export default function Sidebar() {
         </section>
 
         <section id="section-7">
-           <GamePage /> 
+          <GamePage />
         </section>
 
         <section id="section-8" className={"mt-6 sm:mt-10"}>
-       <Expo />
+          <Expo />
         </section>
 
         <section id={`section-footer`}>
