@@ -942,6 +942,8 @@ export default function NITCMapPage() {
           const finalAllEvents = []; // Create a new temporary array for events
 
           if (venues && venues.length > 0) {
+            const targetDate = new Date(); // or any date you want, e.g. new Date("2025-10-25")
+            const targetDay = targetDate.getDate();
             venues.forEach((venue) => {
               const normalizedVenueName = venue.name
                   .trim()
@@ -962,20 +964,25 @@ export default function NITCMapPage() {
                     `✅ Mapped API Venue [${venue.name.trim()}] to Model [${modelNameMatch}]`
                 );
 
+                const filteredEvents = venue.events.filter((event) => {
+                  const localDate = new Date(event.datetime); // converts UTC → local
+                  return localDate.getDate() === targetDay;
+                });
+
                 // Add the mapped location
                 mappedLocations.push({
                   id: modelNameMatch,
                   name: venue.name.trim(),
-                  events: venue.events,
+                  events: filteredEvents,
                   modelCoords: null,
                 });
 
                 // For each event in this venue, add it to our final list
                 // with the correct locationId (the model name)
-                venue.events.forEach((event) => {
+                filteredEvents.forEach((event) => {
                   finalAllEvents.push({
                     ...event,
-                    locationId: modelNameMatch, // <-- THIS IS THE FIX!
+                    locationId: modelNameMatch,
                   });
                 });
               } else {

@@ -314,9 +314,24 @@ function EventCard({
           </h3>
 
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-2">
-            <span className="truncate">{event.type}</span>
             <span className="text-white/20">•</span>
-            {/*<span className="flex-shrink-0">{event.datetime}</span>*/}
+            <span className="flex-shrink-0">
+              {(() => {
+                const start = new Date(event.datetime);
+                const end = event.endTime ? new Date(event.endTime) : null;
+
+                const formatTime = (date) =>
+                    date.toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false, // change to true if you want AM/PM
+                    }).replace(':', '.'); // optional: makes 09:00 → 9.00
+
+                return end
+                    ? `${formatTime(start)} - ${formatTime(end)}`
+                    : formatTime(start);
+              })()}
+            </span>
           </div>
 
           {showLocationName && (
