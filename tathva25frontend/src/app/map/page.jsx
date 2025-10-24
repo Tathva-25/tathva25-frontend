@@ -616,6 +616,22 @@ export default function NITCMapPage() {
     }
   }, [userGps]); // Only depends on userGps changing
 
+  // Prevent body scroll on mobile when panel is open
+  useEffect(() => {
+    if (panelView && typeof window !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [panelView]);
+
   const initializeScene = (mount) => {
     // ... (This function is unchanged from File 1)
     const scene = sceneRef.current;
@@ -1669,8 +1685,7 @@ export default function NITCMapPage() {
   };
 
   return (
-    <div className="fixed top-0 left-0 h-screen w-screen overflow-hidden bg-white/80 font-sans">
-      {/* Minimal full-screen loading overlay */}
+    <div className="fixed inset-0 bg-white/80 font-sans overflow-hidden">      {/* Minimal full-screen loading overlay */}
       {!isModelLoaded && (
         <div className="fixed inset-0 z-[2000]">
           <LoopingLoadingBar isLoaded={isModelLoaded} />
@@ -1728,9 +1743,9 @@ export default function NITCMapPage() {
 
       {/* Three.js Canvas */}
       <div
-        ref={mountRef}
-        className="h-full w-full bg-gray-700"
-        aria-label="Map container"
+          ref={mountRef}
+          className="absolute inset-0 bg-gray-700"
+          aria-label="Map container"
       ></div>
 
       {/* --- UI Buttons (Unchanged from File 1) --- */}
