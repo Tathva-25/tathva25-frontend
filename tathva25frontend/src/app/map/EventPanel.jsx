@@ -1,6 +1,6 @@
 import React from 'react';
 
-const filterCategories = ['All', 'Competitions', 'Workshops', 'Lectures'];
+const filterCategories = ['All', 'Competitions', 'Workshops', 'Lectures', 'Shows', 'General'];
 
 export function EventPanel({
   panelView,
