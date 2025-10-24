@@ -776,7 +776,7 @@ export default function NITCMapPage() {
               >
                 <BuildingMarker
                   buildingName={buildingName}
-                  isActive={active === buildingName.substring(5)}
+                  isActive={active === buildingName.slice(5, -2)}
                   onClick={() => onMarkerClick(buildingName)}
                 />
                 <BuildingCard
@@ -885,133 +885,136 @@ export default function NITCMapPage() {
     loader.setDRACOLoader(dracoLoader);
 
     loader.load(
-      "/models/final1compressed.glb",
-      async (gltf) => {
-        const model = gltf.scene;
-        modelRef.current = model;
+        "/models/finalv2compressed.glb",
+        async (gltf) => {
+          const model = gltf.scene;
+          modelRef.current = model;
 
-        calculateModelScale();
+          calculateModelScale();
 
-        model.traverse((child) => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
-
-        // --- 1. FETCH API DATA ---
-        const { venues } = await dataFetcher();
-
-        // --- 2. GET MODEL BUILDING NAMES ---
-        const modelBuildingNames = [];
-        model.traverse((child) => {
-          // prefix
-          if (
-            child.isMesh &&
-            child.name &&
-            child.name.toLowerCase().startsWith("nitc_")
-          ) {
-            if (!modelBuildingNames.includes(child.name)) {
-              modelBuildingNames.push(child.name);
-            }
-          }
-        });
-        console.log(
-          "🏫 Mappable Buildings Found in Model:",
-          modelBuildingNames
-        );
-
-        // --- 3. PERFORM THE MAPPING & CREATE FINAL DATA ---
-        const mappedLocations = [];
-        const finalAllEvents = []; // Create a new temporary array for events
-
-        if (venues && venues.length > 0) {
-          venues.forEach((venue) => {
-            const normalizedVenueName = venue.name
-              .trim()
-              .toLowerCase()
-              .replace(/\s+/g, "");
-            if (!normalizedVenueName) return;
-
-            const modelNameMatch = modelBuildingNames.find((modelName) => {
-              const modelSuffix = modelName.substring(5).toLowerCase();
-              return modelSuffix === normalizedVenueName;
-            });
-
-            if (modelNameMatch) {
-              console.log(
-                `✅ Mapped API Venue [${venue.name.trim()}] to Model [${modelNameMatch}]`
-              );
-
-              // Add the mapped location
-              mappedLocations.push({
-                id: modelNameMatch,
-                name: venue.name.trim(),
-                events: venue.events,
-                modelCoords: null,
-              });
-
-              // For each event in this venue, add it to our final list
-              // with the correct locationId (the model name)
-              venue.events.forEach((event) => {
-                finalAllEvents.push({
-                  ...event,
-                  locationId: modelNameMatch, // <-- THIS IS THE FIX!
-                });
-              });
-            } else {
-              console.warn(
-                `⚠️ No matching model found for API Venue: "${venue.name.trim()}"`
-              );
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
             }
           });
+
+          // --- 1. FETCH API DATA ---
+          const { venues } = await dataFetcher();
+
+          // --- 2. GET MODEL BUILDING NAMES ---
+          const modelBuildingNames = [];
+          model.traverse((child) => {
+            // prefix
+            if (
+                child.isMesh &&
+                child.name &&
+                child.name.toLowerCase().startsWith("nitc_")
+            ) {
+              if (!modelBuildingNames.includes(child.name)) {
+                modelBuildingNames.push(child.name);
+              }
+            }
+          });
+          console.log(
+              "🏫 Mappable Buildings Found in Model:",
+              modelBuildingNames
+          );
+
+          // --- 3. PERFORM THE MAPPING & CREATE FINAL DATA ---
+          const mappedLocations = [];
+          const finalAllEvents = []; // Create a new temporary array for events
+
+          if (venues && venues.length > 0) {
+            venues.forEach((venue) => {
+              const normalizedVenueName = venue.name
+                  .trim()
+                  .toLowerCase()
+                  .replace(/\s+/g, "_");
+              if (!normalizedVenueName) return;
+
+              const modelNameMatch = modelBuildingNames.find((modelName) => {
+                // Extract suffix after "nitc_" or "NITC_"
+                const modelSuffix = modelName.substring(5);
+                // Remove trailing _number pattern and convert to lowercase for comparison
+                const cleanModelSuffix = modelSuffix.replace(/_\d+$/, '').toLowerCase();
+                return cleanModelSuffix === normalizedVenueName;
+              });
+
+              if (modelNameMatch) {
+                console.log(
+                    `✅ Mapped API Venue [${venue.name.trim()}] to Model [${modelNameMatch}]`
+                );
+
+                // Add the mapped location
+                mappedLocations.push({
+                  id: modelNameMatch,
+                  name: venue.name.trim(),
+                  events: venue.events,
+                  modelCoords: null,
+                });
+
+                // For each event in this venue, add it to our final list
+                // with the correct locationId (the model name)
+                venue.events.forEach((event) => {
+                  finalAllEvents.push({
+                    ...event,
+                    locationId: modelNameMatch, // <-- THIS IS THE FIX!
+                  });
+                });
+              } else {
+                console.warn(
+                    `⚠️ No matching model found for API Venue: "${venue.name.trim()}"`
+                );
+              }
+            });
+          }
+
+          // --- 4. UPDATE REACT STATE WITH CORRECTLY LINKED DATA ---
+          setLocationData(mappedLocations);
+          setAllEvents(finalAllEvents); // Set the final, corrected events list
+          console.log("📍 Final Mapped Location Data:", mappedLocations);
+          console.log("🎉 Final Events Data with locationId:", finalAllEvents);
+
+          // === Setup model bounds and position (Unchanged) ===
+          const box = new THREE.Box3().setFromObject(model);
+          const center = box.getCenter(new THREE.Vector3());
+          const internalPadding = 50; // Reduced from 600
+          mapBoundsRef.current = {
+            MIN_X: box.min.x + internalPadding,
+            MAX_X: box.max.x - internalPadding,
+            MIN_Z: box.min.z + internalPadding,
+            MAX_Z: box.max.z - internalPadding,
+            PADDING: CONFIG.MAP_BOUNDS.PADDING,
+          };
+          controls.target.copy(center);
+          groundPlane.position.y = box.min.y;
+          scene.add(model);
+
+          // --- 5. PASS MAPPED DATA TO THE HIGHLIGHTER (Unchanged) ---
+          const updateLabels = highlightBuildings(
+              model,
+              scene,
+              camera,
+              mappedLocations
+          );
+          if (updateLabels) {
+            window.updateBuildingLabels = updateLabels;
+          }
+
+          // === Start geolocation handling ===
+          handleGeolocation();
+          setIsModelLoaded(true);
+        },
+        (xhr) => {
+          console.log(
+              `Model ${((xhr.loaded / xhr.total) * 100).toFixed(2)}% loaded`
+          );
+        },
+        (error) => {
+          console.error("❌ Error loading model:", error);
+          setIsModelLoaded(true);
         }
-
-        // --- 4. UPDATE REACT STATE WITH CORRECTLY LINKED DATA ---
-        setLocationData(mappedLocations);
-        setAllEvents(finalAllEvents); // Set the final, corrected events list
-        console.log("📍 Final Mapped Location Data:", mappedLocations);
-        console.log("🎉 Final Events Data with locationId:", finalAllEvents);
-
-        // === Setup model bounds and position (Unchanged) ===
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        const internalPadding = 50; // Reduced from 600
-        mapBoundsRef.current = {
-          MIN_X: box.min.x + internalPadding,
-          MAX_X: box.max.x - internalPadding,
-          MIN_Z: box.min.z + internalPadding,
-          MAX_Z: box.max.z - internalPadding,
-          PADDING: CONFIG.MAP_BOUNDS.PADDING,
-        };
-        controls.target.copy(center);
-        groundPlane.position.y = box.min.y;
-        scene.add(model);
-
-        // --- 5. PASS MAPPED DATA TO THE HIGHLIGHTER (Unchanged) ---
-        const updateLabels = highlightBuildings(
-          model,
-          scene,
-          camera,
-          mappedLocations
-        );
-        if (updateLabels) {
-          window.updateBuildingLabels = updateLabels;
-        }
-
-        // === Start geolocation handling ===
-        handleGeolocation();
-        setIsModelLoaded(true);
-      },
-      (xhr) => {
-        console.log(
-          `Model ${((xhr.loaded / xhr.total) * 100).toFixed(2)}% loaded`
-        );
-      },
-      (error) => {
-        console.error("❌ Error loading model:", error);
-        setIsModelLoaded(true);
-      }
     );
   };
 
