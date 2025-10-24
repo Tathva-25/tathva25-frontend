@@ -380,7 +380,7 @@ function LocationCard({ location, eventCount, onNavigate, delay, isVisible }) {
           <h3 className="text-white text-base font-semibold truncate mb-1">
             {location.name}
           </h3>
-          <div className="flex items-center gap-2 text-sm text-gray-40Type">
+          <div className="flex items-center gap-2 text-sm text-gray-400">
             <svg
               className="w-3.5 h-3.5 text-white/40 flex-shrink-0"
               fill="none"
