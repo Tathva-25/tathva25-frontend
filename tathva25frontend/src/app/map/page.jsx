@@ -36,7 +36,7 @@ const CONFIG = {
     MAX_X: 200,
     MIN_Z: -200,
     MAX_Z: 200,
-    PADDING: 20, // Extra padding to prevent going too far out
+    PADDING: 100, // Extra padding to prevent going too far out
   },
   ANIMATION: {
     LERP_FACTOR: 0.05,
@@ -556,20 +556,25 @@ export default function NITCMapPage() {
           ).model;
 
           // Target point: slightly in front of Main Building
-          const targetPoint = new THREE.Vector3(
-            mainBuildingPos.x - 20, // Slightly west of Main Building
-            mainBuildingPos.y,
-            mainBuildingPos.z + 30 // Slightly south of Main Building
-          );
+          // --- NEW STARTING POSITION ---
+          // Calculate the center point (the "between" point) you requested
+          const avgX = (mainBuildingPos.x + aryabhattaPos.x + cccPos.x + tennisPos.x) / 4;
+          const avgY = (mainBuildingPos.y + aryabhattaPos.y + cccPos.y + tennisPos.y) / 4;
+          const avgZ = (mainBuildingPos.z + aryabhattaPos.z + cccPos.z + tennisPos.z) / 4;
+          
+          // This is the point the camera will look at
+          const targetPoint = new THREE.Vector3(avgX, avgY, avgZ);
 
-          // Camera position: South-West of Main Building
-          // This positions camera so CCC is left, Aryabhatta right-front, Tennis right-back
-          targetPositionRef.current = new THREE.Vector3(
-            targetPoint.x - 120, // Move WEST (to see buildings on the right)
-            targetPoint.y + 50, // Elevated for good view
-            targetPoint.z + 80 // Move SOUTH (to look north toward buildings)
-          );
-          targetLookAtRef.current = targetPoint;
+          // Position the camera to look at this central point.
+          // We'll position it to the South-West (negative X, positive Z) and elevated
+          // You can tweak these offsets (e.g., -80, +70, +100) to get the perfect angle
+          targetPositionRef.current = new THREE.Vector3(
+            targetPoint.x - 80,  // Move camera west
+            targetPoint.y + 70,  // Elevate camera
+            targetPoint.z + 100  // Move camera south
+          );
+          targetLookAtRef.current = targetPoint;
+          // --- END NEW STARTING POSITION ---
           isAnimatingRef.current = true;
         }
 
@@ -971,11 +976,12 @@ export default function NITCMapPage() {
         // === Setup model bounds and position (Unchanged) ===
         const box = new THREE.Box3().setFromObject(model);
         const center = box.getCenter(new THREE.Vector3());
+        const internalPadding = 50; // Reduced from 600
         mapBoundsRef.current = {
-          MIN_X: box.min.x + (CONFIG.MAP_BOUNDS.PADDING + 600),
-          MAX_X: box.max.x - (CONFIG.MAP_BOUNDS.PADDING + 600),
-          MIN_Z: box.min.z + (CONFIG.MAP_BOUNDS.PADDING + 600),
-          MAX_Z: box.max.z - (CONFIG.MAP_BOUNDS.PADDING + 600),
+          MIN_X: box.min.x + internalPadding,
+          MAX_X: box.max.x - internalPadding,
+          MIN_Z: box.min.z + internalPadding,
+          MAX_Z: box.max.z - internalPadding,
           PADDING: CONFIG.MAP_BOUNDS.PADDING,
         };
         controls.target.copy(center);
@@ -1428,34 +1434,44 @@ export default function NITCMapPage() {
         // STRICT terrain locking - force camera to stay within bounds
         const clampedCameraPos = clampToMapBounds(camera.position);
         if (!clampedCameraPos.equals(camera.position)) {
-          // Immediate clamping for stronger boundary enforcement
-          camera.position.copy(clampedCameraPos);
+          // Smooth lerp back instead of immediate snap
+          camera.position.lerp(clampedCameraPos, 0.1);
         }
 
-        const groundHeight = checkCollisionAtPosition(camera.position);
-        if (groundHeight !== null) {
-          const minCameraY =
-            groundHeight + CONFIG.CAMERA.MIN_HEIGHT_ABOVE_TERRAIN;
+          const groundHeight = checkCollisionAtPosition(camera.position);
+          if (groundHeight !== null) {
+            const minCameraY =
+              groundHeight + CONFIG.CAMERA.MIN_HEIGHT_ABOVE_TERRAIN;
 
-          if (camera.position.y < minCameraY) {
-            camera.position.y = minCameraY; // Immediate correction
-          }
-        }
+            if (camera.position.y < minCameraY) {
+              // OLD: camera.position.y = minCameraY; // Immediate correction (causes snapping)
+              // NEW: Smoothly push the camera up
+              camera.position.lerp(
+                  new THREE.Vector3(camera.position.x, minCameraY, camera.position.z),
+                  CONFIG.ANIMATION.COLLISION_LERP_FACTOR
+              );
+            }
+          }
 
         if (!isAnimatingRef.current) {
           // Also strictly lock the controls target
           const clampedTargetPos = clampToMapBounds(controls.target);
           if (!clampedTargetPos.equals(controls.target)) {
-            controls.target.copy(clampedTargetPos); // Immediate correction
+            controls.target.lerp(clampedTargetPos, 0.1); // Smooth correction
           }
 
           const targetGroundHeight = findGroundHeight(
-            controls.target.x,
-            controls.target.z
-          );
-          if (controls.target.y < targetGroundHeight) {
-            controls.target.y = targetGroundHeight; // Immediate correction
-          }
+            controls.target.x,
+            controls.target.z
+          );
+          if (controls.target.y < targetGroundHeight) {
+            // OLD: controls.target.y = targetGroundHeight; // Immediate correction
+            // NEW: Smoothly push the target up
+            controls.target.lerp(
+                new THREE.Vector3(controls.target.x, targetGroundHeight, controls.target.z),
+                CONFIG.ANIMATION.COLLISION_LERP_FACTOR
+            );
+          }
         }
       }
       // --- (End Terrain/Collision logic) ---
