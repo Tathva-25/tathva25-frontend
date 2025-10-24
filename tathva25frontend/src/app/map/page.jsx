@@ -775,12 +775,12 @@ export default function NITCMapPage() {
                 }}
               >
                 <BuildingMarker
-                  buildingName={buildingName}
-                  isActive={active === buildingName.slice(5, -2)}
+                  buildingName={buildingName.slice(5, -2)}
+                  isActive={active === buildingName}
                   onClick={() => onMarkerClick(buildingName)}
                 />
                 <BuildingCard
-                  buildingName={buildingName.substring(5)}
+                  buildingName={buildingName.slice(5, -2)}
                   visible={active === buildingName}
                   onAction={() => onCardAction(buildingName)}
                 />
