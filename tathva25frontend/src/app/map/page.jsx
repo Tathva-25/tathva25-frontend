@@ -901,7 +901,7 @@ export default function NITCMapPage() {
     loader.setDRACOLoader(dracoLoader);
 
     loader.load(
-        "/models/finalv2compressed.glb",
+        "/models/map.glb",
         async (gltf) => {
           const model = gltf.scene;
           modelRef.current = model;
